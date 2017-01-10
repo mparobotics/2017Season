@@ -37,3 +37,11 @@ ehthumbs.db
 Thumbs.db
 .metadata
 
+# Intellij generated files #
+############################
+misc.xml
+modules.xml
+vcs.xml
+workspace.xml
+*.iml
+.idea
