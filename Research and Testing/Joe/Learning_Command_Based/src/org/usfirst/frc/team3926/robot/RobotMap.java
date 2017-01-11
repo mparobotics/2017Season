@@ -11,7 +11,18 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
+       public static int FRONT_RIGHT_MOTOR_PWM=0,
+                         BACK_RIGHT_MOTOR_PWM=1,
+                         FRONT_LEFT_MOTOR_PWM=2,
+                         BACK_LEFT_MOTOR_PWM=3;
 
+       public static double SAFETY_FACTOR = 0.50;
+
+       public static int RIGHT_STICK_PORT=0,
+                         LEFT_STICK_PORT=1;
+
+
+       public static boolean XBOX_CONTROLLER = true;
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
