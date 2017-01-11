@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import org.opencv.core.MatOfPoint;
-import org.usfirst.frc.team3926.GripPipeline;
 import org.usfirst.frc.team3926.GripPipelineContour;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class VisionProcessing extends Subsystem {
     private NetworkTable lineTable;
     private UsbCamera camera;
     private VisionThread visionThread;
-    private ArrayList<MatOfPoint> testSync;
+    private ArrayList<MatOfPoint> detectedContours;
 
     /**
      * Constructs the VisionProcessing task.
@@ -43,7 +42,7 @@ public class VisionProcessing extends Subsystem {
             if (!pipeline.filterContoursOutput().isEmpty()) {
                 ArrayList<MatOfPoint> r = pipeline.filterContoursOutput();
                 synchronized (this) {
-                    this.testSync = r;
+                    this.detectedContours = r;
                 }
             }
         });
@@ -57,13 +56,26 @@ public class VisionProcessing extends Subsystem {
      */
     public void testThreadingStuff() {
         synchronized (this) {
-            if (!testSync.isEmpty()) {
-                System.out.println("Testing threads: " + testSync.get(0).toString());
+            if (!detectedContours.isEmpty()) {
+                System.out.println("Testing threads: " + detectedContours.get(0).toString());
             }
         }
     }
 
-    public
+    /**
+     *
+     */
+    public void FollowTarget() {
+        //synchronized (this) {
+        if (!detectedContours.isEmpty() && detectedContours.size() <= 2) {
+            //follow it m8!
+        } else {
+            String errorMessage = (detectedContours.isEmpty()) ? "No contours" :
+                    "Too many contours";
+            System.out.println(errorMessage);
+        }
+        //}
+    }
 
     /**
      *
