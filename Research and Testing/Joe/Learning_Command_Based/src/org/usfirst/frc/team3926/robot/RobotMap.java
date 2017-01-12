@@ -21,6 +21,9 @@ public class RobotMap {
        public static int RIGHT_STICK_PORT=0,
                          LEFT_STICK_PORT=1;
 
+       public static int ENCODER_DI_ONE =0,
+                         ENCODER_DI_TWO =1;
+
 
        public static boolean XBOX_CONTROLLER = true;
 	// If you are using multiple modules, make sure to define both the port

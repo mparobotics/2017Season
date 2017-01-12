@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.robot.commands.ControlTank;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
+import org.usfirst.frc.team3926.robot.subsystems.EncodingControl;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,7 +18,10 @@ import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 public class Robot extends IterativeRobot {
 
 	public static final DriveControl driveControl = new DriveControl();
+	public static EncodingControl encodingcontrol = new EncodingControl();
 	public static OI oi;
+	public int encoderCount = 0;
+
 
 	private ControlTank controlTank;
 
@@ -29,6 +33,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		encodingcontrol.EncodingControl();
+
 	}
 
 	/**
@@ -73,6 +79,9 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		controlTank = new ControlTank();
 		controlTank.start();
+		encoderCount = encodingcontrol.getCount();
+
+
 	}
 
 	/**
