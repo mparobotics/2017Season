@@ -14,8 +14,8 @@ import org.usfirst.frc.team3926.GripPipelineContour;
 import org.usfirst.frc.team3926.VideoServer;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * Class to contain vision processing code
@@ -35,7 +35,7 @@ public class VisionProcessing extends Subsystem {
     /** The contours detected by vision processing */
     private ArrayList<MatOfPoint> detectedContours;
     /** The video server for sending images to the smart dashboard */
-    private VideoServer videoServer;
+    //private VideoServer videoServer;
     /** The mat of the contour image */
     private Mat contourImage;
 
@@ -51,12 +51,12 @@ public class VisionProcessing extends Subsystem {
         camera = CameraServer.getInstance().startAutomaticCapture();
         camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
-        try {
-            videoServer = new VideoServer(80);
-            videoServer.start();
-        } catch (Exception IO) {
-            System.out.println("Could not start video server for OpenCV stream");
-        }
+//        try {
+//            videoServer = new VideoServer(80);
+//            videoServer.start();
+//        } catch (Exception IO) {
+//            System.out.println("Could not start video server for OpenCV stream");
+//        }
 
         visionThread = new VisionThread(camera, new GripPipelineContour(),
                 pipeline -> {
@@ -64,8 +64,6 @@ public class VisionProcessing extends Subsystem {
                         ArrayList<MatOfPoint> r = pipeline.filterContoursOutput();
                         synchronized (this) {
                             this.detectedContours = r;
-                            for (int i = 0; i < r.size(); ++i)
-                                Imgproc.drawContours(this.contourImage, r, i, new Scalar(255, 255, 255), -1);
                         }
                     }
                 });
@@ -94,6 +92,8 @@ public class VisionProcessing extends Subsystem {
         //synchronized (this) {
         if (!detectedContours.isEmpty() && detectedContours.size() <= 2) {
 
+            System.out.println("Moving towards contour...");
+
             double[] offset = contourOffset(0);
 
             double rightSpeed, leftSpeed;
@@ -109,7 +109,9 @@ public class VisionProcessing extends Subsystem {
                 leftSpeed  = RobotMap.AUTONOMOUS_SPEED;
             }
 
-            Robot.driveControl.setSpeed(rightSpeed, leftSpeed);
+            Robot.driveControl.autonomousTank(rightSpeed, leftSpeed);
+
+            System.out.println("\tSetting speed to right: " + rightSpeed + " left: " + leftSpeed);
 
         } else {
             String errorMessage = (detectedContours.isEmpty()) ? "No contours" :
@@ -119,21 +121,21 @@ public class VisionProcessing extends Subsystem {
         //}
     }
 
-    /**
-     * Displays the info about a contour
-     */
-    public void debugContourImage() {
-
-        if (videoServer.isRunning()) {
-            synchronized (this) {
-                try {
-                    videoServer.sendImage(contourImage);
-                } catch (Exception IO) {
-                    System.out.println("Could not send contour image to smart dashboard");
-                }
-            }
-        }
-    }
+//    /**
+//     * Displays the info about a contour
+//     */
+//    public void debugContourImage() {
+//
+//        if (videoServer.isRunning()) {
+//            synchronized (this) {
+//                try {
+//                    videoServer.sendImage(contourImage);
+//                } catch (Exception IO) {
+//                    System.out.println("Could not send contour image to smart dashboard");
+//                }
+//            }
+//        }
+//    }
 
     /**
      * Finds the necessary movement to center the target with the robot
@@ -144,27 +146,51 @@ public class VisionProcessing extends Subsystem {
     }
 
     /**
-     * Determines which side the robot needs to move towards so that the contour can be in the center
-     */
-    private void determineSideCorrection() {
-
-
-
-    }
-
-    /**
      * Gets the offset of a contour from the center of the camera's image
      * @param index The index of the contour from detectedContours
      */
     private double[] contourOffset(int index) {
 
-        List<Point> test = null;
+        System.out.println("\tDetecting offset in contour");
 
-        Converters.Mat_to_vector_Point(detectedContours.get(index), test);
+        try {
 
-        double[] contourPoint = {test.get(index).x, test.get(index).y};
+            Point[] specificContour = detectedContours.get(index).toArray();
+            printContourDebug(specificContour);
 
-        return new double[] {SCREEN_CENTER[0] - contourPoint[0], SCREEN_CENTER[1] - contourPoint[1]};
+            double[] averagePointPosition = new double[2];
+
+            for (Point aSpecificContour : specificContour) {
+                averagePointPosition[0] += aSpecificContour.x;
+                averagePointPosition[1] += aSpecificContour.y;
+            }
+
+            averagePointPosition[0] /= specificContour.length;
+            averagePointPosition[1] /= specificContour.length;
+
+            System.out.println("\t\tAverage X: " + averagePointPosition[0] + " Average Y: " + averagePointPosition[1]);
+
+            return new double[] {SCREEN_CENTER[0] - averagePointPosition[0], SCREEN_CENTER[1] - averagePointPosition[1]};
+
+        } catch (Exception e) {
+            System.out.println("Error in finding contour offset");
+            System.err.println("\t" + e.toString());
+        }
+
+        return new double[] {0, 0};
+
+    }
+
+    /**
+     *
+     */
+    private void printContourDebug(Point[] contourPoints) {
+
+        System.out.println("\t\tPrinting contour data");
+
+        for (Point contourPoint : contourPoints)
+            System.out.println("\t\t\t" + "X: " + contourPoint.x + " Y: " + contourPoint.y);
+
 
     }
 

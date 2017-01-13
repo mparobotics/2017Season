@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveControl driveControl = new DriveControl();
 	public static OI oi;
-    /** The system to use for controlling the drive base in a tank configuration */
+
 	private ControlTank controlTank;
 
 	private VisionProcessing visionProcessing;
@@ -89,6 +89,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-        visionProcessing.debugContourImage();;
+        //visionProcessing.debugContourImage();;
     }
 }

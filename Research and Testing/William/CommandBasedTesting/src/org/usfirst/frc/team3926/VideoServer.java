@@ -16,7 +16,7 @@ import java.nio.channels.CompletionHandler;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
+import org.usfirst.frc.team3926.NakedByteArrayOutputStream;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfInt;
@@ -133,7 +133,7 @@ public class VideoServer {
         this.port = port;
         responseBufferOutputStream.write(BOUNDARY);
         responseBufferOutputStream.write(CONTENT_TYPE);
-        responseBufferOutputStream.mark();
+        //responseBufferOutputStream.mark();
 
         qualityParams = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, quality);
     }
@@ -221,7 +221,7 @@ public class VideoServer {
                 responseBufferOutputStream.reset();
 
                 // Reset response buffer to the end of the header
-                responseBufferOutputStream.markReset();
+                //responseBufferOutputStream.markReset();
                 // Write content length
                 responseBufferOutputStream.write(("Content-Length: " + size +
                         "\r\n\r\n").getBytes());

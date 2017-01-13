@@ -34,6 +34,6 @@ public class RobotMap {
     /** Whether or not to use an XBox controller configuration for driving instead of tank drive */
     public static boolean XBOX_CONTROLLER = true;
 
-    public static double AUTONOMOUS_SPEED = 1;
+    public static double AUTONOMOUS_SPEED = 0.1;
 
 }

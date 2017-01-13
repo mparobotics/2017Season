@@ -51,13 +51,21 @@ public class DriveControl extends Subsystem {
 
     }
 
+    public void autonomousTank(double rightSpeed, double leftSpeed) {
+
+        setSpeed(rightSpeed, leftSpeed);
+
+        driveSystem.tankDrive(rightSpeed, leftSpeed);
+
+    }
+
     /**
      * Set the speed to drive the robot
      *
      * @param rightSpeed The speed to drive the right side
      * @param leftSpeed  The speed to drive the left side
      */
-    public void setSpeed(double rightSpeed, double leftSpeed) {
+    private void setSpeed(double rightSpeed, double leftSpeed) {
 
         rightSide = rightSpeed;
         leftSide = leftSpeed;
