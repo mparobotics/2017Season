@@ -11,19 +11,26 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 public class EncodingControl extends Subsystem {
 
     private Encoder enc;
+    private double maxPeriod = 0.1;
+    private int minRate = 10;
+    private int distance = 2;
+    private int samplesAverage = 5;
 
 
     public void EncodingControl(){
         enc = new Encoder(RobotMap.ENCODER_DI_ONE, RobotMap.ENCODER_DI_TWO,
                 false, Encoder.EncodingType.k4X);
 
-        enc.setMaxPeriod(.1);
-        enc.setMinRate(10);
-        enc.setDistancePerPulse(2);
-        enc.setSamplesToAverage(5);
+        enc.setMaxPeriod(maxPeriod);
+        enc.setMinRate(minRate);
+        enc.setDistancePerPulse(distance);
+        enc.setSamplesToAverage(samplesAverage);
     }
     public int getCount(){
         return enc.get();
+    }
+    public double getRate(){
+        return enc.getRate();
     }
     public void reset() {
         enc.reset();

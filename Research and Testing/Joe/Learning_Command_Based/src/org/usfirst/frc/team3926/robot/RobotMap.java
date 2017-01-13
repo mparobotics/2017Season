@@ -14,7 +14,8 @@ public class RobotMap {
        public static int FRONT_RIGHT_MOTOR_PWM=0,
                          BACK_RIGHT_MOTOR_PWM=1,
                          FRONT_LEFT_MOTOR_PWM=2,
-                         BACK_LEFT_MOTOR_PWM=3;
+                         BACK_LEFT_MOTOR_PWM=3,
+                         SHOOTER_MOTOR_PWM=4;
 
        public static double SAFETY_FACTOR = 0.50;
 
@@ -23,6 +24,8 @@ public class RobotMap {
 
        public static int ENCODER_DI_ONE =0,
                          ENCODER_DI_TWO =1;
+
+
 
 
        public static boolean XBOX_CONTROLLER = true;
