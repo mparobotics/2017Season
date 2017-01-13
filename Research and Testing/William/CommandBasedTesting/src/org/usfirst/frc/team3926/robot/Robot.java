@@ -20,10 +20,10 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveControl driveControl = new DriveControl();
 	public static OI oi;
-
+    /** The system to use for controlling the drive base in a tank configuration */
 	private ControlTank controlTank;
 
-	private VisionProcessing testVisionProcessing;
+	private VisionProcessing visionProcessing;
 
 	private TestMotor testMotor;
 
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		testVisionProcessing = new VisionProcessing("GRIP/LinesReport");
+		visionProcessing = new VisionProcessing("GRIP/LinesReport");
 		testMotor = new TestMotor();
     }
 	
@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        visionProcessing.followTarget();
     }
 
     public void teleopInit() {
@@ -79,7 +80,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        testVisionProcessing.testThreadingStuff();
+        visionProcessing.testThreadingStuff();
         testMotor.RunTestMotor();
     }
     
@@ -88,5 +89,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        visionProcessing.debugContourImage();;
     }
 }
