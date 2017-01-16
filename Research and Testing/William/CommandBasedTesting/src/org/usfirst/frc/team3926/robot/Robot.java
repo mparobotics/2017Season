@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.commands.ControlTank;
 import org.usfirst.frc.team3926.subsystems.DriveControl;
 import org.usfirst.frc.team3926.subsystems.TestMotor;
-import org.usfirst.frc.team3926.subsystems.VisionProcessing;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,8 +22,6 @@ public class Robot extends IterativeRobot {
 
 	private ControlTank controlTank;
 
-	private VisionProcessing visionProcessing;
-
 	private TestMotor testMotor;
 
     /**
@@ -34,7 +31,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		testMotor = new TestMotor();
-        visionProcessing = new VisionProcessing();
     }
 	
 	/**
@@ -68,7 +64,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        visionProcessing.followTarget();
     }
 
     public void teleopInit() {
@@ -89,6 +84,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-        //visionProcessing.debugContourImage();;
     }
+
 }
