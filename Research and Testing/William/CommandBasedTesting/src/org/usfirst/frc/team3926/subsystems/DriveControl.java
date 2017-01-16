@@ -1,3 +1,9 @@
+/***********************************************************************************************************************
+ * @file DriveControl.java
+ * @author William Kluge
+ * Contact: klugewilliam@gmail.com
+ **********************************************************************************************************************/
+
 package org.usfirst.frc.team3926.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -11,7 +17,7 @@ public class DriveControl extends Subsystem {
 
     /* The variables holding the speed to set the motor */
     private double rightSide = 0;
-    private double leftSide = 0;
+    private double leftSide  = 0;
     /* The drive class */
     private RobotDrive driveSystem;
 
@@ -31,7 +37,6 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in a tank configuration
-     *
      * @param rightSpeed The speed to set the right motor
      * @param leftSpeed  The speed to set the left motor
      * @param straight   Whether or not the robot should drive straight
@@ -51,6 +56,11 @@ public class DriveControl extends Subsystem {
 
     }
 
+    /**
+     * Drives the robot in tank drive during the autonomous period
+     * @param rightSpeed Speed to set the right side of the robot
+     * @param leftSpeed Speed to set the left side of the robot
+     */
     public void autonomousTank(double rightSpeed, double leftSpeed) {
 
         setSpeed(rightSpeed, leftSpeed);
@@ -62,8 +72,8 @@ public class DriveControl extends Subsystem {
     /**
      * Set the speed to drive the robot
      *
-     * @param rightSpeed The speed to drive the right side
-     * @param leftSpeed  The speed to drive the left side
+     * @param rightSpeed Speed to drive the right side
+     * @param leftSpeed  Speed to drive the left side
      */
     private void setSpeed(double rightSpeed, double leftSpeed) {
 
@@ -80,7 +90,7 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drive the robot in saftey mode (reduces the speed
+     * Drive the robot in safety mode (reduces the speed
      */
     private void safeMode() {
 

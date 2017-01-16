@@ -33,8 +33,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		visionProcessing = new VisionProcessing("GRIP/LinesReport");
 		testMotor = new TestMotor();
+        visionProcessing = new VisionProcessing();
     }
 	
 	/**
@@ -60,6 +60,7 @@ public class Robot extends IterativeRobot {
      * example) or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+
     }
 
     /**
@@ -80,7 +81,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        visionProcessing.testThreadingStuff();
         testMotor.RunTestMotor();
     }
     

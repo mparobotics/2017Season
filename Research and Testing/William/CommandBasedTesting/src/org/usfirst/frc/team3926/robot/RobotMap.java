@@ -34,6 +34,11 @@ public class RobotMap {
     /** Whether or not to use an XBox controller configuration for driving instead of tank drive */
     public static boolean XBOX_CONTROLLER = true;
 
-    public static double AUTONOMOUS_SPEED = 0.1;
+    /** The max speed for the robot to travel during autonomous */
+    public static double AUTONOMOUS_SPEED = 1;
+
+    /** The amount of time (in milliseconds) to wait and make sure a vision tracking target has been lost/fond before
+     * starting/stopping the robot (the more precise the vision algorithm the smaller the number)  */
+    public static double VISION_TRACKING_CHECK_DELAY = 50;
 
 }
