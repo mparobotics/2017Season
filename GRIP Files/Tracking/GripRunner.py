@@ -32,7 +32,7 @@ def extra_processing(pipeline):
 
 def main():
     NetworkTables.setTeam(3926)
-    NetworkTables.initialize(server='roborio-3926-frc.local')
+    NetworkTables.initialize(server='roboRIO-3926-FRC.local')
     cap = cv2.VideoCapture(0)
     pipeline = GripPythonVI()
     while cap.isOpened():
