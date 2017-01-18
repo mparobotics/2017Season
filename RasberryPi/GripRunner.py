@@ -2,7 +2,7 @@
 
 import cv2
 from networktables import NetworkTables
-from grip import GripPythonVI # TODO change the module and class, if needed
+from grip import GripPythonVI  # TODO change the module and class, if needed
 
 
 def extra_processing(pipeline):
@@ -23,7 +23,7 @@ def extra_processing(pipeline):
         widths.append(w)
         heights.append(y)
 
-    table = NetworkTables.getTable('/vision/red_areas')
+    table = NetworkTables.getTable('/vision/high_goal')
     table.putNumberArray('x', center_x_positions)
     table.putNumberArray('y', center_y_positions)
     table.putNumberArray('width', widths)
