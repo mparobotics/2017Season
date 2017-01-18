@@ -31,7 +31,7 @@ def extra_processing(pipeline):
 
 
 def main():
-    NetworkTables.setTeam('3926')
+    NetworkTables.setTeam(3926)
     NetworkTables.initialize()
     cap = cv2.VideoCapture(0)
     pipeline = GripPythonVI()
