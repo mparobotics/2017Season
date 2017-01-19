@@ -2,3 +2,9 @@
 Research and Testing/.DS_Store
 
 .DS_Store
+
+*.class
+
+Research and Testing/William/CommandBasedTesting/dist/FRCUserProgram.jar
+
+Research and Testing/William/CommandBasedTesting/sysProps.xml

@@ -31,6 +31,11 @@ public class RobotMap {
     public static int RIGHT_STICK_PORT = 0,
                       LEFT_STICK_PORT  = 1;
 
+    /** The illegal array to return from NetworkVisionProcessing if an value could not be gotten */
+    public static double[] ILLEGAL_VALUE = {-404, -404};
+    /** The default value to use in  */
+    public static double[] DEFAULT_VALUE = new double[0];
+
     /** Whether or not to use an XBox controller configuration for driving instead of tank drive */
     public static boolean XBOX_CONTROLLER = true;
 
@@ -40,5 +45,16 @@ public class RobotMap {
     /** The amount of time (in milliseconds) to wait and make sure a vision tracking target has been lost/fond before
      * starting/stopping the robot (the more precise the vision algorithm the smaller the number)  */
     public static double VISION_TRACKING_CHECK_DELAY = 50;
+
+    /* Variables for configuring command generation */
+    /** Track the delays in human commands */
+    public static boolean TRACK_TIME_DELAYS = false;
+    /** Cut the time delays (requires @see TRACK_TIME_DELAYS to be true) */
+    public static boolean CUT_TIME_DELAYS   = false;
+    /** The amount to cut time delays (requires @see CUT_TIME_DELAYS to be true) */
+    public static double CUT_FACTOR = 0.50;
+    /** Use the values from joystick inputs instead of encoder values */
+    public static boolean USE_JOYSTICK_VALUES = false;
+
 
 }

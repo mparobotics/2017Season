@@ -1,0 +1,9 @@
+* Command generator from human actions
+    * Need tank drive encoders
+* AI for shooter
+    * Need encoder on shooter
+    * Human feedback
+    * Saving file
+* Vision tracking
+    * Gears
+    * Shooter
