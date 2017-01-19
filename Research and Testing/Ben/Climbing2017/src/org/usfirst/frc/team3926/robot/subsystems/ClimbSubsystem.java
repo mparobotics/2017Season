@@ -14,15 +14,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ClimbSubsystem extends Subsystem {
 	
 	/*
-	 * make the climber talon
-	 * makes the encoder
+	 * makes the talon than allow the robot to climb
+	 * makes the encoder that tracts the climbing talon
 	 */
 	public static Talon climber;
 	static Encoder climbingEncoder;
 	/*
 	 * defines the CLIMBER_PORT
 	 */
-	int climber_Port;
+	
 	double climberMotorSpeed = 0.5;
 	
 	
@@ -31,7 +31,8 @@ public class ClimbSubsystem extends Subsystem {
 	 * constructs the encoder
 	 */
 	public ClimbSubsystem(){
-		climber = new Talon(climber_Port);
+		
+		climber = new Talon(RobotMap.climberPort);							
 		climbingEncoder = new Encoder(0,1,false, Encoder.EncodingType.k4X);
 		climbingEncoder.setDistancePerPulse(1);
 	}
@@ -48,14 +49,14 @@ public class ClimbSubsystem extends Subsystem {
     public void spinMotor(){
     	double climbingSpeed = climbingEncoder.getRate();
     	
-    	if(climbingSpeed < 5 && climberMotorSpeed < 1) {
+    	if(climbingSpeed < RobotMap.climberRPMTarget && climberMotorSpeed < 1) {
     		
-    		climberMotorSpeed = climberMotorSpeed + 0.1;
+    		climberMotorSpeed += RobotMap.climberSpeeedIncrement;
     	
     	}
-    	if (climbingSpeed > 5 && climberMotorSpeed > 0) {
+    	if (climbingSpeed > RobotMap.climberRPMTarget && climberMotorSpeed > 0) {
     	
-    		climberMotorSpeed = climberMotorSpeed - 0.1;
+    		climberMotorSpeed -= RobotMap.climberSpeeedIncrement;
     	
     	}
     	climber.set(climberMotorSpeed);

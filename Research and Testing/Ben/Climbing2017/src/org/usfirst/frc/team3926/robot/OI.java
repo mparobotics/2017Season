@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.*; //imports all buttons
 import org.usfirst.frc.team3926.robot.commands.ClimbCommand;
+import org.usfirst.frc.team3926.robot.commands.ShootingCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,10 +16,13 @@ public class OI {
 	public static Joystick RIGHT_STICK = new Joystick(RobotMap.RIGHT_STICK_PORT);
 	public static Joystick LEFT_STICK  = new Joystick(RobotMap.LEFT_STICK_PORT);
 
-	Button button = new JoystickButton(RIGHT_STICK, 1);
+	Button button = new JoystickButton(LEFT_STICK, 1);
+	Button shooterButton = new JoystickButton(RIGHT_STICK,2);
+	
 	
 	public OI() {
 		button.whenPressed(new ClimbCommand());
+		shooterButton.whenPressed(new ShootingCommand());
 		
 	}
 	//// CREATING BUTTONS

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.robot.commands.ClimbCommand;
 import org.usfirst.frc.team3926.robot.subsystems.ClimbSubsystem;
 import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
+import org.usfirst.frc.team3926.robot.subsystems.ShootingSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,6 +33,7 @@ public class Robot extends IterativeRobot {
 	
 	public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
 	public static DriveSubsytem driveSubsystem  = new DriveSubsytem();
+	public static ShootingSubsystem shootingSubsystem = new ShootingSubsystem();
 	
 	public static OI oi;
 	public static Encoder drivingEncoder = new Encoder(2,3,false, Encoder.EncodingType.k4X);

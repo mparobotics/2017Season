@@ -65,18 +65,14 @@ public class DriveSubsytem extends Subsystem    {
 	double speed = 0.5;
 	public void deceleration(){
 		
-	//	for(double acceleration = -5, speed = 1 ; acceleration <= -5 && acceleration != 0  ; acceleration = Robot.accelerometer.getX() 
-	//	, speed = speed-0.1 ){
-	//	driveSystem.tankDrive(speed, speed);
-	//	}
-		
+
 		acceleration = Robot.accelerometer.getX();
-		if(acceleration <= -5) {
-			speed = speed + 0.1;
+		if(acceleration < -5) {
+			speed += RobotMap.driveFowardSpeedIncrement;
 			
 			
 		} else if(acceleration > 0) {
-			speed = speed - 0.1; 
+			speed -= RobotMap.driveFowardSpeedIncrement; 
 		} else {
 			driveSystem.tankDrive(0, 0);
 		}

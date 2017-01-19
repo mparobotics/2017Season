@@ -19,10 +19,19 @@ public class RobotMap {
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 	
-	public static int RIGHT_STICK_PORT = 1;
-	public static int LEFT_STICK_PORT = 2;
+	public static int RIGHT_STICK_PORT 			   = 1;
+	public static int LEFT_STICK_PORT  			   = 2;
+	
+	public static double shooterSpeedIncrement 	   = 0.1;
+	public static int shooterRPMTarget 		   	   = 5;
+	
+	public static double climberSpeeedIncrement	   = 0.1;
+	public static int climberRPMTarget 			   = 5;
+	public static int climberPort 				   = 1;
 	
 
+	public static double driveFowardSpeedIncrement = 0.1;
+	public static int shooterPort 				   = 2;
 
 	
 }
