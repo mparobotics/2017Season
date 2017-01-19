@@ -48,12 +48,12 @@ public class ClimbSubsystem extends Subsystem {
     public void spinMotor(){
     	double climbingSpeed = climbingEncoder.getRate();
     	
-    	if(climbingSpeed < 5 && climberMotorSpeed <1){
+    	if(climbingSpeed < 5 && climberMotorSpeed < 1) {
     		
     		climberMotorSpeed = climberMotorSpeed + 0.1;
     	
     	}
-    	if (climbingSpeed > 5 && climberMotorSpeed > 0){
+    	if (climbingSpeed > 5 && climberMotorSpeed > 0) {
     	
     		climberMotorSpeed = climberMotorSpeed - 0.1;
     	

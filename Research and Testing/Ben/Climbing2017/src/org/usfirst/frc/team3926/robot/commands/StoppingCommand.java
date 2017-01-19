@@ -14,14 +14,15 @@ public class StoppingCommand extends Command {
 		
 	}
 	public void execute(){
-		DriveSubsytem.deceleration();
+		Robot.driveSubsystem.deceleration();
 	}
 	public void interrupted(){
 		
 	}
 	public boolean isFinished(){
 		
-		return true;
+		return Robot.driveSubsystem.isSpeedZero();
+		
 		
 	}
 	public void end(){

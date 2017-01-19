@@ -56,14 +56,14 @@ public class DriveSubsytem extends Subsystem    {
 			
 		
 	}
-	public static void driveForward(){
+	public void driveForward(){
 		
 		driveSystem.tankDrive(1 ,1 );
 		distanceTraveled = Robot.drivingEncoder.getDistance();
 	}
 	static double  acceleration;
 	double speed = 0.5;
-	public static void deceleration(){
+	public void deceleration(){
 		
 	//	for(double acceleration = -5, speed = 1 ; acceleration <= -5 && acceleration != 0  ; acceleration = Robot.accelerometer.getX() 
 	//	, speed = speed-0.1 ){
@@ -71,18 +71,28 @@ public class DriveSubsytem extends Subsystem    {
 	//	}
 		
 		acceleration = Robot.accelerometer.getX();
-		if(acceleration <= -5){
+		if(acceleration <= -5) {
+			speed = speed + 0.1;
 			
+			
+		} else if(acceleration > 0) {
+			speed = speed - 0.1; 
+		} else {
+			driveSystem.tankDrive(0, 0);
 		}
 		
+		driveSystem.tankDrive(speed, speed);
 		
+	}
+	public boolean isSpeedZero(){
+		return speed == 0;
 	}
 	public static void stopMotors(){
 		driveSystem.tankDrive(0, 0);
 		
 	}
 	
-	public static void turning(){
+	public void turning(){
 		driveSystem.tankDrive(-1, 1);
 	}
 	public boolean tenMetersTraveled(){

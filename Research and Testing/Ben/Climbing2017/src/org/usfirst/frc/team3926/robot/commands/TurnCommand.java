@@ -13,7 +13,7 @@ public class TurnCommand extends Command{
 	}
 	
 	public void initialize(){
-		DriveSubsytem.turning();
+		Robot.driveSubsystem.turning();
 	}
 	
 	public void execute(){
@@ -29,6 +29,6 @@ public class TurnCommand extends Command{
 	}
 	
 	public void end(){
-		DriveSubsytem.deceleration();
+		Robot.driveSubsystem.deceleration();
 	}
 }
