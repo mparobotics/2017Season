@@ -8,3 +8,6 @@ Research and Testing/.DS_Store
 Research and Testing/William/CommandBasedTesting/dist/FRCUserProgram.jar
 
 Research and Testing/William/CommandBasedTesting/sysProps.xml
+*.iml
+
+*.xml
