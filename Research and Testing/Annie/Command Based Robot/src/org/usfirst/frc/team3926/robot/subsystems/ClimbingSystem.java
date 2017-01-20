@@ -15,18 +15,22 @@ public class ClimbingSystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    //climbing motor
     private Talon climbingMotor;
+    //speed of climbing motor
     private double speed = 1;
+    //limit switch
     private DigitalInput limitSwitch;
 
-
+    //initializes motor and limit switch
     public ClimbingSystem() {
 
         climbingMotor = new Talon(RobotMap.CLIMBING_MOTOR);
         limitSwitch = new DigitalInput(RobotMap.CLIMBING_LIMIT_SWITCH);
+
     }
 
-
+    //sets the climbing motor to the value of speed
     public void Climb() {
 
         // Set the default command for a subsystem here.
@@ -37,8 +41,10 @@ public class ClimbingSystem extends Subsystem {
     public void ClimbingMotor(double speed) {
 
         climbingMotor.set(speed);
+
     }
 
+    //gets value from limit switch
     public boolean LimitSwitch() {
 
         return limitSwitch.get();

@@ -7,18 +7,12 @@ import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.DriveCommand;
 
-/**
- *
- */
 public class DriveSystem extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-
-
     public RobotDrive robotDrive;
-
 
     public DriveSystem() {
         CANTalon TalonSRX_FR = new CANTalon(RobotMap.FR_MOTOR);
