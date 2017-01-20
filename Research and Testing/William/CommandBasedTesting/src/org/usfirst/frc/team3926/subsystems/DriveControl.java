@@ -8,6 +8,8 @@ package org.usfirst.frc.team3926.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
@@ -58,14 +60,17 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in tank drive during the autonomous period
-     * @param rightSpeed Speed to set the right side of the robot
-     * @param leftSpeed Speed to set the left side of the robot
      */
-    public void autonomousTank(double rightSpeed, double leftSpeed) {
+    public void autonomousTank() {
 
-        setSpeed(rightSpeed, leftSpeed);
+        double[] speeds = Robot.visionProcessing.moveToCenter(0);
 
-        driveSystem.tankDrive(rightSpeed, leftSpeed);
+        Robot.visionProcessing.printTableInfo();
+
+        SmartDashboard.putNumber("Right Speed: ", speeds[0]);
+        SmartDashboard.putNumber("Left Speed: ", speeds[1]);
+
+        driveSystem.tankDrive(speeds[0], speeds[1]);
 
     }
 
