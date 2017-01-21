@@ -13,7 +13,9 @@ public class DriveControl extends Subsystem {
 
     /* The variables holding the speed to set the motor */
     private double rightSide = 0;
+
     private double leftSide = 0;
+
     /* The drive class */
     private RobotDrive driveSystem;
 
@@ -23,7 +25,7 @@ public class DriveControl extends Subsystem {
     public DriveControl() {
 
         driveSystem = new RobotDrive(RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM,
-                RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM);
+                                     RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM);
     }
 
     public void initDefaultCommand() {
