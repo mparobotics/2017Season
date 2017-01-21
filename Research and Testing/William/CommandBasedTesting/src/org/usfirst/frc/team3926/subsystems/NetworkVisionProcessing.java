@@ -10,15 +10,17 @@ import java.util.Date;
 
 /**
  * Notes on vision processing:
- * <p>
- * (1/20/2017:4:40) If looking at a piece of (retro-reflective) tape from the side, it's position may indicate that it
- * should move in the opposite direction of where it should go. I (William Kluge) do not think this should be an issue
- * in the 2017 game because the tape is wrapped around a bin, so it's center should actually be in the center.
- * (For an example of side view on a rectangular piece of tape see photo RectangularTapeSideView.png)
- * <p>
- * (1/20/2017:4:44) So looking at the tube actually didn't solve the problem when at an extreme angle. While this
+ * <p>(1/20/2017:4:40PM) If looking at a piece of (retro-reflective) tape from the side, it's position may indicate that
+ * it should move in the opposite direction of where it should go. I (William Kluge) do not think this should be an
+ * issue in the 2017 game because the tape is wrapped around a bin, so it's center should actually be in the center.
+ * (For an example of side view on a rectangular piece of tape see photo RectangularTapeSideView.png)</p>
+ * <p>(1/20/2017:4:44PM) So looking at the tube actually didn't solve the problem when at an extreme angle. While this
  * angle kind of angle isn't likely to actually happen in the game, I'm still going to look into solving it just in case
- * (For an example of extreme angle view on tube see TubeExtremeAngle.png)
+ * (For an example of extreme angle view on tube see TubeExtremeAngle.png)</p>
+ * <p>(1/21/2017:11:25AM) I think that the left and right sides were reversed. Switching the signs to test now</p>
+ * <p>(1/21/2017:11:29AM) So left and right were not reversed, but in some cases it still says to go left when it
+ * should be going right ot vise-versa. (see IncorrectMoveRight.png for example)</p>
+ *
  * @author William Kluge
  */
 public class NetworkVisionProcessing extends Subsystem {
@@ -170,7 +172,6 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Corrects viewing the target from odd angles
-     * <p>
      * <p>Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists</p>
      */
     private double[] correctAngleOffset() {

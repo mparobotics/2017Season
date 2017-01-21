@@ -51,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NetworkVisionProcessing.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NetworkVisionProcessing.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="46" column="11" lean-forward="false" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+            <state relative-caret-position="-658">
+              <caret line="21" column="80" lean-forward="false" selection-start-line="21" selection-start-column="80" selection-end-line="21" selection-end-column="80" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DriveControl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DriveControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/DriveControl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
@@ -128,8 +128,8 @@
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/Robot.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/DriveToVisionTarget.java" />
-        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/DriveControl.java" />
+        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java" />
       </list>
     </option>
   </component>
@@ -899,16 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="46" column="11" lean-forward="false" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/DriveToVisionTarget.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -923,6 +913,16 @@
           <caret line="21" column="7" lean-forward="false" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
           <folding>
             <element signature="method#safeMode#0;class#DriveControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-658">
+          <caret line="21" column="80" lean-forward="false" selection-start-line="21" selection-start-column="80" selection-end-line="21" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
