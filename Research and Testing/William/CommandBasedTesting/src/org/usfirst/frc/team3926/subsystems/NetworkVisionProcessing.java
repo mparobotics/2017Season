@@ -22,24 +22,13 @@ import java.util.Date;
  */
 public class NetworkVisionProcessing extends Subsystem {
 
-    /**
-     * Total size of the camera's image
-     */
+    /** Total size of the camera's image */
     private final int IMAGE_X = 320, IMAGE_Y = 240;
-
-    /**
-     * Center point on the screen
-     */
+    /** Center point on the screen */
     private final int[] SCREEN_CENTER = {IMAGE_X / 2, IMAGE_Y / 2};
-
-    /**
-     * Contour report from the Raspberry Pi
-     */
+    /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
-
-    /**
-     * Booleans to put on the dashboard that represent information on the state of contours
-     */
+    /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean contoursFound, moveRight, moveLeft;
 
     /**
@@ -51,9 +40,10 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Initializes the network table from the Raspberry Pi
-     *
-     * @note If it is initialized from the constructor you will get a load of errors from the robot about tables already
-     * being initialized. I think this has something to do with how the code is loaded onto the robot
+     * <p>
+     * Note: If it is initialized from the constructor you will get a load of errors from the robot about tables
+     * already being initialized. I think this has something to do with how the code is loaded onto the robot
+     * </p>
      */
     public void initNetworkTables() {
 
@@ -179,8 +169,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Corrects viewing the target from odd angles
-     *
-     * @note See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * <p>
+     * <p>Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists</p>
      */
     private double[] correctAngleOffset() {
 
@@ -213,7 +203,7 @@ public class NetworkVisionProcessing extends Subsystem {
      *
      * @param key   Key to use when getting contours from the table
      * @param index Array index of the contour to get
-     * @return Either the desired value for
+     * @return Either the desired value for the value and index or an illegal character if an exception occurred
      */
     private double getContours(String key, int index) {
 
