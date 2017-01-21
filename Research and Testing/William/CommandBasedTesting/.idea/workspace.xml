@@ -44,21 +44,37 @@
       <file leaf-file-name="DriveToVisionTarget.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/DriveToVisionTarget.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="32">
               <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NetworkVisionProcessing.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NetworkVisionProcessing.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-658">
-              <caret line="21" column="80" lean-forward="false" selection-start-line="21" selection-start-column="80" selection-end-line="21" selection-end-column="80" />
+            <state relative-caret-position="86">
+              <caret line="67" column="53" lean-forward="false" selection-start-line="67" selection-start-column="53" selection-end-line="67" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#initNetworkTables#0;class#NetworkVisionProcessing#0" expanded="false" />
+                <element signature="method#turnToCenter#0;class#NetworkVisionProcessing#0" expanded="false" />
+                <element signature="method#printTableInfo#0;class#NetworkVisionProcessing#0" expanded="false" />
+                <element signature="method#printConnectionInfo#0;class#NetworkVisionProcessing#0" expanded="false" />
+                <element signature="method#getContours#0;class#NetworkVisionProcessing#0" expanded="false" />
+                <element signature="method#getContours#1;class#NetworkVisionProcessing#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RobotMap.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="728">
+              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,21 +82,12 @@
       <file leaf-file-name="DriveControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/DriveControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="21" column="7" lean-forward="false" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            <state relative-caret-position="373">
+              <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="method#safeMode#0;class#DriveControl#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RobotMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="36" column="48" lean-forward="false" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -94,6 +101,7 @@
         <option value="Command" />
         <option value="Subsystem" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -126,10 +134,12 @@
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/VisionProcessing.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/NakedByteArrayOutputStream.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/Robot.java" />
-        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/DriveToVisionTarget.java" />
-        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/DriveControl.java" />
+        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/ControlTank.java" />
+        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/automation/VisionDataHolder.java" />
         <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java" />
+        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/DriveControl.java" />
+        <option value="$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java" />
       </list>
     </option>
   </component>
@@ -702,7 +712,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -710,7 +722,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3927/robot/RobotMap.java" />
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3927/robot/Robot.java" />
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3927/subsystems/DriveControl.java" />
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3927/robot/OI.java" />
@@ -804,32 +815,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/OI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/ControlTank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#265#266#0" expanded="false" />
-            <element signature="e#309#310#0" expanded="false" />
-            <element signature="e#854#855#0" expanded="false" />
-            <element signature="e#882#883#0" expanded="false" />
-            <element signature="e#959#960#0" expanded="false" />
-            <element signature="e#1001#1002#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/TestMotor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -891,27 +876,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java">
+    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/DriveToVisionTarget.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="36" column="48" lean-forward="false" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+        <state relative-caret-position="32">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/DriveToVisionTarget.java">
+    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/OI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="255">
           <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/commands/ControlTank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="88" lean-forward="false" selection-start-line="8" selection-start-column="88" selection-end-line="8" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/automation/VisionDataHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="4" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/DriveControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="7" lean-forward="false" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+        <state relative-caret-position="373">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#safeMode#0;class#DriveControl#0" expanded="false" />
           </folding>
         </state>
@@ -919,11 +921,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-658">
-          <caret line="21" column="80" lean-forward="false" selection-start-line="21" selection-start-column="80" selection-end-line="21" selection-end-column="80" />
+        <state relative-caret-position="86">
+          <caret line="67" column="53" lean-forward="false" selection-start-line="67" selection-start-column="53" selection-end-line="67" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#initNetworkTables#0;class#NetworkVisionProcessing#0" expanded="false" />
+            <element signature="method#turnToCenter#0;class#NetworkVisionProcessing#0" expanded="false" />
+            <element signature="method#printTableInfo#0;class#NetworkVisionProcessing#0" expanded="false" />
+            <element signature="method#printConnectionInfo#0;class#NetworkVisionProcessing#0" expanded="false" />
+            <element signature="method#getContours#0;class#NetworkVisionProcessing#0" expanded="false" />
+            <element signature="method#getContours#1;class#NetworkVisionProcessing#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3926/robot/RobotMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="728">
+          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

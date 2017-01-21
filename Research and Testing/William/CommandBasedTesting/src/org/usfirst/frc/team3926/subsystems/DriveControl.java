@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+import java.util.Map;
+
 /***********************************************************************************************************************
  * Enables driving of the robot with a tank drive scheme
  **********************************************************************************************************************/
@@ -57,17 +59,36 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in tank drive during the autonomous period
+     * @throws IllegalArgumentException This happens if {@link RobotMap#SPEED_KEY} was not associated with a double[]
      */
     public void autonomousTank() {
 
-        double[] speeds = Robot.visionProcessing.moveToCenter(0);
+        Map<String, Object> data = Robot.visionProcessing.moveToCenter(0);
 
         Robot.visionProcessing.printTableInfo();
 
-        SmartDashboard.putNumber("Right Speed: ", speeds[0]);
-        SmartDashboard.putNumber("Left Speed: ", speeds[1]);
+        Object speeds = data.get(RobotMap.SPEED_KEY);
 
-        driveSystem.tankDrive(speeds[0], speeds[1]);
+        if (speeds instanceof double[]) {
+
+            double[] confirmedSpeeds = ((double[]) speeds).clone();
+
+            SmartDashboard.putNumber("Right Speed: ", confirmedSpeeds[0]);
+            SmartDashboard.putNumber("Left Speed: ", confirmedSpeeds[1]);
+
+            if (confirmedSpeeds != RobotMap.ILLEGAL_VALUE)
+                driveSystem.tankDrive(confirmedSpeeds[0], confirmedSpeeds[1]);
+            else
+                driveSystem.tankDrive(0, 0);
+
+        } else {
+            throw new IllegalArgumentException("The speeds key was not associated with a double[]");
+        }
+
+        if (!RobotMap.DEBUG)
+            return;
+
+
 
     }
 

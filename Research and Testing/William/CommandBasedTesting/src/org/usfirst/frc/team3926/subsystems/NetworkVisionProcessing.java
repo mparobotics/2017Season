@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Notes on vision processing:
@@ -20,6 +22,9 @@ import java.util.Date;
  * <p>(1/21/2017:11:25AM) I think that the left and right sides were reversed. Switching the signs to test now</p>
  * <p>(1/21/2017:11:29AM) So left and right were not reversed, but in some cases it still says to go left when it
  * should be going right ot vise-versa. (see IncorrectMoveRight.png for example)</p>
+ * <p>(1/21/2017:12:04PM) I have decided to make a method ({@link #logIncorrectAction(boolean)}()} that logs whether
+ * or not a direction is correct when we are driving with vision tracking so that we can tune the algorithm based on the
+ * data we collect. I will likely have to make another program to find patterns in that data.</p>
  *
  * @author William Kluge
  */
@@ -57,9 +62,12 @@ public class NetworkVisionProcessing extends Subsystem {
      * Finds the correction needed to center the robot on a specified contour
      *
      * @param index Index of the contour to get the center of
-     * @return The correction needed to move to the target
+     * @return Correction needed to move to the target and, if addDebugData is true, information on the contour that
+     * produced the correction.
      */
-    public double[] moveToCenter(int index) {
+    public Map<String, Object> moveToCenter(int index) {
+
+
 
         double contourCenter = getContours("x", index);
 
@@ -95,6 +103,7 @@ public class NetworkVisionProcessing extends Subsystem {
         return returnValue;
 
     }
+
 
     /**
      * Finds the turn rate to turn the robot towards the vision target
@@ -156,6 +165,21 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
+     * Logs whether or not an action taken by the robot based on vision tracking is correct or incorrect.
+     * @param incorrectAction Whether an action taken by the robot was incorrect
+     */
+    public void logIncorrectAction(boolean incorrectAction) {
+
+        try {
+            throw new RuntimeException("An action taken by the robot was incorrect");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage() + " @ " + Arrays.toString(e.getStackTrace()));
+            System.out.println("\tValues: " + )
+        }
+
+    }
+
+    /**
      * The method to use to end vision tracking commands when debugging (it never ends)
      *
      * @return false
@@ -165,6 +189,10 @@ public class NetworkVisionProcessing extends Subsystem {
         return false;
     }
 
+    /**
+     * Method to set the default command for this subsystem.
+     * <p>Note: We currently do not have a command that should be set as default</p>
+     */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new DriveToVisionTarget());
@@ -173,6 +201,7 @@ public class NetworkVisionProcessing extends Subsystem {
     /**
      * Corrects viewing the target from odd angles
      * <p>Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists</p>
+     * TODO finish
      */
     private double[] correctAngleOffset() {
 

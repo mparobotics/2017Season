@@ -6,7 +6,7 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Command to execute methods of {@link org.usfirst.frc.team3926.subsystems.DriveControl}
  */
 public class ControlTank extends Command {
 
