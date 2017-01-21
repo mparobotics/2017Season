@@ -19,6 +19,7 @@ import java.util.Date;
  * (1/20/2017:4:44) So looking at the tube actually didn't solve the problem when at an extreme angle. While this
  * angle kind of angle isn't likely to actually happen in the game, I'm still going to look into solving it just in case
  * (For an example of extreme angle view on tube see TubeExtremeAngle.png)
+ * @author William Kluge
  */
 public class NetworkVisionProcessing extends Subsystem {
 
@@ -179,26 +180,6 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Overloaded getContours function that returns the entire array
-     *
-     * @param key Key to use when getting contours from the network table
-     */
-    private double[] getContours(String key) {
-
-        try {
-
-            return contourReport.getNumberArray(key, new double[0]);
-
-        } catch (Exception e) {
-
-            System.out.println(new Date().toString() + ": " + e.getMessage());
-            return RobotMap.ILLEGAL_VALUE;
-
-        }
-
-    }
-
-    /**
      * Function to return a specific contour
      *
      * @param key   Key to use when getting contours from the table
@@ -215,6 +196,26 @@ public class NetworkVisionProcessing extends Subsystem {
 
             System.out.println(new Date().toString() + ": " + e.getMessage());
             return RobotMap.ILLEGAL_DOUBLE;
+
+        }
+
+    }
+
+    /**
+     * Overloaded getContours function that returns the entire array
+     *
+     * @param key Key to use when getting contours from the network table
+     */
+    private double[] getContours(String key) {
+
+        try {
+
+            return contourReport.getNumberArray(key, new double[0]);
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_VALUE;
 
         }
 

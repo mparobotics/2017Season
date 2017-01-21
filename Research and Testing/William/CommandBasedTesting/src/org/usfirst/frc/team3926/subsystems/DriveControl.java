@@ -11,9 +11,9 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
-    /* The variables holding the speed to set the motor */
+    /* Holds the speed for the right motor*/
     private double rightSide = 0;
-
+    /* Holds the speed for the left motor */
     private double leftSide = 0;
 
     /* The drive class */
