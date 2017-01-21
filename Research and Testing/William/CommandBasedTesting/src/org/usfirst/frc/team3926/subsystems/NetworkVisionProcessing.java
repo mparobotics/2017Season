@@ -49,7 +49,7 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Finds the correction needed to center the robot on a specified contour
-     * @param index The index of the contour to get the center of
+     * @param index Index of the contour to get the center of
      * @return The correction needed to move to the target
      */
     public double[] moveToCenter(int index) {
@@ -86,6 +86,20 @@ public class NetworkVisionProcessing extends Subsystem {
         SmartDashboard.putBoolean("Contours Found", contoursFound);
 
         return returnValue;
+
+    }
+
+    /**
+     * Finds the turn rate to turn the robot towards the vision target
+     * @param index Index of the contour to center on
+     * @return Speed to set tank drive to center {(right), (left)}
+     * TODO finish
+     */
+    public double[] turnToCenter(int index) {
+
+        double[] contourCenter = contourReport.getNumberArray("x", new double[0]);
+
+        return new double[0];
 
     }
 
@@ -154,6 +168,27 @@ public class NetworkVisionProcessing extends Subsystem {
     private double[] correctAngleOffset() {
 
         return new double[] {0};
+
+    }
+
+    /**
+     * Overloaded getContours function that returns the entire array
+     * @param key Key to use when getting contours from the network table
+     */
+    private double[] getContours(String key) {
+
+        return contourReport.getNumberArray(key, new double[0]);
+
+    }
+
+    /**
+     * Function to return a specific contour
+     * @param key Key to use when getting contours from the table
+     * @param index Array index of the contour to get
+     */
+    private double getContours(String key, int index) {
+
+        return contourReport.getNumberArray(key, new double[0])[index];
 
     }
 
