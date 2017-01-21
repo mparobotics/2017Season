@@ -33,6 +33,8 @@ public class RobotMap {
 
     /** The illegal array to return from NetworkVisionProcessing if an value could not be gotten */
     public static double[] ILLEGAL_VALUE = {-404, -404};
+    /** The illegal double to return from NetworkVisionProcessing if a value could not be gotten */
+    public static double ILLEGAL_DOUBLE = -1111;
     /** The default value to use in  */
     public static double[] DEFAULT_VALUE = new double[0];
 

@@ -1,9 +1,3 @@
-/***********************************************************************************************************************
- * @file DriveControl.java
- * @author William Kluge
- * Contact: klugewilliam@gmail.com
- **********************************************************************************************************************/
-
 package org.usfirst.frc.team3926.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -19,7 +13,7 @@ public class DriveControl extends Subsystem {
 
     /* The variables holding the speed to set the motor */
     private double rightSide = 0;
-    private double leftSide  = 0;
+    private double leftSide = 0;
     /* The drive class */
     private RobotDrive driveSystem;
 
@@ -39,6 +33,7 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in a tank configuration
+     *
      * @param rightSpeed The speed to set the right motor
      * @param leftSpeed  The speed to set the left motor
      * @param straight   Whether or not the robot should drive straight

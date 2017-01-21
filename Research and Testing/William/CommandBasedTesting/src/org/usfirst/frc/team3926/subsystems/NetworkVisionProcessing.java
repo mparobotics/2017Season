@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+import java.util.Date;
+
 /**
  *
  * Notes on vision processing:
@@ -36,6 +38,8 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public NetworkVisionProcessing() {
 
+
+
     }
 
     /**
@@ -54,24 +58,24 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public double[] moveToCenter(int index) {
 
-        double[] contourCenter = contourReport.getNumberArray("x", new double[0]);
+        double contourCenter = getContours("x", index);
 
         double[] returnValue;
 
-        if (contourCenter.length > index) {
+        if (contourCenter != RobotMap.ILLEGAL_DOUBLE) {
 
             contoursFound = true;
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
-            if (contourCenter[index] < SCREEN_CENTER[0]) {
-                movement[0] = contourCenter[index] / SCREEN_CENTER[0];
-                moveLeft = false;
+            if (contourCenter < SCREEN_CENTER[0]) {
+                movement[0] = contourCenter / SCREEN_CENTER[0];
+                moveLeft  = false;
                 moveRight = true;
-            } else if (contourCenter[index] > SCREEN_CENTER[0]) {
-                movement[1] = Math.pow(contourCenter[index] / SCREEN_CENTER[0], -1);
+            } else if (contourCenter > SCREEN_CENTER[0]) {
+                movement[1] = Math.pow(contourCenter / SCREEN_CENTER[0], -1);
                 moveRight = false;
-                moveLeft = true;
+                moveLeft  = true;
             }
 
             returnValue = movement;
@@ -177,7 +181,16 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     private double[] getContours(String key) {
 
-        return contourReport.getNumberArray(key, new double[0]);
+        try {
+
+            return contourReport.getNumberArray(key, new double[0]);
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_VALUE;
+
+        }
 
     }
 
@@ -185,10 +198,20 @@ public class NetworkVisionProcessing extends Subsystem {
      * Function to return a specific contour
      * @param key Key to use when getting contours from the table
      * @param index Array index of the contour to get
+     * @return Either the desired value for
      */
     private double getContours(String key, int index) {
 
-        return contourReport.getNumberArray(key, new double[0])[index];
+        try {
+
+            return contourReport.getNumberArray(key, new double[0])[index];
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_DOUBLE;
+
+        }
 
     }
 
