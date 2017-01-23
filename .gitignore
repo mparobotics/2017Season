@@ -11,3 +11,15 @@ Research and Testing/William/CommandBasedTesting/sysProps.xml
 *.iml
 ###INTELLIJ Files
 .idea
+
+*.jar
+
+Research and Testing/William/EncoderTestingII/build.xml
+
+Research and Testing/William/EncoderTestingII/build.properties
+
+Research and Testing/William/EncoderTestingII/.project
+
+Research and Testing/William/EncoderTestingII/.classpath
+
+Research and Testing/William/EncoderTestingII/sysProps.xml
