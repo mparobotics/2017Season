@@ -9,3 +9,5 @@ Research and Testing/William/CommandBasedTesting/dist/FRCUserProgram.jar
 
 Research and Testing/William/CommandBasedTesting/sysProps.xml
 *.iml
+###INTELLIJ Files
+.idea
