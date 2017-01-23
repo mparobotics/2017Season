@@ -30,7 +30,7 @@ public class RobotMap {
     /** B channel for the encoder */
     public final static int     ENCODER_B_CHANNEL             = 1;
     /** Target rate for the motor to achieve */
-    public final static double  TARGET_RATE                   = 200;
+    public final static double  TARGET_RATE                   = 1;
     /** Amount of times that an encoder pules in one revolution (find on encoder data-sheet) */
     public final static int     ENCODER_PULSES_PER_REVOLUTION = 2048;
     /** Diameter of the wheel that the encoder is recording for */
@@ -38,7 +38,7 @@ public class RobotMap {
     /** Name of the PID subsystem for the encoder */
     public final static String  ENCODER_PID_NAME              = "PIDEncoderTesting";
     /** Proportional value for encoder PID loop */
-    public final static double  PROPORTIONAL_VALUE            = 0.05;
+    public final static double  PROPORTIONAL_VALUE            = 0.1;
     /** Integral value for the encoder PID loop */
     public final static double  INTEGRAL_VALUE                = 0;
     /** Derivative value for the encoder PID loop */

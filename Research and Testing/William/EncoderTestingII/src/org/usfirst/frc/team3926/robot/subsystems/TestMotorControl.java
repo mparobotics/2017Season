@@ -16,6 +16,10 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  * its target, this gets added. If this is the only value in the loop, the system will oscillate around the target and
  * rarely actually hit it.
  * </p>
+ * <p>
+ * Setpoint: The target value for the PID loop to aim for
+ * So it looks like setting this to 1 makes the target 100 RPM
+ * </p>
  */
 public class TestMotorControl extends PIDSubsystem {
 
@@ -26,14 +30,17 @@ public class TestMotorControl extends PIDSubsystem {
         /* This calls the constructor for a PIDSubsystem(name, proportional, integral, derivative) */
         super(RobotMap.ENCODER_PID_NAME, RobotMap.PROPORTIONAL_VALUE, RobotMap.INTEGRAL_VALUE,
               RobotMap.DERIVATIVE_VALUE);
-        super.setAbsoluteTolerance(RobotMap.ABSOLUTE_TOLERANCE);
-        super.setSetpoint(RobotMap.TARGET_RATE);
+        setAbsoluteTolerance(RobotMap.ABSOLUTE_TOLERANCE);
+        setSetpoint(RobotMap.TARGET_RATE);
         encoder = new Encoder(RobotMap.ENCODER_A_CHANNEL, RobotMap.ENCODER_B_CHANNEL, false, CounterBase.EncodingType
                 .k4X);
         testMotor = new Talon(RobotMap.TEST_MOTOR_PWM);
         encoder.setDistancePerPulse(RobotMap.WHEEL_DIAMETER * Math.PI / RobotMap.ENCODER_PULSES_PER_REVOLUTION);
+        enable();
         getPIDController().setContinuous(true);
-        LiveWindow.addActuator("TestMotorControl", "Encoder System", super.getPIDController());
+        LiveWindow.addActuator("TestMotorControl", "PIDController", getPIDController());
+        LiveWindow.addSensor("TestMotorControl", "Motor Encoder", encoder);
+        //LiveWindow.addActuator("testing again", "test", super.get);
 
     }
 
@@ -41,6 +48,8 @@ public class TestMotorControl extends PIDSubsystem {
      * Displays various values about the encoder
      */
     public void motorDisplayOutput() {
+
+        //usePIDOutput(getPIDController().get());
 
         SmartDashboard.putNumber("Encoder value: ", encoder.get());
         SmartDashboard.putNumber("Encoder Distance: ", encoder.getDistance());
@@ -61,11 +70,11 @@ public class TestMotorControl extends PIDSubsystem {
     /**
      * Use the output of the PID loop to control the system
      *
-     * @param output The output of the PID loop (this is done automatically)
+     * @param output The output of the PID loop
      */
     protected void usePIDOutput(double output) {
 
-        testMotor.set(output);
+        testMotor.pidWrite(output);
     }
 
     public void initDefaultCommand() {
