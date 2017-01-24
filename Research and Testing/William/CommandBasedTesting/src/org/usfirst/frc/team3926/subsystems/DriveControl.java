@@ -10,7 +10,8 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 import java.util.Map;
 
 /***********************************************************************************************************************
- * Enables driving of the robot with a tank drive scheme
+ * Enables driving of the robot with a tank drive scheme. This class contains anything relevant to actuating the drive
+ * motors. This includes autonomous handling of the robot.
  * @author William Kluge
  * <p>
  * Contact: klugewilliam@gmail.com
@@ -120,6 +121,9 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drive the robot straight (based on the speed of the right side)
+     * <p>
+     * This is activated by pressing {@link OI#straightMode}
+     * </p>
      */
     private void straightDrive() {
 
@@ -128,6 +132,9 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFTEY_FACTOR}
+     * <p>
+     * This is activated by pressing {@link OI#safteyMode}
+     * </p>
      */
     private void safeMode() {
 

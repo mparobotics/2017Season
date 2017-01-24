@@ -6,28 +6,50 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Notes on vision processing:
- * <p>(1/20/2017:4:40PM) If looking at a piece of (retro-reflective) tape from the side, it's position may indicate that
- * it should move in the opposite direction of where it should go. I (William Kluge) do not think this should be an
- * issue in the 2017 game because the tape is wrapped around a bin, so it's center should actually be in the center.
- * (For an example of side view on a rectangular piece of tape see photo RectangularTapeSideView.png)</p>
- * <p>(1/20/2017:4:44PM) So looking at the tube actually didn't solve the problem when at an extreme angle. While this
- * angle kind of angle isn't likely to actually happen in the game, I'm still going to look into solving it just in case
- * (For an example of extreme angle view on tube see TubeExtremeAngle.png)</p>
- * <p>(1/21/2017:11:25AM) I think that the left and right sides were reversed. Switching the signs to test now</p>
- * <p>(1/21/2017:11:29AM) So left and right were not reversed, but in some cases it still says to go left when it
- * should be going right ot vise-versa. (see IncorrectMoveRight.png for example)</p>
- * <p>(1/21/2017:12:04PM) I have decided to make a method ({@link #logIncorrectAction(boolean)}()} that logs whether
- * or not a direction is correct when we are driving with vision tracking so that we can tune the algorithm based on the
- * data we collect. I will likely have to make another program to find patterns in that data.</p>
+ * <p>
+ *     (1/20/2017:4:40PM) If looking at a piece of (retro-reflective) tape from the side, it's position may indicate that
+ *     it should move in the opposite direction of where it should go. I (William Kluge) do not think this should be an
+ *     issue in the 2017 game because the tape is wrapped around a bin, so it's center should actually be in the center.
+ *     (For an example of side view on a rectangular piece of tape see photo RectangularTapeSideView.png)
+ * </p>
+ * <p>
+ *     (1/20/2017:4:44PM) So looking at the tube actually didn't solve the problem when at an extreme angle. While this
+ *     angle kind of angle isn't likely to actually happen in the game, I'm still going to look into solving it just in case
+ *     (For an example of extreme angle view on tube see TubeExtremeAngle.png)
+ * </p>
+ * <p>
+ *     (1/21/2017:11:25AM) I think that the left and right sides were reversed. Switching the signs to test now
+ * </p>
+ * <p>
+ *     (1/21/2017:11:29AM) So left and right were not reversed, but in some cases it still says to go left when it
+ *     should be going right ot vise-versa. (see IncorrectMoveRight.png for example)
+ * </p>
+ * <p>
+ *     (1/21/2017:12:04PM) I have decided to make a method (see (1/24/2017:4:30PM) for reason why this no longer
+ *     exists) that logs whether or not a direction is correct when we are driving with vision tracking so that we
+ *     can tune the algorithm based on the data we collect. I will likely have to make another program to find
+ *     patterns in that data.
+ * </p>
+ * <p>
+ *     (1/24/2017:4:19PM) I now have the first version of the drive and center methods done. For the turning method
+ *     I'm just taking the data from the straight method and subtracting it from one, than multiplying the opposite
+ *     direction to drive times -1. This <i>should</i> let us do a 0 point turn...but my math might totally be off
+ * </p>
+ * <p>
+ *     (1/24/2017:4:30PM) I removed logIncorrectAction because it has been replaced by using a Hashmap that I store
+ *     debug data along with driving data in.
+ * </p>
  *
  * @author William Kluge
+ * <p>
+ *     Contact: klugewilliam@gmail.com
+ * </p>
  */
 public class NetworkVisionProcessing extends Subsystem {
 
@@ -51,8 +73,8 @@ public class NetworkVisionProcessing extends Subsystem {
     /**
      * Initializes the network table from the Raspberry Pi
      * <p>
-     * Note: If it is initialized from the constructor you will get a load of errors from the robot about tables
-     * already being initialized. I think this has something to do with how the code is loaded onto the robot
+     *     Note: If it is initialized from the constructor you will get a load of errors from the robot about tables
+     *     already being initialized. I think this has something to do with how the code is loaded onto the robot
      * </p>
      */
     public void initNetworkTables() {
@@ -64,9 +86,8 @@ public class NetworkVisionProcessing extends Subsystem {
      * Finds the correction needed to center the robot on a specified contour
      *
      * @param index Index of the contour to get the center of
-     * @return Correction needed to move to the target and, if {@link RobotMap#DEBUG} is true, information on the contour
-     * that
-     * produced the correction.
+     * @return Correction needed to move to the target and, if {@link RobotMap#DEBUG} is true, information on the
+     * contour that produced the correction.
      */
     public Map<String, Double> moveToCenter(int index) {
 
@@ -180,22 +201,6 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Logs whether or not an action taken by the robot based on vision tracking is correct or incorrect.
-     *
-     * @param incorrectAction Whether an action taken by the robot was incorrect
-     */
-    public void logIncorrectAction(boolean incorrectAction) {
-
-        try {
-            throw new RuntimeException("An action taken by the robot was incorrect");
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage() + " @ " + Arrays.toString(e.getStackTrace()));
-            //System.out.println("\tValues: " +)
-        }
-
-    }
-
-    /**
      * The method to use to end vision tracking commands when debugging (it never ends)
      *
      * @return false
@@ -207,7 +212,9 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Method to set the default command for this subsystem.
-     * <p>Note: We currently do not have a command that should be set as default</p>
+     * <p>
+     *     Note: We currently do not have a command that should be set as default
+     * </p>
      */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -215,8 +222,11 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Corrects viewing the target from odd angles
-     * <p>Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists</p>
+     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
+     * errors caused by viewing the target from a bad angle.
+     * <p>
+     *     Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * </p>
      * TODO finish
      */
     private double[] correctAngleOffset() {
