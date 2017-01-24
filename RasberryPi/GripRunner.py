@@ -15,6 +15,7 @@ def extra_processing(pipeline):
     center_y_positions = []
     widths = []
     heights = []
+    areas = []
 
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
@@ -22,12 +23,14 @@ def extra_processing(pipeline):
         center_y_positions.append(y + h / w)
         widths.append(w)
         heights.append(y)
+        areas.append(w * y)
 
     table = NetworkTables.getTable('/vision/high_goal')
     table.putNumberArray('x', center_x_positions)
     table.putNumberArray('y', center_y_positions)
     table.putNumberArray('width', widths)
     table.putNumberArray('height', heights)
+    table.putNumberArray('area', areas)
 
 
 def main():
