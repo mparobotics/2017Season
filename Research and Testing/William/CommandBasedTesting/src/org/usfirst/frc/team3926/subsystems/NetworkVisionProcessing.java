@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.ConnectionInfo;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.Arrays;
@@ -63,20 +62,22 @@ public class NetworkVisionProcessing extends Subsystem {
      * Finds the correction needed to center the robot on a specified contour
      *
      * @param index Index of the contour to get the center of
-     * @return Correction needed to move to the target and, if addDebugData is true, information on the contour that
+     * @return Correction needed to move to the target and, if {@link RobotMap#DEBUG} is true, information on the contour
+     * that
      * produced the correction.
      */
-    public Map<String, Object> moveToCenter(int index) {
+    public Map<String, Double> moveToCenter(int index) {
 
         double contourCenter = getContours("x", index);
 
-        Map<String, Object> returnValue = null;
+        Map<String, Double> returnValue = null;
 
         if (RobotMap.DEBUG) {
 
             returnValue.put(RobotMap.CONTOUR_X_KEY, contourCenter);
-            returnValue.put(RobotMap.CONTOUR_Y_KEY, getContours("y"));
-            returnValue.put(Ro)
+            returnValue.put(RobotMap.CONTOUR_Y_KEY, getContours("y", index));
+            returnValue.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours("height", index));
+            returnValue.put(RobotMap.CONTOUR_WIDTH_KEY, getContours("width", index));
 
         }
 
@@ -96,10 +97,12 @@ public class NetworkVisionProcessing extends Subsystem {
                 moveLeft = true;
             }
 
-            returnValue = movement;
+            returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[0]);
+            returnValue.put(RobotMap.SPEED_LEFT_KEY, movement[1]);
 
         } else {
-            returnValue = RobotMap.ILLEGAL_VALUE;
+            returnValue.put(RobotMap.SPEED_RIGHT_KEY, RobotMap.ILLEGAL_DOUBLE);
+            returnValue.put(RobotMap.SPEED_LEFT_KEY, RobotMap.ILLEGAL_DOUBLE);
             contoursFound = false;
         }
 
@@ -181,7 +184,7 @@ public class NetworkVisionProcessing extends Subsystem {
             throw new RuntimeException("An action taken by the robot was incorrect");
         } catch (RuntimeException e) {
             System.out.println(e.getMessage() + " @ " + Arrays.toString(e.getStackTrace()));
-            System.out.println("\tValues: " +)
+            //System.out.println("\tValues: " +)
         }
 
     }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.subsystems;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
@@ -13,13 +14,16 @@ import java.util.Map;
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
-    /* Holds the speed for the right motor*/
+    /** Holds the speed for the right motor */
     private double rightSide = 0;
-    /* Holds the speed for the left motor */
-    private double leftSide = 0;
-
-    /* The drive class */
+    /** Holds the speed for the left motor */
+    private double leftSide  = 0;
+    /** Object to handle actual driving of motors */
     private RobotDrive driveSystem;
+    /** Specifies if {@link OI#contourError} was pressed last iteration of the code */
+    private boolean    contourErrorPress;
+    /** Records which time the user is specifying an error (increments each unique press of {@link OI#contourError} */
+    private int        contourErrorGroup;
 
     /**
      * Initializer for drive control
@@ -28,6 +32,8 @@ public class DriveControl extends Subsystem {
 
         driveSystem = new RobotDrive(RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM,
                                      RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM);
+        contourErrorPress = false;
+        contourErrorGroup = 0;
     }
 
     public void initDefaultCommand() {
@@ -59,37 +65,41 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in tank drive during the autonomous period
-     * @throws IllegalArgumentException This happens if {@link RobotMap#SPEED_KEY} was not associated with a double[]
+     * <p>
+     * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
+     * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
+     * {@link RobotMap#CONTOUR_ERROR_BUTTON}
+     * </p>
      */
     public void autonomousTank() {
 
-        Map<String, Object> data = Robot.visionProcessing.moveToCenter(0);
+        Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
 
-        Robot.visionProcessing.printTableInfo();
+        setSpeed(data.get(RobotMap.SPEED_RIGHT_KEY), data.get(RobotMap.SPEED_LEFT_KEY));
 
-        Object speeds = data.get(RobotMap.SPEED_KEY);
+        SmartDashboard.putNumber("Right Speed: ", rightSide);
+        SmartDashboard.putNumber("Left Speed: ", leftSide);
 
-        if (speeds instanceof double[]) {
+        if (leftSide != RobotMap.ILLEGAL_DOUBLE)
+            driveSystem.tankDrive(rightSide, leftSide);
+        else
+            driveSystem.tankDrive(0, 0);
 
-            double[] confirmedSpeeds = ((double[]) speeds).clone();
+        driveSystem.tankDrive(leftSide, rightSide);
 
-            SmartDashboard.putNumber("Right Speed: ", confirmedSpeeds[0]);
-            SmartDashboard.putNumber("Left Speed: ", confirmedSpeeds[1]);
+        /* This will likely go by so quickly that the user will not be able to click based on an error right away,
+         * so try to look for the value in the middle of a group of this error */
+        if (RobotMap.DEBUG && Robot.oi.contourError.get()) {
 
-            if (confirmedSpeeds != RobotMap.ILLEGAL_VALUE)
-                driveSystem.tankDrive(confirmedSpeeds[0], confirmedSpeeds[1]);
-            else
-                driveSystem.tankDrive(0, 0);
+            System.out.println("USER DESIGNATED ERROR WHEN DRIVING BASED ON CONTOURS");
+            System.out.println('\t' + RobotMap.CONTOUR_X_KEY + data.get(RobotMap.CONTOUR_X_KEY));
+            System.out.println('\t' + RobotMap.CONTOUR_Y_KEY + data.get(RobotMap.CONTOUR_Y_KEY));
+            System.out.println('\t' + RobotMap.CONTOUR_WIDTH_KEY + data.get(RobotMap.CONTOUR_WIDTH_KEY));
+            System.out.println('\t' + RobotMap.CONTOUR_HEIGHT_KEY + data.get(RobotMap.CONTOUR_HEIGHT_KEY));
+            System.out.println('\t' + RobotMap.SPEED_RIGHT_KEY + data.get(RobotMap.SPEED_RIGHT_KEY));
+            System.out.println('\t' + RobotMap.SPEED_LEFT_KEY + data.get(RobotMap.SPEED_LEFT_KEY));
 
-        } else {
-            throw new IllegalArgumentException("The speeds key was not associated with a double[]");
         }
-
-        if (!RobotMap.DEBUG)
-            return;
-
-
-
 
     }
 

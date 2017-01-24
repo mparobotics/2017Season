@@ -20,9 +20,10 @@ public class ControlTank extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (RobotMap.XBOX_CONTROLLER)
-            Robot.driveControl.driveTank(Robot.oi.rightStick.getRawAxis(1), Robot.oi.rightStick.getRawAxis(5), Robot.oi.straightMode.get(),
-                    Robot.oi.safteyMode.get());
+        if (RobotMap.XBOX_DRIVE_CONTROLLER)
+            Robot.driveControl.driveTank(Robot.oi.driverPrimaryStick.getRawAxis(1), Robot.oi.driverPrimaryStick
+                                                 .getRawAxis(5), Robot.oi.straightMode.get(),
+                                         Robot.oi.safteyMode.get());
     }
 
     // Make this return true when this Command no longer needs to run execute()

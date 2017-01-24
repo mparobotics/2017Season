@@ -18,8 +18,8 @@ public class TestMotor extends Subsystem {
     }
 
     public void RunTestMotor() {
-        double rightTrigger = oi.rightStick.getRawAxis(RobotMap.TEST_MOTOR_FORWARD);
-        double leftTrigger  = oi.leftStick.getRawAxis(RobotMap.TEST_MOTOR_REVERSE);
+        double rightTrigger = oi.driverPrimaryStick.getRawAxis(RobotMap.TEST_MOTOR_FORWARD);
+        double leftTrigger  = oi.driverSecondaryStick.getRawAxis(RobotMap.TEST_MOTOR_REVERSE);
         double setSpeed = 0;
 
         if (rightTrigger > leftTrigger)
