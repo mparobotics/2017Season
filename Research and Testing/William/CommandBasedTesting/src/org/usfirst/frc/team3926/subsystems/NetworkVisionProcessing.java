@@ -32,7 +32,8 @@ import java.util.Map;
 public class NetworkVisionProcessing extends Subsystem {
 
     /** Total size of the camera's image */
-    private final int IMAGE_X = 320, IMAGE_Y = 240;
+    private final int   IMAGE_X       = 320;
+    private final int   IMAGE_Y       = 240;
     /** Center point on the screen */
     private final int[] SCREEN_CENTER = {IMAGE_X / 2, IMAGE_Y / 2};
     /** Contour report from the Raspberry Pi */
@@ -119,8 +120,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
         Map<String, Double> returnValue = moveToCenter(index);
 
-        double rightSpeed = Math.pow(returnValue.get(RobotMap.SPEED_RIGHT_KEY), -1);
-        double leftSpeed = Math.pow(returnValue.get(RobotMap.SPEED_LEFT_KEY), -1);
+        double rightSpeed = 1 - returnValue.get(RobotMap.SPEED_RIGHT_KEY);
+        double leftSpeed = 1 - returnValue.get(RobotMap.SPEED_LEFT_KEY);
 
         if (moveLeft)
             rightSpeed *= -1;
@@ -269,8 +270,8 @@ public class NetworkVisionProcessing extends Subsystem {
     /**
      * Adds debugging data to the data Map for drive control functions
      *
-     * @param data
-     * @param index
+     * @param data Driving data to add contour information to
+     * @param index Index of the contour to add data on
      * @return Data map with contour data added in
      */
     private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
