@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.ConnectionInfo;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class NetworkVisionProcessing extends Subsystem {
     /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
-    private boolean contoursFound, moveRight, moveLeft;
+    private boolean      contoursFound, moveRight, moveLeft;
 
     /**
      * Constructs the NetworkVisionProcessing class
@@ -67,11 +68,17 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public Map<String, Object> moveToCenter(int index) {
 
-
-
         double contourCenter = getContours("x", index);
 
-        double[] returnValue;
+        Map<String, Object> returnValue = null;
+
+        if (RobotMap.DEBUG) {
+
+            returnValue.put(RobotMap.CONTOUR_X_KEY, contourCenter);
+            returnValue.put(RobotMap.CONTOUR_Y_KEY, getContours("y"));
+            returnValue.put(Ro)
+
+        }
 
         if (contourCenter != RobotMap.ILLEGAL_DOUBLE) {
 
@@ -84,7 +91,7 @@ public class NetworkVisionProcessing extends Subsystem {
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter > SCREEN_CENTER[0]) {
-                movement[1] = Math.pow(contourCenter / SCREEN_CENTER[0], - 1);
+                movement[1] = Math.pow(contourCenter / SCREEN_CENTER[0], -1);
                 moveRight = false;
                 moveLeft = true;
             }
@@ -103,7 +110,6 @@ public class NetworkVisionProcessing extends Subsystem {
         return returnValue;
 
     }
-
 
     /**
      * Finds the turn rate to turn the robot towards the vision target
@@ -131,7 +137,7 @@ public class NetworkVisionProcessing extends Subsystem {
         double[] widths = contourReport.getNumberArray("width", RobotMap.DEFAULT_VALUE);
 
         if (centerXs.length != 0) {
-            for (int i = 0; i < centerXs.length; ++ i) {
+            for (int i = 0; i < centerXs.length; ++i) {
                 try {
                     System.out.println("Printing data for contour " + i);
                     System.out.println("\tCenter X: " + centerXs[i]);
@@ -166,6 +172,7 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Logs whether or not an action taken by the robot based on vision tracking is correct or incorrect.
+     *
      * @param incorrectAction Whether an action taken by the robot was incorrect
      */
     public void logIncorrectAction(boolean incorrectAction) {
@@ -174,7 +181,7 @@ public class NetworkVisionProcessing extends Subsystem {
             throw new RuntimeException("An action taken by the robot was incorrect");
         } catch (RuntimeException e) {
             System.out.println(e.getMessage() + " @ " + Arrays.toString(e.getStackTrace()));
-            System.out.println("\tValues: " + )
+            System.out.println("\tValues: " +)
         }
 
     }
@@ -205,7 +212,7 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     private double[] correctAngleOffset() {
 
-        return new double[]{0};
+        return new double[] {0};
 
     }
 

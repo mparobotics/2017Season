@@ -46,6 +46,10 @@ public class RobotMap {
     public final static String   CONTOUR_X_KEY         = "contourX";
     /** Map key for center y of a contour */
     public final static String   CONTOUR_Y_KEY         = "contourY";
+    /** Map key for contour height */
+    public final static String   CONTOUR_HEIGHT_KEY    = "contourHeight";
+    /** Map key for contour width */
+    public final static String   CONTOUR_WIDTH_KEY     = "contourWidth";
     /** The max speed for the robot to travel during autonomous */
     public final static double   AUTONOMOUS_SPEED      = 1;
     /** The number to multiply times the speed of the robot when the driver enables saftey mode */
