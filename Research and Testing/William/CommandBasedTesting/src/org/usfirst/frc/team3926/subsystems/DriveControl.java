@@ -11,6 +11,10 @@ import java.util.Map;
 
 /***********************************************************************************************************************
  * Enables driving of the robot with a tank drive scheme
+ * @author William Kluge
+ * <p>
+ * Contact: klugewilliam@gmail.com
+ * </p>
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -36,9 +40,21 @@ public class DriveControl extends Subsystem {
         contourErrorGroup = 0;
     }
 
+    /**
+     * Initializes the default command for this SubSystem
+     */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+
+    /**
+     * Resets the data for the drive system
+     */
+    public void reset() {
+
+        rightSide = 0;
+        leftSide = 0;
     }
 
     /**
@@ -64,7 +80,7 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drives the robot in tank drive during the autonomous period
+     * Drives the robot towards a target autonomously
      * <p>
      * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
      * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
@@ -72,34 +88,21 @@ public class DriveControl extends Subsystem {
      * </p>
      */
     public void autonomousTank() {
-
+        //Gets data on where to drive an the contour that it is using
         Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
 
-        setSpeed(data.get(RobotMap.SPEED_RIGHT_KEY), data.get(RobotMap.SPEED_LEFT_KEY));
+        handleDriveData("autonomousTank", data);
 
-        SmartDashboard.putNumber("Right Speed: ", rightSide);
-        SmartDashboard.putNumber("Left Speed: ", leftSide);
+    }
 
-        if (leftSide != RobotMap.ILLEGAL_DOUBLE)
-            driveSystem.tankDrive(rightSide, leftSide);
-        else
-            driveSystem.tankDrive(0, 0);
+    /**
+     * Centers the robot on a target based on vision tracking data
+     */
+    public void center() {
 
-        driveSystem.tankDrive(leftSide, rightSide);
+        Map<String, Double> data = Robot.visionProcessing.turnToCenter(0);
 
-        /* This will likely go by so quickly that the user will not be able to click based on an error right away,
-         * so try to look for the value in the middle of a group of this error */
-        if (RobotMap.DEBUG && Robot.oi.contourError.get()) {
-
-            System.out.println("USER DESIGNATED ERROR WHEN DRIVING BASED ON CONTOURS");
-            System.out.println('\t' + RobotMap.CONTOUR_X_KEY + data.get(RobotMap.CONTOUR_X_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_Y_KEY + data.get(RobotMap.CONTOUR_Y_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_WIDTH_KEY + data.get(RobotMap.CONTOUR_WIDTH_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_HEIGHT_KEY + data.get(RobotMap.CONTOUR_HEIGHT_KEY));
-            System.out.println('\t' + RobotMap.SPEED_RIGHT_KEY + data.get(RobotMap.SPEED_RIGHT_KEY));
-            System.out.println('\t' + RobotMap.SPEED_LEFT_KEY + data.get(RobotMap.SPEED_LEFT_KEY));
-
-        }
+        handleDriveData("center", data);
 
     }
 
@@ -124,7 +127,7 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drive the robot in safety mode (reduces the speed
+     * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFTEY_FACTOR}
      */
     private void safeMode() {
 
@@ -133,12 +136,48 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Resets the data for the drive system
+     * Takes data from one of the vision processing methods ({@link NetworkVisionProcessing#moveToCenter(int)}
+     * {@link NetworkVisionProcessing#moveToCenter(int)}) called from {@link this#center()} or
+     * {@link this#autonomousTank()} and uses it to drive the robot
+     *
+     * @param callingMethod Name of the method that is calling this (used for debugging)
+     * @param data          Data from one of the vision processing methods to use for driving the robot
      */
-    public void reset() {
+    private void handleDriveData(String callingMethod, Map<String, Double> data) {
 
-        rightSide = 0;
-        leftSide = 0;
+        //Sets the speed of the robot to the values from vision tracking
+        setSpeed(data.get(RobotMap.SPEED_RIGHT_KEY), data.get(RobotMap.SPEED_LEFT_KEY));
+        //Sets the speed to 0 if data could not be used to drive
+        if (leftSide == RobotMap.ILLEGAL_DOUBLE)
+            leftSide = rightSide = 0;
+
+        SmartDashboard.putNumber("Right Speed: ", rightSide);
+        SmartDashboard.putNumber("Left Speed: ", leftSide);
+
+        /* This will likely go by so quickly that the user will not be able to click based on an error right away,
+         * so try to look for the value in the middle of a group of this error */
+        if (RobotMap.DEBUG && Robot.oi.contourError.get()) {
+
+            contourErrorPress = true;
+
+            System.out.println("USER DESIGNATED ERROR IN DriveControl." + callingMethod + ": Group #" +
+                               contourErrorGroup);
+            System.out.println('\t' + RobotMap.CONTOUR_X_KEY + data.get(RobotMap.CONTOUR_X_KEY));
+            System.out.println('\t' + RobotMap.CONTOUR_Y_KEY + data.get(RobotMap.CONTOUR_Y_KEY));
+            System.out.println('\t' + RobotMap.CONTOUR_WIDTH_KEY + data.get(RobotMap.CONTOUR_WIDTH_KEY));
+            System.out.println('\t' + RobotMap.CONTOUR_HEIGHT_KEY + data.get(RobotMap.CONTOUR_HEIGHT_KEY));
+            System.out.println('\t' + RobotMap.SPEED_RIGHT_KEY + data.get(RobotMap.SPEED_RIGHT_KEY));
+            System.out.println('\t' + RobotMap.SPEED_LEFT_KEY + data.get(RobotMap.SPEED_LEFT_KEY));
+
+        } else if (contourErrorPress) {
+
+            contourErrorPress = false;
+            ++contourErrorGroup;
+
+        }
+
+        driveSystem.tankDrive(leftSide, rightSide);
+
     }
 
 }

@@ -8,6 +8,7 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -70,16 +71,10 @@ public class NetworkVisionProcessing extends Subsystem {
 
         double contourCenter = getContours("x", index);
 
-        Map<String, Double> returnValue = null;
+        Map<String, Double> returnValue = new HashMap<>();
 
-        if (RobotMap.DEBUG) {
-
-            returnValue.put(RobotMap.CONTOUR_X_KEY, contourCenter);
-            returnValue.put(RobotMap.CONTOUR_Y_KEY, getContours("y", index));
-            returnValue.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours("height", index));
-            returnValue.put(RobotMap.CONTOUR_WIDTH_KEY, getContours("width", index));
-
-        }
+        if (RobotMap.DEBUG)
+            returnValue = addDebugData(returnValue, index);
 
         if (contourCenter != RobotMap.ILLEGAL_DOUBLE) {
 
@@ -118,14 +113,24 @@ public class NetworkVisionProcessing extends Subsystem {
      * Finds the turn rate to turn the robot towards the vision target
      *
      * @param index Index of the contour to center on
-     * @return Speed to set tank drive to center {(right), (left)}
-     * TODO finish
+     * @return Speed to set tank drive to turn towards the center
      */
-    public double[] turnToCenter(int index) {
+    public Map<String, Double> turnToCenter(int index) {
 
-        double[] contourCenter = contourReport.getNumberArray("x", new double[0]);
+        Map<String, Double> returnValue = moveToCenter(index);
 
-        return new double[0];
+        double rightSpeed = Math.pow(returnValue.get(RobotMap.SPEED_RIGHT_KEY), -1);
+        double leftSpeed = Math.pow(returnValue.get(RobotMap.SPEED_LEFT_KEY), -1);
+
+        if (moveLeft)
+            rightSpeed *= -1;
+        else
+            leftSpeed *= -1;
+
+        returnValue.replace(RobotMap.SPEED_RIGHT_KEY, rightSpeed);
+        returnValue.replace(RobotMap.SPEED_LEFT_KEY, leftSpeed);
+
+        return returnValue;
 
     }
 
@@ -258,6 +263,24 @@ public class NetworkVisionProcessing extends Subsystem {
             return RobotMap.ILLEGAL_VALUE;
 
         }
+
+    }
+
+    /**
+     * Adds debugging data to the data Map for drive control functions
+     *
+     * @param data
+     * @param index
+     * @return Data map with contour data added in
+     */
+    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
+
+        data.put(RobotMap.CONTOUR_X_KEY, getContours("x", index));
+        data.put(RobotMap.CONTOUR_Y_KEY, getContours("y", index));
+        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours("height", index));
+        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours("width", index));
+
+        return data;
 
     }
 

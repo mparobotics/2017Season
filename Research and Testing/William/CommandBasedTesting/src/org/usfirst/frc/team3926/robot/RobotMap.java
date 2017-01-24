@@ -2,12 +2,12 @@ package org.usfirst.frc.team3926.robot;
 
 import org.usfirst.frc.team3926.subsystems.DriveControl;
 
-/**
+/***********************************************************************************************************************
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
- */
+ **********************************************************************************************************************/
 public class RobotMap {
 
     /** Determines if debugging code should be used */
@@ -25,8 +25,9 @@ public class RobotMap {
     /* Button/Joystick Mapping */
     /** Whether or not to use an XBox controller for {@link OI#driverPrimaryStick} and not use {@link OI#driverSecondaryStick} */
     public final static boolean  XBOX_DRIVE_CONTROLLER     = true;
-    /** XBox controller mapping */
+    /** ID for the left trigger on the XBox controller */
     public final static int      XBOX_LEFT_TRIGGER         = 2;
+    /** ID for the right trigger on the joystick */
     public final static int      XBOX_RIGHT_TRIGGER        = 3;
     /** The axis to use for testing the test motor */
     public final static int      TEST_MOTOR_FORWARD        = XBOX_RIGHT_TRIGGER;
