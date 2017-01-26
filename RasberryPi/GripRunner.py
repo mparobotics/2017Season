@@ -1,7 +1,7 @@
 #! /home/pi/.virtualenvs/cv/bin/python2
 
-#import cv2.cv2 as cv2
-import cv2
+import cv2.cv2 as cv2
+#mport cv2
 from networktables import NetworkTables
 from grip import GripPythonVI  # TODO change the module and class, if needed
 
@@ -45,7 +45,7 @@ def main():
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
-            (cv2.drawContours(frame, pipeline.filter_contours_output, -1, (255, 255, 255), thickness=-1
+            (cv2.drawContours(cv2.resize(frame, (0, 0), fx=0.25, fy=0.25), pipeline.filter_contours_output, -1, (255, 255, 255), thickness=-1
                               ))
             cv2.imwrite('pic.jpg', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
