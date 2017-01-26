@@ -104,14 +104,17 @@ public class NetworkVisionProcessing extends Subsystem {
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
-            if (contourCenter < SCREEN_CENTER[0]) {
-                movement[0] = contourCenter / SCREEN_CENTER[0];
+            if (contourCenter > SCREEN_CENTER[0]) {
+                movement[0] = SCREEN_CENTER[0] / contourCenter;
                 moveLeft = false;
                 moveRight = true;
-            } else if (contourCenter > SCREEN_CENTER[0]) {
-                movement[1] = Math.pow(contourCenter / SCREEN_CENTER[0], -1);
+            } else if (contourCenter < SCREEN_CENTER[0]) {
+                movement[1] = contourCenter / SCREEN_CENTER[0];
                 moveRight = false;
                 moveLeft = true;
+            } else {
+                moveLeft = false;
+                moveRight = false;
             }
 
             returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[0]);
@@ -140,6 +143,9 @@ public class NetworkVisionProcessing extends Subsystem {
     public Map<String, Double> turnToCenter(int index) {
 
         Map<String, Double> returnValue = moveToCenter(index);
+
+        if (returnValue.get(RobotMap.SPEED_LEFT_KEY) == RobotMap.ILLEGAL_DOUBLE)
+            return returnValue;
 
         double rightSpeed = 1 - returnValue.get(RobotMap.SPEED_RIGHT_KEY);
         double leftSpeed = 1 - returnValue.get(RobotMap.SPEED_LEFT_KEY);

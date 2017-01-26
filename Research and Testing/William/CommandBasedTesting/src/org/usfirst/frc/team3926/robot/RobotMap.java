@@ -64,7 +64,7 @@ public class RobotMap {
     /** Map key for contour width */
     public final static String   CONTOUR_WIDTH_KEY         = "contourWidth";
     /** The max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED          = 1;
+    public final static double   AUTONOMOUS_SPEED          = 0.05;
     /** The number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFTEY_FACTOR       = 0.50;
 

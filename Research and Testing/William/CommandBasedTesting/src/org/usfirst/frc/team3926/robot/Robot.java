@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.commands.ControlTank;
 import org.usfirst.frc.team3926.commands.DriveToVisionTarget;
+import org.usfirst.frc.team3926.commands.TurnToVisionTarget;
 import org.usfirst.frc.team3926.subsystems.DriveControl;
 import org.usfirst.frc.team3926.subsystems.NetworkVisionProcessing;
 import org.usfirst.frc.team3926.subsystems.TestMotor;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
     private        ControlTank         controlTank;
     private        TestMotor           testMotor;
     private static DriveToVisionTarget driveToVisionTarget;
+    private static TurnToVisionTarget turnToVisionTarget;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -70,8 +72,10 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
 
-        driveToVisionTarget = new DriveToVisionTarget();
-        driveToVisionTarget.start();
+        //driveToVisionTarget = new DriveToVisionTarget();
+        //driveToVisionTarget.start();
+        turnToVisionTarget = new TurnToVisionTarget();
+        turnToVisionTarget.start();
     }
 
     /**
