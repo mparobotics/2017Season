@@ -17,7 +17,7 @@ def extra_processing(pipeline):
     widths = []
     heights = []
     areas = []
-    contours = [center_x_positions, center_y_positions]
+
 
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
@@ -45,8 +45,8 @@ def main():
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
-            cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
-            (cv2.drawContours(frame, pipeline.filter_contours_output,
+            resized_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+            (cv2.drawContours(resized_frame, pipeline.filter_contours_output,
                               -1, (255, 0, 120), thickness=-1))
             cv2.imwrite('pic.jpg', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
