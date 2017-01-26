@@ -45,12 +45,14 @@ def main():
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
-            cv2.drawContours(frame, pipeline.filter_contours_output, -1, (255, 255, 255))
+            (cv2.drawContours(frame, pipeline.filter_contours_output, -1, (255, 255, 255), thickness="CV_FILLED",
+                              lineType=8, hierarchy=None, maxLeve=2))
             cv2.imwrite('pic.jpg', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-
     print('Stopped Capturing')
+
+
 if __name__ == '__main__':
     main()
