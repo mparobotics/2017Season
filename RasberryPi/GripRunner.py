@@ -1,6 +1,7 @@
 #! /home/pi/.virtualenvs/cv/bin/python2
 
-import cv2.cv2 as cv2
+#import cv2.cv2 as cv2
+import cv2
 from networktables import NetworkTables
 from grip import GripPythonVI  # TODO change the module and class, if needed
 
@@ -16,6 +17,7 @@ def extra_processing(pipeline):
     widths = []
     heights = []
     areas = []
+    contours = [center_x_positions, center_y_positions]
 
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
@@ -43,7 +45,7 @@ def main():
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
-            cv2.drawContours(frame)
+            cv2.drawContours(frame, pipeline.filter_contours_output)
             cv2.imwrite('pic.jpg', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
