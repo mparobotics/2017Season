@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
+import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
+
 /**
  * Notes on vision processing:
  * <p>
@@ -45,6 +48,11 @@ import java.util.Map;
  * (1/24/2017:4:30PM) I removed logIncorrectAction because it has been replaced by using a Hashmap that I store
  * debug data along with driving data in.
  * </p>
+ * <p>
+ * (1/26/2017:4:05PM) I created the {@link #smartFilterContours(int)} function so that we can use a less strict contour
+ * finding algorithm and filter for contours that are close together. This should let us detect in many different
+ * different situations with (basically) guaranteed same results
+ * </p>
  *
  * @author William Kluge
  *         <p>
@@ -53,11 +61,6 @@ import java.util.Map;
  */
 public class NetworkVisionProcessing extends Subsystem {
 
-    /** Total size of the camera's image */
-    private final int   IMAGE_X       = 320;
-    private final int   IMAGE_Y       = 240;
-    /** Center point on the screen */
-    private final int[] SCREEN_CENTER = {IMAGE_X / 2, IMAGE_Y / 2};
     /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
@@ -91,12 +94,19 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public Map<String, Double> moveToCenter(int index) {
 
-        double contourCenter = getContours("x", index);
+        int checkIndex;
+
+        if (RobotMap.USE_SMART_FILTER)
+            checkIndex = smartFilterContours(index);
+        else
+            checkIndex = index;
+
+        double contourCenter = getContours(RobotMap.CONTOUR_X_KEY, checkIndex);
 
         Map<String, Double> returnValue = new HashMap<>();
 
         if (RobotMap.DEBUG)
-            returnValue = addDebugData(returnValue, index);
+            returnValue = addDebugData(returnValue, checkIndex);
 
         if (contourCenter != RobotMap.ILLEGAL_DOUBLE) {
 
@@ -280,6 +290,84 @@ public class NetworkVisionProcessing extends Subsystem {
             return RobotMap.ILLEGAL_VALUE;
 
         }
+
+    }
+
+    /**
+     * Allows the filtering of contour data past what GRIP can do
+     *
+     * @param index The index of the contour to check
+     * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
+     * otherwise {@link RobotMap#ILLEGAL_INT}
+     */
+    private int smartFilterContours(int index) {
+
+        double[] contourXs = contourReport.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourYs = contourReport.getNumberArray(RobotMap.CONTOUR_Y_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourHeights = contourReport.getNumberArray(RobotMap.CONTOUR_HEIGHT_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourWidths = contourReport.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourAreas = new double[contourHeights.length];
+
+        if (!checkEquality(contourXs.length, contourYs.length, contourHeights.length, contourWidths.length))
+            return ILLEGAL_INT;
+
+        for (int i = 0; i < contourHeights.length; ++i)
+            contourAreas[i] = contourHeights[i] * contourWidths[i];
+
+        boolean[] validAreas = validateContourAreas(contourAreas);
+
+        if (validAreas[index])
+            return index;
+
+        for (int i = 0; i < validAreas.length; ++i)
+            if (validAreas[index])
+                return index;
+
+        return ILLEGAL_INT;
+
+    }
+
+    /**
+     * Checks if a bunch of numbers are equal
+     * @param numbers the numbers to check
+     * @return If the numbers are equal
+     */
+    private boolean checkEquality(int... numbers) {
+
+        for (int number : numbers)
+            for (int x : numbers)
+                if (number != x)
+                    return false;
+
+        return true;
+
+    }
+
+    /**
+     * Checks the contours based on area.
+     * This checks to make sure that a contour has another contour with about double/half of it's area.
+     *
+     * @return Indexes that match the criteria of this method
+     */
+    private boolean[] validateContourAreas(double[] contourAreas) {
+
+        boolean[] validatedIndexes = new boolean[contourAreas.length];
+
+        for (int i = 0; i < contourAreas.length; ++i) {
+
+            validatedIndexes[i] = false;
+
+            for (double checkArea : contourAreas) {
+
+                if (checkArea - (checkArea * RobotMap.ALLOWABLE_ERROR) < contourAreas[i] &&
+                    contourAreas[i] < checkArea + (checkArea + RobotMap.ALLOWABLE_ERROR))
+                    validatedIndexes[i] = true;
+
+            }
+
+        }
+
+        return validatedIndexes;
 
     }
 
