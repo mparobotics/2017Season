@@ -45,7 +45,7 @@ def main():
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
-            cv2.drawContours(frame, pipeline.filter_contours_output)
+            cv2.drawContours(frame, pipeline.filter_contours_output, -1)
             cv2.imwrite('pic.jpg', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
