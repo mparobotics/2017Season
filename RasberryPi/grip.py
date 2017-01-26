@@ -12,16 +12,17 @@ class GripPythonVI:
         """initializes all values to presets or None if need to be set
         """
 
-        self.__resize_image_width = 320.0
-        self.__resize_image_height = 240.0
-        self.__resize_image_interpolation = cv2.INTER_CUBIC
+        self.__cv_resize_dsize = (0, 0)
+        self.__cv_resize_fx = 0.25
+        self.__cv_resize_fy = 0.25
+        self.__cv_resize_interpolation = cv2.INTER_LINEAR
 
-        self.resize_image_output = None
+        self.cv_resize_output = None
 
-        self.__hsl_threshold_input = self.resize_image_output
-        self.__hsl_threshold_hue = [45.32374100719424, 88.31918505942278]
-        self.__hsl_threshold_saturation = [123.83093525179855, 255.0]
-        self.__hsl_threshold_luminance = [224.73021582733813, 255.0]
+        self.__hsl_threshold_input = self.cv_resize_output
+        self.__hsl_threshold_hue = [56.6546762589928, 88.31918505942275]
+        self.__hsl_threshold_saturation = [137.58992805755395, 255.0]
+        self.__hsl_threshold_luminance = [247.6618705035971, 255.0]
 
         self.hsl_threshold_output = None
 
@@ -31,17 +32,17 @@ class GripPythonVI:
         self.find_contours_output = None
 
         self.__filter_contours_contours = self.find_contours_output
-        self.__filter_contours_min_area = 100.0
-        self.__filter_contours_min_perimeter = 100.0
-        self.__filter_contours_min_width = 0
-        self.__filter_contours_max_width = 1000
-        self.__filter_contours_min_height = 0
-        self.__filter_contours_max_height = 1000
-        self.__filter_contours_solidity = [0, 100]
-        self.__filter_contours_max_vertices = 1000000
-        self.__filter_contours_min_vertices = 0
-        self.__filter_contours_min_ratio = 0
-        self.__filter_contours_max_ratio = 1000
+        self.__filter_contours_min_area = 0.0
+        self.__filter_contours_min_perimeter = 0.0
+        self.__filter_contours_min_width = 1.0
+        self.__filter_contours_max_width = 1000.0
+        self.__filter_contours_min_height = 5.0
+        self.__filter_contours_max_height = 1000.0
+        self.__filter_contours_solidity = [74.64028776978418, 100.0]
+        self.__filter_contours_max_vertices = 300.0
+        self.__filter_contours_min_vertices = 10.0
+        self.__filter_contours_min_ratio = 2.0
+        self.__filter_contours_max_ratio = 7.0
 
         self.filter_contours_output = None
 
@@ -50,12 +51,12 @@ class GripPythonVI:
         """
         Runs the pipeline and sets all outputs to new values.
         """
-        # Step Resize_Image0:
-        self.__resize_image_input = source0
-        (self.resize_image_output) = self.__resize_image(self.__resize_image_input, self.__resize_image_width, self.__resize_image_height, self.__resize_image_interpolation)
+        # Step CV_resize0:
+        self.__cv_resize_src = source0
+        (self.cv_resize_output) = self.__cv_resize(self.__cv_resize_src, self.__cv_resize_dsize, self.__cv_resize_fx, self.__cv_resize_fy, self.__cv_resize_interpolation)
 
         # Step HSL_Threshold0:
-        self.__hsl_threshold_input = self.resize_image_output
+        self.__hsl_threshold_input = self.cv_resize_output
         (self.hsl_threshold_output) = self.__hsl_threshold(self.__hsl_threshold_input, self.__hsl_threshold_hue, self.__hsl_threshold_saturation, self.__hsl_threshold_luminance)
 
         # Step Find_Contours0:
@@ -68,17 +69,18 @@ class GripPythonVI:
 
 
     @staticmethod
-    def __resize_image(input, width, height, interpolation):
-        """Scales and image to an exact size.
+    def __cv_resize(src, d_size, fx, fy, interpolation):
+        """Resizes an Image.
         Args:
-            input: A numpy.ndarray.
-            Width: The desired width in pixels.
-            Height: The desired height in pixels.
-            interpolation: Opencv enum for the type fo interpolation.
+            src: A numpy.ndarray.
+            d_size: Size to set the image.
+            fx: The scale factor for the x.
+            fy: The scale factor for the y.
+            interpolation: Opencv enum for the type of interpolation.
         Returns:
-            A numpy.ndarray of the new size.
+            A resized numpy.ndarray.
         """
-        return cv2.resize(input, ((int)(width), (int)(height)), 0, 0, interpolation)
+        return cv2.resize(src, d_size, fx=fx, fy=fy, interpolation=interpolation)
 
     @staticmethod
     def __hsl_threshold(input, hue, sat, lum):
