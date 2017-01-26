@@ -23,7 +23,7 @@ def extra_processing(pipeline):
         center_y_positions.append(y + h / w)
         widths.append(w)
         heights.append(y)
-        areas.append(w * y)
+        areas.append(w * h)
 
     table = NetworkTables.getTable('/vision/high_goal')
     table.putNumberArray('x', center_x_positions)
@@ -43,6 +43,12 @@ def main():
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
+            cv2.imshow('e', frame)
+            cv2.imwrite('pic.jpg', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+    cv2.destroyAllWindows()
+
 
     print('Stopped Capturing')
 if __name__ == '__main__':
