@@ -23,19 +23,19 @@
       <grip:Input step="1" socket="0"/>
       <grip:Input step="1" socket="1">
         <value>
-          <double>56.6546762589928</double>
-          <double>88.31918505942275</double>
+          <double>45.32374100719424</double>
+          <double>123.46349745331071</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="2">
         <value>
-          <double>137.58992805755395</double>
+          <double>151.34892086330936</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>247.6618705035971</double>
+          <double>149.05575539568346</double>
           <double>255.0</double>
         </value>
       </grip:Input>
@@ -51,10 +51,10 @@
     <grip:Step name="Filter Contours">
       <grip:Input step="3" socket="0"/>
       <grip:Input step="3" socket="1">
-        <value>0.0</value>
+        <value>1.0</value>
       </grip:Input>
       <grip:Input step="3" socket="2">
-        <value>0.0</value>
+        <value>1.0</value>
       </grip:Input>
       <grip:Input step="3" socket="3">
         <value>1.0</value>
@@ -91,12 +91,12 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="0" socket="0" previewed="false"/>
-      <grip:Input step="1" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="1" socket="0" previewed="true"/>
       <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="0" socket="0" previewed="false"/>
+      <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
@@ -117,11 +117,11 @@
     <deployJvmOptions>-Xmx50m -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:MaxNewSize=16m</deployJvmOptions>
   </settings>
   <codeGenerationSettings>
-    <language>Java</language>
-    <className>GripPipeline</className>
+    <language>Python</language>
+    <className>GripPythonVI</className>
     <implementWpilibPipeline>false</implementWpilibPipeline>
-    <saveDir>/Users/wkluge17/GRIP</saveDir>
+    <saveDir>/Users/jbrooksbank17/2017Season/GRIP Files/Grip python setting files</saveDir>
     <packageName></packageName>
-    <moduleName>grip</moduleName>
+    <moduleName>gripagain</moduleName>
   </codeGenerationSettings>
 </grip:Pipeline>
