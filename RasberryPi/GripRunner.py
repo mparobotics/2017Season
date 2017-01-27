@@ -1,7 +1,7 @@
 #! /home/pi/.virtualenvs/cv/bin/python2
 
-import cv2.cv2 as cv2
-#mport cv2
+#import cv2.cv2 as cv2
+import cv2
 from networktables import NetworkTables
 from grip import GripPythonVI  # TODO change the module and class, if needed
 
@@ -48,7 +48,7 @@ def main():
             resized_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
             (cv2.drawContours(resized_frame, pipeline.filter_contours_output,
                               -1, (255, 0, 120), thickness=-1))
-            cv2.imwrite('pic.jpg', frame)
+            cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
