@@ -46,6 +46,8 @@ def main():
             pipeline.process(frame)
             extra_processing(pipeline)
             resized_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+            resized_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2HSV)
+            resized_frame = cv2.inRange(resized_frame, pipeline.hsl_threshold_output)
             (cv2.drawContours(resized_frame, pipeline.filter_contours_output,
                               -1, (255, 0, 120), thickness=-1))
             cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', frame)
