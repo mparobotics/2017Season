@@ -7,12 +7,12 @@ import org.usfirst.frc.team3926.robot.Robot;
 import static org.usfirst.frc.team3926.robot.Robot.driveControl;
 
 /**
- *
+ * Turns the robot to center it on the vision tracking target
  */
 public class TurnToVisionTarget extends Command {
 
     public TurnToVisionTarget() {
-        // Use requires() here to declare subsystem dependencies
+
         requires(driveControl);
         SmartDashboard.putBoolean("Turn to Vision Target", false);
 

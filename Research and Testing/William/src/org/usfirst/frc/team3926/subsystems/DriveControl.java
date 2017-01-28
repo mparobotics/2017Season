@@ -148,15 +148,15 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFTEY_FACTOR}
+     * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFETY_FACTOR}
      * <p>
      * This is activated by pressing {@link OI#safteyMode}
      * </p>
      */
     private void safeMode() {
 
-        rightSide *= RobotMap.DRIVE_SAFTEY_FACTOR;
-        leftSide *= RobotMap.DRIVE_SAFTEY_FACTOR;
+        rightSide *= RobotMap.DRIVE_SAFETY_FACTOR;
+        leftSide *= RobotMap.DRIVE_SAFETY_FACTOR;
     }
 
     /**

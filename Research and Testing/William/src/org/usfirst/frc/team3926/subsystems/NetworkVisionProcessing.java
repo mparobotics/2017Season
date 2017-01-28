@@ -10,7 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.usfirst.frc.team3926.robot.RobotMap.*;
+import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
+import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
 
 /**
  * Notes on vision processing:
@@ -114,7 +115,7 @@ public class NetworkVisionProcessing extends Subsystem {
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
             if (contourCenter > SCREEN_CENTER[0]) { //turn to vision reversed
-                movement[0] = 1 - ((contourCenter / IMAGE_X) * RobotMap.AUTONOMOUS_SPEED);
+                movement[0] = 1 - (((contourCenter - SCREEN_CENTER[0]) / SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter < SCREEN_CENTER[0]) {

@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- *
+ * Drives the robot towards the vision tracking target using
+ * {@link org.usfirst.frc.team3926.subsystems.NetworkVisionProcessing#moveToCenter(int)}
  */
 public class DriveToVisionTarget extends Command {
 

@@ -18,7 +18,7 @@ public class OI {
     public Joystick driverSecondaryStick;
     /** Button to make the robot drive straight */
     public Button   straightMode;
-    /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFTEY_FACTOR} */
+    /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFETY_FACTOR} */
     public Button   safteyMode;
     /** Button to signify that the robot has made an incorrect action based off of a contour */
     public Button   contourError;
