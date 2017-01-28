@@ -1,10 +1,12 @@
-import java.util.ArrayList;
-
-import edu.wpi.first.wpilibj.networktables.*;
-import edu.wpi.first.wpilibj.tables.*;
+package grip;
 import edu.wpi.cscore.*;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.ITable;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
 
 public class Main {
   public static void main(String[] args) {
@@ -17,8 +19,8 @@ public class Main {
     NetworkTable.setTeam(3926);
 
     NetworkTable.initialize();
-
-
+    GripPipeline gripPipeline = new GripPipeline();
+    Scalar white = new Scalar(255,255,255);
     // This is the network port you want to stream the raw received image to
     // By rules, this has to be between 1180 and 1190, so 1185 is a good choice
     int streamPort = 1185;
@@ -89,6 +91,8 @@ public class Main {
       // Below is where you would do your OpenCV operations on the provided image
       // The sample below just changes color source to HSV
       Imgproc.cvtColor(inputImage, hsv, Imgproc.COLOR_BGR2HSV);
+      Imgproc.drawContours(hsv, gripPipeline.filterContoursOutput(), -1,white);
+
 
       // Here is where you would write a processed image that you want to restreams
       // This will most likely be a marked up image of what the camera sees

@@ -9,11 +9,7 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 /**
  *
  */
-
 public class ClimbingSystem extends Subsystem {
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
     //climbing motor
     private Talon climbingMotor;
@@ -33,11 +29,9 @@ public class ClimbingSystem extends Subsystem {
     //sets the climbing motor to the value of speed
     public void Climb() {
 
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-
         climbingMotor.set(Robot.climbingSystem.speed);
     }
+
     public void ClimbingMotor(double speed) {
 
         climbingMotor.set(speed);
