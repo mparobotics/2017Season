@@ -68,7 +68,7 @@ public class RobotMap {
     /** Center point on the screen */
     public final static int[]    SCREEN_CENTER               = {IMAGE_X / 2, IMAGE_Y / 2};
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
-    public final static double   ALLOWABLE_ERROR             = 0.20;
+    public final static double   ALLOWABLE_ERROR             = 0.05;
     /** Illegal array to return from NetworkVisionProcessing if an value could not be gotten */
     public final static double[] ILLEGAL_VALUE               = {-404, -404};
     /** Illegal double to return from NetworkVisionProcessing if a value could not be gotten */
@@ -90,20 +90,24 @@ public class RobotMap {
     /** Map key for contour height */
     public final static String   CONTOUR_HEIGHT_KEY          = "height";
     /** Map key for contour width */
-    public final static String   CONTOUR_WIDTH_KEY           = "width";
+    public final static String  CONTOUR_WIDTH_KEY                  = "width";
     /** The max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED            = 0.05;
+    public final static double  AUTONOMOUS_SPEED                   = 0.50;
     /** The number to multiply times the speed of the robot when the driver enables saftey mode */
-    public final static double   DRIVE_SAFTEY_FACTOR         = 0.50;
+    public final static double  DRIVE_SAFTEY_FACTOR                = 0.50;
+    /** Whether or not to invert motor direction for the drive train's right side */
+    public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
+    /** Whether or not to invert motor direction for the drive train's left side */
+    public final static boolean INVERT_LEFT_DRIVE_MOTOR_DIRECTION = false;
 
     /* Variables for configuring command generation */
     /** Track the delays in human commands */
-    public final static boolean  TRACK_TIME_DELAYS           = false;
+    public final static boolean TRACK_TIME_DELAYS                  = false;
     /** Cut the time delays (requires @see TRACK_TIME_DELAYS to be true) */
-    public final static boolean  CUT_TIME_DELAYS             = false;
+    public final static boolean CUT_TIME_DELAYS                    = false;
     /** The amount to cut time delays (requires @see CUT_TIME_DELAYS to be true) */
-    public final static double   CUT_FACTOR                  = 0.50;
+    public final static double  CUT_FACTOR                         = 0.50;
     /** Use the values from joystick inputs instead of encoder values */
-    public final static boolean  USE_JOYSTICK_VALUES         = false;
+    public final static boolean USE_JOYSTICK_VALUES                = false;
 
 }

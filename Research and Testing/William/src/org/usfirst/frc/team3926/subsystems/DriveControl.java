@@ -116,8 +116,24 @@ public class DriveControl extends Subsystem {
      */
     private void setSpeed(double rightSpeed, double leftSpeed) {
 
-        rightSide = rightSpeed;
-        leftSide = leftSpeed;
+        if (leftSpeed != RobotMap.ILLEGAL_DOUBLE) {
+            rightSide = rightSpeed;
+            leftSide = leftSpeed;
+        } else
+            rightSide = leftSide = 0;
+
+        if (RobotMap.INVERT_RIGHT_DRIVE_MOTOR_DIRECTION)
+            rightSpeed *= -1;
+
+        if (RobotMap.INVERT_LEFT_DRIVE_MOTOR_DIRECTION)
+            leftSpeed *= -1;
+
+        if (rightSpeed != RobotMap.ILLEGAL_DOUBLE)
+            SmartDashboard.putNumber("Right Speed: ", rightSide);
+
+        if (leftSpeed != RobotMap.ILLEGAL_DOUBLE)
+            SmartDashboard.putNumber("Left Speed: ", leftSide);
+
     }
 
     /**
@@ -155,12 +171,6 @@ public class DriveControl extends Subsystem {
 
         //Sets the speed of the robot to the values from vision tracking
         setSpeed(data.get(RobotMap.SPEED_RIGHT_KEY), data.get(RobotMap.SPEED_LEFT_KEY));
-        //Sets the speed to 0 if data could not be used to drive
-        if (leftSide == RobotMap.ILLEGAL_DOUBLE)
-            leftSide = rightSide = 0;
-
-        SmartDashboard.putNumber("Right Speed: ", rightSide);
-        SmartDashboard.putNumber("Left Speed: ", leftSide);
 
         /* This will likely go by so quickly that the user will not be able to click based on an error right away,
          * so try to look for the value in the middle of a group of this error */

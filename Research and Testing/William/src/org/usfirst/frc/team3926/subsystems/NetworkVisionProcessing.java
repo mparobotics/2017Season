@@ -10,9 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
-import static org.usfirst.frc.team3926.robot.RobotMap.IMAGE_X;
-import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
+import static org.usfirst.frc.team3926.robot.RobotMap.*;
 
 /**
  * Notes on vision processing:
@@ -115,12 +113,12 @@ public class NetworkVisionProcessing extends Subsystem {
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
-            if (contourCenter > SCREEN_CENTER[0]) {
-                movement[0] = contourCenter / IMAGE_X;
+            if (contourCenter > SCREEN_CENTER[0]) { //turn to vision reversed
+                movement[0] = 1 - ((contourCenter / IMAGE_X) * RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter < SCREEN_CENTER[0]) {
-                movement[1] = contourCenter / SCREEN_CENTER[0];
+                movement[1] = 1 - ((contourCenter / SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveRight = false;
                 moveLeft = true;
             } else {
@@ -158,8 +156,8 @@ public class NetworkVisionProcessing extends Subsystem {
         if (returnValue.get(RobotMap.SPEED_LEFT_KEY) == RobotMap.ILLEGAL_DOUBLE)
             return returnValue;
 
-        double rightSpeed = (1 - returnValue.get(RobotMap.SPEED_RIGHT_KEY) * RobotMap.AUTONOMOUS_SPEED);
-        double leftSpeed = (1 - returnValue.get(RobotMap.SPEED_LEFT_KEY)) * RobotMap.AUTONOMOUS_SPEED;
+        double rightSpeed = returnValue.get(RobotMap.SPEED_RIGHT_KEY);
+        double leftSpeed = returnValue.get(RobotMap.SPEED_LEFT_KEY);
 
         if (moveLeft)
             rightSpeed *= -1;
