@@ -6,12 +6,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
-import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
+import java.util.*;
 
 /**
  * Notes on vision processing:
@@ -66,9 +61,9 @@ public class NetworkVisionProcessing extends Subsystem {
     /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean      contoursFound, moveRight, moveLeft;
     /** Keeps track of the last few speeds to ensure returned values aren't spikes due to temporary interruptions */
-    private double[][] speedBuffer;
-    /** The last valid speed seen with the buffer */
-    private double[]   lastValidSpeed;
+    private List<double[]>      speedBuffer;
+    /** The last valid speed from the buffer */
+    private Map<String, Double> lastValidSpeed;
 
     ////////////////////////////////////// Constructors and Initializer ////////////////////////////////////////////////
 
@@ -78,12 +73,14 @@ public class NetworkVisionProcessing extends Subsystem {
     public NetworkVisionProcessing() {
 
         if (RobotMap.USE_SPEED_BUFFER) {
-            speedBuffer = new double[RobotMap.VISION_SPEED_BUFFER_SIZE][2];
+            speedBuffer = new Vector<>();
 
             for (double[] i : speedBuffer)
                 i[0] = i[1] = 0;
 
-            lastValidSpeed = new double[] {0, 0};
+            lastValidSpeed = new HashMap<>();
+            lastValidSpeed.put(RobotMap.SPEED_RIGHT_KEY, 0.0);
+            lastValidSpeed.put(RobotMap.SPEED_LEFT_KEY, 0.0);
 
         }
 
@@ -143,12 +140,12 @@ public class NetworkVisionProcessing extends Subsystem {
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
-            if (contourCenter > SCREEN_CENTER[0]) { //turn to vision reversed
-                movement[0] = 1 - (((contourCenter - SCREEN_CENTER[0]) / SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+            if (contourCenter > RobotMap.SCREEN_CENTER[0]) { //turn to vision reversed
+                movement[0] = 1 - (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
-            } else if (contourCenter < SCREEN_CENTER[0]) {
-                movement[1] = 1 - ((contourCenter / SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+            } else if (contourCenter < RobotMap.SCREEN_CENTER[0]) {
+                movement[1] = 1 - ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveRight = false;
                 moveLeft = true;
             } else {
@@ -158,6 +155,9 @@ public class NetworkVisionProcessing extends Subsystem {
 
             returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[0]);
             returnValue.put(RobotMap.SPEED_LEFT_KEY, movement[1]);
+
+            if (RobotMap.USE_SPEED_BUFFER)
+                bufferSpeeds(returnValue);
 
         } else {
             returnValue.put(RobotMap.SPEED_RIGHT_KEY, RobotMap.ILLEGAL_DOUBLE);
@@ -198,6 +198,251 @@ public class NetworkVisionProcessing extends Subsystem {
         returnValue.replace(RobotMap.SPEED_LEFT_KEY, leftSpeed);
 
         return returnValue;
+
+    }
+
+    ////////////////////////////////////////// Methods for Obtaining Contours //////////////////////////////////////////
+
+    /**
+     * Function to return a specific contour
+     *
+     * @param key   Key to use when getting contours from the table
+     * @param index Array index of the contour to get
+     * @return Either the desired value for the value and index or an illegal character if an exception occurred
+     */
+    private double getContours(String key, int index) {
+
+        try {
+
+            return contourReport.getNumberArray(key, new double[0])[index];
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_DOUBLE;
+
+        }
+
+    }
+
+    /**
+     * Overloaded getContours function that returns the entire array
+     *
+     * @param key Key to use when getting contours from the network table
+     */
+    private double[] getContours(String key) {
+
+        try {
+
+            return contourReport.getNumberArray(key, new double[0]);
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_VALUE;
+
+        }
+
+    }
+
+    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
+
+    /**
+     * Allows the filtering of contour data past what GRIP can do
+     *
+     * @param index The index of the contour to check
+     * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
+     * otherwise {@link RobotMap#ILLEGAL_INT}
+     */
+    private int smartFilterContours(int index) {
+
+        double[] contourXs = contourReport.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourYs = contourReport.getNumberArray(RobotMap.CONTOUR_Y_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourHeights = contourReport.getNumberArray(RobotMap.CONTOUR_HEIGHT_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourWidths = contourReport.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourAreas = new double[contourHeights.length];
+
+        if (!checkEquality(contourXs.length, contourYs.length, contourHeights.length, contourWidths.length))
+            return RobotMap.ILLEGAL_INT;
+
+        for (int i = 0; i < contourHeights.length; ++i)
+            contourAreas[i] = contourHeights[i] * contourWidths[i];
+
+        boolean[] validAreas = validateContourAreas(contourAreas);
+
+        if (validAreas[index])
+            return index;
+
+        for (int i = 0; i < validAreas.length; ++i)
+            if (validAreas[index])
+                return index;
+
+        return RobotMap.ILLEGAL_INT;
+
+    }
+
+    /**
+     * Checks the contours based on area.
+     * This checks to make sure that a contour has another contour with about double/half of it's area.
+     * <p>
+     * This is used in {@link #smartFilterContours(int)}
+     * </p>
+     *
+     * @return Indexes that match the criteria of this method
+     */
+    private boolean[] validateContourAreas(double[] contourAreas) {
+
+        boolean[] validatedIndexes = new boolean[contourAreas.length];
+
+        for (int i = 0; i < contourAreas.length; ++i) {
+
+            validatedIndexes[i] = false;
+
+            for (double checkArea : contourAreas) {
+
+                if (checkArea - (checkArea * RobotMap.ALLOWABLE_ERROR) < contourAreas[i] &&
+                    contourAreas[i] < checkArea + (checkArea + RobotMap.ALLOWABLE_ERROR))
+                    validatedIndexes[i] = true;
+
+            }
+
+        }
+
+        return validatedIndexes;
+
+    }
+
+    /**
+     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
+     * errors caused by viewing the target from a bad angle.
+     * <p>
+     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * </p>
+     * TODO finish
+     */
+    private double[] correctAngleOffset() {
+
+        return new double[] {0};
+
+    }
+
+    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
+
+    /**
+     * Buffers speeds to avoid sudden spikes or drops
+     * <p>
+     * If {@link RobotMap#BUFFER_ACCELERATION} is true, this will also accelerate towards the new value if it is not
+     * within the buffer range
+     * </p>
+     *
+     * @param data Data to process with the buffer
+     */
+    private void bufferSpeeds(Map<String, Double> data) {
+
+        int[] bufferSpeedCheck = speedWithinBuffer(data);
+
+        { //This adds the latest speeds to the buffer and removes the last entry
+            double[] latestSpeeds = new double[2];
+            latestSpeeds[RobotMap.LEFT_INDEX] = data.get(RobotMap.SPEED_LEFT_KEY);
+            latestSpeeds[RobotMap.RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
+            speedBuffer.add(0, latestSpeeds); //Adds the latest speed to the array
+            speedBuffer.remove(RobotMap.SPEED_BUFFER_SIZE - 1); //Removes the last entry
+        }
+
+        if (RobotMap.BUFFER_ACCELERATION) {
+
+            double modifiedLeftSpeed = data.get(RobotMap.SPEED_LEFT_KEY),
+                    modifiedRightSpeed = data.get(RobotMap.SPEED_RIGHT_KEY);
+
+            modifiedLeftSpeed += bufferSpeedCheck[RobotMap.LEFT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
+            modifiedRightSpeed += bufferSpeedCheck[RobotMap.RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
+
+            data.replace(RobotMap.SPEED_LEFT_KEY, modifiedLeftSpeed);
+            data.replace(RobotMap.SPEED_RIGHT_KEY, modifiedRightSpeed);
+
+        } else {
+
+            if (bufferSpeedCheck[RobotMap.RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
+                data = lastValidSpeed;
+
+        }
+
+        lastValidSpeed = data;
+
+    }
+
+    /**
+     * Checks if the speeds within data are within the constraint set by {@link RobotMap#MAX_BUFFER_DIFFERENCE} when
+     * compared to {@link #speedBuffer}
+     *
+     * @param data Data to check against the buffer
+     * @return An array for the right and left speeds. -1 = speed below range, 1 = speed above range, 0 = speed in range
+     */
+    private int[] speedWithinBuffer(Map<String, Double> data) {
+
+        int goodCount = 0, rightHighCount = 0, leftHighCount = 0, rightLowCount = 0, leftLowCount = 0;
+
+        double dataLeft = data.get(RobotMap.SPEED_LEFT_KEY), dataRight = data.get(RobotMap.SPEED_RIGHT_KEY);
+
+        for (double[] i : speedBuffer) {
+
+            boolean good = false;
+
+            if (greaterThanRange(i[0], dataRight))
+                ++rightHighCount;
+            else if (lessThanRange(i[0], dataRight))
+                ++rightLowCount;
+            else
+                good = true;
+
+            if (greaterThanRange(i[1], dataLeft))
+                ++leftHighCount;
+            else if (lessThanRange(i[1], dataLeft))
+                ++leftLowCount;
+            else if (good)
+                ++goodCount;
+
+        }
+
+        int[] returnValue = new int[2]; //TODO there is a better way to do this
+
+        if (goodCount < rightHighCount && rightHighCount > rightLowCount)
+            returnValue[RobotMap.RIGHT_INDEX] = 1;
+        else if (goodCount < rightLowCount && rightLowCount > rightHighCount)
+            returnValue[RobotMap.RIGHT_INDEX] = -1;
+
+        if (goodCount < leftHighCount && leftHighCount > leftLowCount)
+            returnValue[RobotMap.LEFT_INDEX] = 1;
+        else if (goodCount < leftLowCount && leftLowCount > leftHighCount)
+            returnValue[RobotMap.LEFT_INDEX] = -1;
+
+        return returnValue;
+
+    }
+
+    /**
+     * Determines if a number is greater than the allowable difference from a buffer value
+     *
+     * @param bufferValue Buffer value to check from
+     * @param dataValue   Value to compare
+     * @return If the value is greater than the max allowed by the buffer value
+     */
+    private boolean greaterThanRange(double bufferValue, double dataValue) {
+
+        return dataValue > bufferValue + RobotMap.MAX_BUFFER_DIFFERENCE;
+
+    }
+
+    /**
+     * Determines if a number is less than the allowable difference from a buffer value
+     *
+     * @param bufferValue Buffer value to check from
+     * @param dataValue   Value to compare
+     * @return If the value is less than the min allowed by the buffer value
+     */
+    private boolean lessThanRange(double bufferValue, double dataValue) {
+
+        return dataValue < bufferValue - RobotMap.MAX_BUFFER_DIFFERENCE;
 
     }
 
@@ -273,144 +518,6 @@ public class NetworkVisionProcessing extends Subsystem {
     public boolean debugEndCommand() {
 
         return false;
-    }
-
-    ////////////////////////////////////////// Methods for Obtaining Contours //////////////////////////////////////////
-
-    /**
-     * Function to return a specific contour
-     *
-     * @param key   Key to use when getting contours from the table
-     * @param index Array index of the contour to get
-     * @return Either the desired value for the value and index or an illegal character if an exception occurred
-     */
-    private double getContours(String key, int index) {
-
-        try {
-
-            return contourReport.getNumberArray(key, new double[0])[index];
-
-        } catch (Exception e) {
-
-            System.out.println(new Date().toString() + ": " + e.getMessage());
-            return RobotMap.ILLEGAL_DOUBLE;
-
-        }
-
-    }
-
-    /**
-     * Overloaded getContours function that returns the entire array
-     *
-     * @param key Key to use when getting contours from the network table
-     */
-    private double[] getContours(String key) {
-
-        try {
-
-            return contourReport.getNumberArray(key, new double[0]);
-
-        } catch (Exception e) {
-
-            System.out.println(new Date().toString() + ": " + e.getMessage());
-            return RobotMap.ILLEGAL_VALUE;
-
-        }
-
-    }
-
-    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
-
-    /**
-     * Allows the filtering of contour data past what GRIP can do
-     *
-     * @param index The index of the contour to check
-     * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
-     * otherwise {@link RobotMap#ILLEGAL_INT}
-     */
-    private int smartFilterContours(int index) {
-
-        double[] contourXs = contourReport.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourYs = contourReport.getNumberArray(RobotMap.CONTOUR_Y_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourHeights = contourReport.getNumberArray(RobotMap.CONTOUR_HEIGHT_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourWidths = contourReport.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourAreas = new double[contourHeights.length];
-
-        if (!checkEquality(contourXs.length, contourYs.length, contourHeights.length, contourWidths.length))
-            return ILLEGAL_INT;
-
-        for (int i = 0; i < contourHeights.length; ++i)
-            contourAreas[i] = contourHeights[i] * contourWidths[i];
-
-        boolean[] validAreas = validateContourAreas(contourAreas);
-
-        if (validAreas[index])
-            return index;
-
-        for (int i = 0; i < validAreas.length; ++i)
-            if (validAreas[index])
-                return index;
-
-        return ILLEGAL_INT;
-
-    }
-
-    /**
-     * Checks the contours based on area.
-     * This checks to make sure that a contour has another contour with about double/half of it's area.
-     * <p>
-     * This is used in {@link #smartFilterContours(int)}
-     * </p>
-     *
-     * @return Indexes that match the criteria of this method
-     */
-    private boolean[] validateContourAreas(double[] contourAreas) {
-
-        boolean[] validatedIndexes = new boolean[contourAreas.length];
-
-        for (int i = 0; i < contourAreas.length; ++i) {
-
-            validatedIndexes[i] = false;
-
-            for (double checkArea : contourAreas) {
-
-                if (checkArea - (checkArea * RobotMap.ALLOWABLE_ERROR) < contourAreas[i] &&
-                    contourAreas[i] < checkArea + (checkArea + RobotMap.ALLOWABLE_ERROR))
-                    validatedIndexes[i] = true;
-
-            }
-
-        }
-
-        return validatedIndexes;
-
-    }
-
-    /**
-     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
-     * errors caused by viewing the target from a bad angle.
-     * <p>
-     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
-     * </p>
-     * TODO finish
-     */
-    private double[] correctAngleOffset() {
-
-        return new double[] {0};
-
-    }
-
-    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
-
-    /**
-     * TODO finish
-     * @param data
-     * @return
-     */
-    private Map<String, Double> bufferSpeeds(Map<String, Double> data) {
-
-        return data;
-
     }
 
     ////////////////////////////////////////////////// Other Methods ///////////////////////////////////////////////////

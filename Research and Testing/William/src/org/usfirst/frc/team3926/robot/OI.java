@@ -39,8 +39,11 @@ public class OI {
             centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_BUTTON);
             driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_CENTER_BUTTON);
         } else {
-            straightMode = new JoystickButton(driverSecondaryStick, 1);
-            safteyMode = new JoystickButton(driverPrimaryStick, 1);
+            straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
+            safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFTEY_MODE_BUTTON);
+            contourError = new JoystickButton(driverPrimaryStick, RobotMap.CONTOUR_ERROR_BUTTON);
+            centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.CENTER_BUTTON);
+            driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_CENTER_BUTTON);
         }
 
         centerDrive.whileHeld(new DriveToVisionTarget());

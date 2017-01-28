@@ -11,8 +11,21 @@ import org.usfirst.frc.team3926.subsystems.NetworkVisionProcessing;
  **********************************************************************************************************************/
 public class RobotMap {
 
-    /** Determines if debugging code should be used */
+    ///////////////////////////////////////////// Enable/Disable Features //////////////////////////////////////////////
+    /** Use code specifically made for debugging the robot */
     public final static boolean  DEBUG                              = true;
+    /** Use an XBox controller for {@link OI#driverPrimaryStick} */
+    public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
+    /** Use a speed buffer to prevent sudden jumps or drops in speed */
+    public final static boolean  USE_SPEED_BUFFER                   = true;
+    /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
+    public final static boolean  BUFFER_ACCELERATION                = true;
+    /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
+    public final static boolean  USE_SMART_FILTER                   = true;
+    /** Invert motor direction for the drive train's right side */
+    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = false;
+    /** Invert motor direction for the drive train's left side */
+    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = false;
 
     /////////////////////////////////////////////////// Motor PWM IDs //////////////////////////////////////////////////
     /** PWM port for front right motor */
@@ -25,13 +38,10 @@ public class RobotMap {
     public final static int      BACK_LEFT_MOTOR_PWM                = 3;
     /** Motor for testing shooter */
     public final static int      TEST_MOTOR_PWM                     = 4;
-
-    //////////////////////////////////////////////// XBox configuration ////////////////////////////////////////////////
-    /**
-     * Whether or not to use a XBox controller for {@link OI#driverPrimaryStick} instead of
-     * {@link OI#driverSecondaryStick}
-     */
-    public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
+    
+    ///////////////////////////////////////// XBox configuration (for driving) /////////////////////////////////////////
+    /** USB port number for the XBOX controller */
+    public final static int      XBOX_PORT                          = 0;
     /** ID for the left trigger on the XBox controller */
     public final static int      XBOX_LEFT_TRIGGER                  = 2;
     /** ID for the right trigger on the joystick */
@@ -51,20 +61,30 @@ public class RobotMap {
     /** Button ID to drive towards the center of the vision target */
     public final static int      XBOX_DRIVE_TO_CENTER_BUTTON        = 3;
 
-    ////////////////////////////////////////////// Joystick Configuration //////////////////////////////////////////////
-    /** Axis to use for setting the test motor forward */
-    public final static int      TEST_MOTOR_FORWARD                 = XBOX_RIGHT_TRIGGER;
-    /** Axis to use for setting the test motor in reverse */
-    public final static int      TEST_MOTOR_REVERSE                 = XBOX_LEFT_TRIGGER;
-    /** Button ID to specify an error with contour detection when {@link #XBOX_DRIVE_CONTROLLER} is false */
-    public final static int      CONTOUR_ERROR_BUTTON               = 3;
+    ///////////////////////////////////// Joystick Configuration (for tank drive) //////////////////////////////////////
+    ///// USB Port Configuration /////
     /** USB port number for right joystick */
     public final static int      RIGHT_STICK_PORT                   = 0;
     /** USB port number for left joystick */
     public final static int      LEFT_STICK_PORT                    = 1;
+    ///// Configuration for Driver's Primary Stick /////
+    /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
+    public final static int      SAFTEY_MODE_BUTTON                 = 1;
+    /**
+     * Button ID on {@link OI#driverPrimaryStick} to signify that an action taken by the robot in
+     * {@link DriveControl#autonomousTank()} is incorrect
+     */
+    public final static int      CONTOUR_ERROR_BUTTON               = 5;
+    /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
+    public final static int      CENTER_BUTTON                      = 4;
+    /** Button ID on {@link OI#driverPrimaryStick} to drive towards the center of the vision target */
+    public final static int      DRIVE_TO_CENTER_BUTTON             = 3;
+    ///// Configuration for Driver's Secondary Stick /////
+    /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
+    public final static int      STRAIGHT_MODE_BUTTON               = 1;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
-    /* Table Names and Keys */
+    ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
     public final static String   TABLE_NAME                         = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
@@ -79,47 +99,31 @@ public class RobotMap {
     public final static String   CONTOUR_HEIGHT_KEY                 = "height";
     /** Map key for contour width */
     public final static String   CONTOUR_WIDTH_KEY                  = "width";
-    /* Speed buffer for vision tracking */
-    /** Whether or not to use the speed buffer for vision tracking */
-    public final static boolean  USE_SPEED_BUFFER                   = true;
-    /** Buffer size for vision tracking commands */
-    public final static int      VISION_SPEED_BUFFER_SIZE           = 5;
-    /** Allowable difference in buffered values. If the difference is greater than this it falls back to the */
+    ///// Speed buffer for vision tracking /////
+    /** Amount of previous speed values to store for the speed buffer */
+    public final static int      SPEED_BUFFER_SIZE                  = 5;
+    /** Allowable difference in buffered values. If the difference is greater than this the speed is changed */
     public final static double   MAX_BUFFER_DIFFERENCE              = 0.1;
     /** Time (in milliseconds) between buffer updates */
-    public final static int      BUFFER_UPDATE_TIME                 = 500;
-    /* Image size configuration */
+    public final static int      BUFFER_UPDATE_TIME                 = 100;
+    /** Value to use for accelerating towards the target speed if {@link #BUFFER_ACCELERATION} is true */
+    public final static double   BUFFER_ACCELERATION_AMOUNT         = MAX_BUFFER_DIFFERENCE;
+    ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
     public final static int      IMAGE_X                            = 160;
     /** Size of the vision tracking image's Y axis */
     public final static int      IMAGE_Y                            = 120;
     /** Center point on the screen */
     public final static int[]    SCREEN_CENTER                      = {IMAGE_X / 2, IMAGE_Y / 2};
-    /* Smart Filter Configuration */
+    ///// Smart Filter Configuration /////
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
     public final static double   ALLOWABLE_ERROR                    = 0.05;
-    /** If {@link NetworkVisionProcessing#smartFilterContours(int)} should be used */
-    public final static boolean  USE_SMART_FILTER                   = true;
-    /** Default value to use in when getting values from NetworkTables */
-    public final static double[] DEFAULT_VALUE                      = new double[0];
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** The max speed for the robot to travel during autonomous */
     public final static double   AUTONOMOUS_SPEED                   = 0.50;
     /** The number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
-    /** Whether or not to invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
-    /** Whether or not to invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = false;
-
-    //////////////////////////////////////// Illegal Values (to signify errors) ////////////////////////////////////////
-    /** Illegal array to return from NetworkVisionProcessing if an value could not be gotten */
-    public final static double[] ILLEGAL_VALUE                      = {-404, -404};
-    /** Illegal double to return from NetworkVisionProcessing if a value could not be gotten */
-    public final static double   ILLEGAL_DOUBLE                     = -404;
-    /** Illegal int to return if data could not be validated */
-    public final static int      ILLEGAL_INT                        = -404;
 
     /////////////////////////////////// Variables for configuring command generation ///////////////////////////////////
     /** Track the delays in human commands */
@@ -130,5 +134,21 @@ public class RobotMap {
     public final static double   CUT_FACTOR                         = 0.50;
     /** Use the values from joystick inputs instead of encoder values */
     public final static boolean  USE_JOYSTICK_VALUES                = false;
+
+    ////////////////////////////////////////// Code Quality of Life Variables //////////////////////////////////////////
+    /** Index to always use for accessing the left speed in an array */
+    public final static int      LEFT_INDEX                         = 0;
+    /** Index to always use for accessing the right speed in an array */
+    public final static int      RIGHT_INDEX                        = 1;
+    /** Default value to use in when getting values from NetworkTables */
+    public final static double[] DEFAULT_VALUE                      = new double[0];
+
+    //////////////////////////////////////// Illegal Values (to signify errors) ////////////////////////////////////////
+    /** Illegal array to return from NetworkVisionProcessing if an value could not be gotten */
+    public final static double[] ILLEGAL_VALUE                      = {-404, -404};
+    /** Illegal double to return from NetworkVisionProcessing if a value could not be gotten */
+    public final static double   ILLEGAL_DOUBLE                     = -404;
+    /** Illegal int to return if data could not be validated */
+    public final static int      ILLEGAL_INT                        = -404;
 
 }
