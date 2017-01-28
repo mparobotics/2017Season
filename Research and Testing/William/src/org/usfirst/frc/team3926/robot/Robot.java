@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
     private        ControlTank         controlTank;
     private        TestMotor           testMotor;
     private static DriveToVisionTarget driveToVisionTarget;
-    private static TurnToVisionTarget turnToVisionTarget;
+    private static TurnToVisionTarget  turnToVisionTarget;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -72,10 +72,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
 
-        //driveToVisionTarget = new DriveToVisionTarget();
-        //driveToVisionTarget.start();
-        turnToVisionTarget = new TurnToVisionTarget();
-        turnToVisionTarget.start();
     }
 
     /**
@@ -91,8 +87,12 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
 
-        controlTank = new ControlTank();
-        controlTank.start();
+        //controlTank = new ControlTank();
+        driveToVisionTarget = new DriveToVisionTarget();
+        //driveToVisionTarget.start();
+        turnToVisionTarget = new TurnToVisionTarget();
+        //turnToVisionTarget.start();
+        //controlTank.start();
     }
 
     /**
@@ -101,7 +101,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
 
         Scheduler.getInstance().run();
-        testMotor.RunTestMotor();
+
     }
 
     /**

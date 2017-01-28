@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
 
 import static org.usfirst.frc.team3926.robot.Robot.driveControl;
@@ -13,15 +14,22 @@ public class TurnToVisionTarget extends Command {
     public TurnToVisionTarget() {
         // Use requires() here to declare subsystem dependencies
         requires(driveControl);
+        SmartDashboard.putBoolean("Turn to Vision Target", false);
+
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+
         Robot.visionProcessing.initNetworkTables();
+
+        SmartDashboard.putBoolean("Turn to Vision Target", true);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+
         driveControl.center();
     }
 
@@ -34,12 +42,15 @@ public class TurnToVisionTarget extends Command {
     // Called once after isFinished returns true
     protected void end() {
 
+        SmartDashboard.putBoolean("Turn to Vision Target", false);
+
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
 
+        SmartDashboard.putBoolean("Turn to Vision Target", false);
     }
 
 }

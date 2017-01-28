@@ -3,6 +3,8 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3926.commands.DriveToVisionTarget;
+import org.usfirst.frc.team3926.commands.TurnToVisionTarget;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,6 +22,10 @@ public class OI {
     public Button   safteyMode;
     /** Button to signify that the robot has made an incorrect action based off of a contour */
     public Button   contourError;
+    /** Button to center the robot on the vision target */
+    public Button   centerDrive;
+    /** Button to activate driving the robot towards the center of a vision target */
+    public Button   driveToCenter;
 
     OI() {
 
@@ -30,10 +36,16 @@ public class OI {
             straightMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_STRAIGHT_MODE_BUTTON);
             safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CONTOUR_ERROR_BUTTON);
+            centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_BUTTON);
+            driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_CENTER_BUTTON);
         } else {
             straightMode = new JoystickButton(driverSecondaryStick, 1);
             safteyMode = new JoystickButton(driverPrimaryStick, 1);
         }
+
+        centerDrive.whileHeld(new DriveToVisionTarget());
+        driveToCenter.whileHeld(new TurnToVisionTarget());
+
     }
 
     //// CREATING BUTTONS

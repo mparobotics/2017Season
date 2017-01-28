@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.subsystems;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.commands.ControlTank;
 import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
@@ -46,7 +47,7 @@ public class DriveControl extends Subsystem {
      */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ControlTank());
     }
 
     /**

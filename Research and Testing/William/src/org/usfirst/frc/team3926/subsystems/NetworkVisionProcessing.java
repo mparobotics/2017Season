@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
+import static org.usfirst.frc.team3926.robot.RobotMap.IMAGE_X;
 import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
 
 /**
@@ -82,7 +83,7 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public void initNetworkTables() {
 
-        contourReport = NetworkTable.getTable("vision/high_goal");
+        contourReport = NetworkTable.getTable(RobotMap.TABLE_NAME);
     }
 
     /**
@@ -115,7 +116,7 @@ public class NetworkVisionProcessing extends Subsystem {
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
             if (contourCenter > SCREEN_CENTER[0]) {
-                movement[0] = SCREEN_CENTER[0] / contourCenter;
+                movement[0] = contourCenter / IMAGE_X;
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter < SCREEN_CENTER[0]) {
@@ -329,6 +330,7 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Checks if a bunch of numbers are equal
+     *
      * @param numbers the numbers to check
      * @return If the numbers are equal
      */
