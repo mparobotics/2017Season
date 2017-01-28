@@ -14,7 +14,7 @@ public class RobotMap {
     /** Determines if debugging code should be used */
     public final static boolean  DEBUG                              = true;
 
-    /* Motor PWM IDs */
+    /////////////////////////////////////////////////// Motor PWM IDs //////////////////////////////////////////////////
     /** PWM port for front right motor */
     public final static int      FRONT_RIGHT_MOTOR_PWM              = 0;
     /** PWM port for back right motor */
@@ -26,8 +26,11 @@ public class RobotMap {
     /** Motor for testing shooter */
     public final static int      TEST_MOTOR_PWM                     = 4;
 
-    /* XBox configuration */
-    /** Whether or not to use an XBox controller for {@link OI#driverPrimaryStick} and not use {@link OI#driverSecondaryStick} */
+    //////////////////////////////////////////////// XBox configuration ////////////////////////////////////////////////
+    /**
+     * Whether or not to use a XBox controller for {@link OI#driverPrimaryStick} instead of
+     * {@link OI#driverSecondaryStick}
+     */
     public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
     /** ID for the left trigger on the XBox controller */
     public final static int      XBOX_LEFT_TRIGGER                  = 2;
@@ -48,7 +51,7 @@ public class RobotMap {
     /** Button ID to drive towards the center of the vision target */
     public final static int      XBOX_DRIVE_TO_CENTER_BUTTON        = 3;
 
-    /* Joystick Configuration */
+    ////////////////////////////////////////////// Joystick Configuration //////////////////////////////////////////////
     /** Axis to use for setting the test motor forward */
     public final static int      TEST_MOTOR_FORWARD                 = XBOX_RIGHT_TRIGGER;
     /** Axis to use for setting the test motor in reverse */
@@ -60,7 +63,7 @@ public class RobotMap {
     /** USB port number for left joystick */
     public final static int      LEFT_STICK_PORT                    = 1;
 
-    /* Vision Tracking */
+    //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     /** Name of the network table for NetworkVisionProcessing to read from */
     public final static String   TABLE_NAME                         = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
@@ -75,12 +78,19 @@ public class RobotMap {
     public final static String   CONTOUR_HEIGHT_KEY                 = "height";
     /** Map key for contour width */
     public final static String   CONTOUR_WIDTH_KEY                  = "width";
+    /* Speed buffer for vision tracking */
+    /** Whether or not to use the speed buffer for vision tracking */
+    public final static boolean  USE_SPEED_BUFFER                   = true;
+    /** Buffer size for vision tracking commands */
+    public final static int      VISION_SPEED_BUFFER_SIZE           = 5;
+    /* Image size configuration */
     /** Size of the vision tracking image's X axis */
     public final static int      IMAGE_X                            = 160;
     /** Size of the vision tracking image's Y axis */
     public final static int      IMAGE_Y                            = 120;
     /** Center point on the screen */
     public final static int[]    SCREEN_CENTER                      = {IMAGE_X / 2, IMAGE_Y / 2};
+    /* Smart Filter Configuration */
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
     public final static double   ALLOWABLE_ERROR                    = 0.05;
     /** If {@link NetworkVisionProcessing#smartFilterContours(int)} should be used */
@@ -88,7 +98,7 @@ public class RobotMap {
     /** Default value to use in when getting values from NetworkTables */
     public final static double[] DEFAULT_VALUE                      = new double[0];
 
-    /* Drive Configuration */
+    /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** The max speed for the robot to travel during autonomous */
     public final static double   AUTONOMOUS_SPEED                   = 0.50;
     /** The number to multiply times the speed of the robot when the driver enables saftey mode */
@@ -98,7 +108,7 @@ public class RobotMap {
     /** Whether or not to invert motor direction for the drive train's left side */
     public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = false;
 
-    /* Illegal Values (to signify errors) */
+    //////////////////////////////////////// Illegal Values (to signify errors) ////////////////////////////////////////
     /** Illegal array to return from NetworkVisionProcessing if an value could not be gotten */
     public final static double[] ILLEGAL_VALUE                      = {-404, -404};
     /** Illegal double to return from NetworkVisionProcessing if a value could not be gotten */
@@ -106,7 +116,7 @@ public class RobotMap {
     /** Illegal int to return if data could not be validated */
     public final static int      ILLEGAL_INT                        = -404;
 
-    /* Variables for configuring command generation */
+    /////////////////////////////////// Variables for configuring command generation ///////////////////////////////////
     /** Track the delays in human commands */
     public final static boolean  TRACK_TIME_DELAYS                  = false;
     /** Cut the time delays (requires @see TRACK_TIME_DELAYS to be true) */

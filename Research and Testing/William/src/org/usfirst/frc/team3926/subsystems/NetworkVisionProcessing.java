@@ -65,6 +65,11 @@ public class NetworkVisionProcessing extends Subsystem {
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean      contoursFound, moveRight, moveLeft;
+    /** Keeps track of the last few speeds to ensure a value being returned isn't a spike */
+    private Map<String, Double>[] speedBuffer;
+    /** The last valid speed seen with the buffer */
+    private Map<String, Double> lastValidSpeed;
+
 
     /**
      * Constructs the NetworkVisionProcessing class
@@ -328,25 +333,11 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Checks if a bunch of numbers are equal
-     *
-     * @param numbers the numbers to check
-     * @return If the numbers are equal
-     */
-    private boolean checkEquality(int... numbers) {
-
-        for (int number : numbers)
-            for (int x : numbers)
-                if (number != x)
-                    return false;
-
-        return true;
-
-    }
-
-    /**
      * Checks the contours based on area.
      * This checks to make sure that a contour has another contour with about double/half of it's area.
+     * <p>
+     * This is used in {@link #smartFilterContours(int)}
+     * </p>
      *
      * @return Indexes that match the criteria of this method
      */
@@ -369,6 +360,23 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
         return validatedIndexes;
+
+    }
+
+    /**
+     * Checks if a bunch of numbers are equal
+     *
+     * @param numbers the numbers to check
+     * @return If the numbers are equal
+     */
+    private boolean checkEquality(int... numbers) {
+
+        for (int number : numbers)
+            for (int x : numbers)
+                if (number != x)
+                    return false;
+
+        return true;
 
     }
 

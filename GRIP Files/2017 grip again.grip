@@ -134,10 +134,10 @@
     <deployJvmOptions>-Xmx50m -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:MaxNewSize=16m</deployJvmOptions>
   </settings>
   <codeGenerationSettings>
-    <language>Java</language>
-    <className>GripPipeline</className>
+    <language>Python</language>
+    <className>GripPythonVI</className>
     <implementWpilibPipeline>false</implementWpilibPipeline>
-    <saveDir>/Users/wkluge17/GRIP</saveDir>
+    <saveDir>/Users/wkluge17/ownCloud/Documents/broboticsWorkspace/2017Season/RasberryPi</saveDir>
     <packageName></packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
