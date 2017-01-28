@@ -6,9 +6,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
 import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
@@ -66,16 +64,30 @@ public class NetworkVisionProcessing extends Subsystem {
     /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean      contoursFound, moveRight, moveLeft;
     /** Keeps track of the last few speeds to ensure a value being returned isn't a spike */
-    private Map<String, Double>[] speedBuffer;
+    private List<Map<String, Double>> speedBuffer;
     /** The last valid speed seen with the buffer */
-    private Map<String, Double> lastValidSpeed;
+    private Map<String, Double>       lastValidSpeed;
 
+    ////////////////////////////////////// Constructors and Initializer ////////////////////////////////////////////////
 
     /**
      * Constructs the NetworkVisionProcessing class
      */
     public NetworkVisionProcessing() {
 
+        if (RobotMap.USE_SPEED_BUFFER)
+            speedBuffer = new Vector<>();
+    }
+
+    /**
+     * Method to set the default command for this subsystem.
+     * <p>
+     * Note: We currently do not have a command that should be set as default
+     * </p>
+     */
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new DriveToVisionTarget());
     }
 
     /**
@@ -89,6 +101,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
         contourReport = NetworkTable.getTable(RobotMap.TABLE_NAME);
     }
+
+    ///////////////////////////////////////////////// Moving the Robot /////////////////////////////////////////////////
 
     /**
      * Finds the correction needed to center the robot on a specified contour
@@ -177,6 +191,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
+    ////////////////////////////////////////////////// Debugging Data //////////////////////////////////////////////////
+
     /**
      * Prints the info from contourReport to the log
      */
@@ -222,6 +238,24 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
+     * Adds debugging data to the data Map for drive control functions
+     *
+     * @param data  Driving data to add contour information to
+     * @param index Index of the contour to add data on
+     * @return Data map with contour data added in
+     */
+    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
+
+        data.put(RobotMap.CONTOUR_X_KEY, getContours(RobotMap.CONTOUR_X_KEY, index));
+        data.put(RobotMap.CONTOUR_Y_KEY, getContours(RobotMap.CONTOUR_Y_KEY, index));
+        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours(RobotMap.CONTOUR_HEIGHT_KEY, index));
+        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours(RobotMap.CONTOUR_WIDTH_KEY, index));
+
+        return data;
+
+    }
+
+    /**
      * The method to use to end vision tracking commands when debugging (it never ends)
      *
      * @return false
@@ -231,30 +265,7 @@ public class NetworkVisionProcessing extends Subsystem {
         return false;
     }
 
-    /**
-     * Method to set the default command for this subsystem.
-     * <p>
-     * Note: We currently do not have a command that should be set as default
-     * </p>
-     */
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new DriveToVisionTarget());
-    }
-
-    /**
-     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
-     * errors caused by viewing the target from a bad angle.
-     * <p>
-     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
-     * </p>
-     * TODO finish
-     */
-    private double[] correctAngleOffset() {
-
-        return new double[] {0};
-
-    }
+    ////////////////////////////////////////// Methods for Obtaining Contours //////////////////////////////////////////
 
     /**
      * Function to return a specific contour
@@ -297,6 +308,8 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
     }
+
+    /////////////////////////////////////////////////// Contour Filtering //////////////////////////////////////////////
 
     /**
      * Allows the filtering of contour data past what GRIP can do
@@ -364,6 +377,20 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
+     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
+     * errors caused by viewing the target from a bad angle.
+     * <p>
+     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * </p>
+     * TODO finish
+     */
+    private double[] correctAngleOffset() {
+
+        return new double[] {0};
+
+    }
+
+    /**
      * Checks if a bunch of numbers are equal
      *
      * @param numbers the numbers to check
@@ -377,24 +404,6 @@ public class NetworkVisionProcessing extends Subsystem {
                     return false;
 
         return true;
-
-    }
-
-    /**
-     * Adds debugging data to the data Map for drive control functions
-     *
-     * @param data  Driving data to add contour information to
-     * @param index Index of the contour to add data on
-     * @return Data map with contour data added in
-     */
-    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
-
-        data.put(RobotMap.CONTOUR_X_KEY, getContours("x", index));
-        data.put(RobotMap.CONTOUR_Y_KEY, getContours("y", index));
-        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours("height", index));
-        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours("width", index));
-
-        return data;
 
     }
 
