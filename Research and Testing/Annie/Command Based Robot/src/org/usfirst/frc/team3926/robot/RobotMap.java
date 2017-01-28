@@ -9,27 +9,38 @@ import java.beans.Encoder;
  * floating around.
  */
 public class RobotMap {
-    // For example to map the left and right motors, you could define the
-    // following variables to use with your drivetrain subsystem.
-    // public static int leftMotor = 1;
-    // public static int rightMotor = 2;
-    
-    // If you are using multiple modules, make sure to define both the port
-    // number and the module. For example you with a rangefinder:
-    // public static int rangefinderPort = 1;
-    // public static int rangefinderModule = 1;
-    public static int SHOOTING_MOTOR = 1;
-    public static int CLIMBING_MOTOR = 8;
-    public static int RIGHT_STICK = 0;
-    public static int LEFT_STICK = 1;
-    public static int FR_MOTOR = 2;
-    public static int FL_MOTOR = 3;
-    public static int BR_MOTOR = 4;
-    public static int BL_MOTOR = 5;
-    public static int A_CHANNEL_ENC = 6;
-    public static int B_CHANNEL_ENC = 7;
-    public static int DESRIRED_RPM = 200;
-    public static double ADDED_AMOUNT = .01;
-    public static int CLIMBING_LIMIT_SWITCH = 9;
 
+    public static int    SHOOTING_MOTOR           = 1;
+    public static int    CLIMBING_MOTOR           = 8;
+    /**right joystick*/
+    public static int    RIGHT_STICK              = 0;
+    /**left joystick*/
+    public static int    LEFT_STICK               = 1;
+    /**motors for tank drive*/
+    public static int    FR_MOTOR                 = 2;
+    public static int    FL_MOTOR                 = 3;
+    public static int    BR_MOTOR                 = 4;
+    public static int    BL_MOTOR                 = 5;
+    /**encoder ports*/
+    public static int    A_CHANNEL_ENC            = 6;
+    public static int    B_CHANNEL_ENC            = 7;
+    /**speed wanted for encoder*/
+    public static int    DESRIRED_RPM             = 200;
+    /**amount added to speed for encoder*/
+    public static double ADDED_AMOUNT             = .01;
+    /**limit switch for climbing*/
+    public static int    CLIMBING_LIMIT_SWITCH    = 9;
+    /**contour keys for vision tracking*/
+    public static String X_KEY                    = "x";
+    public static String Y_KEY                    = "y";
+    public static String NETWORK_TABLE_KEY        = "GRIP";
+    public static String WIDTH_KEY                = "width";
+    public static String HIGHT_KEY                = "hight";
+    /**screen coordinates*/
+    public static int    X_SCREEN                 = 60;
+    public static int    Y_SCREEN                 = 30;
+    public static int    CENTER_OF_SCREEN_X       = X_SCREEN / 2;
+    public static int    CENTER_OF_SCREEN_Y       = Y_SCREEN / 2;
+    /**set speed for turning with vision tracking*/
+    public static double VISION_DRIVING_SET_SPEED = 1;
 }

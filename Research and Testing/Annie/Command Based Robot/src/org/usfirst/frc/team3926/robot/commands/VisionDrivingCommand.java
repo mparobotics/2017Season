@@ -1,19 +1,18 @@
 package org.usfirst.frc.team3926.robot.commands;
-//import edu.wpi.first.wpilibj.RobotDrive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.subsystems.VisionTrackingSystem;
 
 /**
  *
  */
-public class DriveCommand extends Command {
+public class VisionDrivingCommand extends Command {
 
-    public DriveCommand() {
+    public VisionDrivingCommand() {
+
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveSystem);
-
+        requires(Robot.visionTrackingSystem);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +23,12 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
-        //gets value of joystick and puts it into tank drive
-        Robot.driveSystem.TankDrive(OI.leftstick.getY(), OI.rightStick.getY());
+        double[] returnValue = Robot.visionTrackingSystem.visionDriving();
+
+        double LSpeed = returnValue[0];
+        double RSpeed = returnValue[1];
+
+        Robot.driveSystem.SetSpeed(LSpeed, RSpeed);
 
     }
 
@@ -33,14 +36,10 @@ public class DriveCommand extends Command {
     protected boolean isFinished() {
 
         return false;
-
     }
 
     // Called once after isFinished returns true
     protected void end() {
-
-        //sets the motors to 0
-        Robot.driveSystem.TankDrive(0, 0);
 
     }
 

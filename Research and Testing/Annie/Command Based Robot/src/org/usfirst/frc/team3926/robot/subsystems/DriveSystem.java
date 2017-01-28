@@ -11,10 +11,13 @@ public class DriveSystem extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    private RobotDrive robotDrive;
 
-    public RobotDrive robotDrive;
-
+    /**
+     * delcares driving motors and tank drive
+     */
     public DriveSystem() {
+
         CANTalon TalonSRX_FR = new CANTalon(RobotMap.FR_MOTOR);
         CANTalon TalonSRX_BR = new CANTalon(RobotMap.BR_MOTOR);
         CANTalon TalonSRX_FL = new CANTalon(RobotMap.FL_MOTOR);
@@ -26,14 +29,30 @@ public class DriveSystem extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
+
         new DriveCommand();
     }
 
-    public void robotSpeed(double LSpeed, double RSpeed) {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    /**
+     * driving with vision tracking
+     */
+    public void robotSpeed() {
 
+        //robotDrive.tankDrive(LSpeed, RSpeed);
+        Robot.visionTrackingSystem.visionDriving();
 
+    }
+
+    public void SetSpeed(double LSpeed, double RSpeed) {
+
+        Robot.visionTrackingSystem.visionDriving();
+        robotDrive.tankDrive(LSpeed, RSpeed);
+
+    }
+
+    public void TankDrive(double speedR, double speedL) {
+
+        robotDrive.tankDrive(speedL, speedR);
 
     }
 

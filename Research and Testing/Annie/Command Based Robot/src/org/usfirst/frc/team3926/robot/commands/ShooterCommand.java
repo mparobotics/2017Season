@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3926.robot.commands;
 
 import org.usfirst.frc.team3926.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,8 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ShooterCommand extends Command {
-
-
 
     public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -45,5 +42,6 @@ public class ShooterCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+
     }
 }

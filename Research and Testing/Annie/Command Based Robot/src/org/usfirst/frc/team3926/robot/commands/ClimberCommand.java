@@ -1,4 +1,5 @@
 package org.usfirst.frc.team3926.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
@@ -30,7 +31,6 @@ public class ClimberCommand extends Command {
         //return Robot.climbingSystem.limitSwitch.get();
     }
 
-
     // Called once after isFinished returns true
     protected void end() {
 
@@ -40,6 +40,7 @@ public class ClimberCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+
     }
 }
 
