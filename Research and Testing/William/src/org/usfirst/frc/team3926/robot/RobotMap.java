@@ -8,6 +8,10 @@ import org.usfirst.frc.team3926.subsystems.NetworkVisionProcessing;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * <p>
+ * All options with the prefix XBOX are only used if {@link #XBOX_DRIVE_CONTROLLER} is true. If that is false, ignore
+ * them
+ * </p>
  **********************************************************************************************************************/
 public class RobotMap {
 
@@ -17,9 +21,9 @@ public class RobotMap {
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
     public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
     /** Use a speed buffer to prevent sudden jumps or drops in speed */
-    public final static boolean  USE_SPEED_BUFFER                   = true;
+    public final static boolean  USE_SPEED_BUFFER                   = false;
     /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
-    public final static boolean  BUFFER_ACCELERATION                = true;
+    public final static boolean  BUFFER_ACCELERATION                = false;
     /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
     public final static boolean  USE_SMART_FILTER                   = true;
     /** Invert motor direction for the drive train's right side */
@@ -38,21 +42,17 @@ public class RobotMap {
     public final static int      BACK_LEFT_MOTOR_PWM                = 3;
     /** Motor for testing shooter */
     public final static int      TEST_MOTOR_PWM                     = 4;
-    
+
     ///////////////////////////////////////// XBox configuration (for driving) /////////////////////////////////////////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                          = 0;
-    /** ID for the left trigger on the XBox controller */
-    public final static int      XBOX_LEFT_TRIGGER                  = 2;
-    /** ID for the right trigger on the joystick */
-    public final static int      XBOX_RIGHT_TRIGGER                 = 3;
     /** Axis ID to use for the left speed in tank drive */
     public final static int      XBOX_LEFT_SPEED_AXIS               = 1;
     /** Axis ID to use for the right speed in tank drive */
     public final static int      XBOX_RIGHT_SPEED_AXIS              = 5;
-    /** Button ID to enter safety mode when {@link #XBOX_DRIVE_CONTROLLER} is true */
+    /** Button ID to enter safety mode */
     public final static int      XBOX_SAFTEY_MODE_BUTTON            = 1;
-    /** Button ID to enter straight mode when {@link #XBOX_DRIVE_CONTROLLER} is true */
+    /** Button ID to enter straight mode */
     public final static int      XBOX_STRAIGHT_MODE_BUTTON          = 2;
     /** Button ID to signify that an action taken by the robot in {@link DriveControl#autonomousTank()} is incorrect */
     public final static int      XBOX_CONTOUR_ERROR_BUTTON          = 5;
@@ -70,10 +70,7 @@ public class RobotMap {
     ///// Configuration for Driver's Primary Stick /////
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
     public final static int      SAFTEY_MODE_BUTTON                 = 1;
-    /**
-     * Button ID on {@link OI#driverPrimaryStick} to signify that an action taken by the robot in
-     * {@link DriveControl#autonomousTank()} is incorrect
-     */
+    /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
     public final static int      CONTOUR_ERROR_BUTTON               = 5;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
     public final static int      CENTER_BUTTON                      = 4;

@@ -27,18 +27,21 @@ public class OI {
     /** Button to activate driving the robot towards the center of a vision target */
     public Button   driveToCenter;
 
+    /**
+     * Constructs the OI class as specified by various options in {@link RobotMap}
+     */
     OI() {
 
-        driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
-        driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
-
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
+            driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);
             straightMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_STRAIGHT_MODE_BUTTON);
             safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CONTOUR_ERROR_BUTTON);
             centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_BUTTON);
             driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_CENTER_BUTTON);
         } else {
+            driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
+            driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
             straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
             safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFTEY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.CONTOUR_ERROR_BUTTON);
