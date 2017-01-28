@@ -64,6 +64,7 @@ public class RobotMap {
     public final static int      LEFT_STICK_PORT                    = 1;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
+    /* Table Names and Keys */
     /** Name of the network table for NetworkVisionProcessing to read from */
     public final static String   TABLE_NAME                         = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
@@ -83,6 +84,10 @@ public class RobotMap {
     public final static boolean  USE_SPEED_BUFFER                   = true;
     /** Buffer size for vision tracking commands */
     public final static int      VISION_SPEED_BUFFER_SIZE           = 5;
+    /** Allowable difference in buffered values. If the difference is greater than this it falls back to the */
+    public final static double   MAX_BUFFER_DIFFERENCE              = 0.1;
+    /** Time (in milliseconds) between buffer updates */
+    public final static int      BUFFER_UPDATE_TIME                 = 500;
     /* Image size configuration */
     /** Size of the vision tracking image's X axis */
     public final static int      IMAGE_X                            = 160;

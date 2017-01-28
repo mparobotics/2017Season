@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
 import static org.usfirst.frc.team3926.robot.RobotMap.SCREEN_CENTER;
@@ -63,10 +65,10 @@ public class NetworkVisionProcessing extends Subsystem {
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean      contoursFound, moveRight, moveLeft;
-    /** Keeps track of the last few speeds to ensure a value being returned isn't a spike */
-    private List<Map<String, Double>> speedBuffer;
+    /** Keeps track of the last few speeds to ensure returned values aren't spikes due to temporary interruptions */
+    private double[][] speedBuffer;
     /** The last valid speed seen with the buffer */
-    private Map<String, Double>       lastValidSpeed;
+    private double[]   lastValidSpeed;
 
     ////////////////////////////////////// Constructors and Initializer ////////////////////////////////////////////////
 
@@ -75,8 +77,16 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public NetworkVisionProcessing() {
 
-        if (RobotMap.USE_SPEED_BUFFER)
-            speedBuffer = new Vector<>();
+        if (RobotMap.USE_SPEED_BUFFER) {
+            speedBuffer = new double[RobotMap.VISION_SPEED_BUFFER_SIZE][2];
+
+            for (double[] i : speedBuffer)
+                i[0] = i[1] = 0;
+
+            lastValidSpeed = new double[] {0, 0};
+
+        }
+
     }
 
     /**
@@ -309,7 +319,7 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
-    /////////////////////////////////////////////////// Contour Filtering //////////////////////////////////////////////
+    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
 
     /**
      * Allows the filtering of contour data past what GRIP can do
@@ -389,6 +399,21 @@ public class NetworkVisionProcessing extends Subsystem {
         return new double[] {0};
 
     }
+
+    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
+
+    /**
+     * TODO finish
+     * @param data
+     * @return
+     */
+    private Map<String, Double> bufferSpeeds(Map<String, Double> data) {
+
+        return data;
+
+    }
+
+    ////////////////////////////////////////////////// Other Methods ///////////////////////////////////////////////////
 
     /**
      * Checks if a bunch of numbers are equal
