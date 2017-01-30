@@ -12,15 +12,9 @@ class GripPythonVI:
         """initializes all values to presets or None if need to be set
         """
 
-        self.__blur_type = BlurType.Box_Blur
-        self.__blur_radius = 92.7927927927928
-
-        self.blur_output = None
-
-        self.__hsv_threshold_input = self.blur_output
-        self.__hsv_threshold_hue = [59.89208633093525, 124.99151103565364]
-        self.__hsv_threshold_saturation = [0.0, 148.93039049235992]
-        self.__hsv_threshold_value = [0.0, 255.0]
+        self.__hsv_threshold_hue = [0.0, 141.79966044142614]
+        self.__hsv_threshold_saturation = [0.0, 64.5076400679117]
+        self.__hsv_threshold_value = [139.88309352517987, 246.34125636672326]
 
         self.hsv_threshold_output = None
 
@@ -30,10 +24,10 @@ class GripPythonVI:
         self.find_contours_output = None
 
         self.__filter_contours_contours = self.find_contours_output
-        self.__filter_contours_min_area = 8.0
-        self.__filter_contours_min_perimeter = 1.0
-        self.__filter_contours_min_width = 1.0
-        self.__filter_contours_max_width = 1000
+        self.__filter_contours_min_area = 100.0
+        self.__filter_contours_min_perimeter = 100.0
+        self.__filter_contours_min_width = 100.0
+        self.__filter_contours_max_width = 1000.0
         self.__filter_contours_min_height = 1.0
         self.__filter_contours_max_height = 1000
         self.__filter_contours_solidity = [0, 100]
@@ -49,12 +43,8 @@ class GripPythonVI:
         """
         Runs the pipeline and sets all outputs to new values.
         """
-        # Step Blur0:
-        self.__blur_input = source0
-        (self.blur_output) = self.__blur(self.__blur_input, self.__blur_type, self.__blur_radius)
-
         # Step HSV_Threshold0:
-        self.__hsv_threshold_input = self.blur_output
+        self.__hsv_threshold_input = source0
         (self.hsv_threshold_output) = self.__hsv_threshold(self.__hsv_threshold_input, self.__hsv_threshold_hue, self.__hsv_threshold_saturation, self.__hsv_threshold_value)
 
         # Step Find_Contours0:
@@ -65,28 +55,6 @@ class GripPythonVI:
         self.__filter_contours_contours = self.find_contours_output
         (self.filter_contours_output) = self.__filter_contours(self.__filter_contours_contours, self.__filter_contours_min_area, self.__filter_contours_min_perimeter, self.__filter_contours_min_width, self.__filter_contours_max_width, self.__filter_contours_min_height, self.__filter_contours_max_height, self.__filter_contours_solidity, self.__filter_contours_max_vertices, self.__filter_contours_min_vertices, self.__filter_contours_min_ratio, self.__filter_contours_max_ratio)
 
-
-    @staticmethod
-    def __blur(src, type, radius):
-        """Softens an image using one of several filters.
-        Args:
-            src: The source mat (numpy.ndarray).
-            type: The blurType to perform represented as an int.
-            radius: The radius for the blur as a float.
-        Returns:
-            A numpy.ndarray that has been blurred.
-        """
-        if(type is BlurType.Box_Blur):
-            ksize = int(2 * round(radius) + 1)
-            return cv2.blur(src, (ksize, ksize))
-        elif(type is BlurType.Gaussian_Blur):
-            ksize = int(6 * round(radius) + 1)
-            return cv2.GaussianBlur(src, (ksize, ksize), round(radius))
-        elif(type is BlurType.Median_Filter):
-            ksize = int(2 * round(radius) + 1)
-            return cv2.medianBlur(src, ksize)
-        else:
-            return cv2.bilateralFilter(src, -1, round(radius), round(radius))
 
     @staticmethod
     def __hsv_threshold(input, hue, sat, val):
@@ -165,5 +133,4 @@ class GripPythonVI:
         return output
 
 
-BlurType = Enum('BlurType', 'Box_Blur Gaussian_Blur Median_Filter Bilateral_Filter')
 
