@@ -12,35 +12,34 @@ class GripPythonVI:
         """initializes all values to presets or None if need to be set
         """
 
-        self.__resize_image_width = 320.0
-        self.__resize_image_height = 240.0
-        self.__resize_image_interpolation = cv2.INTER_CUBIC
+        self.__blur_type = BlurType.Box_Blur
+        self.__blur_radius = 92.7927927927928
 
-        self.resize_image_output = None
+        self.blur_output = None
 
-        self.__hsl_threshold_input = self.resize_image_output
-        self.__hsl_threshold_hue = [45.32374100719424, 88.31918505942278]
-        self.__hsl_threshold_saturation = [123.83093525179855, 255.0]
-        self.__hsl_threshold_luminance = [224.73021582733813, 255.0]
+        self.__hsv_threshold_input = self.blur_output
+        self.__hsv_threshold_hue = [59.89208633093525, 124.99151103565364]
+        self.__hsv_threshold_saturation = [0.0, 148.93039049235992]
+        self.__hsv_threshold_value = [0.0, 255.0]
 
-        self.hsl_threshold_output = None
+        self.hsv_threshold_output = None
 
-        self.__find_contours_input = self.hsl_threshold_output
+        self.__find_contours_input = self.hsv_threshold_output
         self.__find_contours_external_only = False
 
         self.find_contours_output = None
 
         self.__filter_contours_contours = self.find_contours_output
-        self.__filter_contours_min_area = 100.0
-        self.__filter_contours_min_perimeter = 100.0
-        self.__filter_contours_min_width = 0
+        self.__filter_contours_min_area = 8.0
+        self.__filter_contours_min_perimeter = 1.0
+        self.__filter_contours_min_width = 1.0
         self.__filter_contours_max_width = 1000
-        self.__filter_contours_min_height = 0
+        self.__filter_contours_min_height = 1.0
         self.__filter_contours_max_height = 1000
         self.__filter_contours_solidity = [0, 100]
         self.__filter_contours_max_vertices = 1000000
-        self.__filter_contours_min_vertices = 0
-        self.__filter_contours_min_ratio = 0
+        self.__filter_contours_min_vertices = 1.0
+        self.__filter_contours_min_ratio = 1.0
         self.__filter_contours_max_ratio = 1000
 
         self.filter_contours_output = None
@@ -50,16 +49,16 @@ class GripPythonVI:
         """
         Runs the pipeline and sets all outputs to new values.
         """
-        # Step Resize_Image0:
-        self.__resize_image_input = source0
-        (self.resize_image_output) = self.__resize_image(self.__resize_image_input, self.__resize_image_width, self.__resize_image_height, self.__resize_image_interpolation)
+        # Step Blur0:
+        self.__blur_input = source0
+        (self.blur_output) = self.__blur(self.__blur_input, self.__blur_type, self.__blur_radius)
 
-        # Step HSL_Threshold0:
-        self.__hsl_threshold_input = self.resize_image_output
-        (self.hsl_threshold_output) = self.__hsl_threshold(self.__hsl_threshold_input, self.__hsl_threshold_hue, self.__hsl_threshold_saturation, self.__hsl_threshold_luminance)
+        # Step HSV_Threshold0:
+        self.__hsv_threshold_input = self.blur_output
+        (self.hsv_threshold_output) = self.__hsv_threshold(self.__hsv_threshold_input, self.__hsv_threshold_hue, self.__hsv_threshold_saturation, self.__hsv_threshold_value)
 
         # Step Find_Contours0:
-        self.__find_contours_input = self.hsl_threshold_output
+        self.__find_contours_input = self.hsv_threshold_output
         (self.find_contours_output) = self.__find_contours(self.__find_contours_input, self.__find_contours_external_only)
 
         # Step Filter_Contours0:
@@ -68,31 +67,40 @@ class GripPythonVI:
 
 
     @staticmethod
-    def __resize_image(input, width, height, interpolation):
-        """Scales and image to an exact size.
+    def __blur(src, type, radius):
+        """Softens an image using one of several filters.
         Args:
-            input: A numpy.ndarray.
-            Width: The desired width in pixels.
-            Height: The desired height in pixels.
-            interpolation: Opencv enum for the type fo interpolation.
+            src: The source mat (numpy.ndarray).
+            type: The blurType to perform represented as an int.
+            radius: The radius for the blur as a float.
         Returns:
-            A numpy.ndarray of the new size.
+            A numpy.ndarray that has been blurred.
         """
-        return cv2.resize(input, ((int)(width), (int)(height)), 0, 0, interpolation)
+        if(type is BlurType.Box_Blur):
+            ksize = int(2 * round(radius) + 1)
+            return cv2.blur(src, (ksize, ksize))
+        elif(type is BlurType.Gaussian_Blur):
+            ksize = int(6 * round(radius) + 1)
+            return cv2.GaussianBlur(src, (ksize, ksize), round(radius))
+        elif(type is BlurType.Median_Filter):
+            ksize = int(2 * round(radius) + 1)
+            return cv2.medianBlur(src, ksize)
+        else:
+            return cv2.bilateralFilter(src, -1, round(radius), round(radius))
 
     @staticmethod
-    def __hsl_threshold(input, hue, sat, lum):
-        """Segment an image based on hue, saturation, and luminance ranges.
+    def __hsv_threshold(input, hue, sat, val):
+        """Segment an image based on hue, saturation, and value ranges.
         Args:
             input: A BGR numpy.ndarray.
             hue: A list of two numbers the are the min and max hue.
             sat: A list of two numbers the are the min and max saturation.
-            lum: A list of two numbers the are the min and max luminance.
+            lum: A list of two numbers the are the min and max value.
         Returns:
             A black and white numpy.ndarray.
         """
-        out = cv2.cvtColor(input, cv2.COLOR_BGR2HLS)
-        return cv2.inRange(out, (hue[0], lum[0], sat[0]),  (hue[1], lum[1], sat[1]))
+        out = cv2.cvtColor(input, cv2.COLOR_BGR2HSV)
+        return cv2.inRange(out, (hue[0], sat[0], val[0]),  (hue[1], sat[1], val[1]))
 
     @staticmethod
     def __find_contours(input, external_only):
@@ -157,4 +165,5 @@ class GripPythonVI:
         return output
 
 
+BlurType = Enum('BlurType', 'Box_Blur Gaussian_Blur Median_Filter Bilateral_Filter')
 

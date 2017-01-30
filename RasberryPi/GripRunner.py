@@ -18,7 +18,7 @@ def extra_processing(pipeline):
     heights = []
     areas = []
 
-
+    
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
         center_x_positions.append(x + w / 2)  # X and Y are coordinates of the top-left corner of the bounding box
