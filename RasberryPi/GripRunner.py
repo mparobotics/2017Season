@@ -1,7 +1,7 @@
 #! /home/pi/.virtualenvs/cv/bin/python2
 
-import cv2.cv2 as cv2
-#import cv2
+#import cv2.cv2 as cv2
+import cv2
 from networktables import NetworkTables
 from grip import GripPythonVI  # TODO change the module and class, if needed
 
@@ -52,7 +52,7 @@ def main():
             for contour in pipeline.filter_contours_output:
                 x, y, w, h = cv2.boundingRect(contour)
                 center = ((x+w)/2), ((y+h)/2)
-                cv2.putText(resized_frame, contour_number, center)
+                cv2.putText(resized_frame, contour_number, center, "FONT_HERSHEY_PLAIN", 9, (255, 255, 255))
                 contour_number += 1
             cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', resized_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
