@@ -8,6 +8,9 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.*;
 
+import static org.usfirst.frc.team3926.robot.RobotMap.LEFT_INDEX;
+import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
+
 /**
  * Notes on vision processing:
  * <p>
@@ -56,14 +59,26 @@ import java.util.*;
  */
 public class NetworkVisionProcessing extends Subsystem {
 
+    /**
+     * Enumerator for keeping track of what this subsystem is tracking
+     */
+    public enum TrackingType {
+        HighGoal,
+        GearTarget,
+        Other
+    }
+    /** Holds which type of tracking this is */
+    private TrackingType trackingType;
     /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean      contoursFound, moveRight, moveLeft;
     /** Keeps track of the last few speeds to ensure returned values aren't spikes due to temporary interruptions */
     private List<double[]>      speedBuffer;
-    /** The last valid speed from the buffer */
+    /** Last valid speed from the buffer */
     private Map<String, Double> lastValidSpeed;
+    /** Distance between two contours in terms of a ratio of their total size. */
+    private double              contourXOffsetRatio, contourYOffsetRatio;
 
     ////////////////////////////////////// Constructors and Initializer ////////////////////////////////////////////////
 
@@ -134,18 +149,19 @@ public class NetworkVisionProcessing extends Subsystem {
         if (RobotMap.DEBUG)
             returnValue = addDebugData(returnValue, checkIndex);
 
-        if (contourCenter != RobotMap.ILLEGAL_DOUBLE) {
+        if (contourCenter != RobotMap.ILLEGAL_DOUBLE && checkIndex != RobotMap.ILLEGAL_INT) {
 
             contoursFound = true;
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
             if (contourCenter > RobotMap.SCREEN_CENTER[0]) { //turn to vision reversed
-                movement[0] = 1 - (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                movement[RIGHT_INDEX] = 1 - (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) *
+                                             RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter < RobotMap.SCREEN_CENTER[0]) {
-                movement[1] = 1 - ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                movement[LEFT_INDEX] = 1 - ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveRight = false;
                 moveLeft = true;
             } else {
@@ -153,8 +169,8 @@ public class NetworkVisionProcessing extends Subsystem {
                 moveRight = false;
             }
 
-            returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[0]);
-            returnValue.put(RobotMap.SPEED_LEFT_KEY, movement[1]);
+            returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[RIGHT_INDEX]);
+            returnValue.put(RobotMap.SPEED_LEFT_KEY, movement[LEFT_INDEX]);
 
             if (RobotMap.USE_SPEED_BUFFER)
                 bufferSpeeds(returnValue);
@@ -268,29 +284,38 @@ public class NetworkVisionProcessing extends Subsystem {
         for (int i = 0; i < contourHeights.length; ++i)
             contourAreas[i] = contourHeights[i] * contourWidths[i];
 
-        boolean[] validAreas = validateContourAreas(contourAreas);
+        List<boolean[]> validatedSegments = new Vector<>();
 
-        if (validAreas[index])
+        if (RobotMap.USE_RELATIVE_AREA)
+            validatedSegments.add(contourAreaRatio(contourAreas));
+
+        if (RobotMap.USE_MAX_CONTOUR_AREA)
+            validatedSegments.add(contourAreaMax(contourAreas));
+
+        boolean[] validContours = booleanArrayAnd(validatedSegments);
+
+        if (validContours[index])
             return index;
 
-        for (int i = 0; i < validAreas.length; ++i)
-            if (validAreas[index])
-                return index;
+        for (int i = 0; i < validContours.length; ++i)
+            if (validContours[i])
+                return i;
+
+        System.out.println("ERROR NetworkVisionProcessing.smartFilterContours could not find any good contours");
 
         return RobotMap.ILLEGAL_INT;
 
     }
 
     /**
-     * Checks the contours based on area.
-     * This checks to make sure that a contour has another contour with about double/half of it's area.
+     * Checks to make sure that a contour has another contour with about double/half of it's area.
      * <p>
      * This is used in {@link #smartFilterContours(int)}
      * </p>
      *
      * @return Indexes that match the criteria of this method
      */
-    private boolean[] validateContourAreas(double[] contourAreas) {
+    private boolean[] contourAreaRatio(double[] contourAreas) {
 
         boolean[] validatedIndexes = new boolean[contourAreas.length];
 
@@ -313,16 +338,80 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
-     * errors caused by viewing the target from a bad angle.
+     * Checks to make sure that contour areas do not exceed the max
      * <p>
-     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * This is used in {@link #smartFilterContours(int)}
      * </p>
-     * TODO finish
+     *
+     * @param contourAreas Areas of contours
+     * @return Indexes that match the criteria of this method
      */
-    private double[] correctAngleOffset() {
+    private boolean[] contourAreaMax(double[] contourAreas) {
 
-        return new double[] {0};
+        boolean[] validatedIndexes = new boolean[contourAreas.length];
+
+        for (int i = 0; i < contourAreas.length; ++i)
+            validatedIndexes[i] = !(contourAreas[i] >= RobotMap.MAX_CONTOUR_AREA);
+
+        return validatedIndexes;
+
+    }
+
+    /**
+     * Compares the positions of contours
+     *
+     * @param contourXs X axis positions of contours
+     * @param contourYs Y axis positions of contours
+     * @return Contours that are within the {@link #contourXOffsetRatio}
+     */
+    private boolean[] contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
+                                              double[] contourWidths) {
+
+
+
+    }
+
+    /**
+     * Preforms a bitwise & like operation for all boolean[]s within sections
+     *
+     * @param sections A list of all the boolean[]s to check against each other
+     * @return All boolean[]s of sections compared against each other
+     */
+    private boolean[] booleanArrayAnd(List<boolean[]> sections) {
+
+        boolean[] workingArray = sections.get(0);
+
+        for (int i = 1; i < sections.size(); ++i)
+            for (int j = 0; j < sections.get(i).length; ++j)
+                workingArray[j] = workingArray[j] && sections.get(i)[j];
+
+        return workingArray;
+
+    }
+
+    ///////////////////////////////////////////////// Setup Functions //////////////////////////////////////////////////
+
+    /**
+     *
+     */
+    public void setupForHighGoal() {
+
+        contourXOffsetRatio = RobotMap.HIGH_GOAL_X_OFFSET_RATIO;
+        contourYOffsetRatio = RobotMap.HIGH_GOAL_Y_OFFSET_RATIO;
+
+    }
+
+    /**
+     *
+     */
+    public void setupForGear() {
+
+    }
+
+    /**
+     *
+     */
+    public void setupForOther(double xAxisOffset, double yAxisOffset) {
 
     }
 
@@ -344,7 +433,7 @@ public class NetworkVisionProcessing extends Subsystem {
         { //This adds the latest speeds to the buffer and removes the last entry
             double[] latestSpeeds = new double[2];
             latestSpeeds[RobotMap.LEFT_INDEX] = data.get(RobotMap.SPEED_LEFT_KEY);
-            latestSpeeds[RobotMap.RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
+            latestSpeeds[RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
             speedBuffer.add(0, latestSpeeds); //Adds the latest speed to the array
             speedBuffer.remove(RobotMap.SPEED_BUFFER_SIZE - 1); //Removes the last entry
         }
@@ -355,14 +444,14 @@ public class NetworkVisionProcessing extends Subsystem {
                     modifiedRightSpeed = data.get(RobotMap.SPEED_RIGHT_KEY);
 
             modifiedLeftSpeed += bufferSpeedCheck[RobotMap.LEFT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
-            modifiedRightSpeed += bufferSpeedCheck[RobotMap.RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
+            modifiedRightSpeed += bufferSpeedCheck[RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
 
             data.replace(RobotMap.SPEED_LEFT_KEY, modifiedLeftSpeed);
             data.replace(RobotMap.SPEED_RIGHT_KEY, modifiedRightSpeed);
 
         } else {
 
-            if (bufferSpeedCheck[RobotMap.RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
+            if (bufferSpeedCheck[RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
                 data = lastValidSpeed;
 
         }
@@ -407,9 +496,9 @@ public class NetworkVisionProcessing extends Subsystem {
         int[] returnValue = new int[2]; //TODO there is a better way to do this
 
         if (goodCount < rightHighCount && rightHighCount > rightLowCount)
-            returnValue[RobotMap.RIGHT_INDEX] = 1;
+            returnValue[RIGHT_INDEX] = 1;
         else if (goodCount < rightLowCount && rightLowCount > rightHighCount)
-            returnValue[RobotMap.RIGHT_INDEX] = -1;
+            returnValue[RIGHT_INDEX] = -1;
 
         if (goodCount < leftHighCount && leftHighCount > leftLowCount)
             returnValue[RobotMap.LEFT_INDEX] = 1;
@@ -530,12 +619,32 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     private boolean checkEquality(int... numbers) {
 
-        for (int number : numbers)
+        for (int number : numbers) {
+
+            if (number == 0)
+                return false;
+
             for (int x : numbers)
                 if (number != x)
                     return false;
 
+        }
+
         return true;
+
+    }
+
+    /**
+     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
+     * errors caused by viewing the target from a bad angle.
+     * <p>
+     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * </p>
+     * TODO finish
+     */
+    private double[] correctAngleOffset() {
+
+        return new double[] {0};
 
     }
 

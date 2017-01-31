@@ -150,7 +150,7 @@ public class DriveControl extends Subsystem {
     /**
      * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFETY_FACTOR}
      * <p>
-     * This is activated by pressing {@link OI#safteyMode}
+     * This is activated by pressing {@link OI#safetyMode}
      * </p>
      */
     private void safeMode() {
@@ -161,7 +161,7 @@ public class DriveControl extends Subsystem {
 
     /**
      * Takes data from one of the vision processing methods ({@link NetworkVisionProcessing#moveToCenter(int)}
-     * {@link NetworkVisionProcessing#moveToCenter(int)}) called from {@link this#center()} or
+     * {@link NetworkVisionProcessing#turnToCenter(int)}) called from {@link this#center()} or
      * {@link this#autonomousTank()} and uses it to drive the robot
      *
      * @param callingMethod Name of the method that is calling this (used for debugging)
@@ -178,14 +178,15 @@ public class DriveControl extends Subsystem {
 
             contourErrorPress = true;
 
-            System.out.println("USER DESIGNATED ERROR IN DriveControl." + callingMethod + ": Group #" +
+            System.out.println("ERROR IN DriveControl." + callingMethod + ": Group #" +
                                contourErrorGroup);
-            System.out.println('\t' + RobotMap.CONTOUR_X_KEY + data.get(RobotMap.CONTOUR_X_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_Y_KEY + data.get(RobotMap.CONTOUR_Y_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_WIDTH_KEY + data.get(RobotMap.CONTOUR_WIDTH_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_HEIGHT_KEY + data.get(RobotMap.CONTOUR_HEIGHT_KEY));
-            System.out.println('\t' + RobotMap.SPEED_RIGHT_KEY + data.get(RobotMap.SPEED_RIGHT_KEY));
-            System.out.println('\t' + RobotMap.SPEED_LEFT_KEY + data.get(RobotMap.SPEED_LEFT_KEY));
+            contourDataPrint(RobotMap.CONTOUR_X_KEY, data);
+            contourDataPrint(RobotMap.CONTOUR_Y_KEY, data);
+            contourDataPrint(RobotMap.CONTOUR_WIDTH_KEY, data);
+            contourDataPrint(RobotMap.CONTOUR_HEIGHT_KEY, data);
+            contourDataPrint(RobotMap.SPEED_LEFT_KEY, data);
+            contourDataPrint(RobotMap.SPEED_RIGHT_KEY, data);
+            System.out.println('\t' + "area: " + data.get(RobotMap.CONTOUR_X_KEY) * data.get(RobotMap.CONTOUR_Y_KEY));
 
         } else if (contourErrorPress) {
 
@@ -195,6 +196,18 @@ public class DriveControl extends Subsystem {
         }
 
         driveSystem.tankDrive(leftSide, rightSide);
+
+    }
+
+    /**
+     * Prints part of the data for a contour
+     *
+     * @param key  Key from {@link RobotMap} to identify a part of the contour
+     * @param data Data on the contour to print
+     */
+    private void contourDataPrint(String key, Map<String, Double> data) {
+
+        System.out.println('\t' + key + ": " + data.get(key));
 
     }
 

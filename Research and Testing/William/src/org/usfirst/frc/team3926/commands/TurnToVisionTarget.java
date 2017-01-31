@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 import static org.usfirst.frc.team3926.robot.Robot.driveControl;
 
@@ -14,7 +15,9 @@ public class TurnToVisionTarget extends Command {
     public TurnToVisionTarget() {
 
         requires(driveControl);
-        SmartDashboard.putBoolean("Turn to Vision Target", false);
+
+        if (RobotMap.DEBUG)
+            SmartDashboard.putBoolean("Turn to Vision Target", false);
 
     }
 
@@ -23,7 +26,8 @@ public class TurnToVisionTarget extends Command {
 
         Robot.visionProcessing.initNetworkTables();
 
-        SmartDashboard.putBoolean("Turn to Vision Target", true);
+        if (RobotMap.DEBUG)
+            SmartDashboard.putBoolean("Turn to Vision Target", true);
 
     }
 
@@ -42,7 +46,8 @@ public class TurnToVisionTarget extends Command {
     // Called once after isFinished returns true
     protected void end() {
 
-        SmartDashboard.putBoolean("Turn to Vision Target", false);
+        if (RobotMap.DEBUG)
+            SmartDashboard.putBoolean("Turn to Vision Target", false);
 
     }
 
@@ -50,7 +55,8 @@ public class TurnToVisionTarget extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
 
-        SmartDashboard.putBoolean("Turn to Vision Target", false);
+        if (RobotMap.DEBUG)
+            SmartDashboard.putBoolean("Turn to Vision Target", false);
     }
 
 }
