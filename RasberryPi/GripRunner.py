@@ -18,7 +18,7 @@ def extra_processing(pipeline):
     heights = []
     areas = []
 
-
+    
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
         center_x_positions.append(x + w / 2)  # X and Y are coordinates of the top-left corner of the bounding box
@@ -41,6 +41,7 @@ def main():
     cap = cv2.VideoCapture(0)
     pipeline = GripPythonVI()
     while cap.isOpened():
+        contour_number = 0
         have_frame, frame = cap.read()
         if have_frame:
             pipeline.process(frame)
@@ -48,6 +49,11 @@ def main():
             resized_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             (cv2.drawContours(resized_frame, pipeline.filter_contours_output,
                               -1, (255, 0, 120), thickness=-1))
+            for contour in pipeline.filter_contours_output:
+                x, y, w, h = cv2.boundingRect(contour)
+                center = ((x+w)/2), ((y+h)/2)
+                cv2.putText(resized_frame, contour_number, center, "FONT_HERSHEY_PLAIN", 9, (255, 255, 255))
+                contour_number += 1
             cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', resized_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
