@@ -21,14 +21,19 @@ public class ControlTank extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Called repeatedly when this Command is scheduled to run
+     */
     protected void execute() {
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER)
             Robot.driveControl.driveTank(oi.driverPrimaryStick.getRawAxis(RobotMap.XBOX_RIGHT_SPEED_AXIS),
                                          oi.driverPrimaryStick.getRawAxis(RobotMap.XBOX_LEFT_SPEED_AXIS),
                                          oi.straightMode.get(),
-                                         oi.safteyMode.get());
+                                         oi.safetyMode.get());
+        else
+            Robot.driveControl.driveTank(oi.driverPrimaryStick.getY(), oi.driverSecondaryStick.getY(),
+                                         oi.straightMode.get(), oi.safetyMode.get());
     }
 
     // Make this return true when this Command no longer needs to run execute()

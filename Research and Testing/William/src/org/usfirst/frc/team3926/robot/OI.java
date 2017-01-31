@@ -19,7 +19,7 @@ public class OI {
     /** Button to make the robot drive straight */
     public Button   straightMode;
     /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFETY_FACTOR} */
-    public Button   safteyMode;
+    public Button   safetyMode;
     /** Button to signify that the robot has made an incorrect action based off of a contour */
     public Button   contourError;
     /** Button to center the robot on the vision target */
@@ -35,7 +35,7 @@ public class OI {
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
             driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);
             straightMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_STRAIGHT_MODE_BUTTON);
-            safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
+            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CONTOUR_ERROR_BUTTON);
             centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_BUTTON);
             driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_CENTER_BUTTON);
@@ -43,7 +43,7 @@ public class OI {
             driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
             driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
             straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
-            safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFTEY_MODE_BUTTON);
+            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFTEY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.CONTOUR_ERROR_BUTTON);
             centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.CENTER_BUTTON);
             driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_CENTER_BUTTON);

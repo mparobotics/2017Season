@@ -27,9 +27,9 @@ public class RobotMap {
     /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
     public final static boolean  USE_SMART_FILTER                   = true;
     /** Invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = false;
+    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = false;
+    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
 
     /////////////////////////////////////////////////// Motor PWM IDs //////////////////////////////////////////////////
     /** PWM port for front right motor */
@@ -115,6 +115,8 @@ public class RobotMap {
     ///// Smart Filter Configuration /////
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
     public final static double   ALLOWABLE_ERROR                    = 0.05;
+    /** The maximum area of a contour NOTE: This can be done with GRIP. I have it here for convenience */
+    public final static double   MAX_CONTOUR_AREA                   = 20000;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** The max speed for the robot to travel during autonomous */

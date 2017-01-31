@@ -8,6 +8,9 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.*;
 
+import static org.usfirst.frc.team3926.robot.RobotMap.LEFT_INDEX;
+import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
+
 /**
  * Notes on vision processing:
  * <p>
@@ -134,18 +137,19 @@ public class NetworkVisionProcessing extends Subsystem {
         if (RobotMap.DEBUG)
             returnValue = addDebugData(returnValue, checkIndex);
 
-        if (contourCenter != RobotMap.ILLEGAL_DOUBLE) {
+        if (contourCenter != RobotMap.ILLEGAL_DOUBLE && checkIndex != RobotMap.ILLEGAL_INT) {
 
             contoursFound = true;
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
             if (contourCenter > RobotMap.SCREEN_CENTER[0]) { //turn to vision reversed
-                movement[0] = 1 - (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                movement[RIGHT_INDEX] = 1 - (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) *
+                                             RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter < RobotMap.SCREEN_CENTER[0]) {
-                movement[1] = 1 - ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                movement[LEFT_INDEX] = 1 - ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveRight = false;
                 moveLeft = true;
             } else {
@@ -153,8 +157,8 @@ public class NetworkVisionProcessing extends Subsystem {
                 moveRight = false;
             }
 
-            returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[0]);
-            returnValue.put(RobotMap.SPEED_LEFT_KEY, movement[1]);
+            returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[RIGHT_INDEX]);
+            returnValue.put(RobotMap.SPEED_LEFT_KEY, movement[LEFT_INDEX]);
 
             if (RobotMap.USE_SPEED_BUFFER)
                 bufferSpeeds(returnValue);
@@ -268,29 +272,30 @@ public class NetworkVisionProcessing extends Subsystem {
         for (int i = 0; i < contourHeights.length; ++i)
             contourAreas[i] = contourHeights[i] * contourWidths[i];
 
-        boolean[] validAreas = validateContourAreas(contourAreas);
+        boolean[] validAreas = contourAreaRatio(contourAreas);
 
         if (validAreas[index])
             return index;
 
         for (int i = 0; i < validAreas.length; ++i)
-            if (validAreas[index])
-                return index;
+            if (validAreas[i])
+                return i;
+
+        System.out.println("ERROR NetworkVisionProcessing.smartFilterContours could not find any good contours");
 
         return RobotMap.ILLEGAL_INT;
 
     }
 
     /**
-     * Checks the contours based on area.
-     * This checks to make sure that a contour has another contour with about double/half of it's area.
+     * Checks to make sure that a contour has another contour with about double/half of it's area.
      * <p>
      * This is used in {@link #smartFilterContours(int)}
      * </p>
      *
      * @return Indexes that match the criteria of this method
      */
-    private boolean[] validateContourAreas(double[] contourAreas) {
+    private boolean[] contourAreaRatio(double[] contourAreas) {
 
         boolean[] validatedIndexes = new boolean[contourAreas.length];
 
@@ -309,6 +314,24 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
         return validatedIndexes;
+
+    }
+
+    /**
+     * Checks to make sure that contour areas do not exceed the max
+     * <p>
+     * This is used in {@link #smartFilterContours(int)}
+     * </p>
+     *
+     * @param contourAreas Areas of contours
+     * @return Indexes that match the criteria of this method
+     */
+    private boolean[] contourAreaMax(double[] contourAreas) {
+
+        boolean[] validatedIndexes = new boolean[contourAreas.length];
+
+        for (double i : contourAreas)
+
 
     }
 
@@ -344,7 +367,7 @@ public class NetworkVisionProcessing extends Subsystem {
         { //This adds the latest speeds to the buffer and removes the last entry
             double[] latestSpeeds = new double[2];
             latestSpeeds[RobotMap.LEFT_INDEX] = data.get(RobotMap.SPEED_LEFT_KEY);
-            latestSpeeds[RobotMap.RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
+            latestSpeeds[RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
             speedBuffer.add(0, latestSpeeds); //Adds the latest speed to the array
             speedBuffer.remove(RobotMap.SPEED_BUFFER_SIZE - 1); //Removes the last entry
         }
@@ -355,14 +378,14 @@ public class NetworkVisionProcessing extends Subsystem {
                     modifiedRightSpeed = data.get(RobotMap.SPEED_RIGHT_KEY);
 
             modifiedLeftSpeed += bufferSpeedCheck[RobotMap.LEFT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
-            modifiedRightSpeed += bufferSpeedCheck[RobotMap.RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
+            modifiedRightSpeed += bufferSpeedCheck[RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
 
             data.replace(RobotMap.SPEED_LEFT_KEY, modifiedLeftSpeed);
             data.replace(RobotMap.SPEED_RIGHT_KEY, modifiedRightSpeed);
 
         } else {
 
-            if (bufferSpeedCheck[RobotMap.RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
+            if (bufferSpeedCheck[RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
                 data = lastValidSpeed;
 
         }
@@ -407,9 +430,9 @@ public class NetworkVisionProcessing extends Subsystem {
         int[] returnValue = new int[2]; //TODO there is a better way to do this
 
         if (goodCount < rightHighCount && rightHighCount > rightLowCount)
-            returnValue[RobotMap.RIGHT_INDEX] = 1;
+            returnValue[RIGHT_INDEX] = 1;
         else if (goodCount < rightLowCount && rightLowCount > rightHighCount)
-            returnValue[RobotMap.RIGHT_INDEX] = -1;
+            returnValue[RIGHT_INDEX] = -1;
 
         if (goodCount < leftHighCount && leftHighCount > leftLowCount)
             returnValue[RobotMap.LEFT_INDEX] = 1;
@@ -530,10 +553,16 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     private boolean checkEquality(int... numbers) {
 
-        for (int number : numbers)
+        for (int number : numbers) {
+
+            if (number == 0)
+                return false;
+
             for (int x : numbers)
                 if (number != x)
                     return false;
+
+        }
 
         return true;
 
