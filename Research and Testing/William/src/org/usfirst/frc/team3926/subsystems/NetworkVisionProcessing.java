@@ -59,14 +59,26 @@ import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
  */
 public class NetworkVisionProcessing extends Subsystem {
 
+    /**
+     * Enumerator for keeping track of what this subsystem is tracking
+     */
+    public enum TrackingType {
+        HighGoal,
+        GearTarget,
+        Other
+    }
+    /** Holds which type of tracking this is */
+    private TrackingType trackingType;
     /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
     private boolean      contoursFound, moveRight, moveLeft;
     /** Keeps track of the last few speeds to ensure returned values aren't spikes due to temporary interruptions */
     private List<double[]>      speedBuffer;
-    /** The last valid speed from the buffer */
+    /** Last valid speed from the buffer */
     private Map<String, Double> lastValidSpeed;
+    /** Distance between two contours in terms of a ratio of their total size. */
+    private double              contourXOffsetRatio, contourYOffsetRatio;
 
     ////////////////////////////////////// Constructors and Initializer ////////////////////////////////////////////////
 
@@ -272,13 +284,21 @@ public class NetworkVisionProcessing extends Subsystem {
         for (int i = 0; i < contourHeights.length; ++i)
             contourAreas[i] = contourHeights[i] * contourWidths[i];
 
-        boolean[] validAreas = contourAreaRatio(contourAreas);
+        List<boolean[]> validatedSegments = new Vector<>();
 
-        if (validAreas[index])
+        if (RobotMap.USE_RELATIVE_AREA)
+            validatedSegments.add(contourAreaRatio(contourAreas));
+
+        if (RobotMap.USE_MAX_CONTOUR_AREA)
+            validatedSegments.add(contourAreaMax(contourAreas));
+
+        boolean[] validContours = booleanArrayAnd(validatedSegments);
+
+        if (validContours[index])
             return index;
 
-        for (int i = 0; i < validAreas.length; ++i)
-            if (validAreas[i])
+        for (int i = 0; i < validContours.length; ++i)
+            if (validContours[i])
                 return i;
 
         System.out.println("ERROR NetworkVisionProcessing.smartFilterContours could not find any good contours");
@@ -330,22 +350,68 @@ public class NetworkVisionProcessing extends Subsystem {
 
         boolean[] validatedIndexes = new boolean[contourAreas.length];
 
-        for (double i : contourAreas)
+        for (int i = 0; i < contourAreas.length; ++i)
+            validatedIndexes[i] = !(contourAreas[i] >= RobotMap.MAX_CONTOUR_AREA);
+
+        return validatedIndexes;
+
+    }
+
+    /**
+     * Compares the positions of contours
+     *
+     * @param contourXs X axis positions of contours
+     * @param contourYs Y axis positions of contours
+     * @return Contours that are within the {@link #contourXOffsetRatio}
+     */
+    private boolean[] contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
+                                              double[] contourWidths) {
+
 
 
     }
 
     /**
-     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
-     * errors caused by viewing the target from a bad angle.
-     * <p>
-     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
-     * </p>
-     * TODO finish
+     * Preforms a bitwise & like operation for all boolean[]s within sections
+     *
+     * @param sections A list of all the boolean[]s to check against each other
+     * @return All boolean[]s of sections compared against each other
      */
-    private double[] correctAngleOffset() {
+    private boolean[] booleanArrayAnd(List<boolean[]> sections) {
 
-        return new double[] {0};
+        boolean[] workingArray = sections.get(0);
+
+        for (int i = 1; i < sections.size(); ++i)
+            for (int j = 0; j < sections.get(i).length; ++j)
+                workingArray[j] = workingArray[j] && sections.get(i)[j];
+
+        return workingArray;
+
+    }
+
+    ///////////////////////////////////////////////// Setup Functions //////////////////////////////////////////////////
+
+    /**
+     *
+     */
+    public void setupForHighGoal() {
+
+        contourXOffsetRatio = RobotMap.HIGH_GOAL_X_OFFSET_RATIO;
+        contourYOffsetRatio = RobotMap.HIGH_GOAL_Y_OFFSET_RATIO;
+
+    }
+
+    /**
+     *
+     */
+    public void setupForGear() {
+
+    }
+
+    /**
+     *
+     */
+    public void setupForOther(double xAxisOffset, double yAxisOffset) {
 
     }
 
@@ -565,6 +631,20 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
         return true;
+
+    }
+
+    /**
+     * Corrects viewing the target from odd angles. This is not for turning the robot, this solely exists to correct
+     * errors caused by viewing the target from a bad angle.
+     * <p>
+     * Note: See Notes on Vision Processing 1/20/2017:4:44 for reason why this exists
+     * </p>
+     * TODO finish
+     */
+    private double[] correctAngleOffset() {
+
+        return new double[] {0};
 
     }
 
