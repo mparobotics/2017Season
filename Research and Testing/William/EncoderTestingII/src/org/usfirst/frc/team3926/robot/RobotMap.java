@@ -24,13 +24,13 @@ public class RobotMap {
 
     /* Encoder Values */
     /** Speed to set the motor */
-    public final static double  MOTOR_SPEED                   = 0.1;
+    //public final static double  MOTOR_SPEED                   = 0.1;
     /** A channel for the encoder */
     public final static int     ENCODER_A_CHANNEL             = 0;
     /** B channel for the encoder */
     public final static int     ENCODER_B_CHANNEL             = 1;
-    /** Target rate for the motor to achieve */
-    public final static double  TARGET_RATE                   = 1;
+    /** Target rate for the motor to achieve. */
+    public final static double  TARGET_RATE                   = 500;
     /** Amount of times that an encoder pules in one revolution (find on encoder data-sheet) */
     public final static int     ENCODER_PULSES_PER_REVOLUTION = 2048;
     /** Diameter of the wheel that the encoder is recording for */
@@ -38,12 +38,16 @@ public class RobotMap {
     /** Name of the PID subsystem for the encoder */
     public final static String  ENCODER_PID_NAME              = "PIDEncoderTesting";
     /** Proportional value for encoder PID loop */
-    public final static double  PROPORTIONAL_VALUE            = 0.1;
+    public final static double  PROPORTIONAL_VALUE            = 0.0003;
     /** Integral value for the encoder PID loop */
-    public final static double  INTEGRAL_VALUE                = 0;
+    public final static double  INTEGRAL_VALUE                = 0.00001; //testing values, do not change
     /** Derivative value for the encoder PID loop */
     public final static double  DERIVATIVE_VALUE              = 0;
+    /**  */
+    public final static double F_VALUE = 0;
+    /**  */
+    public final static double PERIOD = 0.05;
     /** Absolute Tolerance for PID loop */
-    public final static double  ABSOLUTE_TOLERANCE            = 0.02;
+    public final static double  ABSOLUTE_TOLERANCE            = 3;
 
 }
