@@ -1,6 +1,6 @@
 #! /home/pi/.virtualenvs/cv/bin/python2
 
-#import cv2.cv2 as cv2
+# import cv2.cv2 as cv2
 import cv2
 from networktables import NetworkTables
 from grip import GripPythonVI  # TODO change the module and class, if needed
@@ -36,31 +36,41 @@ def extra_processing(pipeline):
     table.putNumberArray('area', areas)
 
 
-def draw_contours(pipeline, frame):
+def draw_contours(pipeline, frame):  # TODO combine this with extra_processing
+    """
+    Draws and labels contours on actual image, useful to see what opencv "sees".
+    :param pipeline: the pipeline that just processed an image
+    :param frame: the image directly from the camera
+    :return: edited frame, sent to disk to be used in mjpg stream
+    """
     contour_number = 0
     contour_frame = cv2.resize(frame, (0, 0), fx=image_scale, fy=image_scale)
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
-        center = (x+(w/2)), (y+(h/2))
+        center = (x + (w / 2)), (y + (h / 2))
         (cv2.drawContours(contour_frame, pipeline.filter_contours_output, -1, (255, 0, 120), cv2.FILLED))
         cv2.putText(contour_frame, str(contour_number), center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
         contour_number += 1
     return contour_frame
 
 
-def main():
+def main():  # TODO debug grip class to see why it does not see some contours
+                # TODO optimize
+    """
+    Grabs image from webcam, processes it with opencv to search for contours, publishes these contours to a NetworkTable
+    and also to mjpg-Streamer.
+    :return: None
+    """
     NetworkTables.setTeam(3926)
     NetworkTables.initialize(server='roboRIO-3926-FRC.local')
     cap = cv2.VideoCapture(0)
     pipeline = GripPythonVI()
     while cap.isOpened():
-        contour_number = 0
         have_frame, frame = cap.read()
         if have_frame:
             pipeline.process(frame)
             extra_processing(pipeline)
             cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', draw_contours(pipeline, frame))
-
 
     print('Stopped Capturing')
 
