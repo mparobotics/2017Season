@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3926.subsystems;
 
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,8 +37,14 @@ public class DriveControl extends Subsystem {
      */
     public DriveControl() {
 
-        driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
-                                     RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
+        if (RobotMap.USE_CAN_TALON)
+            driveSystem = new RobotDrive(new CANTalon(RobotMap.FRONT_LEFT_MOTOR_CAN),
+                                         new CANTalon(RobotMap.BACK_LEFT_MOTOR_CAN),
+                                         new CANTalon(RobotMap.FRONT_RIGHT_MOTOR_CAN),
+                                         new CANTalon(RobotMap.BACK_RIGHT_MOTOR_CAN));
+        else
+            driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
+                                         RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
         contourErrorPress = false;
         contourErrorGroup = 0;
     }
