@@ -1,8 +1,10 @@
 package org.usfirst.frc.team3926.subsystems;
 
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.commands.ControlTank;
 import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
@@ -35,8 +37,14 @@ public class DriveControl extends Subsystem {
      */
     public DriveControl() {
 
-        driveSystem = new RobotDrive(RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM,
-                                     RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM);
+        if (RobotMap.USE_CAN_TALON)
+            driveSystem = new RobotDrive(new CANTalon(RobotMap.FRONT_LEFT_MOTOR_CAN),
+                                         new CANTalon(RobotMap.BACK_LEFT_MOTOR_CAN),
+                                         new CANTalon(RobotMap.FRONT_RIGHT_MOTOR_CAN),
+                                         new CANTalon(RobotMap.BACK_RIGHT_MOTOR_CAN));
+        else
+            driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
+                                         RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
         contourErrorPress = false;
         contourErrorGroup = 0;
     }
@@ -46,7 +54,7 @@ public class DriveControl extends Subsystem {
      */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ControlTank());
     }
 
     /**
@@ -115,8 +123,24 @@ public class DriveControl extends Subsystem {
      */
     private void setSpeed(double rightSpeed, double leftSpeed) {
 
-        rightSide = rightSpeed;
-        leftSide = leftSpeed;
+        if (leftSpeed != RobotMap.ILLEGAL_DOUBLE) {
+            rightSide = rightSpeed;
+            leftSide = leftSpeed;
+        } else
+            rightSide = leftSide = 0;
+
+        if (RobotMap.INVERT_RIGHT_DRIVE_MOTOR_DIRECTION)
+            rightSpeed *= -1;
+
+        if (RobotMap.INVERT_LEFT_DRIVE_MOTOR_DIRECTION)
+            leftSpeed *= -1;
+
+        if (rightSpeed != RobotMap.ILLEGAL_DOUBLE)
+            SmartDashboard.putNumber("Right Speed: ", rightSide);
+
+        if (leftSpeed != RobotMap.ILLEGAL_DOUBLE)
+            SmartDashboard.putNumber("Left Speed: ", leftSide);
+
     }
 
     /**
@@ -131,20 +155,20 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFTEY_FACTOR}
+     * Drive the robot in safety mode (reduces the speed by {@link RobotMap#DRIVE_SAFETY_FACTOR}
      * <p>
-     * This is activated by pressing {@link OI#safteyMode}
+     * This is activated by pressing {@link OI#safetyMode}
      * </p>
      */
     private void safeMode() {
 
-        rightSide *= RobotMap.DRIVE_SAFTEY_FACTOR;
-        leftSide *= RobotMap.DRIVE_SAFTEY_FACTOR;
+        rightSide *= RobotMap.DRIVE_SAFETY_FACTOR;
+        leftSide *= RobotMap.DRIVE_SAFETY_FACTOR;
     }
 
     /**
      * Takes data from one of the vision processing methods ({@link NetworkVisionProcessing#moveToCenter(int)}
-     * {@link NetworkVisionProcessing#moveToCenter(int)}) called from {@link this#center()} or
+     * {@link NetworkVisionProcessing#turnToCenter(int)}) called from {@link this#center()} or
      * {@link this#autonomousTank()} and uses it to drive the robot
      *
      * @param callingMethod Name of the method that is calling this (used for debugging)
@@ -154,12 +178,6 @@ public class DriveControl extends Subsystem {
 
         //Sets the speed of the robot to the values from vision tracking
         setSpeed(data.get(RobotMap.SPEED_RIGHT_KEY), data.get(RobotMap.SPEED_LEFT_KEY));
-        //Sets the speed to 0 if data could not be used to drive
-        if (leftSide == RobotMap.ILLEGAL_DOUBLE)
-            leftSide = rightSide = 0;
-
-        SmartDashboard.putNumber("Right Speed: ", rightSide);
-        SmartDashboard.putNumber("Left Speed: ", leftSide);
 
         /* This will likely go by so quickly that the user will not be able to click based on an error right away,
          * so try to look for the value in the middle of a group of this error */
@@ -167,14 +185,15 @@ public class DriveControl extends Subsystem {
 
             contourErrorPress = true;
 
-            System.out.println("USER DESIGNATED ERROR IN DriveControl." + callingMethod + ": Group #" +
+            System.out.println("ERROR IN DriveControl." + callingMethod + ": Group #" +
                                contourErrorGroup);
-            System.out.println('\t' + RobotMap.CONTOUR_X_KEY + data.get(RobotMap.CONTOUR_X_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_Y_KEY + data.get(RobotMap.CONTOUR_Y_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_WIDTH_KEY + data.get(RobotMap.CONTOUR_WIDTH_KEY));
-            System.out.println('\t' + RobotMap.CONTOUR_HEIGHT_KEY + data.get(RobotMap.CONTOUR_HEIGHT_KEY));
-            System.out.println('\t' + RobotMap.SPEED_RIGHT_KEY + data.get(RobotMap.SPEED_RIGHT_KEY));
-            System.out.println('\t' + RobotMap.SPEED_LEFT_KEY + data.get(RobotMap.SPEED_LEFT_KEY));
+            contourDataPrint(RobotMap.CONTOUR_X_KEY, data);
+            contourDataPrint(RobotMap.CONTOUR_Y_KEY, data);
+            contourDataPrint(RobotMap.CONTOUR_WIDTH_KEY, data);
+            contourDataPrint(RobotMap.CONTOUR_HEIGHT_KEY, data);
+            contourDataPrint(RobotMap.SPEED_LEFT_KEY, data);
+            contourDataPrint(RobotMap.SPEED_RIGHT_KEY, data);
+            System.out.println('\t' + "area: " + data.get(RobotMap.CONTOUR_X_KEY) * data.get(RobotMap.CONTOUR_Y_KEY));
 
         } else if (contourErrorPress) {
 
@@ -184,6 +203,18 @@ public class DriveControl extends Subsystem {
         }
 
         driveSystem.tankDrive(leftSide, rightSide);
+
+    }
+
+    /**
+     * Prints part of the data for a contour
+     *
+     * @param key  Key from {@link RobotMap} to identify a part of the contour
+     * @param data Data on the contour to print
+     */
+    private void contourDataPrint(String key, Map<String, Double> data) {
+
+        System.out.println('\t' + key + ": " + data.get(key));
 
     }
 

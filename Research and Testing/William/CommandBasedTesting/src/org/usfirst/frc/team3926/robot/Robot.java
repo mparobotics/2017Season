@@ -4,12 +4,8 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team3926.commands.ControlTank;
-import org.usfirst.frc.team3926.commands.DriveToVisionTarget;
-import org.usfirst.frc.team3926.commands.TurnToVisionTarget;
 import org.usfirst.frc.team3926.subsystems.DriveControl;
 import org.usfirst.frc.team3926.subsystems.NetworkVisionProcessing;
-import org.usfirst.frc.team3926.subsystems.TestMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,12 +21,7 @@ public class Robot extends IterativeRobot {
     /** Instance of NetworkVisionProcessing to use for autonomous actions */
     public static final NetworkVisionProcessing visionProcessing = new NetworkVisionProcessing();
     /** Instance of OI to use for operator control */
-    public static  OI                  oi;
-    /* These are here temporatily for debugging */
-    private        ControlTank         controlTank;
-    private        TestMotor           testMotor;
-    private static DriveToVisionTarget driveToVisionTarget;
-    private static TurnToVisionTarget turnToVisionTarget;
+    public static OI oi;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -39,7 +30,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 
         oi = new OI();
-        testMotor = new TestMotor();
     }
 
     /**
@@ -72,10 +62,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
 
-        //driveToVisionTarget = new DriveToVisionTarget();
-        //driveToVisionTarget.start();
-        turnToVisionTarget = new TurnToVisionTarget();
-        turnToVisionTarget.start();
     }
 
     /**
@@ -91,8 +77,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
 
-        controlTank = new ControlTank();
-        controlTank.start();
     }
 
     /**
@@ -101,7 +85,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
 
         Scheduler.getInstance().run();
-        testMotor.RunTestMotor();
+
     }
 
     /**

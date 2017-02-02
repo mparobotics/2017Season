@@ -19,5 +19,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="library" name="OpenCV Java" level="project" />
     <orderEntry type="library" name="WPILib" level="project" />
+    <orderEntry type="library" name="CTRLib" level="project" />
   </component>
 </module>

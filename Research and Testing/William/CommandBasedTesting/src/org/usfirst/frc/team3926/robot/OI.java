@@ -3,6 +3,8 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3926.commands.DriveToHighGoalTarget;
+import org.usfirst.frc.team3926.commands.TurnToHighGoalTarget;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,24 +18,40 @@ public class OI {
     public Joystick driverSecondaryStick;
     /** Button to make the robot drive straight */
     public Button   straightMode;
-    /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFTEY_FACTOR} */
-    public Button   safteyMode;
+    /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFETY_FACTOR} */
+    public Button   safetyMode;
     /** Button to signify that the robot has made an incorrect action based off of a contour */
     public Button   contourError;
+    /** Button to center the robot on the vision target */
+    public Button   centerDrive;
+    /** Button to activate driving the robot towards the center of a vision target */
+    public Button   driveToCenter;
 
+    /**
+     * Constructs the OI class as specified by various options in {@link RobotMap}
+     */
     OI() {
 
-        driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
-        driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
-
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
+            driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);
             straightMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_STRAIGHT_MODE_BUTTON);
-            safteyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
+            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CONTOUR_ERROR_BUTTON);
+            centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_BUTTON);
+            driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_CENTER_BUTTON);
         } else {
-            straightMode = new JoystickButton(driverSecondaryStick, 1);
-            safteyMode = new JoystickButton(driverPrimaryStick, 1);
+            driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
+            driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
+            straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
+            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFTEY_MODE_BUTTON);
+            contourError = new JoystickButton(driverPrimaryStick, RobotMap.CONTOUR_ERROR_BUTTON);
+            centerDrive = new JoystickButton(driverPrimaryStick, RobotMap.CENTER_BUTTON);
+            driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_CENTER_BUTTON);
         }
+
+        centerDrive.whileHeld(new DriveToHighGoalTarget());
+        driveToCenter.whileHeld(new TurnToHighGoalTarget());
+
     }
 
     //// CREATING BUTTONS
