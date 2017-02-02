@@ -2,9 +2,9 @@ package org.usfirst.frc.team3926.robot.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
@@ -16,31 +16,29 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  * its target, this gets added. If this is the only value in the loop, the system will oscillate around the target and
  * rarely actually hit it.
  * </p>
- * <p>
- * Setpoint: The target value for the PID loop to aim for
- * So it looks like setting this to 1 makes the target 100 RPM
- * </p>
  */
 public class TestMotorControl extends PIDSubsystem {
 
     private Encoder encoder;
     private Talon   testMotor;
+    private double outputSum = 0;
 
     public TestMotorControl() {
         /* This calls the constructor for a PIDSubsystem(name, proportional, integral, derivative) */
         super(RobotMap.ENCODER_PID_NAME, RobotMap.PROPORTIONAL_VALUE, RobotMap.INTEGRAL_VALUE,
-              RobotMap.DERIVATIVE_VALUE);
+              RobotMap.DERIVATIVE_VALUE, RobotMap.F_VALUE, RobotMap.PERIOD);
         setAbsoluteTolerance(RobotMap.ABSOLUTE_TOLERANCE);
         setSetpoint(RobotMap.TARGET_RATE);
         encoder = new Encoder(RobotMap.ENCODER_A_CHANNEL, RobotMap.ENCODER_B_CHANNEL, false, CounterBase.EncodingType
                 .k4X);
+        //Sets up the test motor
         testMotor = new Talon(RobotMap.TEST_MOTOR_PWM);
+        //Sets up the encoder
         encoder.setDistancePerPulse(RobotMap.WHEEL_DIAMETER * Math.PI / RobotMap.ENCODER_PULSES_PER_REVOLUTION);
+        encoder.setPIDSourceType(PIDSourceType.kRate);
+        //Starts the PID loop
         enable();
         getPIDController().setContinuous(true);
-        LiveWindow.addActuator("TestMotorControl", "PIDController", getPIDController());
-        LiveWindow.addSensor("TestMotorControl", "Motor Encoder", encoder);
-        //LiveWindow.addActuator("testing again", "test", super.get);
 
     }
 
@@ -74,7 +72,12 @@ public class TestMotorControl extends PIDSubsystem {
      */
     protected void usePIDOutput(double output) {
 
-        testMotor.pidWrite(output);
+        //outputSum += output/20;
+        SmartDashboard.putNumber("PID Output", output);
+        motorDisplayOutput();
+        //testMotor.set(outputSum);
+        testMotor.set(output);
+
     }
 
     public void initDefaultCommand() {

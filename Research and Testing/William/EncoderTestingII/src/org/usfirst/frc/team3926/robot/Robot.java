@@ -15,7 +15,7 @@ import org.usfirst.frc.team3926.robot.subsystems.TestMotorControl;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-	public static final TestMotorControl testMotorControl = new TestMotorControl();
+	public static TestMotorControl testMotorControl;
 	
 
 	double speed;
@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		//speed = SmartDashboard.getNumber("speed", 0);
+        testMotorControl = new TestMotorControl();
     }
 	
 	/**
