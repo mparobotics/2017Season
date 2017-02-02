@@ -3,8 +3,8 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3926.commands.DriveToVisionTarget;
-import org.usfirst.frc.team3926.commands.TurnToVisionTarget;
+import org.usfirst.frc.team3926.commands.DriveToHighGoalTarget;
+import org.usfirst.frc.team3926.commands.TurnToHighGoalTarget;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,8 +49,8 @@ public class OI {
             driveToCenter = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_CENTER_BUTTON);
         }
 
-        centerDrive.whileHeld(new DriveToVisionTarget());
-        driveToCenter.whileHeld(new TurnToVisionTarget());
+        centerDrive.whileHeld(new DriveToHighGoalTarget());
+        driveToCenter.whileHeld(new TurnToHighGoalTarget());
 
     }
 

@@ -59,16 +59,10 @@ import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
  */
 public class NetworkVisionProcessing extends Subsystem {
 
-    /**
-     * Enumerator for keeping track of what this subsystem is tracking
-     */
-    public enum TrackingType {
-        HighGoal,
-        GearTarget,
-        Other
-    }
-    /** Holds which type of tracking this is */
-    private TrackingType trackingType;
+    /** Enables/Disables offset checking on the x-axis */
+    private boolean      XAxisOffsetCheck;
+    /** Enables/Disables offset checking on the y-axis */
+    private boolean      YAxisOffsetCheck;
     /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
@@ -99,6 +93,9 @@ public class NetworkVisionProcessing extends Subsystem {
 
         }
 
+        XAxisOffsetCheck = true;
+        YAxisOffsetCheck = true;
+
     }
 
     /**
@@ -109,7 +106,7 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new DriveToVisionTarget());
+        //setDefaultCommand(new DriveToHighGoalTarget());
     }
 
     /**
@@ -119,9 +116,25 @@ public class NetworkVisionProcessing extends Subsystem {
      * already being initialized. I think this has something to do with how the code is loaded onto the robot
      * </p>
      */
-    public void initNetworkTables() {
+    public void initNetworkTables(String tableName, double xOffsetRatio, double yOffsetRatio) {
 
-        contourReport = NetworkTable.getTable(RobotMap.TABLE_NAME);
+        contourReport = NetworkTable.getTable(tableName);
+        contourXOffsetRatio = xOffsetRatio;
+        contourYOffsetRatio = yOffsetRatio;
+    }
+
+    ////////////////////////////////////////////// Variable Configuration //////////////////////////////////////////////
+
+    /**
+     * Setter enable/disable offset checking of various axis
+     *
+     * @param XAxisOffsetCheck New value for XAxisOffsetCheck
+     * @param YAxisOffsetCheck New value for YAxisOffsetCheck
+     */
+    public void setXAxisOffsetCheck(boolean XAxisOffsetCheck, boolean YAxisOffsetCheck) {
+
+        this.XAxisOffsetCheck = XAxisOffsetCheck;
+        this.YAxisOffsetCheck = YAxisOffsetCheck;
     }
 
     ///////////////////////////////////////////////// Moving the Robot /////////////////////////////////////////////////
@@ -292,6 +305,9 @@ public class NetworkVisionProcessing extends Subsystem {
         if (RobotMap.USE_MAX_CONTOUR_AREA)
             validatedSegments.add(contourAreaMax(contourAreas));
 
+        if (RobotMap.USE_RELATIVE_POSITION_CHECK)
+            validatedSegments.add(contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths));
+
         boolean[] validContours = booleanArrayAnd(validatedSegments);
 
         if (validContours[index])
@@ -323,13 +339,9 @@ public class NetworkVisionProcessing extends Subsystem {
 
             validatedIndexes[i] = false;
 
-            for (double checkArea : contourAreas) {
-
-                if (checkArea - (checkArea * RobotMap.ALLOWABLE_ERROR) < contourAreas[i] &&
-                    contourAreas[i] < checkArea + (checkArea + RobotMap.ALLOWABLE_ERROR))
-                    validatedIndexes[i] = true;
-
-            }
+            for (double checkArea : contourAreas)
+                validatedIndexes[i] = checkArea - (checkArea * RobotMap.ALLOWABLE_ERROR) < contourAreas[i] &&
+                                      contourAreas[i] < checkArea + (checkArea + RobotMap.ALLOWABLE_ERROR);
 
         }
 
@@ -358,16 +370,42 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Compares the positions of contours
+     * Compares the positions of contours to ensure that they are within the desired range of each other as specified
+     * by {@link this#contourYOffsetRatio}
      *
-     * @param contourXs X axis positions of contours
-     * @param contourYs Y axis positions of contours
+     * @param contourXs      X axis positions of contours
+     * @param contourYs      Y axis positions of contours
+     * @param contourHeights Heights of contours
+     * @param contourWidths  Widths of contours
      * @return Contours that are within the {@link #contourXOffsetRatio}
      */
     private boolean[] contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
                                               double[] contourWidths) {
 
+        boolean[] validatedIndexes = new boolean[contourXs.length];
 
+        for (int i = 0; i < contourXs.length; ++i) {
+
+            validatedIndexes[i] = false;
+
+            double XOffset = contourWidths[i] * contourXOffsetRatio;
+            double YOffset = contourHeights[i] * contourYOffsetRatio;
+
+            if (XAxisOffsetCheck)
+                for (double xCenter : contourXs)
+                    validatedIndexes[i] = (validatedIndexes[i] ||
+                                           contourXs[i] - (contourXs[i] * RobotMap.ALLOWABLE_ERROR) < xCenter &&
+                                           contourXs[i] + (contourXs[i] * RobotMap.ALLOWABLE_ERROR) < xCenter);
+
+            if (YAxisOffsetCheck)
+                for (double yCenter : contourYs)
+                    validatedIndexes[i] = (validatedIndexes[i] ||
+                                           contourYs[i] - (contourYs[i] * RobotMap.ALLOWABLE_ERROR) < yCenter &&
+                                           contourYs[i] + (contourYs[i] * RobotMap.ALLOWABLE_ERROR) < yCenter);
+
+        }
+
+        return validatedIndexes;
 
     }
 
@@ -386,32 +424,6 @@ public class NetworkVisionProcessing extends Subsystem {
                 workingArray[j] = workingArray[j] && sections.get(i)[j];
 
         return workingArray;
-
-    }
-
-    ///////////////////////////////////////////////// Setup Functions //////////////////////////////////////////////////
-
-    /**
-     *
-     */
-    public void setupForHighGoal() {
-
-        contourXOffsetRatio = RobotMap.HIGH_GOAL_X_OFFSET_RATIO;
-        contourYOffsetRatio = RobotMap.HIGH_GOAL_Y_OFFSET_RATIO;
-
-    }
-
-    /**
-     *
-     */
-    public void setupForGear() {
-
-    }
-
-    /**
-     *
-     */
-    public void setupForOther(double xAxisOffset, double yAxisOffset) {
 
     }
 

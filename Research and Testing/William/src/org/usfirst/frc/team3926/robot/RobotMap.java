@@ -83,7 +83,7 @@ public class RobotMap {
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String   TABLE_NAME                         = "vision/high_goal";
+    public final static String   TABLE_HIGH_GOAL_NAME               = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
     public final static String   SPEED_RIGHT_KEY                    = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
