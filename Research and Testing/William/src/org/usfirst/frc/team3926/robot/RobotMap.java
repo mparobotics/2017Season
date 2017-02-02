@@ -26,6 +26,8 @@ public class RobotMap {
     public final static boolean  BUFFER_ACCELERATION                = false;
     /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
     public final static boolean  USE_SMART_FILTER                   = true;
+    /** Use CANTalons for the drive base instead of PWM Talons */
+    public final static boolean  USE_CAN_TALON                      = true;
     /** Invert motor direction for the drive train's right side */
     public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
@@ -40,8 +42,16 @@ public class RobotMap {
     public final static int      FRONT_LEFT_MOTOR_PWM               = 2;
     /** PWM port for back left motor */
     public final static int      BACK_LEFT_MOTOR_PWM                = 3;
-    /** Motor for testing shooter */
-    public final static int      TEST_MOTOR_PWM                     = 4;
+
+    /////////////////////////////////////////////////// Motor CAN IDs //////////////////////////////////////////////////
+    /** CAN ID for front right motor */
+    public final static int      FRONT_RIGHT_MOTOR_CAN              = 0;
+    /** CAN ID for back right motor */
+    public final static int      BACK_RIGHT_MOTOR_CAN               = 1;
+    /** CAN ID for front left motor */
+    public final static int      FRONT_LEFT_MOTOR_CAN               = 2;
+    /** CAN ID for back left motor */
+    public final static int      BACK_LEFT_MOTOR_CAN                = 3;
 
     ///////////////////////////////////////// XBox configuration (for driving) /////////////////////////////////////////
     /** USB port number for the XBOX controller */
