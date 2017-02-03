@@ -22,8 +22,6 @@ public class RobotMap {
     public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
     /** Use a speed buffer to prevent sudden jumps or drops in speed */
     public final static boolean  USE_SPEED_BUFFER                   = false;
-    /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
-    public final static boolean  BUFFER_ACCELERATION                = false;
     /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
     public final static boolean  USE_SMART_FILTER                   = true;
     /** Use CANTalons for the drive base instead of PWM Talons */
@@ -45,13 +43,13 @@ public class RobotMap {
 
     /////////////////////////////////////////////////// Motor CAN IDs //////////////////////////////////////////////////
     /** CAN ID for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_CAN              = 0;
+    public final static int      FRONT_RIGHT_MOTOR_CAN              = 1;
     /** CAN ID for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_CAN               = 1;
+    public final static int      BACK_RIGHT_MOTOR_CAN               = 4;
     /** CAN ID for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_CAN               = 2;
+    public final static int      FRONT_LEFT_MOTOR_CAN               = 3;
     /** CAN ID for back left motor */
-    public final static int      BACK_LEFT_MOTOR_CAN                = 3;
+    public final static int      BACK_LEFT_MOTOR_CAN                = 2;
 
     ///////////////////////////////////////// XBox configuration (for driving) /////////////////////////////////////////
     /** USB port number for the XBOX controller */
@@ -141,11 +139,16 @@ public class RobotMap {
     public final static double   GEAR_TARGET_Y_OFFSET_RATIO         = 0;
     /** X axis offset between vision targets for gear placement */
     public final static double   GEAR_TARGET_X_OFFSET_RATIO         = 0;
+    ///// Speed Buffer Configuration /////
+    /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
+    public final static boolean  BUFFER_ACCELERATION                = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
-    /** The max speed for the robot to travel during autonomous */
+    /** Max speed for the robot to travel during autonomous */
     public final static double   AUTONOMOUS_SPEED                   = 0.50;
-    /** The number to multiply times the speed of the robot when the driver enables saftey mode */
+    /** Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
+    public final static double MAX_AUTONOMOUS_SPEED_DIFFERENCE = 0.1;
+    /** Number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
 
     /////////////////////////////////// Variables for configuring command generation ///////////////////////////////////

@@ -151,7 +151,10 @@ public class DriveControl extends Subsystem {
      */
     private void straightDrive() {
 
-        leftSide = rightSide;
+        if (RobotMap.XBOX_DRIVE_CONTROLLER)
+            rightSide = leftSide;
+        else
+            leftSide = rightSide;
     }
 
     /**

@@ -169,12 +169,13 @@ public class NetworkVisionProcessing extends Subsystem {
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
             if (contourCenter > RobotMap.SCREEN_CENTER[0]) { //turn to vision reversed
-                movement[RIGHT_INDEX] = 1 - (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) *
-                                             RobotMap.AUTONOMOUS_SPEED);
+                movement[RIGHT_INDEX] = (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap
+                        .SCREEN_CENTER[0]) *
+                                         RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
             } else if (contourCenter < RobotMap.SCREEN_CENTER[0]) {
-                movement[LEFT_INDEX] = 1 - ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                movement[LEFT_INDEX] = ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveRight = false;
                 moveLeft = true;
             } else {
@@ -193,6 +194,9 @@ public class NetworkVisionProcessing extends Subsystem {
             returnValue.put(RobotMap.SPEED_LEFT_KEY, RobotMap.ILLEGAL_DOUBLE);
             contoursFound = false;
         }
+
+        if (returnValue.get(RobotMap.SPEED_RIGHT_KEY) - returnValue.get(RobotMap.SPEED_LEFT_KEY))
+            //TODO impliment max speed difference
 
         SmartDashboard.putBoolean("Move Left", moveLeft);
         SmartDashboard.putBoolean("Move Right", moveRight);
@@ -317,7 +321,7 @@ public class NetworkVisionProcessing extends Subsystem {
             if (validContours[i])
                 return i;
 
-        System.out.println("ERROR NetworkVisionProcessing.smartFilterContours could not find any good contours");
+        System.out.println("WARNING NetworkVisionProcessing.smartFilterContours could not find any good contours");
 
         return RobotMap.ILLEGAL_INT;
 
@@ -363,7 +367,7 @@ public class NetworkVisionProcessing extends Subsystem {
         boolean[] validatedIndexes = new boolean[contourAreas.length];
 
         for (int i = 0; i < contourAreas.length; ++i)
-            validatedIndexes[i] = !(contourAreas[i] >= RobotMap.MAX_CONTOUR_AREA);
+            validatedIndexes[i] = contourAreas[i] < RobotMap.MAX_CONTOUR_AREA;
 
         return validatedIndexes;
 
@@ -411,17 +415,25 @@ public class NetworkVisionProcessing extends Subsystem {
 
     /**
      * Preforms a bitwise & like operation for all boolean[]s within sections
+     * <p>
+     * Tested, working 100%
+     * </p>
      *
      * @param sections A list of all the boolean[]s to check against each other
      * @return All boolean[]s of sections compared against each other
      */
     private boolean[] booleanArrayAnd(List<boolean[]> sections) {
 
-        boolean[] workingArray = sections.get(0);
+        boolean[] workingArray = new boolean[sections.get(0).length];//= sections.get(0);
 
-        for (int i = 1; i < sections.size(); ++i)
-            for (int j = 0; j < sections.get(i).length; ++j)
-                workingArray[j] = workingArray[j] && sections.get(i)[j];
+        for (int i = 0; i < workingArray.length; ++i) {
+
+            workingArray[i] = true;
+
+            for (boolean[] j : sections)
+                workingArray[i] &= j[i];
+
+        }
 
         return workingArray;
 
@@ -619,6 +631,29 @@ public class NetworkVisionProcessing extends Subsystem {
     public boolean debugEndCommand() {
 
         return false;
+    }
+
+    /**
+     *
+     */
+    public void printSmartFilterArrays(List<boolean[]> sections, boolean[] workingArray) {
+
+        System.out.println("Smart Filter data");
+
+        for (boolean[] i : sections) {
+
+            for (boolean j : i)
+                System.out.print(((j) ? 1 : 0) + " ");
+
+            System.out.println();
+
+        }
+
+        for (boolean j : workingArray)
+            System.out.print(((j) ? 1 : 0) + " ");
+
+        System.out.println();
+
     }
 
     ////////////////////////////////////////////////// Other Methods ///////////////////////////////////////////////////
