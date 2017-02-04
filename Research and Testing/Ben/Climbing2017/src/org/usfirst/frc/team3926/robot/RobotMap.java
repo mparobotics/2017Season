@@ -38,23 +38,20 @@ public class RobotMap {
     /** Distance per pulse for the driving encoder */
     public static final  int    DRIVING_ENCODERS_DISTANCE_PER_PULSE             = 1;
     //////////////////////////////////////////////////////Shooting/////////////////////////////////////////////////////
-    /////Shooting PID Loop Set Point/////
+    /////Shooting PID Loop/////
     /** Set point for the shooting PID loop */
     public static final  int    SHOOTER_PID_LOOP_SET_POINT                      = 3;
+    /** Proportianal value for PID loop */
+    public static final  int    SHOOTER_PID_LOOP_P                              = 1;
+    /** Integral value for PID loop */
+    public static final  int    SHOOTER_PID_LOOP_I                              = 1;
+    /** Derivative value for PID loop */
+    public static final  int    SHOOTER_PID_LOOP_D                              = 1;
+    /** Name for calling super constructor */
+    public static final  String SHOOTER_SUPER_NAME                              = "Name";
     /////Shooting Motor CAN ID/////
     /** CAN ID for motor which shoots */
     public static final  int    SHOOTER_CAN_ID                                  = 1;
-    /////Shooting RPM Regulation/////
-    /**
-     * Increment the robot uses to adjust the speed input for the shooter to acheive the desired RPM, i.e
-     * SHOOTER_RPM_TARGET
-     */
-    public static final  double SHOOTER_SPEED_INCREMENT                         = 0.1;
-    /**
-     * Ideal RPM of the shooter motor which is achieved by adjusting the shooter speed by the
-     * SHOOTER_SPEED_INCREMENT
-     */
-    public static final  int    SHOOTER_RPM_TARGET                              = 5;
     /////Shooting Encoder/////
     /** Port A for the shooting encoder */
     public static final  int    SHOOTING_ENCODER_PORT_A                         = 6;
@@ -112,18 +109,18 @@ public class RobotMap {
     public static final  int    CLIMBING_ENCODER_PORT_B                         = 5;
     ///////////////////////////////////////////////////Button Numbers//////////////////////////////////////////////////
     /** Number for button which makes both sides of the robot go at constant RPMs */
-    public static final  int EQUALIZE_DRIVE_SYSTEM_SPEED_INPUT_BUTTON_NUMBER = 3;
+    public static final  int    EQUALIZE_DRIVE_SYSTEM_SPEED_INPUT_BUTTON_NUMBER = 3;
     /** Button Numbers for the button which starts the climber */
-    static final         int CLIMBER_BUTTON_NUMBER                           = 1;
+    static final         int    CLIMBER_BUTTON_NUMBER                           = 1;
     /** Button Numbers for the button which starts the shooter using the PID loop */
-    static final         int PID_SHOOTER_BUTTON_NUMBER                       = 1;
+    static final         int    PID_SHOOTER_BUTTON_NUMBER                       = 1;
     /** Button Number for the button which prompts turning toward the shooting target using vision tracking */
-    static final         int VISION_TRACKING_TURNING_BUTTON_NUMBER           = 2;
+    static final         int    VISION_TRACKING_TURNING_BUTTON_NUMBER           = 2;
     /**
      * Button Number for the button which prompts driving forward and turning toward the shooting target using vision
      * tracking
      */
-    public static final  int VISION_TRACKING_FORWARD_BUTTON_NUMBER           = 2;
+    public static final  int    VISION_TRACKING_FORWARD_BUTTON_NUMBER           = 2;
     /////////////////////////////////////////////////Joystick Handling/////////////////////////////////////////////////
     /////Joystick Ports/////
     /** Port number of the right joystick */

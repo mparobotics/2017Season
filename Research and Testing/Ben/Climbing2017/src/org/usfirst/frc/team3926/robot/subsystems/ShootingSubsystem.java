@@ -68,21 +68,7 @@ public class ShootingSubsystem extends Subsystem {
      */
     public void useShooter() {
 
-        double shooterRPM = shootingEncoder.getRate();
 
-        if (shooterRPM < RobotMap.SHOOTER_RPM_TARGET) {
-
-            shooterMotorSpeed += RobotMap.SHOOTER_SPEED_INCREMENT;
-
-        }
-
-        if (shooterRPM > RobotMap.SHOOTER_RPM_TARGET && shooterMotorSpeed >= RobotMap.SHOOTER_SPEED_INCREMENT) {
-
-            shooterMotorSpeed -= RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
-
-        }
-
-        shooter.set(shooterMotorSpeed);
 
     }
 
