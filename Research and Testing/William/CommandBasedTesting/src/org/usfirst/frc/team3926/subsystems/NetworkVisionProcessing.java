@@ -8,7 +8,8 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.*;
 
-import static org.usfirst.frc.team3926.robot.RobotMap.*;
+import static org.usfirst.frc.team3926.robot.RobotMap.LEFT_INDEX;
+import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
 
 /**
  * Notes on vision processing:
@@ -340,13 +341,6 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     private void contourAreaRatio(double[] contourAreas, SmartFilterData[] filterData) {
 
-        if (contourAreas.length != filterData.length) {
-            System.out.println("ERROR contour area length (" + contourAreas.length + ")  doesn't match filter data " +
-                               "size (" + filterData.length + ")");
-
-            return;
-        }
-
         for (int i = 0; i < contourAreas.length; ++i) { //Loops through the filter values to check
 
             for (int j = 0; j < contourAreas.length; ++j) { //Loops through the areas to compare to the filter value
@@ -358,7 +352,7 @@ public class NetworkVisionProcessing extends Subsystem {
                         // range
 
                         filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY, contourAreas[i] / contourAreas[j],
-                                              RobotMap.HIGH_GOAL_AREA_RATIO); //Adds area if its the low target
+                                                   RobotMap.HIGH_GOAL_AREA_RATIO); //Adds area if its the low target
 
                     } else if ((contourAreas[i] / 2) * (1 - RobotMap.ALLOWABLE_ERROR) <= contourAreas[j] &&
                                contourAreas[j] <= (contourAreas[i] / 2) * (1 + RobotMap.ALLOWABLE_ERROR)) {
@@ -381,6 +375,11 @@ public class NetworkVisionProcessing extends Subsystem {
      * Compares the positions of contours to ensure that they are within the desired range of each other as specified
      * by {@link this#contourYOffsetRatio}
      *
+     * <p>
+     * More specifically, this compares the x and y positions of contours relative to the x and y positions of other
+     * contours - their width or height and the contour offset ratio
+     * </p>
+     *
      * @param contourXs      X axis positions of contours
      * @param contourYs      Y axis positions of contours
      * @param contourHeights Heights of contours
@@ -390,27 +389,21 @@ public class NetworkVisionProcessing extends Subsystem {
     private void contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
                                          double[] contourWidths, SmartFilterData[] filterData) {
 
-//        SmartFilterData[] validatedIndexes = new SmartFilterData[contourXs.length];
-//
-//        for (int i = 0; i < contourXs.length; ++i) {
-//
-//            boolean isMatch = false;
-//            double XOffset = contourWidths[i] * contourXOffsetRatio;
-//            double YOffset = contourHeights[i] * contourYOffsetRatio;
-//
-//            if (XAxisOffsetCheck) //TODO check if I'm mathing correctly here
-//                for (double xCenter : contourXs)
-//                    isMatch = (isMatch || contourXs[i] - (contourXs[i] * RobotMap.ALLOWABLE_ERROR) < xCenter &&
-//                                          xCenter < contourXs[i] + (contourXs[i] * RobotMap.ALLOWABLE_ERROR));
-//
-//            if (YAxisOffsetCheck)
-//                for (double yCenter : contourYs)
-//                    isMatch = (isMatch || contourYs[i] - (contourYs[i] * RobotMap.ALLOWABLE_ERROR) < yCenter &&
-//                                          yCenter < contourYs[i] + (contourYs[i] * RobotMap.ALLOWABLE_ERROR));
-//
-//            validatedIndexes[i] = new SmartFilterData(isMatch, i);
-//
-//        }
+        for (int i = 0; i < contourHeights.length; ++i) {
+
+            if (XAxisOffsetCheck)
+                for (int j = 0; j < contourXs.length; ++j)
+                    if (i != j)
+                        filterData[i].addBestError(SmartFilterData.RELATIVE_POSITION_X_KEY, contourXs[i],
+                                                   contourXs[j] - contourWidths[j] * contourXOffsetRatio);
+
+            if (YAxisOffsetCheck)
+                for (int j = 0; j < contourYs.length; ++j)
+                    if (i != j)
+                        filterData[i].addBestError(SmartFilterData.RELATIVE_POSITION_Y_KEY, contourYs[i],
+                                                   contourYs[j] - contourHeights[j] * contourYOffsetRatio);
+
+        }
 
     }
 
@@ -423,8 +416,6 @@ public class NetworkVisionProcessing extends Subsystem {
     private int findBestContour(SmartFilterData[] sections) {
 
         int bestMatch = 0;
-
-        System.out.println("ERROR 8==D " + sections.length);
 
         for (int i = 1; i < sections.length; ++i) //Iterates through data to compare
             bestMatch = sections[bestMatch].compareError(sections[i]);
@@ -760,8 +751,6 @@ class SmartFilterData {
 
         int otherDataAdvantage = 0;
         int thisDatasAdvantage = 0;
-
-        System.out.println("ERROR map size is " + percentError.size());
 
         for (Map.Entry<String, Double> entry : percentError.entrySet()) {
 
