@@ -8,6 +8,7 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.*;
 
+import static org.usfirst.frc.team3926.robot.RobotMap.ILLEGAL_INT;
 import static org.usfirst.frc.team3926.robot.RobotMap.LEFT_INDEX;
 import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
 
@@ -66,7 +67,7 @@ public class NetworkVisionProcessing extends Subsystem {
     /** Contour report from the Raspberry Pi */
     private NetworkTable contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
-    private boolean      contoursFound, moveRight, moveLeft;
+    private boolean      contoursFound, moveRight, moveLeft, centered;
     /** Keeps track of the last few speeds to ensure returned values aren't spikes due to temporary interruptions */
     private List<double[]>      speedBuffer;
     /** Last valid speed from the buffer */
@@ -84,8 +85,8 @@ public class NetworkVisionProcessing extends Subsystem {
         if (RobotMap.USE_SPEED_BUFFER) {
             speedBuffer = new Vector<>();
 
-            for (double[] i : speedBuffer)
-                i[0] = i[1] = 0;
+            for (int i = 0; i < RobotMap.SPEED_BUFFER_SIZE; ++i)
+                speedBuffer.add(0, new double[] {0, 0});
 
             lastValidSpeed = new HashMap<>();
             lastValidSpeed.put(RobotMap.SPEED_RIGHT_KEY, 0.0);
@@ -168,19 +169,21 @@ public class NetworkVisionProcessing extends Subsystem {
 
             double[] movement = {RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED};
 
-            if (contourCenter > RobotMap.SCREEN_CENTER[0]) { //turn to vision reversed
-                movement[RIGHT_INDEX] = (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap
-                        .SCREEN_CENTER[0]) *
+            if (contourCenter > RobotMap.SCREEN_CENTER[0] * (1 + RobotMap.ALLOWABLE_ERROR)) {
+                movement[RIGHT_INDEX] = (((contourCenter - RobotMap.SCREEN_CENTER[0]) / RobotMap.SCREEN_CENTER[0]) *
                                          RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
-            } else if (contourCenter < RobotMap.SCREEN_CENTER[0]) {
+                centered = false;
+            } else if (contourCenter < RobotMap.SCREEN_CENTER[0] * (1 - RobotMap.ALLOWABLE_ERROR)) {
                 movement[LEFT_INDEX] = ((contourCenter / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveRight = false;
+                centered = false;
                 moveLeft = true;
             } else {
                 moveLeft = false;
                 moveRight = false;
+                centered = true;
             }
 
             returnValue.put(RobotMap.SPEED_RIGHT_KEY, movement[RIGHT_INDEX]);
@@ -190,16 +193,14 @@ public class NetworkVisionProcessing extends Subsystem {
                 bufferSpeeds(returnValue);
 
         } else {
-            returnValue.put(RobotMap.SPEED_RIGHT_KEY, RobotMap.ILLEGAL_DOUBLE);
-            returnValue.put(RobotMap.SPEED_LEFT_KEY, RobotMap.ILLEGAL_DOUBLE);
+            returnValue.put(RobotMap.SPEED_RIGHT_KEY, 0.0);
+            returnValue.put(RobotMap.SPEED_LEFT_KEY, 0.0);
             contoursFound = false;
         }
 
-        if (returnValue.get(RobotMap.SPEED_RIGHT_KEY) - returnValue.get(RobotMap.SPEED_LEFT_KEY))
-            //TODO impliment max speed difference
-
         SmartDashboard.putBoolean("Move Left", moveLeft);
         SmartDashboard.putBoolean("Move Right", moveRight);
+        SmartDashboard.putBoolean("Centered", centered);
         SmartDashboard.putBoolean("Contours Found", contoursFound);
 
         return returnValue;
@@ -222,10 +223,19 @@ public class NetworkVisionProcessing extends Subsystem {
         double rightSpeed = returnValue.get(RobotMap.SPEED_RIGHT_KEY);
         double leftSpeed = returnValue.get(RobotMap.SPEED_LEFT_KEY);
 
-        if (moveLeft)
-            rightSpeed *= -1;
-        else
-            leftSpeed *= -1;
+        if (rightSpeed != RobotMap.AUTONOMOUS_SPEED || leftSpeed != RobotMap.AUTONOMOUS_SPEED) {
+
+            if (moveLeft)
+                rightSpeed *= -1;
+            else
+                leftSpeed *= -1;
+
+        } else {
+
+            rightSpeed = 0;
+            leftSpeed = 0;
+
+        }
 
         returnValue.replace(RobotMap.SPEED_RIGHT_KEY, rightSpeed);
         returnValue.replace(RobotMap.SPEED_LEFT_KEY, leftSpeed);
@@ -286,6 +296,8 @@ public class NetworkVisionProcessing extends Subsystem {
      * @param index The index of the contour to check
      * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
      * otherwise {@link RobotMap#ILLEGAL_INT}
+     * <p>
+     * TODO working, needs improvement
      */
     private int smartFilterContours(int index) {
 
@@ -301,7 +313,7 @@ public class NetworkVisionProcessing extends Subsystem {
         for (int i = 0; i < contourHeights.length; ++i)
             contourAreas[i] = contourHeights[i] * contourWidths[i];
 
-        List<boolean[]> validatedSegments = new Vector<>();
+        List<SmartFilterData[]> validatedSegments = new Vector<>();
 
         if (RobotMap.USE_RELATIVE_AREA)
             validatedSegments.add(contourAreaRatio(contourAreas));
@@ -313,6 +325,12 @@ public class NetworkVisionProcessing extends Subsystem {
             validatedSegments.add(contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths));
 
         boolean[] validContours = booleanArrayAnd(validatedSegments);
+
+        if (RobotMap.CHECK_FOR_BEST_CONTOUR) {
+
+            return findBestContour(validatedSegments);
+
+        }
 
         if (validContours[index])
             return index;
@@ -332,6 +350,8 @@ public class NetworkVisionProcessing extends Subsystem {
      * <p>
      * This is used in {@link #smartFilterContours(int)}
      * </p>
+     *
+     * TODO convert to using {@link SmartFilterData}
      *
      * @return Indexes that match the criteria of this method
      */
@@ -383,29 +403,34 @@ public class NetworkVisionProcessing extends Subsystem {
      * @param contourWidths  Widths of contours
      * @return Contours that are within the {@link #contourXOffsetRatio}
      */
-    private boolean[] contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
-                                              double[] contourWidths) {
+    private SmartFilterData[] contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
+                                                      double[] contourWidths) {
 
-        boolean[] validatedIndexes = new boolean[contourXs.length];
+        SmartFilterData[] validatedIndexes = new SmartFilterData[contourXs.length];
 
         for (int i = 0; i < contourXs.length; ++i) {
 
-            validatedIndexes[i] = false;
-
+            boolean isMatch = false;
             double XOffset = contourWidths[i] * contourXOffsetRatio;
             double YOffset = contourHeights[i] * contourYOffsetRatio;
 
-            if (XAxisOffsetCheck)
+            if (XAxisOffsetCheck) //TODO check if I'm mathing correctly here
                 for (double xCenter : contourXs)
-                    validatedIndexes[i] = (validatedIndexes[i] ||
-                                           contourXs[i] - (contourXs[i] * RobotMap.ALLOWABLE_ERROR) < xCenter &&
-                                           contourXs[i] + (contourXs[i] * RobotMap.ALLOWABLE_ERROR) < xCenter);
+                    isMatch = (isMatch || contourXs[i] - (contourXs[i] * RobotMap.ALLOWABLE_ERROR) < xCenter &&
+                               xCenter < contourXs[i] + (contourXs[i] * RobotMap.ALLOWABLE_ERROR));
 
             if (YAxisOffsetCheck)
                 for (double yCenter : contourYs)
-                    validatedIndexes[i] = (validatedIndexes[i] ||
-                                           contourYs[i] - (contourYs[i] * RobotMap.ALLOWABLE_ERROR) < yCenter &&
-                                           contourYs[i] + (contourYs[i] * RobotMap.ALLOWABLE_ERROR) < yCenter);
+                    isMatch = (isMatch || contourYs[i] - (contourYs[i] * RobotMap.ALLOWABLE_ERROR) < yCenter &&
+                               yCenter < contourYs[i] + (contourYs[i] * RobotMap.ALLOWABLE_ERROR));
+
+            validatedIndexes[i] = new SmartFilterData(isMatch, i);
+
+            if (RobotMap.CHECK_FOR_BEST_CONTOUR) {
+                //TODO finish adding error here
+                //validatedIndexes[i].addError(SmartFilterData.RELATIVE_POSITION_X_KEY, contourXs[i]);
+
+            }
 
         }
 
@@ -421,6 +446,8 @@ public class NetworkVisionProcessing extends Subsystem {
      *
      * @param sections A list of all the boolean[]s to check against each other
      * @return All boolean[]s of sections compared against each other
+     *
+     * TODO finish
      */
     private boolean[] booleanArrayAnd(List<boolean[]> sections) {
 
@@ -436,6 +463,64 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
         return workingArray;
+
+    }
+
+    /**
+     * Preforms a bitwise & like operation for all SmartFilterDatas within sections
+     *
+     * @param sections A list of all the boolean[]s to check against each other
+     * @return All boolean[]s of sections compared against each other
+     */
+    private boolean[] booleanArrayAnd(List<SmartFilterData[]> sections) {
+
+        boolean[] workingArray = new boolean[sections.get(0).length];//= sections.get(0);
+
+        for (int i = 0; i < workingArray.length; ++i) {
+
+            workingArray[i] = true;
+
+            for (boolean[] j : sections)
+                workingArray[i] &= j[i];
+
+        }
+
+        return workingArray;
+
+    }
+
+    /**
+     * Determines which contour has the smallest amount of error
+     * @param sections A list of every section of {@link #smartFilterContours(int)}
+     * @return Index of the contour with the lowest percent error on everything
+     * TODO test, if something goes wrong it's probably here
+     */
+    private int findBestContour(List<SmartFilterData[]> sections) {
+
+        int[] bestMatches = new int[sections.get(0).length];
+
+        for (int i = 0; i < sections.size(); ++i) { //Iterates which test to compare
+
+            int currentBest = 0;
+
+            for (int j = 1; j < sections.get(i).length; ++j) //Finds which index of the test had the best results
+                currentBest = sections.get(i)[currentBest].compareError(sections.get(i)[j]);
+
+            bestMatches[i] = currentBest;
+
+        }
+
+        int[] bestMacthesCount = new int[bestMatches.length];
+
+        for (int i : bestMatches)
+            ++bestMacthesCount[i];
+
+        int winner = ILLEGAL_INT;
+
+        for (int aBestMacthesCount : bestMacthesCount)
+            winner = (aBestMacthesCount != 0 && aBestMacthesCount > winner) ? aBestMacthesCount : winner;
+
+        return winner;
 
     }
 
@@ -618,6 +703,7 @@ public class NetworkVisionProcessing extends Subsystem {
         data.put(RobotMap.CONTOUR_Y_KEY, getContours(RobotMap.CONTOUR_Y_KEY, index));
         data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours(RobotMap.CONTOUR_HEIGHT_KEY, index));
         data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours(RobotMap.CONTOUR_WIDTH_KEY, index));
+        data.put(RobotMap.SMARTFILTER_PASS_KEY, (double) index);
 
         return data;
 
@@ -692,6 +778,125 @@ public class NetworkVisionProcessing extends Subsystem {
     private double[] correctAngleOffset() {
 
         return new double[] {0};
+
+    }
+
+}
+
+/**
+ * Class to hold and handle data from {@link NetworkVisionProcessing#smartFilterContours(int)}.
+ * This class exists solely for this purpose. If more methods need to be added, keys for their data also need to be
+ * added to this class
+ */
+class SmartFilterData {
+
+    /**
+     * Key for x-axis data from
+     * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[])}
+     */
+    public final static String RELATIVE_POSITION_X_KEY = "relativePositionX";
+    /**
+     * Key for y-axis data from
+     * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[])}
+     */
+    public final static String RELATIVE_POSITION_Y_KEY = "relativePositionY";
+    /** Key for data from {@link NetworkVisionProcessing#contourAreaRatio(double[])} */
+    public final static String AREA_RATIO_KEY        = "areaRatio";
+    /** Key for data from {@link NetworkVisionProcessing#contourAreaMax(double[])} */
+    public final static String MAX_AREA              = "maxArea";
+    /** Whether or not {@link NetworkVisionProcessing#smartFilterContours(int)} determined this index to be good */
+    private boolean             match;
+    /** Index of the contour used to determine {@link #match} */
+    private int                 index;
+    /** All percent errors from target value for any smart filter methods */
+    private Map<String, Double> percentError;
+
+    /**
+     * Instantiates a SmartFilterData object
+     *
+     * @param match Whether or not SmartFilter
+     */
+    public SmartFilterData(boolean match, int index) {
+
+        this.match = match;
+        this.index = index;
+        percentError = new HashMap<>();
+
+    }
+
+    /**
+     * Preforms the boolean logic operator &= on match and another boolean
+     *
+     * @param a Other boolean to use
+     * @return Whether or not a and math are true
+     */
+    public boolean and(boolean a) {
+
+        return a & match;
+
+    }
+
+    /**
+     * Gets the value of math
+     *
+     * @return match's value
+     */
+    public boolean isMatch() {
+
+        return match;
+    }
+
+    /**
+     * Sets the value of {@link #match}
+     *
+     * @param match New value to set
+     */
+    public void setMatch(boolean match) {
+
+        this.match = match;
+    }
+
+    /**
+     * @return Value of {@link #index}
+     */
+    public int getIndex() {
+
+        return index;
+    }
+
+    /**
+     * Adds a new error to {@link #percentError}
+     *
+     * @param value  Value related to this contour
+     * @param target Exact value of that is desired to be reached
+     */
+    public void addError(String key, double value, double target) {
+
+        percentError.put(key, Math.abs(1 - value / target));
+
+    }
+
+    /**
+     * Compares the error of another SmartFilterData object to this one and attempts to find which one has less error
+     *
+     * @param otherData Data to compare to this one
+     * @return Whichever data has less error
+     */
+    public int compareError(SmartFilterData otherData) {
+
+        int otherDataAdvantage = 0;
+        int thisDatasAdvantage = 0;
+
+        for (int i = 0; i < percentError.size() && i < otherData.percentError.size(); ++i) {
+
+            if (percentError.get(i) < otherData.percentError.get(i))
+                ++thisDatasAdvantage;
+            else
+                ++otherDataAdvantage;
+
+        }
+
+        return (thisDatasAdvantage >= otherDataAdvantage) ? index : otherData.index;
 
     }
 

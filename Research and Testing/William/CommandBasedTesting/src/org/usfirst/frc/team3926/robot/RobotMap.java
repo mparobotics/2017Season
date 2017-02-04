@@ -20,7 +20,7 @@ public class RobotMap {
     public final static boolean  DEBUG                              = true;
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
     public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
-    /** Use a speed buffer to prevent sudden jumps or drops in speed */
+    /** Use a speed buffer to prevent sudden jumps or drops in speed TODO working, needs improvement */
     public final static boolean  USE_SPEED_BUFFER                   = false;
     /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
     public final static boolean  USE_SMART_FILTER                   = true;
@@ -104,6 +104,8 @@ public class RobotMap {
     public final static String   CONTOUR_HEIGHT_KEY                 = "height";
     /** Map key for contour width */
     public final static String   CONTOUR_WIDTH_KEY                  = "width";
+    /** Map key for SmartFilter pass status */
+    public final static String   SMARTFILTER_PASS_KEY               = "smartFilter";
     ///// Speed buffer for vision tracking /////
     /** Amount of previous speed values to store for the speed buffer */
     public final static int      SPEED_BUFFER_SIZE                  = 5;
@@ -128,11 +130,13 @@ public class RobotMap {
     /** This option is mainly for debugging */
     public final static boolean  USE_MAX_CONTOUR_AREA               = true;
     /** Maximum area of a contour NOTE: This can be done with GRIP. I have it here for convenience */
-    public final static double   MAX_CONTOUR_AREA                   = 20000;
+    public final static double   MAX_CONTOUR_AREA                   =14000;
     /** Whether or not to determine if a contour is valid based on its position relative to other contours */
     public final static boolean  USE_RELATIVE_POSITION_CHECK        = true;
+    /** Whether or not to find the BEST contours, not just contours that match the criteria */
+    public final static boolean CHECK_FOR_BEST_CONTOUR = true;
     /** Y axis offset between vision targets for the high goal */
-    public final static double   HIGH_GOAL_Y_OFFSET_RATIO           = 0.5;
+    public final static double   HIGH_GOAL_Y_OFFSET_RATIO           = 1;
     /** X axis offset between vision targets for the high goal */
     public final static double   HIGH_GOAL_X_OFFSET_RATIO           = 0;
     /** Y axis offset between vision targets for gear placement */
@@ -146,8 +150,8 @@ public class RobotMap {
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Max speed for the robot to travel during autonomous */
     public final static double   AUTONOMOUS_SPEED                   = 0.50;
-    /** Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
-    public final static double MAX_AUTONOMOUS_SPEED_DIFFERENCE = 0.1;
+    /** TODO Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
+    public final static double   MAX_AUTONOMOUS_SPEED_DIFFERENCE    = 0.1;
     /** Number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
 

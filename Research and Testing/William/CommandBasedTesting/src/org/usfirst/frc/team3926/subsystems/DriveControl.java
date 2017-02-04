@@ -184,12 +184,17 @@ public class DriveControl extends Subsystem {
 
         /* This will likely go by so quickly that the user will not be able to click based on an error right away,
          * so try to look for the value in the middle of a group of this error */
-        if (RobotMap.DEBUG && Robot.oi.contourError.get()) {
+        if (RobotMap.DEBUG && Robot.oi.contourError.get() &&
+            data.get(RobotMap.SPEED_LEFT_KEY) != RobotMap.ILLEGAL_INT) {
 
             contourErrorPress = true;
 
             System.out.println("ERROR IN DriveControl." + callingMethod + ": Group #" +
                                contourErrorGroup);
+            System.out.println("\tPassed SmartFilter: " +
+                               ((data.get(RobotMap.SMARTFILTER_PASS_KEY) != RobotMap.ILLEGAL_DOUBLE) ? "true" :
+                                "false"));
+            contourDataPrint(RobotMap.SMARTFILTER_PASS_KEY, data);
             contourDataPrint(RobotMap.CONTOUR_X_KEY, data);
             contourDataPrint(RobotMap.CONTOUR_Y_KEY, data);
             contourDataPrint(RobotMap.CONTOUR_WIDTH_KEY, data);
