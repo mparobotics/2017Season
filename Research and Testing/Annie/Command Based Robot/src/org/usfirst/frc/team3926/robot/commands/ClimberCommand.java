@@ -4,41 +4,55 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- *
+ * turns on climbing motor until limit switch is pressed
  */
 public class ClimberCommand extends Command {
 
+    /**
+     * tells code it needs to access things in the climbing subsystem
+     */
     public ClimberCommand() {
-        // Use requires() here to declare subsystem dependencies
+
         requires(Robot.climbingSystem);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * initialization is done in the climbing subsystem
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * calls the climbing subsystem
+     */
     protected void execute() {
 
         Robot.climbingSystem.Climb();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * ends the program when limit switch is pushed
+     *
+     * @return
+     */
     protected boolean isFinished() {
 
         return Robot.climbingSystem.LimitSwitch();
-        //return Robot.climbingSystem.limitSwitch.get();
+
     }
 
-    // Called once after isFinished returns true
+    /**
+     * turns off the climbing motor
+     */
     protected void end() {
 
-        Robot.climbingSystem.ClimbingMotor(0);
+        Robot.climbingSystem.StopClimbing(0);
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * should only stop if limit switch is pressed
+     */
     protected void interrupted() {
 
     }

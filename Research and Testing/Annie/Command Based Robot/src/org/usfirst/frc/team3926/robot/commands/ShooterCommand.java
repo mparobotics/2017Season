@@ -4,43 +4,54 @@ import org.usfirst.frc.team3926.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
- *
- *
+ * turns on the motor for shooting
  */
 public class ShooterCommand extends Command {
 
+    /**
+     * tells code it needs to access things in the shooting subsystem
+     */
     public ShooterCommand() {
-        // Use requires() here to declare subsystem dependencies
+
         requires(Robot.shootingSystem);
 
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * initialization is done in the climbing subsystem
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * calls the shooting subsystem
+     */
     protected void execute() {
 
         Robot.shootingSystem.shootingEncoder();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * doesn't return anything
+     * @return
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * turns off the shooting motor
+     */
     protected void end() {
 
         Robot.shootingSystem.SetSpeed(0);
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * shouldn't be interrupted
+     */
     protected void interrupted() {
 
     }

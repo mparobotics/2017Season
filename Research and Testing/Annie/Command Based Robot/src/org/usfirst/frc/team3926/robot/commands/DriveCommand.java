@@ -6,46 +6,59 @@ import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- *
+ * turns on the motors for driving and puts them in tank drive
  */
 public class DriveCommand extends Command {
 
+    /**
+     * tells code it needs to access things in the driving subsystem
+     */
     public DriveCommand() {
-        // Use requires() here to declare subsystem dependencies
+
         requires(Robot.driveSystem);
 
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * initialization is done in the climbing subsystem
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * calls the drive subsystem
+     * gets the Y values from the left and right joysticks
+     * puts those values in tank drive
+     */
     protected void execute() {
 
-        //gets value of joystick and puts it into tank drive
-        Robot.driveSystem.TankDrive(OI.leftstick.getY(), OI.rightStick.getY());
+        Robot.driveSystem.TankDrive(OI.leftStick.getY(), OI.rightStick.getY());
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * doesn't return anything
+     * @return
+     */
     protected boolean isFinished() {
 
         return false;
 
     }
 
-    // Called once after isFinished returns true
+    /**
+     * stops the motors
+     */
     protected void end() {
 
-        //sets the motors to 0
         Robot.driveSystem.TankDrive(0, 0);
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * shouldn't be interrupted
+     */
     protected void interrupted() {
 
     }
