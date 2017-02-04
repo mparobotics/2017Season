@@ -128,7 +128,7 @@ public class RobotMap {
     /** Enable/Disable relative area check (a contour must have an area double/half the size of another contour) */
     public final static boolean  USE_RELATIVE_AREA                  = true;
     /** This option is mainly for debugging */
-    public final static boolean  USE_MAX_CONTOUR_AREA               = true;
+    public final static boolean  USE_MAX_CONTOUR_AREA               = false;
     /** Maximum area of a contour NOTE: This can be done with GRIP. I have it here for convenience */
     public final static double   MAX_CONTOUR_AREA                   =14000;
     /** Whether or not to determine if a contour is valid based on its position relative to other contours */
@@ -143,6 +143,10 @@ public class RobotMap {
     public final static double   GEAR_TARGET_Y_OFFSET_RATIO         = 0;
     /** X axis offset between vision targets for gear placement */
     public final static double   GEAR_TARGET_X_OFFSET_RATIO         = 0;
+    /** Target ratio of the two area of the contours for the high goal */
+    public final static double HIGH_GOAL_AREA_RATIO = 0.5;
+    /** Target ratio of the high goals top contour area */
+    public final static double HIGH_GOAL_TOP_AREA_RATIO = 2;
     ///// Speed Buffer Configuration /////
     /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
     public final static boolean  BUFFER_ACCELERATION                = false;
