@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3926.robot.RobotMap;
@@ -12,13 +11,9 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  */
 public class ShootingSubsystem extends Subsystem {
 
-    /** Declares the encoder for the shooter */
-    private static Encoder shootingEncoder;
     /** Declares a talon for the shooter, it's default speed and an rpm variable */
     private        Talon   shooter;
-    /** The default speed of the shooter */
-    private        double  shooterMotorSpeed;
-    /** The current RPM of the shooter motor */
+
     /**
      * Constructs the shooter talon
      * Constructs the encoder which tracks the shooter motor
@@ -27,10 +22,6 @@ public class ShootingSubsystem extends Subsystem {
     public ShootingSubsystem() {
 
         shooter = new Talon(RobotMap.SHOOTER_CAN_ID);
-        shootingEncoder = new Encoder(RobotMap.SHOOTING_ENCODER_PORT_A, RobotMap.SHOOTING_ENCODER_PORT_B, false,
-                                      Encoder.EncodingType.k4X);
-        shootingEncoder.setDistancePerPulse(RobotMap.SHOOTING_ENCODER_DISTANCE_PER_PULSE);
-        shooterMotorSpeed = 0.5;
 
     }
 
