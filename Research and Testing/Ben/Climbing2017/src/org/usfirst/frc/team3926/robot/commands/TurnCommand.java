@@ -2,55 +2,62 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
 
 /**
- * has the robot turn
+ * Has the robot turn
+ *
  * @author Benjamin Lash
  */
-
 public class TurnCommand extends Command {
 
-
-
-
+    /**
+     * Requires the robot driveSubsystem
+     */
     public void TurnCommand() {
 
         requires(Robot.driveSubsystem);
+
     }
 
     /**
-     * activates the turning method
+     * Activates the turning method
      */
     public void initialize() {
 
         Robot.driveSubsystem.turning();
+
     }
 
     /**
-     * stores the the angle info from the gyro, the
+     * Stores the the angle info from the {@link DriveSubsytem#Gyro()}
      */
     public void execute() {
 
-       Robot.driveSubsystem.Gyro();
+        Robot.driveSubsystem.Gyro();
+
     }
 
     /**
-     * this command should not be interrupted by any of the commands which could interrupt it
+     * This command should not be interrupted by any of the commands which could interrupt it
      */
     public void interrupted() {
 
     }
 
     /**
-     * @return if the robot has turned 90 degrees
+     * Ends the command if the robot has turned 90 degrees
+     *
+     * @return {@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#HasRobotTurned}
      */
     public boolean isFinished() {
 
         return Robot.driveSubsystem.HasRobotTurned();
+
     }
 
     /**
-     * decelerates the robot until it stops
+     * Decelerates the robot until it stops
      */
     public void end() {
 

@@ -5,33 +5,43 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3926.robot.commands.ClimbCommand;
 import org.usfirst.frc.team3926.robot.commands.ShootingCommand;
+import org.usfirst.frc.team3926.robot.commands.VisionTrackingForwardCommand;
+import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurningCommand;
 
-/***
+/**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
 
-    /**
-     * declares joysticks which will be used for various things on the robot
-     */
-    public Joystick rightStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
-    public Joystick leftStick = new Joystick(RobotMap.LEFT_STICK_PORT);
-    public Joystick XboxJoystick = new Joystick(2);
+    /** Right joystick */
+    public  Joystick rightStick                  = new Joystick(RobotMap.RIGHT_STICK_PORT);
+    /** Left joystick */
+    public  Joystick leftStick                   = new Joystick(RobotMap.LEFT_STICK_PORT);
+    ///** Xbox joystick */
+    //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
+    /** Button on the joystick that starts the ShootingCommand */
+    private Button   shooterButton               = new JoystickButton(rightStick, RobotMap.SHOOTER_BUTTON_NUMBER);
+    /** Button on the joystick that starts the ClimbCommand */
+    private Button   climberButton               = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
+    /** Button on the joystick that starts the VisionTrackingTurningCommand */
+    private Button   visionTrackingTurningButton = new JoystickButton(leftStick, RobotMap
+            .VISION_TRACKING_TURNING_BUTTON_NUMBER);
+    /** Button on the joystick that starts the VisionTrackingForwardCommand */
+    private Button   visionTrackingForwardButton = new JoystickButton(leftStick, RobotMap.
+            VISION_TRACKING_FORWARD_BUTTON_NUMBER);
 
     /**
-     * makes buttons on the joystick that start the ClimbCommand and the Shooting Command
+     * Activates the ClimbCommand and the ShootingCommand if the buttons made for them are pressed
+     * Activates the vision tracking command if the vision tracking button is being held
      */
-    public Button climberButton = new JoystickButton(leftStick, 1);
-    public Button shooterButton = new JoystickButton(rightStick, 1);
-    public Button stopShooterButton = new JoystickButton(rightStick, 2);
 
-    public OI() {
-        /**
-         * activates the ClimbCommand and the ShootingCommand if the buttons made for them are pressed
-         */
+    OI() {
+
         climberButton.whenPressed(new ClimbCommand());
-        shooterButton.whenPressed(new ShootingCommand());
+        shooterButton.whileHeld(new ShootingCommand());
+        visionTrackingTurningButton.whileHeld(new VisionTrackingTurningCommand());
+        visionTrackingForwardButton.whileHeld(new VisionTrackingForwardCommand());
 
     }
     //// CREATING BUTTONS

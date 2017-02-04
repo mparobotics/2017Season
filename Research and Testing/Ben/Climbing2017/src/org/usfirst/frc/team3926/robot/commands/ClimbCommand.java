@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- *  instructs the robot to climb
- *  @author Benjamin Lash
+ * Instructs the robot to climb
+ *
+ * @author Benjamin Lash
  */
 public class ClimbCommand extends Command {
 
     /**
-     * requires climbSubsystem
-     * constructs the climber talon
+     * Requires climbSubsystem
      */
     public ClimbCommand() {
 
@@ -20,6 +20,9 @@ public class ClimbCommand extends Command {
 
     }
 
+    /**
+     * No relevant variables or methods are needed for this function
+     */
     protected void initialize() {
 
     }
@@ -30,10 +33,11 @@ public class ClimbCommand extends Command {
     public void execute() {
 
         Robot.climbSubsystem.spinMotor();
+
     }
 
     /**
-     * stops the command if the limit switch is triggered
+     * Stops the command if the limit switch is triggered
      */
     public boolean isFinished() {
 
@@ -42,7 +46,7 @@ public class ClimbCommand extends Command {
     }
 
     /**
-     * sets the speed of the climber talon to zero before the command is over
+     * Sets the speed of the climber talon to zero before the command is over
      */
     protected void end() {
 
@@ -50,6 +54,9 @@ public class ClimbCommand extends Command {
 
     }
 
+    /**
+     * This command should not be interrupted by any of the commands which could interrupt it
+     */
     protected void interrupted() {
 
     }

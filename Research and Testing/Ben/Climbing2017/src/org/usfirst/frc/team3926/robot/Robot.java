@@ -4,11 +4,10 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
 import org.usfirst.frc.team3926.robot.subsystems.ClimbSubsystem;
 import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
 import org.usfirst.frc.team3926.robot.subsystems.ShootingSubsystem;
+import org.usfirst.frc.team3926.robot.subsystems.VisionTrackingSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,27 +18,28 @@ import org.usfirst.frc.team3926.robot.subsystems.ShootingSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-    /**
-     * declares instances of the subsystems
-     */
-    public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
-    public static DriveSubsytem driveSubsystem = new DriveSubsytem();
-    public static ShootingSubsystem shootingSubsystem = new ShootingSubsystem();
-    
+    /** Instance of the climbSubsystem */
+    public static ClimbSubsystem          climbSubsystem;
+    /** Instance of the driveSubsystem */
+    public static DriveSubsytem           driveSubsystem;
+    /** Instance of the shootingSubsystem */
+    public static ShootingSubsystem       shootingSubsystem;
+    /** Instance of the visionTrackingSubsystem */
+    public static VisionTrackingSubsystem visionTrackingSubsystem;
+    /** Instance of the OI class */
+    public static OI                      oi;
 
     /**
-     * makes an instance of the OI class
-     */
-    public static OI oi;
-
-    /**
-     * constructs an instance of the OI class
+     *  Constructs an instance of the OI class
      */
     public void robotInit() {
-    	
-    	
+
         oi = new OI();
-        
+        climbSubsystem          = new ClimbSubsystem();
+        driveSubsystem          = new DriveSubsytem();
+        shootingSubsystem       = new ShootingSubsystem();
+        visionTrackingSubsystem = new VisionTrackingSubsystem();
+
     }
 
     /**
@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
     public void disabledPeriodic() {
 
         Scheduler.getInstance().run();
+
     }
 
     /**
@@ -75,6 +76,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
 
         Scheduler.getInstance().run();
+
     }
 
     public void teleopInit() {
@@ -88,7 +90,6 @@ public class Robot extends IterativeRobot {
 
         Scheduler.getInstance().run();
 
-
     }
 
     /**
@@ -97,5 +98,6 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
 
         LiveWindow.run();
+
     }
 }

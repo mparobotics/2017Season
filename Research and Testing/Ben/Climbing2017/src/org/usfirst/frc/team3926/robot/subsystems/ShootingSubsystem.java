@@ -3,96 +3,57 @@ package org.usfirst.frc.team3926.robot.subsystems;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
- * handles the robot's shooting mechanism
+ * Handles variables and methods for the robot's shooting mechanism
  *
  * @author Benjamin Lash
  */
-
 public class ShootingSubsystem extends Subsystem {
 
+    /** Declares the encoder for the shooter */
     private static Encoder shootingEncoder;
+    /** Declares a talon for the shooter, it's default speed and an rpm variable */
+    private        Talon   shooter;
+    /** The default speed of the shooter */
+    private        double  shooterMotorSpeed;
+    /** The current RPM of the shooter motor */
     /**
-     * make the climber talon
-     * makes the encoder
-     */
-    private Talon shooter;
-    private double shooterMotorSpeed = 0.5;
-
-    private double shooterRPM;
-
-    NetworkTable table;
-
-    double[] xValue;
-
-    /**
-     * constructs the shooter talon
-     * constructs the encoder
+     * Constructs the shooter talon
+     * Constructs the encoder which tracks the shooter motor
+     * Sets distance per pulse of shooting encoder
      */
     public ShootingSubsystem() {
 
         shooter = new Talon(RobotMap.SHOOTER_PORT);
-        shootingEncoder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
-        shootingEncoder.setDistancePerPulse(1);
-        table = NetworkTable.getTable("GRIP/ContourReport");
-        xValue = table.getNumberArray(RobotMap.NETWORK_TABLE_KEY, new double[0]);
-
+        shootingEncoder = new Encoder(RobotMap.SHOOTING_ENCODER_PORT_A, RobotMap.SHOOTING_ENCODER_PORT_B, false,
+                                      Encoder.EncodingType.k4X);
+        shootingEncoder.setDistancePerPulse(RobotMap.SHOOTING_ENCODER_DISTANCE_PER_PULSE);
+        shooterMotorSpeed = 0.5;
 
     }
 
+    /**
+     * No default command is needed for this Subsystem
+     */
     public void initDefaultCommand() {
 
     }
 
-    public double visionTrackingForwardSpeedOne() {
-
-        return xValue[0] < RobotMap.VISION_SCREEN_CENTER ?
-               RobotMap.MAX_VISION_TRACKING_SPEED * (xValue[0] / RobotMap.VISION_SCREEN_CENTER) :
-               RobotMap.MAX_VISION_TRACKING_SPEED;
-    }
-
-    public double visionTrackingForwardSpeedTwo() {
-
-        return xValue[0] > RobotMap.VISION_SCREEN_CENTER ? RobotMap.MAX_VISION_TRACKING_SPEED *
-                                                           ((xValue[0] -
-                                                             (RobotMap.VISION_SCREEN_CENTER)) /
-                                                            RobotMap.VISION_SCREEN_CENTER) :
-               RobotMap.MAX_VISION_TRACKING_SPEED;
-    }
-
-    public void visionTracking(double visionTrackingSpeedOne, double visionTrackingSpeedTwo) {
-
-        DriveSubsytem.visionTrackingMovement(visionTrackingSpeedOne, visionTrackingSpeedTwo);
-
-    }
-
-    public double[] visionTrackingTurningSpeeds() {
-
-        return new double[]{xValue[0] < RobotMap.VISION_SCREEN_CENTER ? visionTrackingForwardSpeedOne() :
-                            - visionTrackingForwardSpeedOne(),
-                            xValue[0] > RobotMap.VISION_SCREEN_CENTER ? visionTrackingForwardSpeedTwo() :
-                            - visionTrackingForwardSpeedTwo()};
-
-    }
-
-
     /**
-     * sets the speed of the shooter motor to 0
+     * Sets the speed of the shooter motor to 0
      */
     public void stopShooter() {
 
-        Robot.shootingSubsystem.shooter.set(0);
+        shooter.set(0);
 
     }
 
     /**
-     * a simple method to set the speed of the motor speed based off of the position of the right stick
+     * A simple method to set the speed of the shooter motor based off of the position of the right stick
      *
-     * @param rightStickYForShooter
+     * @param rightStickYForShooter the y position of the rightstick
      */
     public void useSimpleShooter(double rightStickYForShooter) {
 
@@ -101,13 +62,13 @@ public class ShootingSubsystem extends Subsystem {
     }
 
     /**
-     * makes the robot shoot
-     * adjusts the speed of the shooter if the shooter RPM is too slow or too fast but makes sure to not lower the speed
-     * beyond 0
+     * Makes the robot shoot
+     * Adjusts the speed of the shooter if the shooter RPM is too slow or too fast but makes sure to not lower the
+     * speed below 0
      */
     public void useShooter() {
 
-        shooterRPM = shootingEncoder.getRate();
+        double shooterRPM = shootingEncoder.getRate();
 
         if (shooterRPM < RobotMap.SHOOTER_RPM_TARGET) {
 
@@ -124,7 +85,6 @@ public class ShootingSubsystem extends Subsystem {
         shooter.set(shooterMotorSpeed);
 
     }
-
 
 }
 

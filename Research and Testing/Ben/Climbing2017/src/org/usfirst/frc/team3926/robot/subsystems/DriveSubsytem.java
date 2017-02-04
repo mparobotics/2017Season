@@ -8,179 +8,222 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.DriveCommand;
 
 /**
- * handles the robot's driving functionality
+ * Handles variables and methods for the robot's driving functionality
+ *
  * @author Benjamin Lash
  */
 public class DriveSubsytem extends Subsystem {
 
-    /**
-     * makes an encoder to track the forward motion of the robot
-     */
-    private static Encoder drivingEncoder;
-
-    private static RobotDrive driveSystem;
-
-    private static Talon talonBR;
-    private static Talon talonFR;
-    private static Talon talonBL;
-    private static Talon talonFL;
-
-    double distanceTraveled;
-
+    /** Encoder to track the forward motion of the robot */
+    private static Encoder       rightDrivingEncoder;
+    /** Encoder to track the forward motion of the robot */
+    private static  Encoder       leftDrivingEncoder;
+    /** Declares the drivesystem for the robot */
+    private static RobotDrive    driveSystem;
+    /** Talon on the back right corner of the robot for the driveSystem */
+    private static Talon         talonBR;
+    /** Talon on the front right corner of the robot for the driveSystem */
+    private static Talon         talonFR;
+    /** Talon on the back left corner of the robot for the driveSystem */
+    private static Talon         talonBL;
+    /** Talon on the front left corner of the robot for the driveSystem */
+    private static Talon         talonFL;
+    /** Distance traveled by the robot */
+    private        double        distanceTraveled;
+    /** Accelometer to track the robot's acceleration */
     private static Accelerometer accelerometer;
-
-    private static Gyro gyro;
+    /** Gyro to track the position of the Robot */
+    private static Gyro          gyro;
+    /** Variable to track the acceleration of the motor */
+    private static double        acceleration;
+    /** Speed variable for right side in the deceleration function */
+    private        double        rightSideDecelerationSpeed;
+    /** Speed variable for left side in the deceleration function */
+    private        double        leftSideDecelerationSpeed;
+    /** Variable for the robots angle for the turning function */
+    private        double        currentAngle;
 
     /**
-     * creates a variable to track the acceleration of the motors
+     * Constructs the driving encoders
+     * Sets the distance per pulse of the driving encoders
+     * Constructs the motors for the drive system
+     * Constructs the accelerometer
+     * Constructs the gyro
+     * Constructs the rightSideDecelerationSpeed variable which acts as the default deceleration speed
      */
-    static double acceleration;
-    /**
-     * sets the default speed for the deceleration function to zero
-     */
-    private double speed;
-
-    double currentAngle;
-
     public DriveSubsytem() {
 
-        drivingEncoder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
-
-        driveSystem = new RobotDrive(talonFL, talonBL, talonFR, talonBR);
+        rightDrivingEncoder =
+                new Encoder(RobotMap.RIGHT_DRIVING_ENCODER_PORT_A, RobotMap.RIGHT_DRIVING_ENCODER_PORT_B, false,
+                            Encoder.EncodingType.k4X);
+        leftDrivingEncoder = new Encoder(RobotMap.LEFT_DRIVING_ENCODER_PORT_A, RobotMap.LEFT_DRIVING_ENCODER_PORT_B,
+                                         false,
+                                         Encoder.EncodingType.k4X);
+        rightDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
+        leftDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
 
         talonBR = new Talon(RobotMap.TALON_BR_PORT);
         talonFR = new Talon(RobotMap.TALON_FR_PORT);
         talonBL = new Talon(RobotMap.TALON_BL_PORT);
         talonFL = new Talon(RobotMap.TALON_FL_PORT);
 
+        driveSystem = new RobotDrive(talonFL, talonBL, talonFR, talonBR);
+
         accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 
         gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 
-        speed = RobotMap.DEFAULT_DECELERATION_SPEED;
+        rightSideDecelerationSpeed = RobotMap.DEFAULT_DECELERATION_SPEED;
+
     }
 
     /**
-     * makes a gyro to track the position of the Robot
-     */
-
-
-
-
-
-
-    /**
-     * sets the default command to DriveCommand
+     * Sets the default command to DriveCommand
      */
     public void initDefaultCommand() {
 
         new DriveCommand();
+
     }
 
     /**
-     * plugs in leftStickHeight and rightStickHeight to the driveSystem
-     * @param rightStickHeight
-     * @param leftStickHeight
-     * @param leftButtonStatus
+     * Plugs in leftStickHeight and rightStickHeight to the driveSystem
+     *
+     * @param rightStickHeight The y position from the right joystick
+     * @param leftStickHeight  The y position from the left joystick
+     * @param leftButtonStatus If the button of the left stick is pressed
      */
-    public static void driveMethod(double rightStickHeight, double leftStickHeight, boolean leftButtonStatus) {
-
+    public void driveMethod(double rightStickHeight, double leftStickHeight, boolean leftButtonStatus) {
 
         if (leftButtonStatus) {
 
             rightStickHeight = leftStickHeight;
+
         }
 
         driveSystem.tankDrive(leftStickHeight, rightStickHeight);
 
-
-    }
-
-    public void driveForward() {
-        /**
-         * this sets the speed of the motors to full to go foward
-         * then it gets the distance that the robot has traveled
-         */
-        driveSystem.tankDrive(1, 1);
-        distanceTraveled = drivingEncoder.getDistance();
     }
 
     /**
-     * adds or lowers the speed of the motor for the robot depending on the rate of acceleration to decelerate the
-     * robot until it is told to stop
+     * This sets the rightSideDecelerationSpeed of the motors to full to go foward
+     * Then it gets the distance that the robot has traveled
      */
+    public void driveForward() {
 
+        driveSystem.tankDrive(1, 1);
+        distanceTraveled = rightDrivingEncoder.getDistance();
+
+    }
+
+    /**
+     * Changes speed of the motor for the robot based on the robot's rate of acceleration until the Robot
+     * reaches 0 speed
+     */
     public void deceleration() {
 
         acceleration = accelerometer.getX();
 
+        if (acceleration < -5) {
 
-        if (acceleration < - 5) {
-            speed += RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
-
+            rightSideDecelerationSpeed += RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
 
         } else if (acceleration > 0) {
-            speed -= RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+
+            rightSideDecelerationSpeed -= RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+
         } else {
 
-            speed = 0;
+            rightSideDecelerationSpeed = 0;
         }
 
-        driveSystem.tankDrive(speed, speed);
+        if (acceleration < -5) {
+
+            leftSideDecelerationSpeed += RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+
+        } else if (acceleration > 0) {
+
+            leftSideDecelerationSpeed -= RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+
+        } else {
+
+            leftSideDecelerationSpeed = 0;
+
+        }
+
+        driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
 
     }
 
     /**
-     * @return if the speed of the robot is zero
+     * Checks if the robot has reached 0 speed
+     *
+     * @return If the rightSideDecelerationSpeed and leftSideDecelerationSpeed is zero
      */
     public boolean isSpeedZero() {
 
-        return speed == 0;
+        return rightSideDecelerationSpeed == 0 && leftSideDecelerationSpeed == 0;
 
     }
 
     /**
-     * sets the driveSystem to values that make it turn
+     * Sets the driveSystem to values that make it turn
      */
     public void turning() {
 
-        driveSystem.tankDrive(- 1, 1);
+        driveSystem.tankDrive(-1, 1);
     }
 
     /**
-     * resets the encoder to be used again
+     * Resets the encoder to be used again
      */
-    public void resetEncoder(){
-        drivingEncoder.reset();
+    public void resetEncoder() {
+
+        rightDrivingEncoder.reset();
+
     }
 
     /**
-     * gets the robots current angle with the gyro to find it's position
+     * Gets the robots current angle with the gyro to find it's position
      */
     public void Gyro() {
 
         currentAngle = gyro.getAngle();
-    }
-    
-    public static void visionTrackingMovement(double visionTrackingLeftSpeed, double visionTrackingRightSpeed){
-    	driveSystem.tankDrive(visionTrackingLeftSpeed,visionTrackingRightSpeed);
-    }
 
+    }
 
     /**
-     * @return if the robot has turned 90 degrees since the last reset
+     * Makes robot move based off position of retroreflective tape
+     *
+     * @param visionTrackingLeftSpeed  (the first speed of the drive system)
+     * @param visionTrackingRightSpeed (the second speed in the drive system)
      */
-    public boolean HasRobotTurned(){
-        return currentAngle >= 90;
+    public static void visionTrackingMovement(double visionTrackingLeftSpeed, double visionTrackingRightSpeed) {
+
+        driveSystem.tankDrive(visionTrackingLeftSpeed, visionTrackingRightSpeed);
+
     }
 
+    /**
+     * Checks if the robot has turned 90 degrees
+     *
+     * @return If the robot has turned 90 degrees since the last reset
+     */
+    public boolean HasRobotTurned() {
+
+        return currentAngle >= 90;
+
+    }
 
     /**
-     * @return if the robot has traveled ten meters
+     * Checks if the robot has traveled 10 meters
+     *
+     * @return If the robot has traveled ten meters
      */
     public boolean tenMetersTraveled() {
 
         return distanceTraveled >= 10;
+
     }
 }
 
