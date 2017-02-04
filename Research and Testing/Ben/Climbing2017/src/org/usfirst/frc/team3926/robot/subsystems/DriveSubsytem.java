@@ -62,10 +62,10 @@ public class DriveSubsytem extends Subsystem {
         rightDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
         leftDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
 
-        talonBR = new Talon(RobotMap.TALON_BR_PORT);
-        talonFR = new Talon(RobotMap.TALON_FR_PORT);
-        talonBL = new Talon(RobotMap.TALON_BL_PORT);
-        talonFL = new Talon(RobotMap.TALON_FL_PORT);
+        talonBR = new Talon(RobotMap.TALON_BR_CAN_ID);
+        talonFR = new Talon(RobotMap.TALON_FR_CAN_ID);
+        talonBL = new Talon(RobotMap.TALON_BL_CAN_ID);
+        talonFL = new Talon(RobotMap.TALON_FL_CAN_ID);
 
         driveSystem = new RobotDrive(talonFL, talonBL, talonFR, talonBR);
 

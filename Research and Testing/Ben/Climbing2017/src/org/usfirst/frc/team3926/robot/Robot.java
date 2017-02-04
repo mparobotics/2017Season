@@ -2,12 +2,10 @@
 package org.usfirst.frc.team3926.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team3926.robot.subsystems.ClimbSubsystem;
-import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
-import org.usfirst.frc.team3926.robot.subsystems.ShootingSubsystem;
-import org.usfirst.frc.team3926.robot.subsystems.VisionTrackingSubsystem;
+import org.usfirst.frc.team3926.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +24,8 @@ public class Robot extends IterativeRobot {
     public static ShootingSubsystem       shootingSubsystem;
     /** Instance of the visionTrackingSubsystem */
     public static VisionTrackingSubsystem visionTrackingSubsystem;
+    /** Instance of the PIDSubystem */
+    public static PIDSubsystem pidSubsystem;
     /** Instance of the OI class */
     public static OI                      oi;
 
@@ -39,6 +39,7 @@ public class Robot extends IterativeRobot {
         driveSubsystem          = new DriveSubsytem();
         shootingSubsystem       = new ShootingSubsystem();
         visionTrackingSubsystem = new VisionTrackingSubsystem();
+        pidSubsystem            = new PIDLoopSubsystem();
 
     }
 

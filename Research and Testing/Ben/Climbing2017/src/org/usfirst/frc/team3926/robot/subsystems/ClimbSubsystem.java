@@ -29,7 +29,7 @@ public class ClimbSubsystem extends Subsystem {
      */
     public ClimbSubsystem() {
 
-        climber = new Talon(RobotMap.CLIMBER_PORT);
+        climber = new Talon(RobotMap.CLIMBER_CAN_ID);
         climbingEncoder = new Encoder(RobotMap.CLIMBING_ENCODER_PORT_A, RobotMap.CLIMBING_ENCODER_PORT_B, false,
                                       Encoder.EncodingType.k4X);
         climbingEncoder.setDistancePerPulse(RobotMap.CLIMBING_ENCODER_DISTANCE_PER_PULSE);

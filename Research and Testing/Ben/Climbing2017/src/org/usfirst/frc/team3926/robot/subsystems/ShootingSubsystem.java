@@ -26,7 +26,7 @@ public class ShootingSubsystem extends Subsystem {
      */
     public ShootingSubsystem() {
 
-        shooter = new Talon(RobotMap.SHOOTER_PORT);
+        shooter = new Talon(RobotMap.SHOOTER_CAN_ID);
         shootingEncoder = new Encoder(RobotMap.SHOOTING_ENCODER_PORT_A, RobotMap.SHOOTING_ENCODER_PORT_B, false,
                                       Encoder.EncodingType.k4X);
         shootingEncoder.setDistancePerPulse(RobotMap.SHOOTING_ENCODER_DISTANCE_PER_PULSE);

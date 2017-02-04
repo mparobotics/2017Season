@@ -3,10 +3,7 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3926.robot.commands.ClimbCommand;
-import org.usfirst.frc.team3926.robot.commands.ShootingCommand;
-import org.usfirst.frc.team3926.robot.commands.VisionTrackingForwardCommand;
-import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurningCommand;
+import org.usfirst.frc.team3926.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,7 +18,7 @@ public class OI {
     ///** Xbox joystick */
     //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
     /** Button on the joystick that starts the ShootingCommand */
-    private Button   shooterButton               = new JoystickButton(rightStick, RobotMap.SHOOTER_BUTTON_NUMBER);
+    private Button   shooterPIDButton               = new JoystickButton(rightStick, RobotMap.PID_SHOOTER_BUTTON_NUMBER);
     /** Button on the joystick that starts the ClimbCommand */
     private Button   climberButton               = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
     /** Button on the joystick that starts the VisionTrackingTurningCommand */
@@ -39,7 +36,7 @@ public class OI {
     OI() {
 
         climberButton.whenPressed(new ClimbCommand());
-        shooterButton.whileHeld(new ShootingCommand());
+        shooterPIDButton.whileHeld(new PIDShootingCommand());
         visionTrackingTurningButton.whileHeld(new VisionTrackingTurningCommand());
         visionTrackingForwardButton.whileHeld(new VisionTrackingForwardCommand());
 
