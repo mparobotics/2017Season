@@ -130,24 +130,24 @@ public class RobotMap {
     /** Whether or not to determine if a contour is valid based on its position relative to other contours */
     public final static boolean  USE_RELATIVE_POSITION_CHECK        = false;
     /** Y axis offset between vision targets for the high goal */
-    public final static double   HIGH_GOAL_Y_OFFSET_RATIO           = 1;
+    public final static double  HIGH_GOAL_Y_OFFSET_RATIO   = 1;
     /** X axis offset between vision targets for the high goal */
-    public final static double   HIGH_GOAL_X_OFFSET_RATIO           = 0;
+    public final static double  HIGH_GOAL_X_OFFSET_RATIO   = 0;
     /** Y axis offset between vision targets for gear placement */
-    public final static double   GEAR_TARGET_Y_OFFSET_RATIO         = 0;
+    public final static double  GEAR_TARGET_Y_OFFSET_RATIO = 0;
     /** X axis offset between vision targets for gear placement */
-    public final static double   GEAR_TARGET_X_OFFSET_RATIO         = 0;
+    public final static double  GEAR_TARGET_X_OFFSET_RATIO = 0;
     /** Target ratio of the two area of the contours for the high goal */
-    public final static double HIGH_GOAL_AREA_RATIO = 0.5;
+    public final static double  HIGH_GOAL_AREA_RATIO       = 0.5;
     /** Target ratio of the high goals top contour area */
-    public final static double HIGH_GOAL_TOP_AREA_RATIO = 2;
+    public final static double  HIGH_GOAL_TOP_AREA_RATIO   = 2;
     ///// Speed Buffer Configuration /////
     /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
-    public final static boolean  BUFFER_ACCELERATION                = false;
+    public final static boolean BUFFER_ACCELERATION        = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED                   = 0.50;
+    public final static double  AUTONOMOUS_SPEED           = 0.50;
     /** TODO Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
     public final static double   MAX_AUTONOMOUS_SPEED_DIFFERENCE    = 0.1;
     /** Number to multiply times the speed of the robot when the driver enables saftey mode */

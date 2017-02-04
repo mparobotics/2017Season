@@ -140,6 +140,43 @@ public class NetworkVisionProcessing extends Subsystem {
     ///////////////////////////////////////////////// Moving the Robot /////////////////////////////////////////////////
 
     /**
+     * Finds the turn rate to turn the robot towards the vision target
+     *
+     * @param index Index of the contour to center on
+     * @return Speed to set tank drive to turn towards the center
+     */
+    public Map<String, Double> turnToCenter(int index) {
+
+        Map<String, Double> returnValue = moveToCenter(index);
+
+        if (returnValue.get(RobotMap.SPEED_LEFT_KEY) == RobotMap.ILLEGAL_DOUBLE)
+            return returnValue;
+
+        double rightSpeed = returnValue.get(RobotMap.SPEED_RIGHT_KEY);
+        double leftSpeed = returnValue.get(RobotMap.SPEED_LEFT_KEY);
+
+        if (rightSpeed != RobotMap.AUTONOMOUS_SPEED || leftSpeed != RobotMap.AUTONOMOUS_SPEED) {
+
+            if (moveLeft)
+                rightSpeed *= -1;
+            else
+                leftSpeed *= -1;
+
+        } else {
+
+            rightSpeed = 0;
+            leftSpeed = 0;
+
+        }
+
+        returnValue.replace(RobotMap.SPEED_RIGHT_KEY, rightSpeed);
+        returnValue.replace(RobotMap.SPEED_LEFT_KEY, leftSpeed);
+
+        return returnValue;
+
+    }
+
+    /**
      * Finds the correction needed to center the robot on a specified contour
      *
      * @param index Index of the contour to get the center of
@@ -206,88 +243,7 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
-    /**
-     * Finds the turn rate to turn the robot towards the vision target
-     *
-     * @param index Index of the contour to center on
-     * @return Speed to set tank drive to turn towards the center
-     */
-    public Map<String, Double> turnToCenter(int index) {
-
-        Map<String, Double> returnValue = moveToCenter(index);
-
-        if (returnValue.get(RobotMap.SPEED_LEFT_KEY) == RobotMap.ILLEGAL_DOUBLE)
-            return returnValue;
-
-        double rightSpeed = returnValue.get(RobotMap.SPEED_RIGHT_KEY);
-        double leftSpeed = returnValue.get(RobotMap.SPEED_LEFT_KEY);
-
-        if (rightSpeed != RobotMap.AUTONOMOUS_SPEED || leftSpeed != RobotMap.AUTONOMOUS_SPEED) {
-
-            if (moveLeft)
-                rightSpeed *= -1;
-            else
-                leftSpeed *= -1;
-
-        } else {
-
-            rightSpeed = 0;
-            leftSpeed = 0;
-
-        }
-
-        returnValue.replace(RobotMap.SPEED_RIGHT_KEY, rightSpeed);
-        returnValue.replace(RobotMap.SPEED_LEFT_KEY, leftSpeed);
-
-        return returnValue;
-
-    }
-
     ////////////////////////////////////////// Methods for Obtaining Contours //////////////////////////////////////////
-
-    /**
-     * Function to return a specific contour
-     *
-     * @param key   Key to use when getting contours from the table
-     * @param index Array index of the contour to get
-     * @return Either the desired value for the value and index or an illegal character if an exception occurred
-     */
-    private double getContours(String key, int index) {
-
-        try {
-
-            return contourReport.getNumberArray(key, new double[0])[index];
-
-        } catch (Exception e) {
-
-            System.out.println(new Date().toString() + ": " + e.getMessage());
-            return RobotMap.ILLEGAL_DOUBLE;
-
-        }
-
-    }
-
-    /**
-     * Overloaded getContours function that returns the entire array
-     *
-     * @param key Key to use when getting contours from the network table
-     */
-    private double[] getContours(String key) {
-
-        try {
-
-            return contourReport.getNumberArray(key, new double[0]);
-
-        } catch (Exception e) {
-
-            System.out.println(new Date().toString() + ": " + e.getMessage());
-            return RobotMap.ILLEGAL_VALUE;
-
-        }
-
-    }
-
-    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
 
     /**
      * Allows the filtering of contour data past what GRIP can do
@@ -314,8 +270,6 @@ public class NetworkVisionProcessing extends Subsystem {
 
         SmartFilterData[] validatedSegments = new SmartFilterData[arrayLength];
 
-        //java.util.Arrays.fill(validatedSegments, new SmartFilterData());
-
         for (int i = 0; i < validatedSegments.length; ++i) {
 
             validatedSegments[i] = new SmartFilterData(i);
@@ -329,6 +283,115 @@ public class NetworkVisionProcessing extends Subsystem {
             contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths, validatedSegments); //TODO
 
         return findBestContour(validatedSegments);
+
+    }
+
+    /**
+     * Function to return a specific contour
+     *
+     * @param key   Key to use when getting contours from the table
+     * @param index Array index of the contour to get
+     * @return Either the desired value for the value and index or an illegal character if an exception occurred
+     */
+    private double getContours(String key, int index) {
+
+        try {
+
+            return contourReport.getNumberArray(key, new double[0])[index];
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_DOUBLE;
+
+        }
+
+    }
+
+    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
+
+    /**
+     * Adds debugging data to the data Map for drive control functions
+     *
+     * @param data  Driving data to add contour information to
+     * @param index Index of the contour to add data on
+     * @return Data map with contour data added in
+     */
+    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
+
+        data.put(RobotMap.CONTOUR_X_KEY, getContours(RobotMap.CONTOUR_X_KEY, index));
+        data.put(RobotMap.CONTOUR_Y_KEY, getContours(RobotMap.CONTOUR_Y_KEY, index));
+        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours(RobotMap.CONTOUR_HEIGHT_KEY, index));
+        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours(RobotMap.CONTOUR_WIDTH_KEY, index));
+        data.put(RobotMap.SMARTFILTER_PASS_KEY, (double) index);
+
+        return data;
+
+    }
+
+    /**
+     * Buffers speeds to avoid sudden spikes or drops
+     * <p>
+     * If {@link RobotMap#BUFFER_ACCELERATION} is true, this will also accelerate towards the new value if it is not
+     * within the buffer range
+     * </p>
+     *
+     * @param data Data to process with the buffer
+     */
+    private void bufferSpeeds(Map<String, Double> data) {
+
+        int[] bufferSpeedCheck = speedWithinBuffer(data);
+
+        { //This adds the latest speeds to the buffer and removes the last entry
+            double[] latestSpeeds = new double[2];
+            latestSpeeds[RobotMap.LEFT_INDEX] = data.get(RobotMap.SPEED_LEFT_KEY);
+            latestSpeeds[RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
+            speedBuffer.add(0, latestSpeeds); //Adds the latest speed to the array
+            speedBuffer.remove(RobotMap.SPEED_BUFFER_SIZE - 1); //Removes the last entry
+        }
+
+        if (RobotMap.BUFFER_ACCELERATION) {
+
+            double modifiedLeftSpeed = data.get(RobotMap.SPEED_LEFT_KEY),
+                    modifiedRightSpeed = data.get(RobotMap.SPEED_RIGHT_KEY);
+
+            modifiedLeftSpeed += bufferSpeedCheck[RobotMap.LEFT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
+            modifiedRightSpeed += bufferSpeedCheck[RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
+
+            data.replace(RobotMap.SPEED_LEFT_KEY, modifiedLeftSpeed);
+            data.replace(RobotMap.SPEED_RIGHT_KEY, modifiedRightSpeed);
+
+        } else {
+
+            if (bufferSpeedCheck[RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
+                data = lastValidSpeed;
+
+        }
+
+        lastValidSpeed = data;
+
+    }
+
+    /**
+     * Checks if a bunch of numbers are equal
+     *
+     * @param numbers the numbers to check
+     * @return If the numbers are equal
+     */
+    private boolean checkEquality(int... numbers) {
+
+        for (int number : numbers) {
+
+            if (number == 0)
+                return false;
+
+            for (int x : numbers)
+                if (number != x)
+                    return false;
+
+        }
+
+        return true;
 
     }
 
@@ -371,10 +434,12 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
+    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
+
     /**
      * Compares the positions of contours to ensure that they are within the desired range of each other as specified
      * by {@link this#contourYOffsetRatio}
-     *
+     * <p>
      * <p>
      * More specifically, this compares the x and y positions of contours relative to the x and y positions of other
      * contours - their width or height and the contour offset ratio
@@ -421,51 +486,6 @@ public class NetworkVisionProcessing extends Subsystem {
             bestMatch = sections[bestMatch].compareError(sections[i]);
 
         return bestMatch;
-
-    }
-
-    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
-
-    /**
-     * Buffers speeds to avoid sudden spikes or drops
-     * <p>
-     * If {@link RobotMap#BUFFER_ACCELERATION} is true, this will also accelerate towards the new value if it is not
-     * within the buffer range
-     * </p>
-     *
-     * @param data Data to process with the buffer
-     */
-    private void bufferSpeeds(Map<String, Double> data) {
-
-        int[] bufferSpeedCheck = speedWithinBuffer(data);
-
-        { //This adds the latest speeds to the buffer and removes the last entry
-            double[] latestSpeeds = new double[2];
-            latestSpeeds[RobotMap.LEFT_INDEX] = data.get(RobotMap.SPEED_LEFT_KEY);
-            latestSpeeds[RIGHT_INDEX] = data.get(RobotMap.SPEED_RIGHT_KEY);
-            speedBuffer.add(0, latestSpeeds); //Adds the latest speed to the array
-            speedBuffer.remove(RobotMap.SPEED_BUFFER_SIZE - 1); //Removes the last entry
-        }
-
-        if (RobotMap.BUFFER_ACCELERATION) {
-
-            double modifiedLeftSpeed = data.get(RobotMap.SPEED_LEFT_KEY),
-                    modifiedRightSpeed = data.get(RobotMap.SPEED_RIGHT_KEY);
-
-            modifiedLeftSpeed += bufferSpeedCheck[RobotMap.LEFT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
-            modifiedRightSpeed += bufferSpeedCheck[RIGHT_INDEX] * RobotMap.BUFFER_ACCELERATION_AMOUNT;
-
-            data.replace(RobotMap.SPEED_LEFT_KEY, modifiedLeftSpeed);
-            data.replace(RobotMap.SPEED_RIGHT_KEY, modifiedRightSpeed);
-
-        } else {
-
-            if (bufferSpeedCheck[RIGHT_INDEX] != 0 || bufferSpeedCheck[RobotMap.LEFT_INDEX] != 0)
-                data = lastValidSpeed;
-
-        }
-
-        lastValidSpeed = data;
 
     }
 
@@ -531,6 +551,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
+    ////////////////////////////////////////////////// Debugging Data //////////////////////////////////////////////////
+
     /**
      * Determines if a number is less than the allowable difference from a buffer value
      *
@@ -544,7 +566,25 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
-    ////////////////////////////////////////////////// Debugging Data //////////////////////////////////////////////////
+    /**
+     * Overloaded getContours function that returns the entire array
+     *
+     * @param key Key to use when getting contours from the network table
+     */
+    private double[] getContours(String key) {
+
+        try {
+
+            return contourReport.getNumberArray(key, new double[0]);
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_VALUE;
+
+        }
+
+    }
 
     /**
      * Prints the info from contourReport to the log
@@ -591,25 +631,6 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Adds debugging data to the data Map for drive control functions
-     *
-     * @param data  Driving data to add contour information to
-     * @param index Index of the contour to add data on
-     * @return Data map with contour data added in
-     */
-    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
-
-        data.put(RobotMap.CONTOUR_X_KEY, getContours(RobotMap.CONTOUR_X_KEY, index));
-        data.put(RobotMap.CONTOUR_Y_KEY, getContours(RobotMap.CONTOUR_Y_KEY, index));
-        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours(RobotMap.CONTOUR_HEIGHT_KEY, index));
-        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours(RobotMap.CONTOUR_WIDTH_KEY, index));
-        data.put(RobotMap.SMARTFILTER_PASS_KEY, (double) index);
-
-        return data;
-
-    }
-
-    /**
      * The method to use to end vision tracking commands when debugging (it never ends)
      *
      * @return false
@@ -618,6 +639,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
         return false;
     }
+
+    ////////////////////////////////////////////////// Other Methods ///////////////////////////////////////////////////
 
     /**
      *
@@ -639,31 +662,6 @@ public class NetworkVisionProcessing extends Subsystem {
             System.out.print(((j) ? 1 : 0) + " ");
 
         System.out.println();
-
-    }
-
-    ////////////////////////////////////////////////// Other Methods ///////////////////////////////////////////////////
-
-    /**
-     * Checks if a bunch of numbers are equal
-     *
-     * @param numbers the numbers to check
-     * @return If the numbers are equal
-     */
-    private boolean checkEquality(int... numbers) {
-
-        for (int number : numbers) {
-
-            if (number == 0)
-                return false;
-
-            for (int x : numbers)
-                if (number != x)
-                    return false;
-
-        }
-
-        return true;
 
     }
 
@@ -752,11 +750,14 @@ class SmartFilterData {
         int otherDataAdvantage = 0;
         int thisDatasAdvantage = 0;
 
+        if (otherData == null)
+            return RobotMap.ILLEGAL_INT;
+
         for (Map.Entry<String, Double> entry : percentError.entrySet()) {
 
-            if (entry.getValue() < otherData.percentError.get(entry.getKey())) {
+            if (entry.getValue() < otherData.percentError.get(entry.getKey())) { //TODO Null error here sometimes
 
-                ++thisDatasAdvantage;
+                ++thisDatasAdvantage; //TODO fix null error
 
             } else if (Objects.equals(entry.getValue(), otherData.percentError.get(entry.getKey()))) {
 
@@ -770,6 +771,8 @@ class SmartFilterData {
             }
 
         }
+
+        System.out.println("finished compareError");
 
         return (thisDatasAdvantage >= otherDataAdvantage) ? index : otherData.index;
 
