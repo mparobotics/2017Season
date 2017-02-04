@@ -46,7 +46,7 @@ import static org.usfirst.frc.team3926.robot.RobotMap.*;
  * debug data along with driving data in.
  * </p>
  * <p>
- * (1/26/2017:4:05PM) I created the {@link #smartFilterContours(int)} function so that we can use a less strict contour
+ * (1/26/2017:4:05PM) I created the {@link #smartFilterContours()} function so that we can use a less strict contour
  * finding algorithm and filter for contours that are close together. This should let us detect in many different
  * different situations with (basically) guaranteed same results
  * </p>
@@ -150,7 +150,7 @@ public class NetworkVisionProcessing extends Subsystem {
         int checkIndex;
 
         if (RobotMap.USE_SMART_FILTER)
-            checkIndex = smartFilterContours(index);
+            checkIndex = smartFilterContours();
         else
             checkIndex = index;
 
@@ -294,7 +294,6 @@ public class NetworkVisionProcessing extends Subsystem {
      * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
      * otherwise {@link RobotMap#ILLEGAL_INT}
      * <p>
-     * TODO convert to SmartFilterData format
      */
     private int smartFilterContours() {
 
@@ -312,14 +311,21 @@ public class NetworkVisionProcessing extends Subsystem {
         for (int i = 0; i < arrayLength; ++i)
             contourAreas[i] = contourHeights[i] * contourWidths[i];
 
-        List<SmartFilterData> validatedSegments = new Vector<>(arrayLength);
+        SmartFilterData[] validatedSegments = new SmartFilterData[arrayLength];
+
+        //java.util.Arrays.fill(validatedSegments, new SmartFilterData());
+
+        for (int i = 0; i < validatedSegments.length; ++i) {
+
+            validatedSegments[i] = new SmartFilterData(i);
+
+        }
 
         if (RobotMap.USE_RELATIVE_AREA)
             contourAreaRatio(contourAreas, validatedSegments);
 
         if (RobotMap.USE_RELATIVE_POSITION_CHECK)
             contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths, validatedSegments); //TODO
-
 
         return findBestContour(validatedSegments);
 
@@ -332,7 +338,14 @@ public class NetworkVisionProcessing extends Subsystem {
      * </p>
      * Converted to use {@link SmartFilterData} TODO test
      */
-    private void contourAreaRatio(double[] contourAreas, List<SmartFilterData> filterData) {
+    private void contourAreaRatio(double[] contourAreas, SmartFilterData[] filterData) {
+
+        if (contourAreas.length != filterData.length) {
+            System.out.println("ERROR contour area length (" + contourAreas.length + ")  doesn't match filter data " +
+                               "size (" + filterData.length + ")");
+
+            return;
+        }
 
         for (int i = 0; i < contourAreas.length; ++i) { //Loops through the filter values to check
 
@@ -344,17 +357,15 @@ public class NetworkVisionProcessing extends Subsystem {
                         contourAreas[j] <= (contourAreas[i] * 2) * (1 + RobotMap.ALLOWABLE_ERROR)) { //Within error
                         // range
 
-                        filterData.get(i)
-                                  .addBestError(SmartFilterData.AREA_RATIO_KEY, contourAreas[i] / contourAreas[j],
-                                                RobotMap.HIGH_GOAL_AREA_RATIO); //Adds area if its the low target
+                        filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY, contourAreas[i] / contourAreas[j],
+                                              RobotMap.HIGH_GOAL_AREA_RATIO); //Adds area if its the low target
 
                     } else if ((contourAreas[i] / 2) * (1 - RobotMap.ALLOWABLE_ERROR) <= contourAreas[j] &&
-                            contourAreas[j] <= (contourAreas[i] / 2) * (1 + RobotMap.ALLOWABLE_ERROR)) {
+                               contourAreas[j] <= (contourAreas[i] / 2) * (1 + RobotMap.ALLOWABLE_ERROR)) {
 
-                        filterData.get(i).addBestError(SmartFilterData.AREA_RATIO_KEY,
-                                                       contourAreas[i] / contourAreas[j],
-                                                       RobotMap.HIGH_GOAL_TOP_AREA_RATIO); //adds area if its high
-                        // target
+                        filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY,
+                                                   contourAreas[i] / contourAreas[j],
+                                                   RobotMap.HIGH_GOAL_TOP_AREA_RATIO); //adds area if its high target
 
                     }
 
@@ -374,10 +385,10 @@ public class NetworkVisionProcessing extends Subsystem {
      * @param contourYs      Y axis positions of contours
      * @param contourHeights Heights of contours
      * @param contourWidths  Widths of contours
-     * TODO convert to SmartFilterData format
+     *                       TODO convert to SmartFilterData format
      */
     private void contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
-                                         double[] contourWidths, List<SmartFilterData> filterData) {
+                                         double[] contourWidths, SmartFilterData[] filterData) {
 
 //        SmartFilterData[] validatedIndexes = new SmartFilterData[contourXs.length];
 //
@@ -399,15 +410,7 @@ public class NetworkVisionProcessing extends Subsystem {
 //
 //            validatedIndexes[i] = new SmartFilterData(isMatch, i);
 //
-//            if (RobotMap.CHECK_FOR_BEST_CONTOUR) {
-//                //TODO finish adding error here
-//                //validatedIndexes[i].addError(SmartFilterData.RELATIVE_POSITION_X_KEY, contourXs[i]);
-//
-//            }
-//
 //        }
-//
-//        return validatedIndexes;
 
     }
 
@@ -417,12 +420,14 @@ public class NetworkVisionProcessing extends Subsystem {
      * @param sections A list of every section of {@link #smartFilterContours()}
      * @return Index of the contour with the lowest percent error on everything
      */
-    private int findBestContour(List<SmartFilterData> sections) {
+    private int findBestContour(SmartFilterData[] sections) {
 
         int bestMatch = 0;
 
-        for (int i = 1; i < sections.size(); ++i) //Iterates through data to compare
-            bestMatch = sections.get(bestMatch).compareError(sections.get(i));
+        System.out.println("ERROR 8==D " + sections.length);
+
+        for (int i = 1; i < sections.length; ++i) //Iterates through data to compare
+            bestMatch = sections[bestMatch].compareError(sections[i]);
 
         return bestMatch;
 
@@ -701,18 +706,18 @@ class SmartFilterData {
     //////////////////////////////////////////////// Keys for Test Data ////////////////////////////////////////////////
     /**
      * Key for x-axis data from
-     * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[])}
+     * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[], SmartFilterData[])}
      */
     final static String RELATIVE_POSITION_X_KEY = "relativePositionX";
     /**
      * Key for y-axis data from
-     * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[])}
+     * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[], SmartFilterData[])}
      */
     final static String RELATIVE_POSITION_Y_KEY = "relativePositionY";
-    /** Key for data from  */
+    /** Key for data from */
     final static String AREA_RATIO_KEY          = "areaRatio";
     ////////////////////////////////////////////////// Class Variables /////////////////////////////////////////////////
-    /** Index of the contour used to determine  */
+    /** Index of the contour used to determine */
     private int                 index;
     /** All percent errors from target value for any smart filter methods */
     private Map<String, Double> percentError;
@@ -720,53 +725,10 @@ class SmartFilterData {
     /**
      * Default constructor
      */
-    SmartFilterData() {
-
-        index = ILLEGAL_INT;
-
-    }
-
-    /**
-     * Instantiates a SmartFilterData object
-     *
-     * @param match Whether or not SmartFilter
-     */
-    SmartFilterData(boolean match, int index) {
+    SmartFilterData(int index) {
 
         this.index = index;
         percentError = new HashMap<>();
-
-    }
-
-    /**
-     * Instantiates a SmartFilterData object
-     *
-     * @param match Whether or not SmartFilter
-     */
-    SmartFilterData(boolean match, int index, double error) {
-
-        this.index = index;
-        percentError = new HashMap<>();
-
-    }
-
-    /**
-     * @return Value of {@link #index}
-     */
-    public int getIndex() {
-
-        return index;
-    }
-
-    /**
-     * Adds a new error to {@link #percentError}
-     *
-     * @param value  Value related to this contour
-     * @param target Exact value of that is desired to be reached
-     */
-    public void addError(String key, double value, double target) {
-
-        percentError.put(key, Math.abs(1 - value / target));
 
     }
 
@@ -781,8 +743,10 @@ class SmartFilterData {
 
         double error = (Math.abs(1 - value / target));
 
-        if (error < percentError.get(key))
-            percentError.replace(key, error);
+        if (percentError.containsKey(key) && error < percentError.get(key))
+            percentError.put(key, error);
+        else
+            percentError.put(key, error);
 
     }
 
@@ -796,6 +760,8 @@ class SmartFilterData {
 
         int otherDataAdvantage = 0;
         int thisDatasAdvantage = 0;
+
+        System.out.println("ERROR map size is " + percentError.size());
 
         for (Map.Entry<String, Double> entry : percentError.entrySet()) {
 
