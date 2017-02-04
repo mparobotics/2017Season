@@ -291,13 +291,12 @@ public class NetworkVisionProcessing extends Subsystem {
     /**
      * Allows the filtering of contour data past what GRIP can do
      *
-     * @param index The index of the contour to check
      * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
      * otherwise {@link RobotMap#ILLEGAL_INT}
      * <p>
      * TODO convert to SmartFilterData format
      */
-    private int smartFilterContours(int index) {
+    private int smartFilterContours() {
 
         double[] contourXs = contourReport.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
         double[] contourYs = contourReport.getNumberArray(RobotMap.CONTOUR_Y_KEY, RobotMap.DEFAULT_VALUE);
@@ -316,39 +315,20 @@ public class NetworkVisionProcessing extends Subsystem {
         List<SmartFilterData> validatedSegments = new Vector<>(arrayLength);
 
         if (RobotMap.USE_RELATIVE_AREA)
-            validatedSegments.add(contourAreaRatio(contourAreas)); //TODO
-
-        if (RobotMap.USE_MAX_CONTOUR_AREA)
-            validatedSegments.add(contourAreaMax(contourAreas)); //TODO
+            contourAreaRatio(contourAreas, validatedSegments);
 
         if (RobotMap.USE_RELATIVE_POSITION_CHECK)
-            validatedSegments.add(contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths)); //TODO
+            contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths, validatedSegments); //TODO
 
-        //TODO boolean[] validContours = booleanArrayAnd(validatedSegments);
 
-        if (RobotMap.CHECK_FOR_BEST_CONTOUR) {
-
-            return findBestContour(validatedSegments);
-
-        }
-//
-//        if (validContours[index])
-//            return index;
-//
-//        for (int i = 0; i < validContours.length; ++i)
-//            if (validContours[i])
-//                return i;
-
-        System.out.println("WARNING NetworkVisionProcessing.smartFilterContours could not find any good contours");
-
-        return RobotMap.ILLEGAL_INT;
+        return findBestContour(validatedSegments);
 
     }
 
     /**
      * Checks to make sure that a contour has another contour with about double/half of it's area.
      * <p>
-     * This is used in {@link #smartFilterContours(int)}
+     * This is used in {@link #smartFilterContours()}
      * </p>
      * Converted to use {@link SmartFilterData} TODO test
      */
@@ -387,24 +367,6 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Checks to make sure that contour areas do not exceed the max
-     * <p>
-     * This is used in {@link #smartFilterContours(int)}
-     * </p>
-     *
-     * @param contourAreas Areas of contours
-     * TODO get rid of
-     */
-    private void contourAreaMax(double[] contourAreas) {
-
-        SmartFilterData[] validatedIndexes = new SmartFilterData[contourAreas.length];
-
-        for (int i = 0; i < contourAreas.length; ++i)
-            validatedIndexes[i] = new SmartFilterData(contourAreas[i] < RobotMap.MAX_CONTOUR_AREA, i);
-
-    }
-
-    /**
      * Compares the positions of contours to ensure that they are within the desired range of each other as specified
      * by {@link this#contourYOffsetRatio}
      *
@@ -412,11 +374,10 @@ public class NetworkVisionProcessing extends Subsystem {
      * @param contourYs      Y axis positions of contours
      * @param contourHeights Heights of contours
      * @param contourWidths  Widths of contours
-     * @return Contours that are within the {@link #contourXOffsetRatio}
      * TODO convert to SmartFilterData format
      */
     private void contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
-                                         double[] contourWidths) {
+                                         double[] contourWidths, List<SmartFilterData> filterData) {
 
 //        SmartFilterData[] validatedIndexes = new SmartFilterData[contourXs.length];
 //
@@ -451,36 +412,9 @@ public class NetworkVisionProcessing extends Subsystem {
     }
 
     /**
-     * Preforms a bitwise & like operation for all boolean[]s within sections
-     * <p>
-     * Tested, working 100%
-     * </p>
-     *
-     * @param sections A list of all the boolean[]s to check against each other
-     * @return All boolean[]s of sections compared against each other
-     * <p>
-     */
-    private boolean[] booleanArrayAnd(List<boolean[]> sections) {
-
-        boolean[] workingArray = new boolean[sections.get(0).length];//= sections.get(0);
-
-        for (int i = 0; i < workingArray.length; ++i) {
-
-            workingArray[i] = true;
-
-            for (boolean[] j : sections)
-                workingArray[i] &= j[i];
-
-        }
-
-        return workingArray;
-
-    }
-
-    /**
      * Determines which contour has the smallest amount of error
      *
-     * @param sections A list of every section of {@link #smartFilterContours(int)}
+     * @param sections A list of every section of {@link #smartFilterContours()}
      * @return Index of the contour with the lowest percent error on everything
      */
     private int findBestContour(List<SmartFilterData> sections) {
@@ -754,16 +688,12 @@ public class NetworkVisionProcessing extends Subsystem {
 }
 
 /**
- * Class to hold and handle data from {@link NetworkVisionProcessing#smartFilterContours(int)}.
+ * Class to hold and handle data from {@link NetworkVisionProcessing#smartFilterContours()}.
  * This class exists solely for this purpose. If more methods need to be added, keys for their data also need to be
  * added to this class.
  * <p>
  * Note: It is intended that each contour only has ONE of these to go along with it. This will need to be passed
  * around to all methods that deal with contour data.
- * </p>
- * <p>
- * Note: If this ever receives a value for {@link #match} that is false, that object should not be checked again.
- * That we we will not require an bitwise & method for this.
  * </p>
  */
 class SmartFilterData {
@@ -773,20 +703,16 @@ class SmartFilterData {
      * Key for x-axis data from
      * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[])}
      */
-    public final static String RELATIVE_POSITION_X_KEY = "relativePositionX";
+    final static String RELATIVE_POSITION_X_KEY = "relativePositionX";
     /**
      * Key for y-axis data from
      * {@link NetworkVisionProcessing#contourRelativePosition(double[], double[], double[], double[])}
      */
-    public final static String RELATIVE_POSITION_Y_KEY = "relativePositionY";
+    final static String RELATIVE_POSITION_Y_KEY = "relativePositionY";
     /** Key for data from  */
-    public final static String AREA_RATIO_KEY          = "areaRatio";
-    /** Key for data from {@link NetworkVisionProcessing#contourAreaMax(double[])} */
-    public final static String MAX_AREA                = "maxArea";
+    final static String AREA_RATIO_KEY          = "areaRatio";
     ////////////////////////////////////////////////// Class Variables /////////////////////////////////////////////////
-    /** Whether or not {@link NetworkVisionProcessing#smartFilterContours(int)} determined this index to be good */
-    private boolean             match;
-    /** Index of the contour used to determine {@link #match} */
+    /** Index of the contour used to determine  */
     private int                 index;
     /** All percent errors from target value for any smart filter methods */
     private Map<String, Double> percentError;
@@ -796,7 +722,6 @@ class SmartFilterData {
      */
     SmartFilterData() {
 
-        match = false;
         index = ILLEGAL_INT;
 
     }
@@ -808,7 +733,6 @@ class SmartFilterData {
      */
     SmartFilterData(boolean match, int index) {
 
-        this.match = match;
         this.index = index;
         percentError = new HashMap<>();
 
@@ -821,42 +745,9 @@ class SmartFilterData {
      */
     SmartFilterData(boolean match, int index, double error) {
 
-        this.match = match;
         this.index = index;
         percentError = new HashMap<>();
 
-    }
-
-    /**
-     * Preforms the boolean logic operator &= on match and another boolean
-     *
-     * @param a Other boolean to use
-     * @return Whether or not a and math are true
-     */
-    boolean and(boolean a) {
-
-        return a & match;
-
-    }
-
-    /**
-     * Gets the value of math
-     *
-     * @return match's value
-     */
-    boolean isMatch() {
-
-        return match;
-    }
-
-    /**
-     * Sets the value of {@link #match}
-     *
-     * @param match New value to set
-     */
-    public void setMatch(boolean match) {
-
-        this.match = match;
     }
 
     /**
@@ -886,7 +777,7 @@ class SmartFilterData {
      * @param value  Calculated value related to the error
      * @param target Target value to reach
      */
-    public void addBestError(String key, double value, double target) {
+    void addBestError(String key, double value, double target) {
 
         double error = (Math.abs(1 - value / target));
 
