@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3926.robot.commands.DriveCommand;
-import org.usfirst.frc.team3926.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3926.robot.commands.ShooterCommand;
-import org.usfirst.frc.team3926.robot.subsystems.ShootingSystem;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,9 +12,13 @@ import org.usfirst.frc.team3926.robot.subsystems.ShootingSystem;
  */
 public class OI {
 
+    /** right joystick*/
     public static Joystick     rightStick     = new Joystick(RobotMap.RIGHT_STICK);
-    public static Joystick     leftstick      = new Joystick(RobotMap.LEFT_STICK);
+    /** left joystick*/
+    public static Joystick     leftStick      = new Joystick(RobotMap.LEFT_STICK);
+    /** button for shooter*/
     public        Button       shootingButton = new JoystickButton(rightStick, 1);
+    /** limit switch for climbing*/
     public        DigitalInput limitSwitch    = new DigitalInput(RobotMap.CLIMBING_LIMIT_SWITCH);
 
     public OI() {
@@ -26,3 +27,4 @@ public class OI {
 
     }
 }
+

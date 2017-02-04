@@ -4,25 +4,31 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- *
+ * gets the return values from the vision tracking system and set the speed
+ * equal to the return value - turns towards the target
  */
 public class VisionTurningCommand extends Command {
 
+    /**
+     * tells code it needs to access things in the vision tracking subsystem
+     */
     public VisionTurningCommand() {
-        // Use requires() here to declare subsystem dependencies
+
         requires(Robot.visionTrackingSystem);
+
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * initialization is done in the subsystem
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
-
     /**
-     * returns the value of the speeds from the vision tracking subsystem and sets it to the
-     * speed of the robot
+     * gets the return value of vision driving
+     * sets left speed to the first value in the array
+     * sets right speed to the second
      */
     protected void execute() {
 
@@ -35,19 +41,25 @@ public class VisionTurningCommand extends Command {
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * doesn't return anything
+     * @return
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * should always be running
+     */
     protected void end() {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * shouldn't be interrupted
+     */
     protected void interrupted() {
 
     }

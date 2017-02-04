@@ -7,44 +7,49 @@ import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
- *
+ * turns on the motor for climbing
+ * when limit switch is pressed the motor stops
  */
 public class ClimbingSystem extends Subsystem {
 
-    //climbing motor
-    private Talon climbingMotor;
-    //speed of climbing motor
-    private double speed = 1;
-    //limit switch
+    /** climbing motor */
+    private Talon        climbingMotor;
+    /** limit switch to know when to stop the motor */
     private DigitalInput limitSwitch;
 
-    //initializes motor and limit switch
+    /**
+     * initializes the climbing motor and limit switch
+     */
     public ClimbingSystem() {
 
         climbingMotor = new Talon(RobotMap.CLIMBING_MOTOR);
-        limitSwitch = new DigitalInput(RobotMap.CLIMBING_LIMIT_SWITCH);
+        limitSwitch = Robot.oi.limitSwitch;
 
     }
 
-    //sets the climbing motor to the value of speed
+    /** sets the climbing motor to the value of Climbing motor speed in robot map */
     public void Climb() {
 
-        climbingMotor.set(Robot.climbingSystem.speed);
+        climbingMotor.set(RobotMap.CLIMBING_MOTOR_SPEED);
     }
 
-    public void ClimbingMotor(double speed) {
-
-        climbingMotor.set(speed);
-
-    }
-
-    //gets value from limit switch
+    /** gets value from limit switch */
     public boolean LimitSwitch() {
 
         return limitSwitch.get();
 
     }
 
+    /** stops climbing */
+    public void StopClimbing(int speed) {
+
+        climbingMotor.set(speed);
+
+    }
+
+    /**
+     * doesn't need a default command
+     */
     @Override
     protected void initDefaultCommand() {
 

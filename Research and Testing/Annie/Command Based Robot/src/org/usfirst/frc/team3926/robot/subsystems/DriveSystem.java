@@ -7,14 +7,15 @@ import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.DriveCommand;
 
+/**
+ * drives the robot
+ */
 public class DriveSystem extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
     private RobotDrive robotDrive;
 
     /**
-     * delcares driving motors and tank drive
+     * declares driving motors and tank drive
      */
     public DriveSystem() {
 
@@ -28,6 +29,10 @@ public class DriveSystem extends Subsystem {
     }
 
     @Override
+
+    /**
+     * if it can it will call the drive command
+     */
     protected void initDefaultCommand() {
 
         new DriveCommand();
@@ -36,13 +41,6 @@ public class DriveSystem extends Subsystem {
     /**
      * driving with vision tracking
      */
-    public void robotSpeed() {
-
-        //robotDrive.tankDrive(LSpeed, RSpeed);
-        Robot.visionTrackingSystem.visionDriving();
-
-    }
-
     public void SetSpeed(double LSpeed, double RSpeed) {
 
         Robot.visionTrackingSystem.visionDriving();
@@ -50,6 +48,7 @@ public class DriveSystem extends Subsystem {
 
     }
 
+    /** tank drive */
     public void TankDrive(double speedR, double speedL) {
 
         robotDrive.tankDrive(speedL, speedR);
