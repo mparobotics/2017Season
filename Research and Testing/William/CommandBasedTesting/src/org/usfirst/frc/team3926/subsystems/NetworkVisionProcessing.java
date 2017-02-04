@@ -754,7 +754,7 @@ class SmartFilterData {
 
         for (Map.Entry<String, Double> entry : percentError.entrySet()) {
 
-            if (entry.getValue() < otherData.percentError.get(entry.getKey())) {
+            if (entry.getValue() < otherData.percentError.get(entry.getKey())) { //Getting Null error here sometimes
 
                 ++thisDatasAdvantage;
 
