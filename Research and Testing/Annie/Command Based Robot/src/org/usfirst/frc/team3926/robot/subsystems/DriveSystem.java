@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3926.robot.Robot;
