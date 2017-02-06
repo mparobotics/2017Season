@@ -238,6 +238,7 @@ public class NetworkVisionProcessing extends Subsystem {
         SmartDashboard.putBoolean("Move Right", moveRight);
         SmartDashboard.putBoolean("Centered", centered);
         SmartDashboard.putBoolean("Contours Found", contoursFound);
+        SmartDashboard.putNumber("Driving Based on Contour: ", checkIndex);
 
         return returnValue;
 
