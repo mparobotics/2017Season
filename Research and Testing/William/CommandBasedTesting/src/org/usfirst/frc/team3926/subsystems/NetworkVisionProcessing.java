@@ -407,6 +407,8 @@ public class NetworkVisionProcessing extends Subsystem {
      */
     private void contourAreaRatio(double[] contourAreas, SmartFilterData[] filterData) {
 
+        System.out.println("m8 we just c4ll3d c0nt0ur4r34R4t10 and f1lt3rD4t4 is th111115 b1g: " + filterData.length);
+
         for (int i = 0; i < contourAreas.length; ++i) { //Loops through the filter values to check
 
             for (int j = 0; j < contourAreas.length; ++j) { //Loops through the areas to compare to the filter value
@@ -790,8 +792,6 @@ class SmartFilterData {
 
         }
 
-        //System.out.println("finished compareError");
-
         return (thisDatasAdvantage >= otherDataAdvantage) ? index : otherData.index;
 
     }
@@ -802,7 +802,7 @@ class SmartFilterData {
     void printInformation() {
 
         if (percentError.size() == 0)
-            System.out.println("percentError is empty");
+            System.out.println("\tpercentError is empty m8");
         else
             for (Map.Entry<String, Double> i : percentError.entrySet())
                 System.out.println("\t" + i.getKey() + ": " + i.getValue());
