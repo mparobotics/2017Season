@@ -482,8 +482,21 @@ public class NetworkVisionProcessing extends Subsystem {
 
         int bestMatch = 0;
 
-        for (int i = 1; i < sections.length; ++i) //Iterates through data to compare
-            bestMatch = sections[bestMatch].compareError(sections[i]);
+        for (int i = 1; i < sections.length; ++i) { //Iterates through data to compare
+
+            try {
+
+                bestMatch = sections[bestMatch].compareError(sections[i]);
+
+            } catch (NullPointerException e) {
+
+                sections[bestMatch].printInformation();
+
+                sections[i].printInformation();
+
+            }
+
+        }
 
         return bestMatch;
 
@@ -772,9 +785,19 @@ class SmartFilterData {
 
         }
 
-        System.out.println("finished compareError");
+        //System.out.println("finished compareError");
 
         return (thisDatasAdvantage >= otherDataAdvantage) ? index : otherData.index;
+
+    }
+
+    /**
+     * Prints information about percent erros
+     */
+    void printInformation() {
+
+        for (Map.Entry<String, Double> i : percentError.entrySet())
+            System.out.println(i.getKey() + ": " + i.getValue());
 
     }
 
