@@ -89,33 +89,6 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drives the robot towards a target autonomously
-     * <p>
-     * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
-     * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
-     * {@link RobotMap#CONTOUR_ERROR_BUTTON}
-     * </p>
-     */
-    public void autonomousTank() {
-        //Gets data on where to drive an the contour that it is using
-        Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
-
-        handleDriveData("autonomousTank", data);
-
-    }
-
-    /**
-     * Centers the robot on a target based on vision tracking data
-     */
-    public void center() {
-
-        Map<String, Double> data = Robot.visionProcessing.turnToCenter(0);
-
-        handleDriveData("center", data);
-
-    }
-
-    /**
      * Set the speed to drive the robot
      *
      * @param rightSpeed Speed to drive the right side
@@ -170,6 +143,22 @@ public class DriveControl extends Subsystem {
     }
 
     /**
+     * Drives the robot towards a target autonomously
+     * <p>
+     * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
+     * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
+     * {@link RobotMap#CONTOUR_ERROR_BUTTON}
+     * </p>
+     */
+    public void autonomousTank() {
+        //Gets data on where to drive an the contour that it is using
+        Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
+
+        handleDriveData("autonomousTank", data);
+
+    }
+
+    /**
      * Takes data from one of the vision processing methods ({@link NetworkVisionProcessing#moveToCenter(int)}
      * {@link NetworkVisionProcessing#turnToCenter(int)}) called from {@link this#center()} or
      * {@link this#autonomousTank()} and uses it to drive the robot
@@ -202,6 +191,7 @@ public class DriveControl extends Subsystem {
             contourDataPrint(RobotMap.SPEED_LEFT_KEY, data);
             contourDataPrint(RobotMap.SPEED_RIGHT_KEY, data);
             System.out.println('\t' + "area: " + data.get(RobotMap.CONTOUR_X_KEY) * data.get(RobotMap.CONTOUR_Y_KEY));
+            Robot.visionProcessing.smartFilterData.printInformation();
 
         } else if (contourErrorPress) {
 
@@ -223,6 +213,17 @@ public class DriveControl extends Subsystem {
     private void contourDataPrint(String key, Map<String, Double> data) {
 
         System.out.println('\t' + key + ": " + data.get(key));
+
+    }
+
+    /**
+     * Centers the robot on a target based on vision tracking data
+     */
+    public void center() {
+
+        Map<String, Double> data = Robot.visionProcessing.turnToCenter(0);
+
+        handleDriveData("center", data);
 
     }
 

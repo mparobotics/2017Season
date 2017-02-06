@@ -59,14 +59,16 @@ import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
  */
 public class NetworkVisionProcessing extends Subsystem {
 
+    /** TODO remove, for debugging SmartFilterData on the current contour */
+    public  SmartFilterData smartFilterData;
     /** Enables/Disables offset checking on the x-axis */
-    private boolean      XAxisOffsetCheck;
+    private boolean         XAxisOffsetCheck;
     /** Enables/Disables offset checking on the y-axis */
-    private boolean      YAxisOffsetCheck;
+    private boolean         YAxisOffsetCheck;
     /** Contour report from the Raspberry Pi */
-    private NetworkTable contourReport;
+    private NetworkTable    contourReport;
     /** Booleans to put on the dashboard that represent information on the state of contours */
-    private boolean      contoursFound, moveRight, moveLeft, centered;
+    private boolean         contoursFound, moveRight, moveLeft, centered;
     /** Keeps track of the last few speeds to ensure returned values aren't spikes due to temporary interruptions */
     private List<double[]>      speedBuffer;
     /** Last valid speed from the buffer */
@@ -499,6 +501,8 @@ public class NetworkVisionProcessing extends Subsystem {
 
         }
 
+        smartFilterData = sections[bestMatch];
+
         return bestMatch;
 
     }
@@ -793,12 +797,15 @@ class SmartFilterData {
     }
 
     /**
-     * Prints information about percent erros
+     * Prints information about percent errors
      */
     void printInformation() {
 
-        for (Map.Entry<String, Double> i : percentError.entrySet())
-            System.out.println(i.getKey() + ": " + i.getValue());
+        if (percentError.size() == 0)
+            System.out.println("percentError is empty");
+        else
+            for (Map.Entry<String, Double> i : percentError.entrySet())
+                System.out.println("\t" + i.getKey() + ": " + i.getValue());
 
     }
 
