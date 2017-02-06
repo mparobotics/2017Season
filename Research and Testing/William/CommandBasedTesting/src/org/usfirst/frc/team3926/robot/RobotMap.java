@@ -22,7 +22,7 @@ public class RobotMap {
     public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
     /** Use a speed buffer to prevent sudden jumps or drops in speed TODO working, needs improvement */
     public final static boolean  USE_SPEED_BUFFER                   = false;
-    /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours(int)} */
+    /** Filter contours based on their features. This uses {@link NetworkVisionProcessing#smartFilterContours()} */
     public final static boolean  USE_SMART_FILTER                   = true;
     /** Use CANTalons for the drive base instead of PWM Talons */
     public final static boolean  USE_CAN_TALON                      = true;
@@ -127,14 +127,8 @@ public class RobotMap {
     public final static double   ALLOWABLE_ERROR                    = 0.05;
     /** Enable/Disable relative area check (a contour must have an area double/half the size of another contour) */
     public final static boolean  USE_RELATIVE_AREA                  = true;
-    /** This option is mainly for debugging */
-    public final static boolean  USE_MAX_CONTOUR_AREA               = false;
-    /** Maximum area of a contour NOTE: This can be done with GRIP. I have it here for convenience */
-    public final static double   MAX_CONTOUR_AREA                   =14000;
     /** Whether or not to determine if a contour is valid based on its position relative to other contours */
-    public final static boolean  USE_RELATIVE_POSITION_CHECK        = true;
-    /** Whether or not to find the BEST contours, not just contours that match the criteria */
-    public final static boolean CHECK_FOR_BEST_CONTOUR = true;
+    public final static boolean  USE_RELATIVE_POSITION_CHECK        = false;
     /** Y axis offset between vision targets for the high goal */
     public final static double   HIGH_GOAL_Y_OFFSET_RATIO           = 1;
     /** X axis offset between vision targets for the high goal */
