@@ -41,25 +41,6 @@ def extra_processing(pipeline, frame):
     return contour_frame
 
 
-def draw_contours(pipeline, frame):  # TODO combine this with extra_processing
-    """
-    Draws and labels contours on actual image, useful to see what opencv "sees".
-    :param pipeline: the pipeline that just processed an image
-    :param frame: the image directly from the camera
-    :return: edited frame, sent to disk to be used in mjpg stream
-    """
-    contour_number = 0
-    contour_frame = cv2.resize(frame, (0, 0), fx=image_scale, fy=image_scale)
-    number_of_contours = len(pipeline.filter_contours_output)
-    for contour in pipeline.filter_contours_output:
-        x, y, w, h = cv2.boundingRect(contour)
-        center = x, y
-        (cv2.drawContours(contour_frame, pipeline.filter_contours_output, -1, (255, 0, 120), cv2.FILLED))
-        cv2.putText(contour_frame, str(contour_number), center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
-        contour_number += 1
-    return contour_frame
-
-
 def main():  # TODO debug grip class to see why it does not see some contours
                 # TODO optimize
     """
