@@ -12,6 +12,7 @@ import static org.usfirst.frc.team3926.robot.RobotMap.LEFT_INDEX;
 import static org.usfirst.frc.team3926.robot.RobotMap.RIGHT_INDEX;
 
 /**
+ * TODO make a new class for this. I don't like the way this is working
  * Notes on vision processing:
  * <p>
  * (1/20/2017:4:40PM) If looking at a piece of (retro-reflective) tape from the side, it's position may indicate that
@@ -128,7 +129,7 @@ public class NetworkVisionProcessing extends Subsystem {
     ////////////////////////////////////////////// Variable Configuration //////////////////////////////////////////////
 
     /**
-     * Setter enable/disable offset checking of various axis
+     * Enable/disable offset checking of various axis
      *
      * @param XAxisOffsetCheck New value for XAxisOffsetCheck
      * @param YAxisOffsetCheck New value for YAxisOffsetCheck
@@ -246,91 +247,7 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
-    ////////////////////////////////////////// Methods for Obtaining Contours //////////////////////////////////////////
-
-    /**
-     * Allows the filtering of contour data past what GRIP can do
-     *
-     * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
-     * otherwise {@link RobotMap#ILLEGAL_INT}
-     * <p>
-     */
-    private int smartFilterContours() {
-
-        double[] contourXs = contourReport.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourYs = contourReport.getNumberArray(RobotMap.CONTOUR_Y_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourHeights = contourReport.getNumberArray(RobotMap.CONTOUR_HEIGHT_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourWidths = contourReport.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE);
-        double[] contourAreas = new double[contourHeights.length];
-
-        if (!checkEquality(contourXs.length, contourYs.length, contourHeights.length, contourWidths.length))
-            return RobotMap.ILLEGAL_INT;
-
-        int arrayLength = contourXs.length;
-
-        for (int i = 0; i < arrayLength; ++i)
-            contourAreas[i] = contourHeights[i] * contourWidths[i];
-
-        SmartFilterData[] validatedSegments = new SmartFilterData[arrayLength];
-
-        for (int i = 0; i < validatedSegments.length; ++i) {
-
-            validatedSegments[i] = new SmartFilterData(i);
-
-        }
-
-        if (RobotMap.USE_RELATIVE_AREA)
-            contourAreaRatio(contourAreas, validatedSegments);
-
-        if (RobotMap.USE_RELATIVE_POSITION_CHECK)
-            contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths, validatedSegments); //TODO
-
-        return findBestContour(validatedSegments);
-
-    }
-
-    /**
-     * Function to return a specific contour
-     *
-     * @param key   Key to use when getting contours from the table
-     * @param index Array index of the contour to get
-     * @return Either the desired value for the value and index or an illegal character if an exception occurred
-     */
-    private double getContours(String key, int index) {
-
-        try {
-
-            return contourReport.getNumberArray(key, new double[0])[index];
-
-        } catch (Exception e) {
-
-            System.out.println(new Date().toString() + ": " + e.getMessage());
-            return RobotMap.ILLEGAL_DOUBLE;
-
-        }
-
-    }
-
-    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
-
-    /**
-     * Adds debugging data to the data Map for drive control functions
-     *
-     * @param data  Driving data to add contour information to
-     * @param index Index of the contour to add data on
-     * @return Data map with contour data added in
-     */
-    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
-
-        data.put(RobotMap.CONTOUR_X_KEY, getContours(RobotMap.CONTOUR_X_KEY, index));
-        data.put(RobotMap.CONTOUR_Y_KEY, getContours(RobotMap.CONTOUR_Y_KEY, index));
-        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours(RobotMap.CONTOUR_HEIGHT_KEY, index));
-        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours(RobotMap.CONTOUR_WIDTH_KEY, index));
-        data.put(RobotMap.SMARTFILTER_PASS_KEY, (double) index);
-
-        return data;
-
-    }
+    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
 
     /**
      * Buffers speeds to avoid sudden spikes or drops
@@ -372,138 +289,6 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
         lastValidSpeed = data;
-
-    }
-
-    /**
-     * Checks if a bunch of numbers are equal
-     *
-     * @param numbers the numbers to check
-     * @return If the numbers are equal
-     */
-    private boolean checkEquality(int... numbers) {
-
-        for (int number : numbers) {
-
-            if (number == 0)
-                return false;
-
-            for (int x : numbers)
-                if (number != x)
-                    return false;
-
-        }
-
-        return true;
-
-    }
-
-    /**
-     * Checks to make sure that a contour has another contour with about double/half of it's area.
-     * <p>
-     * This is used in {@link #smartFilterContours()}
-     * </p>
-     * Converted to use {@link SmartFilterData} TODO test
-     */
-    private void contourAreaRatio(double[] contourAreas, SmartFilterData[] filterData) {
-
-        for (int i = 0; i < contourAreas.length; ++i) { //Loops through the filter values to check
-
-            for (int j = 0; j < contourAreas.length; ++j) { //Loops through the areas to compare to the filter value
-
-                if (i != j) { //Don't check a value against itself
-
-                    if ((contourAreas[i] * 2) * (1 - RobotMap.ALLOWABLE_ERROR) <= contourAreas[j] &&
-                        contourAreas[j] <= (contourAreas[i] * 2) * (1 + RobotMap.ALLOWABLE_ERROR)) { //Within error
-                        // range
-
-                        filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY, contourAreas[i] / contourAreas[j],
-                                                   RobotMap.HIGH_GOAL_AREA_RATIO); //Adds area if its the low target
-
-                    } else if ((contourAreas[i] / 2) * (1 - RobotMap.ALLOWABLE_ERROR) <= contourAreas[j] &&
-                               contourAreas[j] <= (contourAreas[i] / 2) * (1 + RobotMap.ALLOWABLE_ERROR)) {
-
-                        filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY,
-                                                   contourAreas[i] / contourAreas[j],
-                                                   RobotMap.HIGH_GOAL_TOP_AREA_RATIO); //adds area if its high target
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-    ///////////////////////////////////////////////// Speed Buffering //////////////////////////////////////////////////
-
-    /**
-     * Compares the positions of contours to ensure that they are within the desired range of each other as specified
-     * by {@link this#contourYOffsetRatio}
-     * <p>
-     * <p>
-     * More specifically, this compares the x and y positions of contours relative to the x and y positions of other
-     * contours - their width or height and the contour offset ratio
-     * </p>
-     *
-     * @param contourXs      X axis positions of contours
-     * @param contourYs      Y axis positions of contours
-     * @param contourHeights Heights of contours
-     * @param contourWidths  Widths of contours
-     *                       TODO convert to SmartFilterData format
-     */
-    private void contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
-                                         double[] contourWidths, SmartFilterData[] filterData) {
-
-        for (int i = 0; i < contourHeights.length; ++i) {
-
-            if (XAxisOffsetCheck)
-                for (int j = 0; j < contourXs.length; ++j)
-                    if (i != j)
-                        filterData[i].addBestError(SmartFilterData.RELATIVE_POSITION_X_KEY, contourXs[i],
-                                                   contourXs[j] - contourWidths[j] * contourXOffsetRatio);
-
-            if (YAxisOffsetCheck)
-                for (int j = 0; j < contourYs.length; ++j)
-                    if (i != j)
-                        filterData[i].addBestError(SmartFilterData.RELATIVE_POSITION_Y_KEY, contourYs[i],
-                                                   contourYs[j] - contourHeights[j] * contourYOffsetRatio);
-
-        }
-
-    }
-
-    /**
-     * Determines which contour has the smallest amount of error
-     *
-     * @param sections A list of every section of {@link #smartFilterContours()}
-     * @return Index of the contour with the lowest percent error on everything
-     */
-    private int findBestContour(SmartFilterData[] sections) {
-
-        int bestMatch = 0;
-
-        for (int i = 1; i < sections.length; ++i) { //Iterates through data to compare
-
-            try {
-
-                bestMatch = sections[bestMatch].compareError(sections[i]);
-
-            } catch (NullPointerException e) {
-
-                sections[bestMatch].printInformation();
-
-                sections[i].printInformation();
-
-            }
-
-        }
-
-        smartFilterData = sections[bestMatch];
-
-        return bestMatch;
 
     }
 
@@ -556,31 +341,214 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
-    /**
-     * Determines if a number is greater than the allowable difference from a buffer value
-     *
-     * @param bufferValue Buffer value to check from
-     * @param dataValue   Value to compare
-     * @return If the value is greater than the max allowed by the buffer value
-     */
-    private boolean greaterThanRange(double bufferValue, double dataValue) {
+    /////////////////////////////////////////////// New Contour Filtering //////////////////////////////////////////////
 
-        return dataValue > bufferValue + RobotMap.MAX_BUFFER_DIFFERENCE;
+    /**
+     * Filters contours based on program configuration
+     * @return Index of the contour with the least error
+     * TODO finish
+     */
+    private int smartFilter() {
+
+
 
     }
 
-    ////////////////////////////////////////////////// Debugging Data //////////////////////////////////////////////////
+    /**
+     * Filters contours based on where another contour SHOULD be located.
+     * @return
+     * TODO finish
+     */
+    private boolean[] comparisonFilter() {
+
+
+    }
 
     /**
-     * Determines if a number is less than the allowable difference from a buffer value
-     *
-     * @param bufferValue Buffer value to check from
-     * @param dataValue   Value to compare
-     * @return If the value is less than the min allowed by the buffer value
+     * Filters contours based on where they alone
+     * @return
+     * TODO finish
      */
-    private boolean lessThanRange(double bufferValue, double dataValue) {
+    private boolean[] individualFilter() {
 
-        return dataValue < bufferValue - RobotMap.MAX_BUFFER_DIFFERENCE;
+
+
+    }
+
+
+
+    ///////////////////////////////////////////////// Contour Filtering ////////////////////////////////////////////////
+
+    /**
+     * Allows the filtering of contour data past what GRIP can do
+     *
+     * @return index (if it is a valid contour), otherwise the next valid contour (if there are valid contours),
+     * otherwise {@link RobotMap#ILLEGAL_INT}
+     * @deprecated This has all been replaced by the new way to filter contours
+     * TODO impliment max error to drive to
+     */
+    private int smartFilterContours() {
+
+        double[] contourXs = contourReport.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourYs = contourReport.getNumberArray(RobotMap.CONTOUR_Y_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourHeights = contourReport.getNumberArray(RobotMap.CONTOUR_HEIGHT_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourWidths = contourReport.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourAreas = new double[contourHeights.length];
+
+        if (!checkEquality(contourXs.length, contourYs.length, contourHeights.length, contourWidths.length))
+            return RobotMap.ILLEGAL_INT;
+
+        int arrayLength = contourXs.length;
+
+        for (int i = 0; i < arrayLength; ++i)
+            contourAreas[i] = contourHeights[i] * contourWidths[i];
+
+        SmartFilterData[] validatedSegments = new SmartFilterData[arrayLength];
+
+        for (int i = 0; i < validatedSegments.length; ++i) {
+
+            validatedSegments[i] = new SmartFilterData(i);
+
+        }
+
+        if (RobotMap.USE_RELATIVE_AREA)
+            contourAreaRatio(contourAreas, validatedSegments);
+
+        if (RobotMap.USE_RELATIVE_POSITION_CHECK)
+            contourRelativePosition(contourXs, contourYs, contourHeights, contourWidths, validatedSegments); //TODO
+
+        return findBestContour(validatedSegments);
+
+    }
+
+    /**
+     * Compares the positions of contours to ensure that they are within the desired range of each other as specified
+     * by {@link this#contourYOffsetRatio}
+     * <p>
+     * <p>
+     * More specifically, this compares the x and y positions of contours relative to the x and y positions of other
+     * contours - their width or height and the contour offset ratio
+     * </p>
+     *
+     * @param contourXs      X axis positions of contours
+     * @param contourYs      Y axis positions of contours
+     * @param contourHeights Heights of contours
+     * @param contourWidths  Widths of contours
+     *                       TODO convert to SmartFilterData format
+     */
+    private void contourRelativePosition(double[] contourXs, double[] contourYs, double[] contourHeights,
+                                         double[] contourWidths, SmartFilterData[] filterData) {
+
+        for (int i = 0; i < contourHeights.length; ++i) {
+
+            if (XAxisOffsetCheck)
+                for (int j = 0; j < contourXs.length; ++j)
+                    if (i != j)
+                        filterData[i].addBestError(SmartFilterData.RELATIVE_POSITION_X_KEY, contourXs[i],
+                                                   contourXs[j] - contourWidths[j] * contourXOffsetRatio);
+
+            if (YAxisOffsetCheck)
+                for (int j = 0; j < contourYs.length; ++j)
+                    if (i != j)
+                        filterData[i].addBestError(SmartFilterData.RELATIVE_POSITION_Y_KEY, contourYs[i],
+                                                   contourYs[j] - contourHeights[j] * contourYOffsetRatio);
+
+        }
+
+    }
+
+    /**
+     * Checks to make sure that a contour has another contour with about double/half of it's area.
+     * <p>
+     * This is used in {@link #smartFilterContours()}
+     * </p>
+     * Converted to use {@link SmartFilterData} TODO test
+     */
+    private void contourAreaRatio(double[] contourAreas, SmartFilterData[] filterData) {
+
+        for (int i = 0; i < contourAreas.length; ++i) { //Loops through the filter values to check
+
+            for (int j = 0; j < contourAreas.length; ++j) { //Loops through the areas to compare to the filter value
+
+                if (i != j) { //Don't check a value against itself
+
+                    if ((contourAreas[i] * 2) * (1 - RobotMap.ALLOWABLE_ERROR) <= contourAreas[j] &&
+                        contourAreas[j] <= (contourAreas[i] * 2) * (1 + RobotMap.ALLOWABLE_ERROR)) { //Within error
+                        // range
+
+                        filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY, contourAreas[i] / contourAreas[j],
+                                                   RobotMap.HIGH_GOAL_AREA_RATIO); //Adds area if its the low target
+
+                    } else if ((contourAreas[i] / 2) * (1 - RobotMap.ALLOWABLE_ERROR) <= contourAreas[j] &&
+                               contourAreas[j] <= (contourAreas[i] / 2) * (1 + RobotMap.ALLOWABLE_ERROR)) {
+
+                        filterData[i].addBestError(SmartFilterData.AREA_RATIO_KEY,
+                                                   contourAreas[i] / contourAreas[j],
+                                                   RobotMap.HIGH_GOAL_TOP_AREA_RATIO); //adds area if its high target
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Determines which contour has the smallest amount of error
+     *
+     * @param sections A list of every section of {@link #smartFilterContours()}
+     * @return Index of the contour with the lowest percent error on everything
+     */
+    private int findBestContour(SmartFilterData[] sections) {
+
+        int bestMatch = 0;
+
+        for (int i = 1; i < sections.length; ++i) { //Iterates through data to compare
+
+            try {
+
+                bestMatch = sections[bestMatch].compareError(sections[i]);
+
+            } catch (NullPointerException e) {
+
+                sections[bestMatch].printInformation();
+
+                sections[i].printInformation();
+
+            }
+
+        }
+
+        smartFilterData = sections[bestMatch];
+
+        return bestMatch;
+
+    }
+
+    ////////////////////////////////////////// Methods for Obtaining Contours //////////////////////////////////////////
+
+    /**
+     * Function to return a specific contour
+     *
+     * @param key   Key to use when getting contours from the table
+     * @param index Array index of the contour to get
+     * @return Either the desired value for the value and index or an illegal character if an exception occurred
+     */
+    private double getContours(String key, int index) {
+
+        try {
+
+            return contourReport.getNumberArray(key, new double[0])[index];
+
+        } catch (Exception e) {
+
+            System.out.println(new Date().toString() + ": " + e.getMessage());
+            return RobotMap.ILLEGAL_DOUBLE;
+
+        }
 
     }
 
@@ -603,6 +571,8 @@ public class NetworkVisionProcessing extends Subsystem {
         }
 
     }
+
+    ////////////////////////////////////////////////// Debugging Data //////////////////////////////////////////////////
 
     /**
      * Prints the info from contourReport to the log
@@ -658,6 +628,25 @@ public class NetworkVisionProcessing extends Subsystem {
         return false;
     }
 
+    /**
+     * Adds debugging data to the data Map for drive control functions
+     *
+     * @param data  Driving data to add contour information to
+     * @param index Index of the contour to add data on
+     * @return Data map with contour data added in
+     */
+    private Map<String, Double> addDebugData(Map<String, Double> data, int index) {
+
+        data.put(RobotMap.CONTOUR_X_KEY, getContours(RobotMap.CONTOUR_X_KEY, index));
+        data.put(RobotMap.CONTOUR_Y_KEY, getContours(RobotMap.CONTOUR_Y_KEY, index));
+        data.put(RobotMap.CONTOUR_HEIGHT_KEY, getContours(RobotMap.CONTOUR_HEIGHT_KEY, index));
+        data.put(RobotMap.CONTOUR_WIDTH_KEY, getContours(RobotMap.CONTOUR_WIDTH_KEY, index));
+        data.put(RobotMap.SMARTFILTER_PASS_KEY, (double) index);
+
+        return data;
+
+    }
+
     ////////////////////////////////////////////////// Other Methods ///////////////////////////////////////////////////
 
     /**
@@ -697,6 +686,55 @@ public class NetworkVisionProcessing extends Subsystem {
 
     }
 
+    /**
+     * Checks if a bunch of numbers are equal
+     *
+     * @param numbers the numbers to check
+     * @return If the numbers are equal
+     */
+    private boolean checkEquality(int... numbers) {
+
+        for (int number : numbers) {
+
+            if (number == 0)
+                return false;
+
+            for (int x : numbers)
+                if (number != x)
+                    return false;
+
+        }
+
+        return true;
+
+    }
+
+    /**
+     * Determines if a number is less than the allowable difference from a buffer value
+     *
+     * @param bufferValue Buffer value to check from
+     * @param dataValue   Value to compare
+     * @return If the value is less than the min allowed by the buffer value
+     */
+    private boolean lessThanRange(double bufferValue, double dataValue) {
+
+        return dataValue < bufferValue - RobotMap.MAX_BUFFER_DIFFERENCE;
+
+    }
+
+    /**
+     * Determines if a number is greater than the allowable difference from a buffer value
+     *
+     * @param bufferValue Buffer value to check from
+     * @param dataValue   Value to compare
+     * @return If the value is greater than the max allowed by the buffer value
+     */
+    private boolean greaterThanRange(double bufferValue, double dataValue) {
+
+        return dataValue > bufferValue + RobotMap.MAX_BUFFER_DIFFERENCE;
+
+    }
+
 }
 
 /**
@@ -707,6 +745,8 @@ public class NetworkVisionProcessing extends Subsystem {
  * Note: It is intended that each contour only has ONE of these to go along with it. This will need to be passed
  * around to all methods that deal with contour data.
  * </p>
+ * TODO make a new class for this. I don't like the way this is working
+ * @deprecated This entire class is really bad...don't use it. Use the new way to filter contours
  */
 class SmartFilterData {
 
