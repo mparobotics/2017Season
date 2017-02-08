@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Handles variables to make the robot drive based off vision tracking
  *
@@ -15,15 +19,30 @@ public class VisionTrackingSubsystem extends Subsystem {
     private NetworkTable table;
     /** Gets the x value info from a networktable */
     private double[]     xValue;
+    private double[]     yValues;
+    private double[]     contourHeights;
+    /** Gets the areas of the contours from the networktable */
+    private double[]     areas;
+    private boolean[]    hasThisPassedCurrentFilter;
+    private boolean[]    hasThisPassedPreviousFilter;
+    private List         filterList<Boolean>;
 
     /**
-     * Makes a new network table and an array inside to store the xvalue of objects detected by vision tracking
+     * Constructs the network table
+     * Constructs the xValue array
+     * Constructs the areas array
      */
     public VisionTrackingSubsystem() {
 
+        filterList = new ArrayList<Boolean>();
+
         table = NetworkTable.getTable(RobotMap.NETWORK_TABLE_NAME);
 
-        xValue = table.getNumberArray(RobotMap.NETWORK_TABLE_KEY, new double[0]);
+        xValue = table.getNumberArray(RobotMap.XVALUE_KEY, new double[0]);
+
+        yValues = table.getNumberArray(RobotMap.YVALUE_KEY, new double[1]);
+
+        areas = table.getNumberArray(RobotMap.AREA_KEY, new double[2]);
 
     }
 
@@ -31,6 +50,12 @@ public class VisionTrackingSubsystem extends Subsystem {
      * No default command is needed for this Subsystem
      */
     protected void initDefaultCommand() {
+
+    }
+
+    public void filtering(){
+
+        filterList.add
 
     }
 
@@ -44,12 +69,15 @@ public class VisionTrackingSubsystem extends Subsystem {
     public double[] visionTrackingForwardSpeeds() {
 
         double secondVisionSpeed = RobotMap.MAX_VISION_TRACKING_SPEED *
-                                   ((xValue[0] - (RobotMap.VISION_SCREEN_CENTER)) / RobotMap.VISION_SCREEN_CENTER);
+                                   ((xValue[0] - (RobotMap.VISION_SCREEN_CENTER)) /
+                                    RobotMap.VISION_SCREEN_CENTER);
         return new double[] {(xValue[0] < RobotMap.VISION_SCREEN_CENTER) ?
-                             RobotMap.MAX_VISION_TRACKING_SPEED * (xValue[0] / RobotMap.VISION_SCREEN_CENTER) :
-                             RobotMap.MAX_VISION_TRACKING_SPEED, (xValue[0] > RobotMap.VISION_SCREEN_CENTER) ?
-                                                                 secondVisionSpeed :
-                                                                 RobotMap.MAX_VISION_TRACKING_SPEED};
+                             RobotMap.MAX_VISION_TRACKING_SPEED *
+                             (xValue[0] / RobotMap.VISION_SCREEN_CENTER) :
+                             RobotMap.MAX_VISION_TRACKING_SPEED,
+                             (xValue[0] > RobotMap.VISION_SCREEN_CENTER) ?
+                             secondVisionSpeed :
+                             RobotMap.MAX_VISION_TRACKING_SPEED};
 
     }
 
@@ -67,6 +95,63 @@ public class VisionTrackingSubsystem extends Subsystem {
                              -forwardSpeedArray[0],
                              xValue[0] > RobotMap.VISION_SCREEN_CENTER ? forwardSpeedArray[1] :
                              -forwardSpeedArray[1]};
+
+    }
+
+    /**
+     * Filters out contours which are not in a pair of contours in which one contour has double the height of the other
+     */
+    private void partlyFilteredContourArrayCreation() {
+
+        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
+        Arrays.fill(hasThisPassedCurrentFilter, false);
+
+        for (int i = 0; i < contourHeights.length; i++) {
+
+            for (int j = 0; j < contourHeights.length; j++) {
+
+                if ((contourHeights[j] > ((1 - RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2))) &&
+                    contourHeights[j] < (1 + RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2)) {
+
+                    hasThisPassedCurrentFilter[i] = true;
+                    hasThisPassedCurrentFilter[j] = true;
+
+                }
+            }
+
+        }
+
+        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter & hasThisPassedPreviousFilter;
+        Arrays.fill(hasThisPassedCurrentFilter, false);
+
+    }
+
+    /**
+     * Filters out contours which are not part a pair of contours which have the same distance
+     * between each other as half the area of the larger contour
+     */
+    public void usingDistanceBetweenContours() {
+
+        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
+        Arrays.fill(hasThisPassedCurrentFilter, false);
+        partlyFilteredContourArrayCreation();
+
+        for (int i = 0; i < yValues.length; i++) {
+
+            for (int j = 0; j < yValues.length; j++) {
+
+                if (hasThisPassedPreviousFilter[i] && hasThisPassedPreviousFilter[j] &&
+                    contourHeights[i] > (yValues[i] - yValues[j]) * (1 - RobotMap.ALLOWABLE_ERROR) &&
+                    contourHeights[i] < (yValues[i] - yValues[j]) * (1 + RobotMap.ALLOWABLE_ERROR)) {
+
+                    hasThisPassedCurrentFilter[i] = true;
+                    hasThisPassedCurrentFilter[j] = true;
+
+                }
+
+            }
+
+        }
 
     }
 

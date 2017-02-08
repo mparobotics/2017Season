@@ -11,13 +11,11 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  */
 public class ShootingSubsystem extends Subsystem {
 
-    /** Declares a talon for the shooter, it's default speed and an rpm variable */
-    private        Talon   shooter;
+    /** Declares a talon for the shooter */
+    private Talon shooter;
 
     /**
      * Constructs the shooter talon
-     * Constructs the encoder which tracks the shooter motor
-     * Sets distance per pulse of shooting encoder
      */
     public ShootingSubsystem() {
 
@@ -52,14 +50,7 @@ public class ShootingSubsystem extends Subsystem {
 
     }
 
-    /**
-     * Makes the robot shoot
-     * Adjusts the speed of the shooter if the shooter RPM is too slow or too fast but makes sure to not lower the
-     * speed below 0
-     */
     public void useShooter() {
-
-
 
     }
 

@@ -3,7 +3,10 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3926.robot.commands.*;
+import org.usfirst.frc.team3926.robot.commands.ClimbCommand;
+import org.usfirst.frc.team3926.robot.commands.PIDShootingCommand;
+import org.usfirst.frc.team3926.robot.commands.VisionTrackingForwardCommand;
+import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurningCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,7 +21,7 @@ public class OI {
     ///** Xbox joystick */
     //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
     /** Button on the joystick that starts the ShootingCommand */
-    private Button   shooterPIDButton               = new JoystickButton(rightStick, RobotMap.PID_SHOOTER_BUTTON_NUMBER);
+    private Button   shooterPIDButton            = new JoystickButton(rightStick, RobotMap.PID_SHOOTER_BUTTON_NUMBER);
     /** Button on the joystick that starts the ClimbCommand */
     private Button   climberButton               = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
     /** Button on the joystick that starts the VisionTrackingTurningCommand */
@@ -32,7 +35,6 @@ public class OI {
      * Activates the ClimbCommand and the ShootingCommand if the buttons made for them are pressed
      * Activates the vision tracking command if the vision tracking button is being held
      */
-
     OI() {
 
         climberButton.whenPressed(new ClimbCommand());
