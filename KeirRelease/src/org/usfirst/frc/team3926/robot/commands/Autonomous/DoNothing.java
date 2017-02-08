@@ -3,37 +3,55 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * Autonomous command to do nothing.
+ * <p>
+ * Sure, I could just set the command to null
+ * </p>
  *
+ * @author William Kluge
  */
 public class DoNothing extends Command {
 
+    /**
+     * Constructs nothing
+     */
     public DoNothing() {
 
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Initializes nothing
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Called repeatedly when this Command is scheduled to do nothing
+     */
     protected void execute() {
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Make this return true when this Command no longer needs to do nothing
+     * @return something
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * Ends nothing
+     */
     protected void end() {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Interrupts nothing
+     */
     protected void interrupted() {
 
     }

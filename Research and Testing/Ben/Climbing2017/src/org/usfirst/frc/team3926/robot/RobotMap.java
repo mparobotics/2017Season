@@ -28,9 +28,9 @@ public class RobotMap {
     public static final  int    TALON_FL_CAN_ID                                 = 3;
     /////Driving Encoders/////
     /** Port A for the right driving encoder */
-    public static final  int    RIGHT_DRIVING_ENCODER_PORT_A                    = 0;
+    public static final  int    RIGHT_DRIVING_ENCODER_PORT_A                    = 6;
     /** Port B for the right driving encoder */
-    public static final  int    RIGHT_DRIVING_ENCODER_PORT_B                    = 1;
+    public static final  int    RIGHT_DRIVING_ENCODER_PORT_B                    = 7;
     /** Port A for the left driving encoder */
     public static final  int    LEFT_DRIVING_ENCODER_PORT_A                     = 2;
     /** Port B for the right driving encoder */
@@ -42,37 +42,48 @@ public class RobotMap {
     /** Set point for the shooting PID loop */
     public static final  int    SHOOTER_PID_LOOP_SET_POINT                      = 3;
     /** Proportianal value for PID loop */
-    public static final  int    SHOOTER_PID_LOOP_P                              = 1;
+    public static final  double SHOOTER_PID_LOOP_P                              = 0.001;
     /** Integral value for PID loop */
-    public static final  int    SHOOTER_PID_LOOP_I                              = 1;
+    public static final  double SHOOTER_PID_LOOP_I                              = 0;
     /** Derivative value for PID loop */
-    public static final  int    SHOOTER_PID_LOOP_D                              = 1;
+    public static final  double SHOOTER_PID_LOOP_D                              = 0;
     /** Name for calling super constructor */
     public static final  String SHOOTER_SUPER_NAME                              = "Name";
     /////Shooting Motor CAN ID/////
     /** CAN ID for motor which shoots */
-    public static final  int    SHOOTER_CAN_ID                                  = 1;
+    public static final  int    SHOOTER_CAN_ID                                  = 4;
     /////Shooting Encoder/////
     /** Port A for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_PORT_A                         = 6;
+    public static final  int    SHOOTING_ENCODER_PORT_A             = 0;
     /** Port B for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_PORT_B                         = 7;
+    public static final  int    SHOOTING_ENCODER_PORT_B             = 1;
     /** Distance per pulse for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_DISTANCE_PER_PULSE             = 1;
+    public static final  int    SHOOTING_ENCODER_DISTANCE_PER_PULSE = 1;
     //////////////////////////////////////////////////Vision Tracking//////////////////////////////////////////////////
+
+    /** Ratio of height to the length of the retro-reflective tape contour */
+    public static final  double LARGE_TAPE_SIDES_RATIO              = 0.25;
+    /** Ratio of height to the length of the retro-reflective tape contour */
+    public static final  double SMALL_TAPE_SIDE_RATIO               = 0.125;
+    /** Allow error for filtering */
+    public static final  double ALLOWABLE_ERROR                     = 0.05;
     /////Vision Tracking Screen Dimensions/////
     /** Height of the vision sensing screen */
-    public static final  int    VISION_MAX_HEIGHT                               = 2;
+    public static final  int    VISION_MAX_HEIGHT                   = 2;
     /** Length of the vision sensing screen */
-    private static final int    VISION_MAX_LENGTH                               = 6;
+    private static final int    VISION_MAX_LENGTH                   = 6;
     /** Center of the vision sensing screen */
-    public static final  int    VISION_SCREEN_CENTER                            = VISION_MAX_LENGTH / 2;
+    public static final  int    VISION_SCREEN_CENTER                = VISION_MAX_LENGTH / 2;
     /////Vision Tracking Speed Regulation/////
     /** Max speed of the motors in vision tracking */
     public static final  double MAX_VISION_TRACKING_SPEED                       = 1;
     /////Vision Tracking Network Table/////
-    /** Key for network table */
-    public static final  String NETWORK_TABLE_KEY                               = "xValue";
+    /** Key for xvalue array */
+    public static final  String XVALUE_KEY                                      = "xValue";
+    /** Key for yvalue array */
+    public static final  String YVALUE_KEY                                      = "yValue";
+    /** Key for the area array */
+    public static final  String AREA_KEY                                        = "array";
     /** Name of the network table */
     public static final  String NETWORK_TABLE_NAME                              = "GRIP/ContourReport";
     //////////////////////////////////////////////////////Climbing/////////////////////////////////////////////////////
