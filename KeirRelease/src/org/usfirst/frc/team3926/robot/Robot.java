@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team3926.robot;
 
+import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,6 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
+import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
+import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,7 +23,12 @@ import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
  */
 public class Robot extends IterativeRobot {
 
-    //public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    ////////////////////////////////////////// Instances of Subsystem Classes //////////////////////////////////////////
+    /** Instance of DriveControl to allow driving of the robot's base */
+    public static final DriveControl                             driveControl    = new DriveControl();
+    /** TODO test if I'm allowed to put classes here like this */
+    public static PIDControlledActuator shooterAgitator;
+    ///////////////////////////////////////// User Interface and Control ///////////////////////////////////////////////
     /** Operator interface class */
     public static OI                       oi;
     /** Chooser for selecting the autonomous command */
@@ -34,12 +43,16 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
 
-        oi = new OI();
+        ///// Subsystem Initialization /////
+        shooterAgitator = new PIDControlledActuator<CANTalon, Encoder>()
 
+        ///// User Interface and Control Initialization /////
+        oi = new OI();
         chooser = new SendableChooser<>();
         chooser.addDefault("Do Nothing", new DoNothing());
         chooser.addObject("Drive Forward", new DriveForward());
         SmartDashboard.putData("Autonomous mode", chooser);
+
     }
 
     /**

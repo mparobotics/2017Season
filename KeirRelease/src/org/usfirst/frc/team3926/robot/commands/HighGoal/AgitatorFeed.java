@@ -1,14 +1,13 @@
-package org.usfirst.frc.team3926.robot.commands.Gears;
+package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Centers the robot on the vision target for gear placement
- * @author William Kluge
+ *
  */
-public class CenterOnGears extends Command {
+public class AgitatorFeed extends Command {
 
-    public CenterOnGears() {
+    public AgitatorFeed() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

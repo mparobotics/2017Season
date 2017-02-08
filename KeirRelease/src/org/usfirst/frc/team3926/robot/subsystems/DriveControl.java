@@ -37,7 +37,7 @@ public class DriveControl extends Subsystem {
      */
     public DriveControl() {
 
-        if (RobotMap.USE_CAN_TALON)
+        if (RobotMap.DRIVE_USE_CAN_TALON)
             driveSystem = new RobotDrive(new CANTalon(RobotMap.FRONT_LEFT_MOTOR_CAN),
                                          new CANTalon(RobotMap.BACK_LEFT_MOTOR_CAN),
                                          new CANTalon(RobotMap.FRONT_RIGHT_MOTOR_CAN),
