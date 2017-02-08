@@ -34,14 +34,14 @@ class GripPythonVI:
         self.__filter_contours_min_area = 20.0
         self.__filter_contours_min_perimeter = 1.0
         self.__filter_contours_min_width = 50.0
-        self.__filter_contours_max_width = 10000.0
+        self.__filter_contours_max_width = 100.0
         self.__filter_contours_min_height = 20.0
-        self.__filter_contours_max_height = 1000
+        self.__filter_contours_max_height = 100
         self.__filter_contours_solidity = [0.0, 100.0]
-        self.__filter_contours_max_vertices = 1000000
+        self.__filter_contours_max_vertices = 100
         self.__filter_contours_min_vertices = 10.0
         self.__filter_contours_min_ratio = 1.0
-        self.__filter_contours_max_ratio = 1000
+        self.__filter_contours_max_ratio = 100
 
         self.filter_contours_output = None
 
