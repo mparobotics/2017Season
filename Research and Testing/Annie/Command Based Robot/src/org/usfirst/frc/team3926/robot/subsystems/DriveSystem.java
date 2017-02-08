@@ -1,11 +1,7 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
-<<<<<<< Updated upstream
-import edu.wpi.first.wpilibj.CANTalon;
-=======
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
->>>>>>> Stashed changes
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -27,6 +23,10 @@ public class DriveSystem extends Subsystem {
     private Encoder    enc;
     /** rate of encoder */
     private double     rate;
+    /** turn right */
+    private boolean    right;
+    /** turn left */
+    private boolean    left;
 
     /**
      * declares driving motors and tank drive
@@ -90,9 +90,25 @@ public class DriveSystem extends Subsystem {
 
     public boolean turningWithRangeFinder() {
 
+        Robot.rangeFinderBackupSystem.rightOrLeft(right, left);
+
         if (range > RobotMap.DISTANCE_TO_AIRSHIP) {
 
-            enc.reset();
+            if (rate == 5) {
+
+                if (right) {
+
+                    Robot.driveSystem.TankDrive(.5, -.5);
+
+                }
+                if (left) {
+
+                    Robot.driveSystem.TankDrive(-.5, .5);
+
+                }
+
+            }
+
             return true;
 
         }
