@@ -4,9 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Handles variables to make the robot drive based off vision tracking
@@ -22,10 +20,11 @@ public class VisionTrackingSubsystem extends Subsystem {
     private double[]     yValues;
     private double[]     contourHeights;
     /** Gets the areas of the contours from the networktable */
+
     private double[]     areas;
     private boolean[]    hasThisPassedCurrentFilter;
     private boolean[]    hasThisPassedPreviousFilter;
-    private List         filterList<Boolean>;
+    private double[]    filteredxValues;
 
     /**
      * Constructs the network table
@@ -33,8 +32,6 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Constructs the areas array
      */
     public VisionTrackingSubsystem() {
-
-        filterList = new ArrayList<Boolean>();
 
         table = NetworkTable.getTable(RobotMap.NETWORK_TABLE_NAME);
 
@@ -53,11 +50,29 @@ public class VisionTrackingSubsystem extends Subsystem {
 
     }
 
-    public void filtering(){
+    /**
+     * Fills the hasThisPassedPreviousFilter with true
+     * FIlls the hasThis
+     */
+    public void mainFiltering() {
 
-        filterList.add
+        Arrays.fill(hasThisPassedPreviousFilter, true);
+        Arrays.fill(hasThisPassedCurrentFilter, false);
+        usingDistanceBetweenContours();
+        partlyFilteredContourArrayCreation();
 
+        for(int i = 0, j = -1; i < xValue.length;i++ ){
+
+            if(hasThisPassedPreviousFilter[i] = true){
+
+                j++;
+                filteredxValues[j] = xValue[i];
+
+            }
+
+        }
     }
+
 
     /**
      * Stores the speeds of drivesystem for driving toward the shooting target based off the
@@ -103,15 +118,13 @@ public class VisionTrackingSubsystem extends Subsystem {
      */
     private void partlyFilteredContourArrayCreation() {
 
-        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
-        Arrays.fill(hasThisPassedCurrentFilter, false);
-
         for (int i = 0; i < contourHeights.length; i++) {
 
             for (int j = 0; j < contourHeights.length; j++) {
 
                 if ((contourHeights[j] > ((1 - RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2))) &&
-                    contourHeights[j] < (1 + RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2)) {
+                    contourHeights[j] < (1 + RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2) &&
+                    hasThisPassedPreviousFilter[i] && hasThisPassedPreviousFilter[j]) {
 
                     hasThisPassedCurrentFilter[i] = true;
                     hasThisPassedCurrentFilter[j] = true;
@@ -121,7 +134,7 @@ public class VisionTrackingSubsystem extends Subsystem {
 
         }
 
-        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter & hasThisPassedPreviousFilter;
+        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
         Arrays.fill(hasThisPassedCurrentFilter, false);
 
     }
@@ -131,10 +144,6 @@ public class VisionTrackingSubsystem extends Subsystem {
      * between each other as half the area of the larger contour
      */
     public void usingDistanceBetweenContours() {
-
-        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
-        Arrays.fill(hasThisPassedCurrentFilter, false);
-        partlyFilteredContourArrayCreation();
 
         for (int i = 0; i < yValues.length; i++) {
 
@@ -152,6 +161,9 @@ public class VisionTrackingSubsystem extends Subsystem {
             }
 
         }
+
+        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
+        Arrays.fill(hasThisPassedCurrentFilter, false);
 
     }
 
