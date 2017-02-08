@@ -3,7 +3,6 @@ package org.usfirst.frc.team3926.robot.subsystems;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
@@ -41,7 +40,7 @@ public class RangeFinderBackupSystem extends Subsystem {
      * if the range finder does not see the airship the robot will turn around until it sees it
      * once the robot is close enough to the airship (5 inches) it will stop and shoot the ball
      */
-    public void rangeFinderDistance() {
+    /* public void rangeFinderDistance() {
 
         range = rangefinder.getRangeInches();
 
@@ -78,7 +77,7 @@ public class RangeFinderBackupSystem extends Subsystem {
 
         }
 
-    }
+    } */
 
     /**
      *
@@ -92,27 +91,6 @@ public class RangeFinderBackupSystem extends Subsystem {
 
     }
 
-    /**
-     * turns
-     */
-    public void turn() {
-
-        if (rate == 5) {
-
-            if (right) {
-
-                Robot.driveSystem.TankDrive(.5, -.5);
-
-            }
-            if (left) {
-
-                Robot.driveSystem.TankDrive(-.5, .5);
-
-            }
-
-        }
-
-    }
 }
 
 

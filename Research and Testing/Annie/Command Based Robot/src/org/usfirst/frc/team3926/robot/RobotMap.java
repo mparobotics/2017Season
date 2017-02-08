@@ -37,6 +37,15 @@ public class RobotMap {
     public static double  ADDED_AMOUNT             = .01;
     /** limit switch for climbing */
     public static int     CLIMBING_LIMIT_SWITCH    = 9;
+    /////////////////////////////////////////////Backup rangefinder////////////////////////////////////////////////////
+    /** back up range finder port 1 */
+    public static int     RANGE_FINDER_PORT_1        = 1;
+    /** back up range finder port 2 */
+    public static int     RANGE_FINDER_PORT_2        = 1;
+    /** distance to airship */
+    public static int     DISTANCE_TO_AIRSHIP        = 170;
+    /** how close the robot will be to the airship to shoot */
+    public static int     SHOOTING_DISTANCE          = 5;
     /////////////////////////////////////////////Vision tracking///////////////////////////////////////////////////////
     /** contour X key */
     public static String  X_KEY                    = "x";

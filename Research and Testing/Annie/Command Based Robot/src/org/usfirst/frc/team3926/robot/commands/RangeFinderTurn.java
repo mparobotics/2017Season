@@ -17,13 +17,12 @@ public class RangeFinderTurn extends Command {
     /** Called just before this Command runs the first time */
     protected void initialize() {
 
-        Robot.driveSystem.TankDrive(.5, .5);
-
     }
 
     /** Called repeatedly when this Command is scheduled to run */
     protected void execute() {
 
+        Robot.driveSystem.TankDrive(.5, .5);
         Robot.driveSystem.turningWithRangeFinder();
 
     }
@@ -36,8 +35,6 @@ public class RangeFinderTurn extends Command {
 
     /** Called once after isFinished returns true */
     protected void end() {
-
-        Robot.rangeFinderBackupSystem.turn();
 
     }
 

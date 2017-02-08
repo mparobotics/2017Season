@@ -2,7 +2,6 @@
 package org.usfirst.frc.team3926.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,20 +16,13 @@ import org.usfirst.frc.team3926.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-<<<<<<< Updated upstream
-    public static final ShootingSystem       shootingSystem       = new ShootingSystem();
-    public static final DriveSystem          driveSystem          = new DriveSystem();
-    public static final ClimbingSystem       climbingSystem       = new ClimbingSystem();
-    public static final VisionTrackingSystem visionTrackingSystem = new VisionTrackingSystem();
-    public static final PIDEncoder           PIDencoder           = new PIDEncoder();
-=======
     public static final ShootingSystem          shootingSystem          = new ShootingSystem();
     public static final DriveSystem             driveSystem             = new DriveSystem();
     public static final ClimbingSystem          climbingSystem          = new ClimbingSystem();
     public static final VisionTrackingSystem    visionTrackingSystem    = new VisionTrackingSystem();
     public static final PIDEncoder              PIDencoder              = new PIDEncoder();
     public static final RangeFinderBackupSystem rangeFinderBackupSystem = new RangeFinderBackupSystem();
->>>>>>> Stashed changes
+
     public static OI oi;
 
     /**
