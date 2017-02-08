@@ -8,6 +8,7 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 /**
  * Drives the robot towards the vision tracking target using
  * {@link org.usfirst.frc.team3926.subsystems.NetworkVisionProcessing#moveToCenter(int)}
+ * @author William Kluge
  */
 public class DriveToHighGoalTarget extends Command {
 
