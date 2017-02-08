@@ -9,7 +9,7 @@ import org.usfirst.frc.team3926.robot.Robot;
 public class PIDEncoderCommand extends Command {
 
     /**
-     * tells code it needs to access things in the climbing subsystem
+     * declares dependencies
      */
     public PIDEncoderCommand() {
 

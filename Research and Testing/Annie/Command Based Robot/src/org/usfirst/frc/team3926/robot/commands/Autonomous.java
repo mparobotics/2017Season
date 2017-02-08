@@ -5,13 +5,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Autonomus extends CommandGroup {
+public class Autonomous extends CommandGroup {
     
+<<<<<<< Updated upstream:Research and Testing/Annie/Command Based Robot/src/org/usfirst/frc/team3926/robot/commands/Autonomus.java
     public  Autonomus() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
+=======
+    public Autonomous() {
+>>>>>>> Stashed changes:Research and Testing/Annie/Command Based Robot/src/org/usfirst/frc/team3926/robot/commands/Autonomous.java
 
         // To run multiple commands at the same time,
         // use addParallel()
@@ -25,4 +29,5 @@ public class Autonomus extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     }
+
 }

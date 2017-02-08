@@ -10,7 +10,7 @@ import org.usfirst.frc.team3926.robot.Robot;
 public class VisionTurningCommand extends Command {
 
     /**
-     * tells code it needs to access things in the vision tracking subsystem
+     * declares dependencies
      */
     public VisionTurningCommand() {
 

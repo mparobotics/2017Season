@@ -255,6 +255,7 @@ public class VisionTrackingSystem extends Subsystem {
         map.put(RobotMap.Y_KEY, y[index]);
         map.put(RobotMap.HIGHT_KEY, height[index]);
         map.put(RobotMap.WIDTH_KEY, width[index]);
+
     }
 }
 

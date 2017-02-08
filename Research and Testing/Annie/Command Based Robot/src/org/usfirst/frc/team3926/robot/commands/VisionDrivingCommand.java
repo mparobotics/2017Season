@@ -2,7 +2,6 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
-import org.usfirst.frc.team3926.robot.subsystems.VisionTrackingSystem;
 
 /**
  * gets the return values from the vision tracking system and set the speed
@@ -11,7 +10,7 @@ import org.usfirst.frc.team3926.robot.subsystems.VisionTrackingSystem;
 public class VisionDrivingCommand extends Command {
 
     /**
-     * tells code it needs to access things in the vision tracking subsystem
+     * declares dependencies
      */
     public VisionDrivingCommand() {
 
