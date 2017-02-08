@@ -25,21 +25,26 @@ public class Robot extends IterativeRobot {
     /** Instance of the visionTrackingSubsystem */
     public static VisionTrackingSubsystem visionTrackingSubsystem;
     /** Instance of the PIDSubystem */
-    public static PIDSubsystem pidSubsystem;
+    public static PIDSubsystem            pidSubsystem;
     /** Instance of the OI class */
     public static OI                      oi;
 
     /**
-     *  Constructs an instance of the OI class
+     * Constructs an instance of the OI class
+     * Constructs an instance of the ClimbSubsystem
+     * Constructs an instance of the DriveSubsystem
+     * Constructs an instance of the ShootingSubsystem
+     * Constructs an instance of the VisionTrackingSubsystem
+     * Constructs an instance of the PIDLoopSubsystemSubsystem
      */
     public void robotInit() {
 
         oi = new OI();
-        climbSubsystem          = new ClimbSubsystem();
-        driveSubsystem          = new DriveSubsytem();
-        shootingSubsystem       = new ShootingSubsystem();
+        climbSubsystem = new ClimbSubsystem();
+        driveSubsystem = new DriveSubsytem();
+        shootingSubsystem = new ShootingSubsystem();
         visionTrackingSubsystem = new VisionTrackingSubsystem();
-        pidSubsystem            = new PIDLoopSubsystem();
+        pidSubsystem = new PIDLoopSubsystem();
 
     }
 

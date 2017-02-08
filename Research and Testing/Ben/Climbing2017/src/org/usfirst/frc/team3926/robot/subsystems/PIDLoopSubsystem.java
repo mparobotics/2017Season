@@ -17,8 +17,12 @@ public class PIDLoopSubsystem extends PIDSubsystem {
     /** Declares a talon for the shooter, it's default speed and an rpm variable */
     private        Talon   shooter;
 
-
-
+    /**
+     * Calls teh default constructor of the PIDsubsystem
+     * Constructs the shootingEncoder
+     * Constructs the shooter
+     * Sets the set point for the PID loop
+     */
     public PIDLoopSubsystem() {
 
         super(RobotMap.SHOOTER_SUPER_NAME, RobotMap.SHOOTER_PID_LOOP_P, RobotMap.SHOOTER_PID_LOOP_I, RobotMap.SHOOTER_PID_LOOP_D);
@@ -29,16 +33,27 @@ public class PIDLoopSubsystem extends PIDSubsystem {
 
     }
 
+    /**
+     * Gets the rate of the moter from the encoder
+     *
+     * @return the rate of the shooter motor
+     */
     protected double returnPIDInput() {
 
         return shootingEncoder.getRate();
 
     }
 
+    /**
+     * No command uses this subsystm by default
+     */
     protected void initDefaultCommand() {
 
     }
 
+    /**
+     * Based off of the shooter's rate it outputs speed to the shooter
+     */
     protected void usePIDOutput(double output) {
 
         shooter.pidWrite(output);
