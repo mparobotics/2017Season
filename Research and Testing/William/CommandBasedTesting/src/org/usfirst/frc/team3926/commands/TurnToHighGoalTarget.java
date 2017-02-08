@@ -38,10 +38,13 @@ public class TurnToHighGoalTarget extends Command {
         driveControl.center();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Make this return true when this Command no longer needs to run execute()
+     * @return false, this will run forever TODO get actual end command
+     */
     protected boolean isFinished() {
 
-        return Robot.visionProcessing.debugEndCommand();
+        return false;
     }
 
     // Called once after isFinished returns true
