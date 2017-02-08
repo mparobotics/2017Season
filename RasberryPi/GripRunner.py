@@ -1,9 +1,15 @@
 #! /home/pi/.virtualenvs/cv/bin/python2
 
-#import cv2.cv2 as cv2
 import cv2
 from networktables import NetworkTables
-from grip import GripPythonVI  # TODO change the module and class, if needed
+
+from grip import GripPythonVI  #
+
+# This is just to unconfuse PyCharm
+try:
+    from cv2 import cv2
+except ImportError:
+    pass
 
 image_scale = 0.5
 
