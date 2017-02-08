@@ -191,7 +191,7 @@ public class DriveControl extends Subsystem {
             contourDataPrint(RobotMap.SPEED_LEFT_KEY, data);
             contourDataPrint(RobotMap.SPEED_RIGHT_KEY, data);
             System.out.println('\t' + "area: " + data.get(RobotMap.CONTOUR_X_KEY) * data.get(RobotMap.CONTOUR_Y_KEY));
-            Robot.visionProcessing.smartFilterData.printInformation();
+            //Robot.visionProcessing.smartFilterData.printInformation();
 
         } else if (contourErrorPress) {
 
