@@ -21,13 +21,6 @@ public class VisionTrackingSubsystem extends Subsystem {
     private double[]     yValues;
     /** Gets the height of each contour from a networktable */
     private double[]     contourHeights;
-    /**
-     * Temporarily used to store the results of a filter while the filter is running so it can be assigned to
-     * hasPassedPreviousFilter
-     */
-    private boolean[]    hasThisPassedCurrentFilter;
-    /** Used to check if a contour has passed the previous filter */
-    private boolean[]    hasThisPassedPreviousFilter;
     /** An array used to store x values of contours which remain after filtering */
     private double[]     filteredXValues;
 
@@ -54,50 +47,25 @@ public class VisionTrackingSubsystem extends Subsystem {
     }
 
     /**
-     * Fills the hasThisPassedPreviousFilter with true
-     * Fills the hasThisPassedCurrentFilter with false
-     * Runs the filtering methods
-     * Uses data from xValues and Filters to make an array of filteredXValues
-     */
-    public void mainFiltering() {
-
-        Arrays.fill(hasThisPassedPreviousFilter, true);
-        Arrays.fill(hasThisPassedCurrentFilter, false);
-        usingDistanceBetweenContours();
-        partlyFilteredContourArrayCreation();
-
-        for (int i = 0, j = -1; i < xValues.length; i++) {
-
-            if (hasThisPassedPreviousFilter[i] = true) {
-
-                j++;
-                filteredXValues[j] = xValues[i];
-
-            }
-
-        }
-    }
-
-    /**
      * Stores the speeds of drivesystem for driving toward the shooting target based off the
      * position of retro-reflective tape
      *
-     * @return Speeds of robot drivesystem while going forward with vision tracking based off postion of
+     * @return Speeds of robot drivesystem while going forward with vision tracking based off position of
      * retro-reflective tape
      */
     public double[] visionTrackingForwardSpeeds() {
 
-        mainFiltering();
+        boolean[] passedPreviousFilter = new boolean[xValues.length];
+        boolean[] passedCurrentFilter = new boolean[xValues.length];
 
-        double secondVisionSpeed = RobotMap.MAX_VIS_TRACK_SPEED *
-                                   ((filteredXValues[0] - (RobotMap.VIS_SCREEN_CENTER)) /
-                                    RobotMap.VIS_SCREEN_CENTER);
+        mainFiltering(passedCurrentFilter, passedPreviousFilter);
+
+        double forwardVisTrackSpeed1 = RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER);
+        double forwardVisTrackSpeed2 = RobotMap.MAX_VIS_TRACK_SPEED;
         return new double[] {(filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER) ?
-                             RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER) :
-                             RobotMap.MAX_VIS_TRACK_SPEED,
+                             forwardVisTrackSpeed1 : forwardVisTrackSpeed2,
                              (filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER) ?
-                             RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER) :
-                             RobotMap.MAX_VIS_TRACK_SPEED};
+                             forwardVisTrackSpeed1 : forwardVisTrackSpeed2};
 
     }
 
@@ -109,21 +77,51 @@ public class VisionTrackingSubsystem extends Subsystem {
      */
     public double[] visionTrackingTurningSpeeds() {
 
-        mainFiltering();
+        boolean[] passedPreviousFilter = new boolean[xValues.length];
+        boolean[] passedCurrentFilter = new boolean[xValues.length];
+
+        Arrays.fill(passedPreviousFilter, true);
+        Arrays.fill(passedCurrentFilter, false);
+
+        mainFiltering(passedCurrentFilter, passedPreviousFilter);
 
         double[] forwardSpeedArray = visionTrackingForwardSpeeds();
 
         return new double[] {filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER ? forwardSpeedArray[0] :
                              -forwardSpeedArray[0],
                              filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER ? forwardSpeedArray[1] :
-                                 -forwardSpeedArray[1]};
+                             -forwardSpeedArray[1]};
+
+    }
+
+    /**
+     * Fills the passedPreviousFilter with true
+     * Fills the passedCurrentFilter with false
+     * Runs the filtering methods
+     * Uses data from xValues and Filters to make an array of filteredXValues
+     */
+    private void mainFiltering(boolean[] temporaryPassedFilters, boolean[] permanentPassedFilter) {
+
+        partlyFilteredContourArrayCreation(temporaryPassedFilters, permanentPassedFilter);
+        usingDistanceBetweenContours(temporaryPassedFilters, permanentPassedFilter);
+
+        for (int i = 0, j = -1; i < xValues.length; i++) {
+
+            if (permanentPassedFilter[i]) {
+
+                j++;
+                filteredXValues[j] = xValues[i];
+
+            }
+
+        }
 
     }
 
     /**
      * Filters out contours which are not in a pair of contours in which one contour has double the height of the other
      */
-    private void partlyFilteredContourArrayCreation() {
+    private void partlyFilteredContourArrayCreation(boolean[] temporaryPassedFilters, boolean[] permanentPassedFilter) {
 
         for (int i = 0; i < contourHeights.length; i++) {
 
@@ -131,18 +129,19 @@ public class VisionTrackingSubsystem extends Subsystem {
 
                 if ((contourHeights[j] > ((1 - RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2))) &&
                     contourHeights[j] < (1 + RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2) &&
-                    hasThisPassedPreviousFilter[i] && hasThisPassedPreviousFilter[j]) {
+                    permanentPassedFilter[i] && permanentPassedFilter[j]) {
 
-                    hasThisPassedCurrentFilter[i] = true;
-                    hasThisPassedCurrentFilter[j] = true;
+                    temporaryPassedFilters[i] = true;
+                    temporaryPassedFilters[j] = true;
 
                 }
+
             }
 
         }
 
-        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
-        Arrays.fill(hasThisPassedCurrentFilter, false);
+        permanentPassedFilter = temporaryPassedFilters;
+        Arrays.fill(temporaryPassedFilters, false);
 
     }
 
@@ -150,18 +149,18 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Filters out contours which are not part a pair of contours which have the same distance
      * between each other as half the area of the larger contour
      */
-    private void usingDistanceBetweenContours() {
+    private void usingDistanceBetweenContours(boolean[] passedCurrentFilter, boolean[] passedPreviousFilter) {
 
         for (int i = 0; i < yValues.length; i++) {
 
             for (int j = 0; j < yValues.length; j++) {
 
-                if (hasThisPassedPreviousFilter[i] && hasThisPassedPreviousFilter[j] &&
+                if (passedPreviousFilter[i] && passedPreviousFilter[j] &&
                     contourHeights[i] > (yValues[i] - yValues[j]) * (1 - RobotMap.ALLOWABLE_ERROR) &&
                     contourHeights[i] < (yValues[i] - yValues[j]) * (1 + RobotMap.ALLOWABLE_ERROR)) {
 
-                    hasThisPassedCurrentFilter[i] = true;
-                    hasThisPassedCurrentFilter[j] = true;
+                    passedCurrentFilter[i] = true;
+                    passedCurrentFilter[j] = true;
 
                 }
 
@@ -169,8 +168,8 @@ public class VisionTrackingSubsystem extends Subsystem {
 
         }
 
-        hasThisPassedPreviousFilter = hasThisPassedCurrentFilter;
-        Arrays.fill(hasThisPassedCurrentFilter, false);
+        passedPreviousFilter = passedCurrentFilter;
+        Arrays.fill(passedCurrentFilter, false);
 
     }
 
