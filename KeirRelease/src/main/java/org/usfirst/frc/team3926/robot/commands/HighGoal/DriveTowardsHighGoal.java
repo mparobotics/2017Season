@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3926.robot.Robot;
 
 /***********************************************************************************************************************
  * Command to autonomously drive towards the high goal target
@@ -13,8 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveTowardsHighGoal extends Command {
 
     public DriveTowardsHighGoal() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.driveControl);
     }
 
     // Called just before this Command runs the first time
@@ -25,6 +25,7 @@ public class DriveTowardsHighGoal extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
+        Robot.driveControl.autonomousTank(false);
     }
 
     // Make this return true when this Command no longer needs to run execute()

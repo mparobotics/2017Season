@@ -9,8 +9,6 @@ import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
 
-import java.util.Map;
-
 /***********************************************************************************************************************
  * Enables driving of the robot with a tank drive scheme. This class contains anything relevant to actuating the drive
  * motors. This includes autonomous handling of the robot.
@@ -27,13 +25,9 @@ public class DriveControl extends Subsystem {
     private double leftSide  = 0;
     /** Object to handle actual driving of motors */
     private RobotDrive   driveSystem;
-    /** Specifies if {@link OI#contourError} was pressed last iteration of the code */
-    private boolean      contourErrorPress;
-    /** Records which time the user is specifying an error (increments each unique press of {@link OI#contourError} */
-    private int          contourErrorGroup;
     /** Network table for vision processing of the high goal target */
-    private NetworkTable highGoalTable;
-    /**  */
+    private NetworkTable visionTable;
+    /** Vision processing booleans */
     private boolean      moveLeft, moveRight, contoursFound, centered;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
@@ -51,8 +45,7 @@ public class DriveControl extends Subsystem {
         else
             driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
                                          RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
-        contourErrorPress = false;
-        contourErrorGroup = 0;
+
     }
 
     /**
@@ -62,6 +55,20 @@ public class DriveControl extends Subsystem {
     public void initDefaultCommand() {
 
         setDefaultCommand(new UserDriveTank());
+    }
+
+    /**
+     * Initialises the network table for vision processing
+     * <p>
+     * Note: When this is put in the constructor it seems to always fail
+     * </p>
+     *
+     * @param networkTableName Name of the network table to initialize
+     */
+    public void initNetworkTables(String networkTableName) {
+
+        visionTable = NetworkTable.getTable(networkTableName);
+
     }
 
     /**
@@ -99,13 +106,15 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot towards a target autonomously
-     * TODO make this work for the gear targets too
+     *
+     * @param targetGears Set this to true if vision tracking should work to center itself on gears not the high goal
+     *                    target, which it will do if this is true
      */
-    public void autonomousTank() {
+    public void autonomousTank(boolean targetGears) {
 
         int checkIndex = 0; //TODO add minor filtering
 
-        double[] contourCenter = highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+        double[] contourCenter = visionTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
 
         if (contourCenter[checkIndex] != RobotMap.ILLEGAL_DOUBLE) {
 
@@ -143,15 +152,21 @@ public class DriveControl extends Subsystem {
 
     /**
      * Centers the robot on a target based on vision tracking data
+     * <p>
+     * To actually get data this calls {@link #autonomousTank(boolean)} and than inverts the speed on the opposite of
+     * the side to move to, this causes the robot to turn.
+     * </p>
      */
-    public void center() {
+    public void center(boolean targetGears) {
 
-        autonomousTank();
+        autonomousTank(targetGears);
 
         if (moveLeft)
             rightSide *= -1;
-        else if (moveLeft)
+        else if (moveRight)
             leftSide *= -1;
+        else
+            setSpeed(0, 0);
 
     }
 
@@ -209,18 +224,6 @@ public class DriveControl extends Subsystem {
 
         rightSide *= RobotMap.DRIVE_SAFETY_FACTOR;
         leftSide *= RobotMap.DRIVE_SAFETY_FACTOR;
-    }
-
-    /**
-     * Prints part of the data for a contour
-     *
-     * @param key  Key from {@link RobotMap} to identify a part of the contour
-     * @param data Data on the contour to print
-     */
-    private void contourDataPrint(String key, Map<String, Double> data) {
-
-        System.out.println('\t' + key + ": " + data.get(key));
-
     }
 
 }

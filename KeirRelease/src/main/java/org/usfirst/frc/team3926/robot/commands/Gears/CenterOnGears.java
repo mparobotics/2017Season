@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3926.robot.Robot;
 
 /***********************************************************************************************************************
  * Centers the robot on the vision target for gear placement
@@ -13,8 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CenterOnGears extends Command {
 
     public CenterOnGears() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.driveControl);
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class CenterOnGears extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
+        Robot.driveControl.center(true);
     }
 
     // Make this return true when this Command no longer needs to run execute()

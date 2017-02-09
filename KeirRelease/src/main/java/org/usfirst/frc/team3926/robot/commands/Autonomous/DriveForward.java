@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3926.robot.Robot;
 
 /***********************************************************************************************************************
  * Drives the robot forward during autonomous
@@ -13,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveForward extends Command {
 
     public DriveForward() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+
+        requires(Robot.driveControl);
     }
 
     // Called just before this Command runs the first time

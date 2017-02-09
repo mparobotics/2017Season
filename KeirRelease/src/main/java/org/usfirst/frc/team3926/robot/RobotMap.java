@@ -76,8 +76,12 @@ public class RobotMap {
     public final static boolean  CLIMBER_USE_CAN_TALON               = true;
     /** CAN ID for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
     public final static int      CLIMBER_CAN_ID                      = 103;
+    /** CAN ID for the climbing system's second motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
+    public final static int      CLIMBER_SECOND_CAN_ID               = 104;
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
     public final static int      CLIMBER_PWM_PORT                    = 7;
+    /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
+    public final static int      CLIMBER_SECOND_PWM_PORT             = 8;
     /** DIO port for the climbing system's limit switch */
     public final static int      CLIMBER_LIMIT_SWITCH_PORT           = 4;
 
@@ -196,6 +200,9 @@ public class RobotMap {
     public final static String   CONTOUR_WIDTH_KEY                   = "width";
     /** Map key for SmartFilter pass status */
     public final static String   SMARTFILTER_PASS_KEY                = "smartFilter";
+    ///// Smart Filter Configuration /////
+    /** How off the value is allowed to be from what it should be for vision tracking algorithms */
+    public final static double   ALLOWABLE_ERROR                     = 0.05;
     ///// Speed buffer for vision tracking /////
     /** Amount of previous speed values to store for the speed buffer */
     public final static int      SPEED_BUFFER_SIZE                   = 5;
@@ -212,25 +219,6 @@ public class RobotMap {
     public final static int      IMAGE_Y                             = 120;
     /** Center point on the screen */
     public final static int[]    SCREEN_CENTER                       = {IMAGE_X / 2, IMAGE_Y / 2};
-    ///// Smart Filter Configuration /////
-    /** How off the value is allowed to be from what it should be for vision tracking algorithms */
-    public final static double   ALLOWABLE_ERROR                     = 0.05;
-    /** Enable/Disable relative area check (a contour must have an area double/half the size of another contour) */
-    public final static boolean  USE_RELATIVE_AREA                   = true;
-    /** Whether or not to determine if a contour is valid based on its position relative to other contours */
-    public final static boolean  USE_RELATIVE_POSITION_CHECK         = false;
-    /** Y axis offset between vision targets for the high goal */
-    public final static double   HIGH_GOAL_Y_OFFSET_RATIO            = 1;
-    /** X axis offset between vision targets for the high goal */
-    public final static double   HIGH_GOAL_X_OFFSET_RATIO            = 0;
-    /** Y axis offset between vision targets for gear placement */
-    public final static double   GEAR_TARGET_Y_OFFSET_RATIO          = 0;
-    /** X axis offset between vision targets for gear placement */
-    public final static double   GEAR_TARGET_X_OFFSET_RATIO          = 0;
-    /** Target ratio of the two area of the contours for the high goal */
-    public final static double   HIGH_GOAL_AREA_RATIO                = 0.5;
-    /** Target ratio of the high goals top contour area */
-    public final static double   HIGH_GOAL_TOP_AREA_RATIO            = 2;
     ///// Speed Buffer Configuration /////
     /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
     public final static boolean  BUFFER_ACCELERATION                 = false;
