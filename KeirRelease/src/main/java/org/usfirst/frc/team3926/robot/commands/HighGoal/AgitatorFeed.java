@@ -1,4 +1,4 @@
-package main.java.org.usfirst.frc.team3926.robot.commands.HighGoal;
+package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
 

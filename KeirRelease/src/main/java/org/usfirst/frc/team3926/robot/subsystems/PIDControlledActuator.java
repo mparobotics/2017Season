@@ -1,4 +1,4 @@
-package main.java.org.usfirst.frc.team3926.robot.subsystems;
+package org.usfirst.frc.team3926.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;

@@ -1,10 +1,10 @@
-package main.java.org.usfirst.frc.team3926.robot;
+package org.usfirst.frc.team3926.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import main.java.org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
-import main.java.org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
 
 /**
  * This class is the glue that binds the controls on the physical operator

@@ -2,12 +2,14 @@ plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "latest-version"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.1.1"
 }
 
 frc {
-    team = "5333"
-    robotClass = "org.usfirst.frc.team0000.Robot"
+    team = "3926"
+    robotClass = "org.usfirst.frc.team3926.Robot"
+    rioIP = "10.39.26.2"
+    rioHost = "roboRIO-3926-FRC.local"
 }
 
 dependencies {

@@ -1,13 +1,13 @@
-package main.java.org.usfirst.frc.team3926.robot.subsystems;
+package org.usfirst.frc.team3926.robot.subsystems;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import main.java.org.usfirst.frc.team3926.robot.OI;
-import main.java.org.usfirst.frc.team3926.robot.Robot;
-import main.java.org.usfirst.frc.team3926.robot.RobotMap;
-import main.java.org.usfirst.frc.team3926.robot.commands.UserDriveTank;
+import org.usfirst.frc.team3926.robot.OI;
+import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
+import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
 
 import java.util.Map;
 

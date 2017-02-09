@@ -1,4 +1,4 @@
-package main.java.org.usfirst.frc.team3926.robot.commands.Gears;
+package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
 

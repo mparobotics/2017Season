@@ -1,8 +1,8 @@
-package main.java.org.usfirst.frc.team3926.robot.commands;
+package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import main.java.org.usfirst.frc.team3926.robot.Robot;
-import main.java.org.usfirst.frc.team3926.robot.RobotMap;
+import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 import static org.usfirst.frc.team3926.robot.Robot.oi;
 

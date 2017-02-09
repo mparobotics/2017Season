@@ -1,4 +1,4 @@
-package main.java.org.usfirst.frc.team3926.robot;
+package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import main.java.org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
-import main.java.org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
-import main.java.org.usfirst.frc.team3926.robot.subsystems.DriveControl;
-import main.java.org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
+import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
+import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
+import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
+import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
