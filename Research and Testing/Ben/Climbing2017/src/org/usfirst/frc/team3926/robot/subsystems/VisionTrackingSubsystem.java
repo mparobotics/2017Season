@@ -42,7 +42,7 @@ public class VisionTrackingSubsystem extends Subsystem {
     /**
      * No default command is needed for this Subsystem
      */
-    protected void initDefaultCommand() {
+    protected void initDefaultCommand() {                                                                                                                                                                                                                                                                                                                                                                                                       )
 
     }
 
@@ -55,13 +55,11 @@ public class VisionTrackingSubsystem extends Subsystem {
      */
     public double[] visionTrackingForwardSpeeds() {
 
-        boolean[] passedPreviousFilter = new boolean[xValues.length];
-        boolean[] passedCurrentFilter = new boolean[xValues.length];
-
-        mainFiltering(passedCurrentFilter, passedPreviousFilter);
+        mainFiltering();
 
         double forwardVisTrackSpeed1 = RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER);
         double forwardVisTrackSpeed2 = RobotMap.MAX_VIS_TRACK_SPEED;
+
         return new double[] {(filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER) ?
                              forwardVisTrackSpeed1 : forwardVisTrackSpeed2,
                              (filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER) ?
@@ -77,20 +75,12 @@ public class VisionTrackingSubsystem extends Subsystem {
      */
     public double[] visionTrackingTurningSpeeds() {
 
-        boolean[] passedPreviousFilter = new boolean[xValues.length];
-        boolean[] passedCurrentFilter = new boolean[xValues.length];
-
-        Arrays.fill(passedPreviousFilter, true);
-        Arrays.fill(passedCurrentFilter, false);
-
-        mainFiltering(passedCurrentFilter, passedPreviousFilter);
-
         double[] forwardSpeedArray = visionTrackingForwardSpeeds();
 
-        return new double[] {filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER ? forwardSpeedArray[0] :
-                             -forwardSpeedArray[0],
-                             filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER ? forwardSpeedArray[1] :
-                             -forwardSpeedArray[1]};
+        return new double[] {filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER ?
+                             forwardSpeedArray[0] : -forwardSpeedArray[0],
+                             filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER ?
+                             forwardSpeedArray[1] : -forwardSpeedArray[1]};
 
     }
 
@@ -100,14 +90,18 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Runs the filtering methods
      * Uses data from xValues and Filters to make an array of filteredXValues
      */
-    private void mainFiltering(boolean[] temporaryPassedFilters, boolean[] permanentPassedFilter) {
+    private void mainFiltering() {
 
-        partlyFilteredContourArrayCreation(temporaryPassedFilters, permanentPassedFilter);
-        usingDistanceBetweenContours(temporaryPassedFilters, permanentPassedFilter);
+        boolean[] passedPreviousFilter = new boolean[xValues.length];
+        boolean[] passedCurrentFilter = new boolean[xValues.length];
+        Arrays.fill(passedPreviousFilter, true);
+        Arrays.fill(passedCurrentFilter, false);
+        partlyFilteredContourArrayCreation(passedPreviousFilter, passedCurrentFilter);
+        usingDistanceBetweenContours(passedPreviousFilter, passedCurrentFilter);
 
         for (int i = 0, j = -1; i < xValues.length; i++) {
 
-            if (permanentPassedFilter[i]) {
+            if (passedCurrentFilter[i]) {
 
                 j++;
                 filteredXValues[j] = xValues[i];
