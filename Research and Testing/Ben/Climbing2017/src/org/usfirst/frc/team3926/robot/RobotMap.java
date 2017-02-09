@@ -78,12 +78,12 @@ public class RobotMap {
     /** Max speed of the motors in vision tracking */
     public static final  double MAX_VIS_TRACK_SPEED   = 1;
     /////Vision Tracking Network Table/////
+    /** Key for contourHeights array */
+    public static final  String CONTOUR_HEIGHTS_KEY   = "contourHeightsKey";
     /** Key for xvalue array */
     public static final  String XVALUE_KEY            = "xValue";
     /** Key for yvalue array */
     public static final  String YVALUE_KEY            = "yValue";
-    /** Key for the area array */
-    public static final  String AREA_KEY              = "array";
     /** Name of the network table */
     public static final  String NETWORK_TABLE_NAME   = "GRIP/ContourReport";
     //////////////////////////////////////////////////////Climbing/////////////////////////////////////////////////////
