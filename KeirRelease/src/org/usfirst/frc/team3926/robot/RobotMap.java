@@ -10,13 +10,12 @@ package org.usfirst.frc.team3926.robot;
  * them
  * </p>
  **********************************************************************************************************************/
+@SuppressWarnings("WeakerAccess")
 public class RobotMap {
 
     ///////////////////////////////////////////// Enable/Disable Features //////////////////////////////////////////////
     /** Use code specifically made for debugging the robot */
     public final static boolean  DEBUG                              = true;
-    /** Use an XBox controller for {@link OI#driverPrimaryStick} */
-    public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
     /** Use a speed buffer to prevent sudden jumps or drops in speed TODO working, needs improvement */
     public final static boolean  USE_SPEED_BUFFER                   = false;
     /** Filter contours based on their features */
@@ -65,6 +64,8 @@ public class RobotMap {
     public final static int      BALL_COLLECTION_PWM_PORT           = 6;
 
     ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
+    /** Use an XBox controller for {@link OI#driverPrimaryStick} */
+    public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                          = 0;

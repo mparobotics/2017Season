@@ -44,7 +44,10 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 
         ///// Subsystem Initialization /////
-        shooterAgitator = new PIDControlledActuator<CANTalon, Encoder>()
+        if (RobotMap.SHOOTER_USE_CAN_TALON)
+            shooterAgitator = new PIDControlledActuator<CANTalon, Encoder>(new CANTalon(RobotMap.SHOOTER_CAN_ID), )
+        else
+
 
         ///// User Interface and Control Initialization /////
         oi = new OI();
