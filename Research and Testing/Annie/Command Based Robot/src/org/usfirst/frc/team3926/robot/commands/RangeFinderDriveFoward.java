@@ -13,7 +13,7 @@ public class RangeFinderDriveFoward extends Command {
      */
     public RangeFinderDriveFoward() {
 
-        requires(Robot.rangeFinderBackupSystem);
+        requires(Robot.driveSystem);
 
     }
 

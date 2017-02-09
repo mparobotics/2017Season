@@ -10,7 +10,7 @@ public class RangeFinderTurn extends Command {
 
     public RangeFinderTurn() {
 
-        requires(Robot.rangeFinderBackupSystem);
+        requires(Robot.driveSystem);
 
     }
 

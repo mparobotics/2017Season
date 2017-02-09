@@ -94,7 +94,7 @@ public class DriveSystem extends Subsystem {
 
         if (range > RobotMap.DISTANCE_TO_AIRSHIP) {
 
-            if (rate == 5) {
+            if (rate == RobotMap.DISTANCE_TO_AIRSHIP) {
 
                 if (right) {
 
