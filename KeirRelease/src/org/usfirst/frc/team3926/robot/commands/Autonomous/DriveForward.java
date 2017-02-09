@@ -3,7 +3,7 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Drives the robot forward during autonomous
  */
 public class DriveForward extends Command {
 

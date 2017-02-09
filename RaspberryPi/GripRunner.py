@@ -69,7 +69,7 @@ def main():  # TODO optimize
     :return: None
     """
     NetworkTables.initialize(server='roboRIO-3926-FRC.local')  # Change the number to your team number if not MPA
-    # Grabs the data from camera
+    # Grabs the data from camera on port 0
     cap = cv2.VideoCapture(0)
     cap.set(3, x_resolution)  # width
     cap.set(4, y_resolution)  # height
