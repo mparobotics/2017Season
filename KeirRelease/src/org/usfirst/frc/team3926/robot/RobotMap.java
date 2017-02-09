@@ -21,46 +21,72 @@ public class RobotMap {
     public final static boolean  USE_SPEED_BUFFER                   = false;
     /** Filter contours based on their features */
     public final static boolean  USE_SMART_FILTER                   = true;
-    /** Invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
-    /** Invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
 
-    //////////////////////////////////////// Motor Controller Type Configuration ///////////////////////////////////////
-    /** Use CANTalons for the drive base instead of PWM Talons */
-    public final static boolean  DRIVE_USE_CAN_TALON                = true;
+    ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
+    ///// Shooter Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter */
     public final static boolean  SHOOTER_USE_CAN_TALON              = true;
+    /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
+    public final static int      SHOOTER_CAN_ID                     = 100;
+    /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
+    public final static int      SHOOTER_PWM_ID                     = 4;
+    /** DIO port for the shooter's encoder's A channel */
+    public final static int      SHOOTER_ENCODER_A_CHANNEL          = 4;
+    /** DIO port for the shooter's encoder's B channel */
+    public final static int      SHOOTER_ENCODER_B_CHANNEL          = 5;
+    ///// Ball Agitator Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter's ball agitator */
     public final static boolean  AGITATOR_USE_CAN_TALON             = true;
-    /** Enable/Disable using CAN based talons for the ball feeding mechanism */
-    public final static boolean  BALL_FEED_USE_CAN_TALON            = true;
+    /** CAN ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is true) */
+    public final static int      AGITATOR_CAN_ID                    = 101;
+    /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
+    public final static int      AGITATOR_PWM_PORT                  = 5;
+    /** DIO port for the agitator's encoder's A channel */
+    public final static int      AGITATOR_ENCODER_A_CHANNEL         = 2;
+    /** DIO port for the agitator's encoder's B channel */
+    public final static int      AGITATOR_ENCODER_B_CHANNEL         = 3;
+
+    /////////////////////////////////////////////// Climber Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the climbing mechanism */
     public final static boolean  CLIMBER_USE_CAN_TALON              = true;
+    /** CAN ID for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
+    public final static int      CLIMBER_CAN_ID                     = 103;
+    /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
+    public final static int      CLIMBER_PWM_PORT                   = 7;
+    /** DIO port for the climbing system's limit switch */
+    public final static int      CLIMBER_LIMIT_SWITCH_PORT          = 4;
 
-    ///////////////////////////////////////// XBox configuration (for driving) /////////////////////////////////////////
+    /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
+    /** Enable/Disable using CAN based talons for the ball feeding mechanism */
+    public final static boolean  BALL_COLLECTION_USE_CAN_TALON      = true;
+    /** CAN ID for ball collection system's motor controller (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true) */
+    public final static int      BALL_COLLECTION_CAN_ID             = 102;
+    /** PWM ID for ball collection system's motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
+    public final static int      BALL_COLLECTION_PWM_PORT           = 6;
+
+    ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
+    ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                          = 0;
     /** Axis ID to use for the left speed in tank drive */
-    public final static int      XBOX_LEFT_SPEED_AXIS               = 1;
+    public final static int      XBOX_LEFT_SPEED_AXIS               = 1; //(Left joystick y)
     /** Axis ID to use for the right speed in tank drive */
-    public final static int      XBOX_RIGHT_SPEED_AXIS              = 5;
+    public final static int      XBOX_RIGHT_SPEED_AXIS              = 5; //(Right joystick y)
     /** Button ID to enter safety mode */
-    public final static int      XBOX_SAFTEY_MODE_BUTTON            = 1;
+    public final static int      XBOX_SAFTEY_MODE_BUTTON            = 1; //(A)
     /** Button ID to enter straight mode */
-    public final static int      XBOX_STRAIGHT_MODE_BUTTON          = 2;
+    public final static int      XBOX_STRAIGHT_MODE_BUTTON          = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */
-    public final static int      XBOX_CONTOUR_ERROR_BUTTON          = 5;
+    public final static int      XBOX_CONTOUR_ERROR_BUTTON          = 5; //(Left bumper)
     /** Button ID to center the robot on the vision target */
-    public final static int      XBOX_CENTER_ON_HIGH_GOAL_BUTTON    = 4;
+    public final static int      XBOX_CENTER_ON_HIGH_GOAL_BUTTON    = 4; //(X)
     /** Button ID to drive towards the center of the vision target */
-    public final static int      XBOX_DRIVE_TO_HIGH_GOAL_BUTTON     = 3;
+    public final static int      XBOX_DRIVE_TO_HIGH_GOAL_BUTTON     = 3; //(Y)
     /** Button ID to drive towards the center of the gear's vision target */
-    public final static int      XBOX_CENTER_ON_GEAR_BUTTON         = 6;
+    public final static int      XBOX_CENTER_ON_GEAR_BUTTON         = 6; //(?)
     /** Button ID to center the robot on the gear's vision target */
-    public final static int      XBOX_DRIVE_TO_GEAR_BUTTON          = 7;
-
-    ///////////////////////////////////// Joystick Configuration (for tank drive) //////////////////////////////////////
+    public final static int      XBOX_DRIVE_TO_GEAR_BUTTON          = 7; //(?)
+    ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
     public final static int      RIGHT_STICK_PORT                   = 0;
@@ -82,6 +108,39 @@ public class RobotMap {
     public final static int      CENTER_ON_GEAR_BUTTON              = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
     public final static int      DRIVE_TO_GEAR_BUTTON               = 4;
+
+    /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
+    /** Use CANTalons for the drive base instead of PWM Talons */
+    public final static boolean  DRIVE_USE_CAN_TALON                = true;
+    /** Invert motor direction for the drive train's right side */
+    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
+    /** Invert motor direction for the drive train's left side */
+    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
+    /** Number to multiply times the speed of the robot when the driver enables saftey mode */
+    public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
+    ///// Motor CAN IDs /////
+    /** CAN ID for front right motor */
+    public final static int      FRONT_RIGHT_MOTOR_CAN              = 1;
+    /** CAN ID for back right motor */
+    public final static int      BACK_RIGHT_MOTOR_CAN               = 4;
+    /** CAN ID for front left motor */
+    public final static int      FRONT_LEFT_MOTOR_CAN               = 3;
+    /** CAN ID for back left motor */
+    public final static int      BACK_LEFT_MOTOR_CAN                = 2;
+    ///// Motor PWM IDs /////
+    /** PWM port for front right motor */
+    public final static int      FRONT_RIGHT_MOTOR_PWM              = 0;
+    /** PWM port for back right motor */
+    public final static int      BACK_RIGHT_MOTOR_PWM               = 1;
+    /** PWM port for front left motor */
+    public final static int      FRONT_LEFT_MOTOR_PWM               = 2;
+    /** PWM port for back left motor */
+    public final static int      BACK_LEFT_MOTOR_PWM                = 3;
+    ///// Autonomous Configuration /////
+    /** Max speed for the robot to travel during autonomous */
+    public final static double   AUTONOMOUS_SPEED                   = 0.50;
+    /** TODO Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
+    public final static double   MAX_AUTONOMOUS_SPEED_DIFFERENCE    = 0.1;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
@@ -139,33 +198,6 @@ public class RobotMap {
     ///// Speed Buffer Configuration /////
     /** Accelerate/decelerate if a speed is outside of the buffer range (requires {@link #USE_SPEED_BUFFER} be true */
     public final static boolean  BUFFER_ACCELERATION                = false;
-
-    /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
-    ///// Motor PWM IDs /////
-    /** PWM port for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_PWM              = 0;
-    /** PWM port for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_PWM               = 1;
-    /** PWM port for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_PWM               = 2;
-    /** PWM port for back left motor */
-    public final static int      BACK_LEFT_MOTOR_PWM                = 3;
-    ///// Motor CAN IDs /////
-    /** CAN ID for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_CAN              = 1;
-    /** CAN ID for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_CAN               = 4;
-    /** CAN ID for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_CAN               = 3;
-    /** CAN ID for back left motor */
-    public final static int      BACK_LEFT_MOTOR_CAN                = 2;
-    ///// General Configuration /////
-    /** Max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED                   = 0.50;
-    /** TODO Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
-    public final static double   MAX_AUTONOMOUS_SPEED_DIFFERENCE    = 0.1;
-    /** Number to multiply times the speed of the robot when the driver enables saftey mode */
-    public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
 
     ////////////////////////////////////////// Code Quality of Life Variables //////////////////////////////////////////
     /** Index to always use for accessing the left speed in an array */
