@@ -26,16 +26,20 @@ public class DriveControl extends Subsystem {
     /** Holds the speed for the left motor */
     private double leftSide  = 0;
     /** Object to handle actual driving of motors */
-    private RobotDrive driveSystem;
+    private RobotDrive   driveSystem;
     /** Specifies if {@link OI#contourError} was pressed last iteration of the code */
-    private boolean    contourErrorPress;
+    private boolean      contourErrorPress;
     /** Records which time the user is specifying an error (increments each unique press of {@link OI#contourError} */
-    private int        contourErrorGroup;
+    private int          contourErrorGroup;
     /** Network table for vision processing of the high goal target */
     private NetworkTable highGoalTable;
+    /**  */
+    private boolean      moveLeft, moveRight, contoursFound, centered;
+
+    ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
     /**
-     * Initializer for drive control
+     * Constructor for drive control
      */
     public DriveControl() {
 
@@ -56,6 +60,7 @@ public class DriveControl extends Subsystem {
      * This sets the default command to be user-controlled tank drive with the {@link UserDriveTank} command
      */
     public void initDefaultCommand() {
+
         setDefaultCommand(new UserDriveTank());
     }
 
@@ -67,6 +72,8 @@ public class DriveControl extends Subsystem {
         rightSide = 0;
         leftSide = 0;
     }
+
+    //////////////////////////////////////////////// Robot Driving /////////////////////////////////////////////////////
 
     /**
      * Drives the robot in a tank configuration
@@ -91,12 +98,72 @@ public class DriveControl extends Subsystem {
     }
 
     /**
+     * Drives the robot towards a target autonomously
+     * TODO make this work for the gear targets too
+     */
+    public void autonomousTank() {
+
+        int checkIndex = 0; //TODO add minor filtering
+
+        double[] contourCenter = highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+
+        if (contourCenter[checkIndex] != RobotMap.ILLEGAL_DOUBLE) {
+
+            contoursFound = true;
+
+            if (contourCenter[checkIndex] > RobotMap.SCREEN_CENTER[0] * (1 + RobotMap.ALLOWABLE_ERROR)) {
+                setSpeed(RobotMap.AUTONOMOUS_SPEED, ((contourCenter[checkIndex] - RobotMap.SCREEN_CENTER[0]) /
+                                                     RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                moveLeft = false;
+                moveRight = true;
+                centered = false;
+            } else if (contourCenter[checkIndex] < RobotMap.SCREEN_CENTER[0] * (1 - RobotMap.ALLOWABLE_ERROR)) {
+                setSpeed((contourCenter[checkIndex] / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED, 0);
+                moveRight = false;
+                centered = false;
+                moveLeft = true;
+            } else {
+                moveLeft = false;
+                moveRight = false;
+                centered = true;
+            }
+
+        } else {
+            setSpeed(0, 0);
+            contoursFound = false;
+        }
+
+        SmartDashboard.putBoolean("Move Left", moveLeft);
+        SmartDashboard.putBoolean("Move Right", moveRight);
+        SmartDashboard.putBoolean("Centered", centered);
+        SmartDashboard.putBoolean("Contours Found", contoursFound);
+        SmartDashboard.putNumber("Driving Based on Contour: ", checkIndex);
+
+    }
+
+    /**
+     * Centers the robot on a target based on vision tracking data
+     */
+    public void center() {
+
+        autonomousTank();
+
+        if (moveLeft)
+            rightSide *= -1;
+        else if (moveLeft)
+            leftSide *= -1;
+
+    }
+
+    //////////////////////////////////////////// Drive Behavior Modification ///////////////////////////////////////////
+
+    /**
      * Set the speed to drive the robot
      *
-     * @param rightSpeed Speed to drive the right side
      * @param leftSpeed  Speed to drive the left side
+     * @param rightSpeed Speed to drive the right side
      */
-    private void setSpeed(double rightSpeed, double leftSpeed) {
+    private void setSpeed(double leftSpeed, double rightSpeed) {
 
         if (leftSpeed != RobotMap.ILLEGAL_DOUBLE) {
             rightSide = rightSpeed;
@@ -153,33 +220,6 @@ public class DriveControl extends Subsystem {
     private void contourDataPrint(String key, Map<String, Double> data) {
 
         System.out.println('\t' + key + ": " + data.get(key));
-
-    }
-
-    /**
-     * Centers the robot on a target based on vision tracking data
-     */
-    public void center() {
-
-        //Map<String, Double> data = Robot.visionProcessing.turnToCenter(0);
-
-        //handleDriveData("center", data);
-
-    }
-
-    /**
-     * Drives the robot towards a target autonomously
-     * <p>
-     * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
-     * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
-     * {@link RobotMap#CONTOUR_ERROR_BUTTON}
-     * </p>
-     */
-    public void autonomousTank() {
-        //Gets data on where to drive an the contour that it is using
-        //Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
-
-        //handleDriveData("autonomousTank", data);
 
     }
 
