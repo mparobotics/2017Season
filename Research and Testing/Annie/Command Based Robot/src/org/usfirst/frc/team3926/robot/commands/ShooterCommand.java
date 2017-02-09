@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
     /**
-     * tells code it needs to access things in the shooting subsystem
+     * declares dependencies
      */
     public ShooterCommand() {
 

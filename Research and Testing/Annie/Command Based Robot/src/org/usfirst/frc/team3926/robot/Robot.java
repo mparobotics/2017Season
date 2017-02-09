@@ -2,9 +2,9 @@
 package org.usfirst.frc.team3926.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.subsystems.*;
 
 /**
@@ -16,11 +16,13 @@ import org.usfirst.frc.team3926.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-    public static final ShootingSystem       shootingSystem       = new ShootingSystem();
-    public static final DriveSystem          driveSystem          = new DriveSystem();
-    public static final ClimbingSystem       climbingSystem       = new ClimbingSystem();
-    public static final VisionTrackingSystem visionTrackingSystem = new VisionTrackingSystem();
-    public static final PIDEncoder           PIDencoder           = new PIDEncoder();
+    public static final ShootingSystem          shootingSystem          = new ShootingSystem();
+    public static final DriveSystem             driveSystem             = new DriveSystem();
+    public static final ClimbingSystem          climbingSystem          = new ClimbingSystem();
+    public static final VisionTrackingSystem    visionTrackingSystem    = new VisionTrackingSystem();
+    public static final PIDEncoder              PIDencoder              = new PIDEncoder();
+    public static final RangeFinderBackupSystem rangeFinderBackupSystem = new RangeFinderBackupSystem();
+
     public static OI oi;
 
     /**
@@ -28,6 +30,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+
+        SmartDashboard.putBoolean("turn right", false);
+        SmartDashboard.putBoolean("turn left", false);
 
     }
 
@@ -50,11 +55,16 @@ public class Robot extends IterativeRobot {
      * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
      * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
      * below the Gyro
-     *
+     * <p>
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
      * or additional comparisons to the switch structure below with additional strings & commands.
      */
     public void autonomousInit() {
+
+        boolean right = SmartDashboard.getBoolean("turn right", false);
+        boolean left = SmartDashboard.getBoolean("turn left", false);
+
+        Robot.rangeFinderBackupSystem.rightOrLeft(right, left);
 
     }
 
