@@ -1,19 +1,35 @@
 package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
-/**
- * Spins the
- */
+/***********************************************************************************************************************
+ * Spins the ball agitator to prevent balls from getting stuck
+ *
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class AgitatorIdle extends Command {
 
+    /**
+     * Constructs the AgitatorIdle class with a requirement on {@link Robot#agitator}
+     */
     public AgitatorIdle() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+
+        requires(Robot.agitator);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Called just before this Command runs the first time
+     * This changes the setpoint of the ball agitator to the idle speed using
+     * {@link org.usfirst.frc.team3926.robot.RobotMap#AGITATOR_IDLE_SETPOINT}
+     */
     protected void initialize() {
+
+        Robot.agitator.setSetpoint(RobotMap.AGITATOR_IDLE_SETPOINT);
 
     }
 

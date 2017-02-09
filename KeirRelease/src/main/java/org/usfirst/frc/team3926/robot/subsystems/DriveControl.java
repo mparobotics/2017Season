@@ -3,9 +3,9 @@ package org.usfirst.frc.team3926.robot.subsystems;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.OI;
-import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
 
@@ -31,6 +31,8 @@ public class DriveControl extends Subsystem {
     private boolean    contourErrorPress;
     /** Records which time the user is specifying an error (increments each unique press of {@link OI#contourError} */
     private int        contourErrorGroup;
+    /** Network table for vision processing of the high goal target */
+    private NetworkTable highGoalTable;
 
     /**
      * Initializer for drive control
@@ -51,9 +53,9 @@ public class DriveControl extends Subsystem {
 
     /**
      * Initializes the default command for this SubSystem
+     * This sets the default command to be user-controlled tank drive with the {@link UserDriveTank} command
      */
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         setDefaultCommand(new UserDriveTank());
     }
 
@@ -143,67 +145,6 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Drives the robot towards a target autonomously
-     * <p>
-     * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
-     * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
-     * {@link RobotMap#CONTOUR_ERROR_BUTTON}
-     * </p>
-     */
-    public void autonomousTank() {
-        //Gets data on where to drive an the contour that it is using
-        //Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
-
-        //handleDriveData("autonomousTank", data);
-
-    }
-
-    /**
-     * Takes data from one of the vision processing methods (removed) called from {@link this#center()} or
-     * {@link this#autonomousTank()} and uses it to drive the robot
-     *
-     * @param callingMethod Name of the method that is calling this (used for debugging)
-     * @param data          Data from one of the vision processing methods to use for driving the robot
-     */
-    private void handleDriveData(String callingMethod, Map<String, Double> data) {
-
-        //Sets the speed of the robot to the values from vision tracking
-        setSpeed(data.get(RobotMap.SPEED_RIGHT_KEY), data.get(RobotMap.SPEED_LEFT_KEY));
-
-        /* This will likely go by so quickly that the user will not be able to click based on an error right away,
-         * so try to look for the value in the middle of a group of this error */
-        if (RobotMap.DEBUG && Robot.oi.contourError.get() &&
-            data.get(RobotMap.SPEED_LEFT_KEY) != RobotMap.ILLEGAL_INT) {
-
-            contourErrorPress = true;
-
-            System.out.println("ERROR IN DriveControl." + callingMethod + ": Group #" +
-                               contourErrorGroup);
-            System.out.println("\tPassed SmartFilter: " +
-                               ((data.get(RobotMap.SMARTFILTER_PASS_KEY) != RobotMap.ILLEGAL_DOUBLE) ? "true" :
-                                "false"));
-            contourDataPrint(RobotMap.SMARTFILTER_PASS_KEY, data);
-            contourDataPrint(RobotMap.CONTOUR_X_KEY, data);
-            contourDataPrint(RobotMap.CONTOUR_Y_KEY, data);
-            contourDataPrint(RobotMap.CONTOUR_WIDTH_KEY, data);
-            contourDataPrint(RobotMap.CONTOUR_HEIGHT_KEY, data);
-            contourDataPrint(RobotMap.SPEED_LEFT_KEY, data);
-            contourDataPrint(RobotMap.SPEED_RIGHT_KEY, data);
-            System.out.println('\t' + "area: " + data.get(RobotMap.CONTOUR_X_KEY) * data.get(RobotMap.CONTOUR_Y_KEY));
-            //Robot.visionProcessing.smartFilterData.printInformation();
-
-        } else if (contourErrorPress) {
-
-            contourErrorPress = false;
-            ++contourErrorGroup;
-
-        }
-
-        driveSystem.tankDrive(leftSide, rightSide);
-
-    }
-
-    /**
      * Prints part of the data for a contour
      *
      * @param key  Key from {@link RobotMap} to identify a part of the contour
@@ -223,6 +164,22 @@ public class DriveControl extends Subsystem {
         //Map<String, Double> data = Robot.visionProcessing.turnToCenter(0);
 
         //handleDriveData("center", data);
+
+    }
+
+    /**
+     * Drives the robot towards a target autonomously
+     * <p>
+     * If {@link RobotMap#DEBUG} is true, this will also allow the driver to log when an incorrect action was taken by
+     * pressing {@link RobotMap#XBOX_CONTOUR_ERROR_BUTTON} if {@link RobotMap#XBOX_DRIVE_CONTROLLER} or
+     * {@link RobotMap#CONTOUR_ERROR_BUTTON}
+     * </p>
+     */
+    public void autonomousTank() {
+        //Gets data on where to drive an the contour that it is using
+        //Map<String, Double> data = Robot.visionProcessing.moveToCenter(0);
+
+        //handleDriveData("autonomousTank", data);
 
     }
 

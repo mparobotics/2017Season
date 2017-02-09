@@ -2,14 +2,17 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
+/***********************************************************************************************************************
  * Autonomous command to do nothing.
  * <p>
  * Sure, I could just set the command to null
  * </p>
  *
  * @author William Kluge
- */
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class DoNothing extends Command {
 
     /**
@@ -35,6 +38,7 @@ public class DoNothing extends Command {
 
     /**
      * Make this return true when this Command no longer needs to do nothing
+     *
      * @return something
      */
     protected boolean isFinished() {

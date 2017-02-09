@@ -12,39 +12,53 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
 
-/**
+/***********************************************************************************************************************
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
- */
+ *
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
+@SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
 
     ////////////////////////////////////////// Instances of Subsystem Classes //////////////////////////////////////////
     /** Instance of DriveControl to allow driving of the robot's base */
-    public static final DriveControl driveControl = new DriveControl();
-    /** TODO test if I'm allowed to put classes here like this */
-    public static PIDControlledActuator    shooter;
+    public final static DriveControl driveControl = new DriveControl();
+    /** Subsystem to control the robot's shooter */
+    public final static PIDControlledActuator shooter;
+    /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
+    public final static PIDControlledActuator agitator;
+    /* * Subsystem to control the robot's climbing mechanism */
+    //public final static
 
-    static {
+    static { //Static initialization for subsystems TODO test if this works
 
-        ///// Shooter Initialization /////
-        if (RobotMap.SHOOTER_USE_CAN_TALON)
-            shooter = new PIDControlledActuator<CANTalon, Encoder>
-                    ("Shooter PID Control", new CANTalon(RobotMap.SHOOTER_CAN_ID),
-                     new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
-                     PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
-                     RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
-        else
-            shooter = new PIDControlledActuator<Talon, Encoder>
-                    ("Shooter PID Control", new Talon(RobotMap.SHOOTER_CAN_ID),
-                     new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
-                     PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
-                     RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+        ///// Shooter Initialization ////
+        shooter = new PIDControlledActuator<>
+                ("Shooter PID Control", (RobotMap.SHOOTER_USE_CAN_TALON) ? new CANTalon(RobotMap.SHOOTER_CAN_ID) :
+                                        new Talon(RobotMap.SHOOTER_CAN_ID),
+                 new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
+                 PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
+                 RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+
+        ///// Agitator Initialization /////
+        agitator = new PIDControlledActuator<>
+                ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
+                                         new Talon(RobotMap.AGITATOR_PWM_PORT),
+                 new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL, RobotMap.AGITATOR_ENCODER_B_CHANNEL),
+                 PIDSourceType.kRate, RobotMap.AGITATOR_FEED_SETPOINT, RobotMap.AGITATOR_PROPORTIONAL,
+                 RobotMap.AGITATOR_INTEGRAL, RobotMap.AGITATOR_DERIVATIVE, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE);
+        agitator.createDefaultCommand(new AgitatorIdle());
 
     }
 
@@ -97,7 +111,7 @@ public class Robot extends IterativeRobot {
      * <p>
      * You can add additional auto modes by adding additional commands to the
      * chooser code above (like the commented example) or additional comparisons
-     * to the switch structure below with additional strings & commands.
+     * to the switch structure below with additional strings and commands.
      */
     @Override
     public void autonomousInit() {

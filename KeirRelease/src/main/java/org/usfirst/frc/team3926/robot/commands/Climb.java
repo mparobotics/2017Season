@@ -2,9 +2,13 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
+/***********************************************************************************************************************
+ * Command to make the robot climb
+ * @author William Kluge
+ * <p>
+ *     Contact: klugewilliam@gmail.com
+ * </p>
+ ***********************************************************************************************************************/
 public class Climb extends Command {
 
     public Climb() {

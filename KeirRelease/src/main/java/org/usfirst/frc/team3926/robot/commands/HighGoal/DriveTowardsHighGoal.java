@@ -2,9 +2,14 @@ package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
+/***********************************************************************************************************************
+ * Command to autonomously drive towards the high goal target
  *
- */
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class DriveTowardsHighGoal extends Command {
 
     public DriveTowardsHighGoal() {

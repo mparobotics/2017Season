@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
-/**
+/***********************************************************************************************************************
  * This class controls a motor controller (of type T) via a sensor (of type S).
  * <p>
  * This class supports actuators that extend PIDOutput (CANTalon, Jaguar, Spark, Talon, TalonSRX, Victor, VictorSP,
@@ -19,11 +19,14 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  * Encoder, Filter, GearTooth, GyroBase, LinearDigitalFilter, Potentiometer, and Ultrasonic) and sensors of the class
  * Accelerometer, Gyro
  * </p>
- *
+ * <p>
  * TODO support solenoid output
  *
  * @author William Kluge
- */
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
     /** Holds what the sensor is supposed to be checking for */

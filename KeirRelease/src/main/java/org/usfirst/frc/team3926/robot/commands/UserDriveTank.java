@@ -6,9 +6,14 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import static org.usfirst.frc.team3926.robot.Robot.oi;
 
-/**
+/***********************************************************************************************************************
  * Command to execute methods of {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl}
- */
+ *
+ * @author William Kluge
+ *         <p>
+ *         klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class UserDriveTank extends Command {
 
     public UserDriveTank() {

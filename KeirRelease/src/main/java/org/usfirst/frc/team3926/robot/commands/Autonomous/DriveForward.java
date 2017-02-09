@@ -2,9 +2,14 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
+/***********************************************************************************************************************
  * Drives the robot forward during autonomous
- */
+ *
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class DriveForward extends Command {
 
     public DriveForward() {

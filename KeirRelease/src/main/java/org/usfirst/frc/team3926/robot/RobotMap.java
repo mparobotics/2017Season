@@ -9,6 +9,10 @@ package org.usfirst.frc.team3926.robot;
  * All options with the prefix XBOX are only used if {@link #XBOX_DRIVE_CONTROLLER} is true. If that is false, ignore
  * them
  * </p>
+ * @author William Kluge
+ * <p>
+ * Contact: klugewilliam@gmail.com
+ * </p>
  **********************************************************************************************************************/
 @SuppressWarnings("WeakerAccess")
 public class RobotMap {
@@ -54,8 +58,10 @@ public class RobotMap {
     public final static int      AGITATOR_ENCODER_A_CHANNEL          = 2;
     /** DIO port for the agitator's encoder's B channel */
     public final static int      AGITATOR_ENCODER_B_CHANNEL          = 3;
-    /** Setpoint for the agitator's PID loop */
-    public final static double   AGITATOR_SETPOINT                   = 200; //TODO figure out what this should be
+    /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
+    public final static double   AGITATOR_FEED_SETPOINT              = 200; //TODO figure out what this should be
+    /** Setpoint for the agitator's PID loop when it is sitting idle */
+    public final static double   AGITATOR_IDLE_SETPOINT              = 100;
     /** Proportional multiplier for the agitator's PID loop */
     public final static double   AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the agitator's PID loop */

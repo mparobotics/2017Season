@@ -2,9 +2,14 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
+/***********************************************************************************************************************
+ * Drive towards the gear placement vision target
  *
- */
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class DriveToGears extends Command {
 
     public DriveToGears() {

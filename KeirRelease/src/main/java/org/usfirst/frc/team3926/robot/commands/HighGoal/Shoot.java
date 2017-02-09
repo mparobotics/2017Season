@@ -2,9 +2,13 @@ package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
+/***********************************************************************************************************************
+ * Command to make the robot shoot at the high goal
+ * @author William Kluge
+ * <p>
+ *     Contact: klugewilliam@gmail.com
+ * </p>
+ ***********************************************************************************************************************/
 public class Shoot extends Command {
 
     public Shoot() {

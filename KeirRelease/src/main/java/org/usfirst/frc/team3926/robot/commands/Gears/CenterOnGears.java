@@ -2,10 +2,14 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
+/***********************************************************************************************************************
  * Centers the robot on the vision target for gear placement
+ *
  * @author William Kluge
- */
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ ***********************************************************************************************************************/
 public class CenterOnGears extends Command {
 
     public CenterOnGears() {
