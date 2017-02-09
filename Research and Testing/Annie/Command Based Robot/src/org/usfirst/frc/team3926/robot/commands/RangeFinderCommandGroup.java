@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * if the range finder does not see the airship the robot will turn around until it sees it
  * once the robot is close enough to the airship (5 inches) it will stop and shoot the ball
  */
-public class RangeFinder extends CommandGroup {
+public class RangeFinderCommandGroup extends CommandGroup {
 
-    public RangeFinder() {
+    public RangeFinderCommandGroup() {
 
-        addParallel(new RangeFinderDriveFoward());
-        addParallel(new RangeFinderTurn());
+        addSequential(new RangeFinderDriveFoward());
+        addSequential(new RangeFinderTurn());
         addSequential(new RangeFinderShoot());
 
     }

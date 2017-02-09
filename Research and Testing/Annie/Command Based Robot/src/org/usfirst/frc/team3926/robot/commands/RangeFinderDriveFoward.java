@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  * makes robt drive forward
@@ -20,19 +21,22 @@ public class RangeFinderDriveFoward extends Command {
     /** Called just before this Command runs the first time */
     protected void initialize() {
 
+        Robot.driveSystem.encReset();
+
     }
 
     /** Called repeatedly when this Command is scheduled to run */
     protected void execute() {
 
-        Robot.driveSystem.drivingWithRangefinder();
+        Robot.driveSystem.drivingWithRangefinder(RobotMap.SHOOTING_DISTANCE);
 
     }
 
     /** Make this return true when this Command no longer needs to run execute() */
     protected boolean isFinished() {
 
-        return false;
+        return Robot.driveSystem.drivingWithRangefinder(RobotMap.SHOOTING_DISTANCE);
+
     }
 
     /** Called once after isFinished returns true */

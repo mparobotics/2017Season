@@ -42,7 +42,6 @@ public class DriveSystem extends Subsystem {
         rangefinder = new Ultrasonic(RobotMap.RANGE_FINDER_PORT_1, RobotMap.RANGE_FINDER_PORT_2);
         enc = new Encoder(RobotMap.A_CHANNEL_ENC, RobotMap.B_CHANNEL_ENC);
         enc.setDistancePerPulse(RobotMap.ENCODER_DISTANCE_PER_PULSE);
-        rate = enc.getRate();
 
     }
 
@@ -74,12 +73,17 @@ public class DriveSystem extends Subsystem {
     }
 
     /** driving straight with rangefinder */
-    public boolean drivingWithRangefinder() {
+    public boolean drivingWithRangefinder(double distance) {
 
         range = rangefinder.getRangeInches();
+        rate = enc.getRate();
         Robot.driveSystem.TankDrive(.5, .5);
 
-        if (range <= RobotMap.SHOOTING_DISTANCE) {
+        if (range <= distance) {
+
+            return true;
+
+        } else if (rate > distance) {
 
             return true;
 
@@ -88,32 +92,43 @@ public class DriveSystem extends Subsystem {
         return false;
     }
 
-    public boolean turningWithRangeFinder() {
+    public boolean turningWithRangeFinder(double distance) {
 
-        Robot.rangeFinderBackupSystem.rightOrLeft(right, left);
-
-        if (range > RobotMap.DISTANCE_TO_AIRSHIP) {
-
-            if (rate == RobotMap.DISTANCE_TO_AIRSHIP) {
-
-                if (right) {
-
-                    Robot.driveSystem.TankDrive(.5, -.5);
-
-                }
-                if (left) {
-
-                    Robot.driveSystem.TankDrive(-.5, .5);
-
-                }
-
-            }
+        if (range <= distance++) {
 
             return true;
 
+        } else {
+
+            Robot.rangeFinderBackupSystem.rightOrLeft(right, left);
+
+            if (right) {
+
+                Robot.driveSystem.TankDrive(.5, -.5);
+
+            } else if (left) {
+
+                Robot.driveSystem.TankDrive(-.5, .5);
+
+            }
+
+            Robot.driveSystem.TankDrive(.5, .5);
+
+            if (range <= distance++) {
+
+                return true;
+
+            }
         }
 
-       return false;
+        return false;
+
+    }
+
+    public void encReset() {
+
+        enc.reset();
+
     }
 
 }

@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  * drives forward
@@ -22,19 +23,20 @@ public class RangeFinderTurn extends Command {
     /** Called repeatedly when this Command is scheduled to run */
     protected void execute() {
 
-        Robot.driveSystem.TankDrive(.5, .5);
-        Robot.driveSystem.turningWithRangeFinder();
+        Robot.driveSystem.turningWithRangeFinder(RobotMap.SHOOTING_DISTANCE);
 
     }
 
     /** Make this return true when this Command no longer needs to run execute() */
     protected boolean isFinished() {
 
-        return false;
+        return Robot.driveSystem.turningWithRangeFinder(RobotMap.SHOOTING_DISTANCE);
     }
 
     /** Called once after isFinished returns true */
     protected void end() {
+
+        Robot.driveSystem.TankDrive(0, 0);
 
     }
 
