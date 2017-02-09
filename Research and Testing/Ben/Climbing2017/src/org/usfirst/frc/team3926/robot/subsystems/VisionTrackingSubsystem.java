@@ -15,31 +15,34 @@ public class VisionTrackingSubsystem extends Subsystem {
 
     /** Constructs the Network Table */
     private NetworkTable table;
-    /** Gets the x value info from a networktable */
-    private double[]     xValue;
+    /** Gets the x value info of each contour from a networktable */
+    private double[]     xValues;
+    /** Gets the y value info of each contour from a networktable */
     private double[]     yValues;
+    /** Gets the height of each contour from a networktable */
     private double[]     contourHeights;
-    /** Gets the areas of the contours from the networktable */
-
-    private double[]     areas;
+    /**
+     * Temporarily used to store the results of a filter while the filter is running so it can be assigned to
+     * hasPassedPreviousFilter
+     */
     private boolean[]    hasThisPassedCurrentFilter;
+    /** Used to check if a contour has passed the previous filter */
     private boolean[]    hasThisPassedPreviousFilter;
-    private double[]    filteredxValues;
+    /** An array used to store x values of contours which remain after filtering */
+    private double[]     filteredXValues;
 
     /**
      * Constructs the network table
-     * Constructs the xValue array
+     * Constructs the xValues array
      * Constructs the areas array
      */
     public VisionTrackingSubsystem() {
 
         table = NetworkTable.getTable(RobotMap.NETWORK_TABLE_NAME);
 
-        xValue = table.getNumberArray(RobotMap.XVALUE_KEY, new double[0]);
+        xValues = table.getNumberArray(RobotMap.XVALUE_KEY, new double[0]);
 
         yValues = table.getNumberArray(RobotMap.YVALUE_KEY, new double[1]);
-
-        areas = table.getNumberArray(RobotMap.AREA_KEY, new double[2]);
 
     }
 
@@ -52,7 +55,9 @@ public class VisionTrackingSubsystem extends Subsystem {
 
     /**
      * Fills the hasThisPassedPreviousFilter with true
-     * FIlls the hasThis
+     * Fills the hasThisPassedCurrentFilter with false
+     * Runs the filtering methods
+     * Uses data from xValues and Filters to make an array of filteredXValues
      */
     public void mainFiltering() {
 
@@ -61,55 +66,57 @@ public class VisionTrackingSubsystem extends Subsystem {
         usingDistanceBetweenContours();
         partlyFilteredContourArrayCreation();
 
-        for(int i = 0, j = -1; i < xValue.length;i++ ){
+        for (int i = 0, j = -1; i < xValues.length; i++) {
 
-            if(hasThisPassedPreviousFilter[i] = true){
+            if (hasThisPassedPreviousFilter[i] = true) {
 
                 j++;
-                filteredxValues[j] = xValue[i];
+                filteredXValues[j] = xValues[i];
 
             }
 
         }
     }
 
-
     /**
      * Stores the speeds of drivesystem for driving toward the shooting target based off the
-     * position of retroreflective tape
+     * position of retro-reflective tape
      *
      * @return Speeds of robot drivesystem while going forward with vision tracking based off postion of
-     * retroreflective tape
+     * retro-reflective tape
      */
     public double[] visionTrackingForwardSpeeds() {
 
-        double secondVisionSpeed = RobotMap.MAX_VISION_TRACKING_SPEED *
-                                   ((xValue[0] - (RobotMap.VISION_SCREEN_CENTER)) /
-                                    RobotMap.VISION_SCREEN_CENTER);
-        return new double[] {(xValue[0] < RobotMap.VISION_SCREEN_CENTER) ?
-                             RobotMap.MAX_VISION_TRACKING_SPEED *
-                             (xValue[0] / RobotMap.VISION_SCREEN_CENTER) :
-                             RobotMap.MAX_VISION_TRACKING_SPEED,
-                             (xValue[0] > RobotMap.VISION_SCREEN_CENTER) ?
-                             secondVisionSpeed :
-                             RobotMap.MAX_VISION_TRACKING_SPEED};
+        mainFiltering();
+
+        double secondVisionSpeed = RobotMap.MAX_VIS_TRACK_SPEED *
+                                   ((filteredXValues[0] - (RobotMap.VIS_SCREEN_CENTER)) /
+                                    RobotMap.VIS_SCREEN_CENTER);
+        return new double[] {(filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER) ?
+                             RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER) :
+                             RobotMap.MAX_VIS_TRACK_SPEED,
+                             (filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER) ?
+                             RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER) :
+                             RobotMap.MAX_VIS_TRACK_SPEED};
 
     }
 
     /**
      * Stores the speeds of the drive system for turning toward the shooting target based off the postion of
-     * retroreflictive tape
+     * retro-reflective tape
      *
      * @return An array with the speeds of each robot side for turning with vision tracking
      */
     public double[] visionTrackingTurningSpeeds() {
 
+        mainFiltering();
+
         double[] forwardSpeedArray = visionTrackingForwardSpeeds();
 
-        return new double[] {xValue[0] < RobotMap.VISION_SCREEN_CENTER ? forwardSpeedArray[0] :
+        return new double[] {filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER ? forwardSpeedArray[0] :
                              -forwardSpeedArray[0],
-                             xValue[0] > RobotMap.VISION_SCREEN_CENTER ? forwardSpeedArray[1] :
-                             -forwardSpeedArray[1]};
+                             filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER ? forwardSpeedArray[1] :
+                                 -forwardSpeedArray[1]};
 
     }
 
@@ -143,7 +150,7 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Filters out contours which are not part a pair of contours which have the same distance
      * between each other as half the area of the larger contour
      */
-    public void usingDistanceBetweenContours() {
+    private void usingDistanceBetweenContours() {
 
         for (int i = 0; i < yValues.length; i++) {
 

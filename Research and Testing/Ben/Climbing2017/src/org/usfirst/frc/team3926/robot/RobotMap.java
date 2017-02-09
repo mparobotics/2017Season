@@ -64,28 +64,28 @@ public class RobotMap {
     /** Ratio of height to the length of the retro-reflective tape contour */
     public static final  double LARGE_TAPE_SIDES_RATIO              = 0.25;
     /** Ratio of height to the length of the retro-reflective tape contour */
-    public static final  double SMALL_TAPE_SIDE_RATIO               = 0.125;
+    public static final  double SMALL_TAPE_SIDE_RATIO = 0.125;
     /** Allow error for filtering */
-    public static final  double ALLOWABLE_ERROR                     = 0.05;
+    public static final  double ALLOWABLE_ERROR       = 0.05;
     /////Vision Tracking Screen Dimensions/////
     /** Height of the vision sensing screen */
-    public static final  int    VISION_MAX_HEIGHT                   = 2;
+    public static final  int    VISION_MAX_HEIGHT     = 2;
     /** Length of the vision sensing screen */
-    private static final int    VISION_MAX_LENGTH                   = 6;
+    private static final int    VISION_MAX_LENGTH     = 6;
     /** Center of the vision sensing screen */
-    public static final  int    VISION_SCREEN_CENTER                = VISION_MAX_LENGTH / 2;
+    public static final  int    VIS_SCREEN_CENTER     = VISION_MAX_LENGTH / 2;
     /////Vision Tracking Speed Regulation/////
     /** Max speed of the motors in vision tracking */
-    public static final  double MAX_VISION_TRACKING_SPEED                       = 1;
+    public static final  double MAX_VIS_TRACK_SPEED   = 1;
     /////Vision Tracking Network Table/////
     /** Key for xvalue array */
-    public static final  String XVALUE_KEY                                      = "xValue";
+    public static final  String XVALUE_KEY            = "xValue";
     /** Key for yvalue array */
-    public static final  String YVALUE_KEY                                      = "yValue";
+    public static final  String YVALUE_KEY            = "yValue";
     /** Key for the area array */
-    public static final  String AREA_KEY                                        = "array";
+    public static final  String AREA_KEY              = "array";
     /** Name of the network table */
-    public static final  String NETWORK_TABLE_NAME                              = "GRIP/ContourReport";
+    public static final  String NETWORK_TABLE_NAME   = "GRIP/ContourReport";
     //////////////////////////////////////////////////////Climbing/////////////////////////////////////////////////////
     /////Climbing Motor Speed Regulation/////
     /**
