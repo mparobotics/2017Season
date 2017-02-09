@@ -29,7 +29,25 @@ public class Robot extends IterativeRobot {
     public static final DriveControl driveControl = new DriveControl();
     /** TODO test if I'm allowed to put classes here like this */
     public static PIDControlledActuator    shooter;
-    /**  */
+
+    static {
+
+        ///// Shooter Initialization /////
+        if (RobotMap.SHOOTER_USE_CAN_TALON)
+            shooter = new PIDControlledActuator<CANTalon, Encoder>
+                    ("Shooter PID Control", new CANTalon(RobotMap.SHOOTER_CAN_ID),
+                     new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
+                     PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
+                     RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+        else
+            shooter = new PIDControlledActuator<Talon, Encoder>
+                    ("Shooter PID Control", new Talon(RobotMap.SHOOTER_CAN_ID),
+                     new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
+                     PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
+                     RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+
+    }
+
     ///////////////////////////////////////// User Interface and Control ///////////////////////////////////////////////
     /** Operator interface class */
     public static OI                       oi;
@@ -44,24 +62,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-
-        ////////// Subsystem Initialization //////////
-        ///// Shooter Initialization /////
-        if (RobotMap.SHOOTER_USE_CAN_TALON)
-            shooter = new PIDControlledActuator<CANTalon, Encoder>
-                    ("Shooter PID Control", new CANTalon(RobotMap.SHOOTER_CAN_ID),
-                     new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
-                     PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
-                     RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
-        else
-            shooter = new PIDControlledActuator<Talon, Encoder>
-                    ("Shooter PID Control", new Talon(RobotMap.SHOOTER_CAN_ID),
-                     new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
-                     PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
-                     RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
-        ///// Agitator Initialization /////
-        if (RobotMap.AGITATOR_USE_CAN_TALON)
-
 
         ////////// User Interface and Control Initialization //////////
         oi = new OI();
