@@ -78,6 +78,7 @@ def main():  # TODO optimize
     and also to mjpg-Streamer.
     :return: None
     """
+    print("testing pycharm")
     NetworkTables.initialize(server='roboRIO-3926-FRC.local')  # Change the number to your team number if not MPA
     # Grabs the data from camera on port 0
     cap = cv2.VideoCapture(0)
