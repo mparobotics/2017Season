@@ -7,7 +7,7 @@ plugins {
 
 frc {
     team = "3926"
-    robotClass = "org.usfirst.frc.team3926.Robot"
+    robotClass = "org.usfirst.frc.team3926.robot.Robot"
     rioIP = "10.39.26.2"
     rioHost = "roboRIO-3926-FRC.local"
 }
