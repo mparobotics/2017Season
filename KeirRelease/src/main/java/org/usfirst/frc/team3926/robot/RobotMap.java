@@ -84,6 +84,8 @@ public class RobotMap {
     public final static int      CLIMBER_SECOND_PWM_PORT             = 8;
     /** DIO port for the climbing system's limit switch */
     public final static int      CLIMBER_LIMIT_SWITCH_PORT           = 4;
+    /** Speed to climb at */
+    public final static double   CLIMBER_SPEED                       = 1;
 
     /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */

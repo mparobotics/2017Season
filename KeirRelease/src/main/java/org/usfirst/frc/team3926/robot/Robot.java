@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
     /* Subsystem to control the robot's climbing mechanism */
     public final static Climber               climber;
 
-    static { //Static initialization for subsystems TODO test if this works
+    static { //Static initialization for subsystems
 
         ///// Shooter Initialization ////
         shooter = new PIDControlledActuator<>

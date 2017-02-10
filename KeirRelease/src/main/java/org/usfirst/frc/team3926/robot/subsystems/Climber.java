@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Subsystem to handle climbing on the robot
+ * Subsystem to handle climbing on the robot TODO document better
  */
 public class Climber<T> extends Subsystem {
 
@@ -20,7 +20,7 @@ public class Climber<T> extends Subsystem {
     private DigitalInput limitSwitch;
 
     /**
-     * Constructor for the
+     * Constructor for the Climber class
      *
      * @param limitSwitch      Limit switch to monitor the state of the climber
      * @param motorControllers All the motor controllers for this class to control
