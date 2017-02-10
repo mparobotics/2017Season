@@ -1,7 +1,10 @@
 package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -10,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
-import org.usfirst.frc.team3926.robot.subsystems.Climber;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
 
@@ -37,7 +39,7 @@ public class Robot extends IterativeRobot {
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
     public final static PIDControlledActuator agitator;
     /** Subsystem to control the robot's climbing mechanism */
-    public final static Climber               climber;
+    //public final static Climber               climber = null;
 
     static { //Static initialization for subsystems
 
@@ -59,12 +61,13 @@ public class Robot extends IterativeRobot {
         agitator.createDefaultCommand(new AgitatorIdle());
 
         ///// Climber Initialization /////
-        climber = new Climber<>(new DigitalInput(RobotMap.CLIMBER_LIMIT_SWITCH_PORT),
-                                (RobotMap.CLIMBER_USE_CAN_TALON) ?
-                                new CANTalon[] {new CANTalon(RobotMap.CLIMBER_CAN_ID),
-                                                new CANTalon(RobotMap.CLIMBER_SECOND_CAN_ID)} :
-                                new Talon[] {new Talon(RobotMap.CLIMBER_PWM_PORT),
-                                             new Talon(RobotMap.CLIMBER_SECOND_PWM_PORT)});
+//        climber = new Climber<>(new DigitalInput(RobotMap.CLIMBER_LIMIT_SWITCH_PORT),
+//                               /* (RobotMap.CLIMBER_USE_CAN_TALON) ?*/
+//                                //:
+//                                /*new Talon[] {new Talon(RobotMap.CLIMBER_PWM_PORT),
+//                                             new Talon(RobotMap.CLIMBER_SECOND_PWM_PORT)}*/
+//                                new CANTalon(RobotMap.CLIMBER_CAN_ID),
+//                                new CANTalon(RobotMap.CLIMBER_SECOND_CAN_ID));
 
     }
 
