@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class rangeFinderMovingCommandGroup extends CommandGroup {
+public class RangeFinderMovingCommandGroup extends CommandGroup {
 
-    public rangeFinderMovingCommandGroup() {
+    public RangeFinderMovingCommandGroup() {
 
-        addSequential(new RangeFinderDriveBackwardCommand());
-        addSequential(new RangeFinderDriveBackwardCommand());
+        addSequential(new RangeFinderDriveBackward());
+        addSequential(new RangeFinderDriveBackward());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
