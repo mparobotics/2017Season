@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.DriveCommand;
 
@@ -116,6 +117,17 @@ public class DriveSubsytem extends Subsystem {
 
     }
 
+    public void rangeFinderDriveBackward() {
+
+        if(Robot.rangeFinderSubsystem.wallLessThenTenMetersAway()){
+
+            driveSystem.tankDrive(1, 1);
+            rightDrivingEncoder.getDistance();
+
+        }
+
+    }
+
     /**
      * Changes speed of the motor for the robot based on the robot's rate of acceleration until the Robot
      * reaches 0 speed
@@ -172,6 +184,16 @@ public class DriveSubsytem extends Subsystem {
     public void turning() {
 
         driveSystem.tankDrive(-1, 1);
+    }
+
+    public void rangeFinderTurning() {
+
+        if(Robot.rangeFinderSubsystem.wallLessThenTenMetersAway()) {
+
+            driveSystem.tankDrive(-1, 1);
+
+        }
+
     }
 
     /**

@@ -54,38 +54,37 @@ public class RobotMap {
     public static final  int    SHOOTER_CAN_ID                                  = 4;
     /////Shooting Encoder/////
     /** Port A for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_PORT_A             = 0;
+    public static final  int    SHOOTING_ENCODER_PORT_A                         = 0;
     /** Port B for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_PORT_B             = 1;
+    public static final  int    SHOOTING_ENCODER_PORT_B                         = 1;
     /** Distance per pulse for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_DISTANCE_PER_PULSE = 1;
+    public static final  int    SHOOTING_ENCODER_DISTANCE_PER_PULSE             = 1;
     //////////////////////////////////////////////////Vision Tracking//////////////////////////////////////////////////
-
     /** Ratio of height to the length of the retro-reflective tape contour */
-    public static final  double LARGE_TAPE_SIDES_RATIO              = 0.25;
+    public static final  double LARGE_TAPE_SIDES_RATIO                          = 0.25;
     /** Ratio of height to the length of the retro-reflective tape contour */
-    public static final  double SMALL_TAPE_SIDE_RATIO = 0.125;
+    public static final  double SMALL_TAPE_SIDE_RATIO                           = 0.125;
     /** Allow error for filtering */
-    public static final  double ALLOWABLE_ERROR       = 0.05;
+    public static final  double ALLOWABLE_ERROR                                 = 0.05;
     /////Vision Tracking Screen Dimensions/////
     /** Height of the vision sensing screen */
-    public static final  int    VISION_MAX_HEIGHT     = 2;
+    public static final  int    VISION_MAX_HEIGHT                               = 2;
     /** Length of the vision sensing screen */
-    private static final int    VISION_MAX_LENGTH     = 6;
+    private static final int    VISION_MAX_LENGTH                               = 6;
     /** Center of the vision sensing screen */
-    public static final  int    VIS_SCREEN_CENTER     = VISION_MAX_LENGTH / 2;
+    public static final  int    VIS_SCREEN_CENTER                               = VISION_MAX_LENGTH / 2;
     /////Vision Tracking Speed Regulation/////
     /** Max speed of the motors in vision tracking */
-    public static final  double MAX_VIS_TRACK_SPEED   = 1;
+    public static final  double MAX_VIS_TRACK_SPEED                             = 1;
     /////Vision Tracking Network Table/////
     /** Key for contourHeights array */
-    public static final  String CONTOUR_HEIGHTS_KEY   = "contourHeightsKey";
+    public static final  String CONTOUR_HEIGHTS_KEY                             = "contourHeightsKey";
     /** Key for xvalue array */
-    public static final  String XVALUE_KEY            = "xValue";
+    public static final  String XVALUE_KEY                                      = "xValue";
     /** Key for yvalue array */
-    public static final  String YVALUE_KEY            = "yValue";
+    public static final  String YVALUE_KEY                                      = "yValue";
     /** Name of the network table */
-    public static final  String NETWORK_TABLE_NAME   = "GRIP/ContourReport";
+    public static final  String NETWORK_TABLE_NAME                              = "GRIP/ContourReport";
     //////////////////////////////////////////////////////Climbing/////////////////////////////////////////////////////
     /////Climbing Motor Speed Regulation/////
     /**
@@ -140,5 +139,10 @@ public class RobotMap {
     public static final  int    LEFT_STICK_PORT                                 = 1;
     /** Port number of the xbox joystick */
     public static final  int    XBOX_JOYSTICK_PORT                              = 2;
+    ////////////////////////////////////////////////RangeFinder Movement///////////////////////////////////////////////
+    /////RangeFinder Sensitivity/////
+    /** The meters per volt from the RangeFinder */
+    public static final  int    RANGE_FINDER_SENSITIVITY                        = 5;
 
 }
+
