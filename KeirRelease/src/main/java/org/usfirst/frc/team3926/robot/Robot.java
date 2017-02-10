@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
     public final static PIDControlledActuator shooter;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
     public final static PIDControlledActuator agitator;
-    /* Subsystem to control the robot's climbing mechanism */
+    /** Subsystem to control the robot's climbing mechanism */
     public final static Climber               climber;
 
     static { //Static initialization for subsystems
@@ -60,10 +60,11 @@ public class Robot extends IterativeRobot {
 
         ///// Climber Initialization /////
         climber = new Climber<>(new DigitalInput(RobotMap.CLIMBER_LIMIT_SWITCH_PORT),
-                                (RobotMap.CLIMBER_USE_CAN_TALON) ? new CANTalon(RobotMap.CLIMBER_CAN_ID) :
-                                new Talon(RobotMap.CLIMBER_PWM_PORT),
-                                (RobotMap.CLIMBER_USE_CAN_TALON) ? new CANTalon(RobotMap.CLIMBER_SECOND_CAN_ID) :
-                                new Talon(RobotMap.CLIMBER_SECOND_PWM_PORT));
+                                (RobotMap.CLIMBER_USE_CAN_TALON) ?
+                                new CANTalon[] {new CANTalon(RobotMap.CLIMBER_CAN_ID),
+                                                new CANTalon(RobotMap.CLIMBER_SECOND_CAN_ID)} :
+                                new Talon[] {new Talon(RobotMap.CLIMBER_PWM_PORT),
+                                             new Talon(RobotMap.CLIMBER_SECOND_PWM_PORT)});
 
     }
 
