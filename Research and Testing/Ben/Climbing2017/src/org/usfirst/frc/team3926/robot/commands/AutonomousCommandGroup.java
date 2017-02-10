@@ -11,10 +11,10 @@ public class AutonomousCommandGroup extends CommandGroup {
 
     public AutonomousCommandGroup() {
 
-        addSequential(new DriveForwardCommand());
-        addSequential(new TurnCommand());
-        addSequential(new DriveForwardCommand());
-        addSequential(new StoppingCommand());
+        addSequential(new DriveForward());
+        addSequential(new TurnRobot());
+        addSequential(new DriveForward());
+        addSequential(new StopRobot());
 
     }
 }

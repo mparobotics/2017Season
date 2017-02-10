@@ -1,4 +1,5 @@
 package org.usfirst.frc.team3926.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
@@ -8,7 +9,7 @@ import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
  *
  * @author Benjamin Lash
  */
-public class RangeFinderTurningCommand extends Command {
+public class TurnRobot extends Command {
 
     /**
      * Requires the robot driveSubsystem

@@ -4,9 +4,8 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
-import org.usfirst.frc.team3926.robot.commands.DriveCommand;
+import org.usfirst.frc.team3926.robot.commands.DriveWithController;
 
 /**
  * Handles variables and methods for the robot's driving functionality
@@ -44,6 +43,8 @@ public class DriveSubsytem extends Subsystem {
     /** Variable for the robots angle for the turning function */
     private        double        currentAngle;
 
+    private AnalogInput rangeFinder;
+
     /**
      * Constructs the driving encoders
      * Sets the distance per pulse of the driving encoders
@@ -53,6 +54,8 @@ public class DriveSubsytem extends Subsystem {
      * Constructs the rightSideDecelerationSpeed variable which acts as the default deceleration speed
      */
     public DriveSubsytem() {
+
+        rangeFinder = new AnalogInput(1);
 
         rightDrivingEncoder =
                 new Encoder(RobotMap.RIGHT_DRIVING_ENCODER_PORT_A, RobotMap.RIGHT_DRIVING_ENCODER_PORT_B, false,
@@ -79,11 +82,17 @@ public class DriveSubsytem extends Subsystem {
     }
 
     /**
-     * Sets the default command to DriveCommand
+     * Sets the default command to DriveWithController
      */
     public void initDefaultCommand() {
 
-        new DriveCommand();
+        new DriveWithController();
+
+    }
+
+    public boolean wallLessThenTenMetersAway(){
+
+        return rangeFinder.getValue() * RobotMap.RANGE_FINDER_SENSITIVITY <= 10;
 
     }
 
@@ -107,7 +116,7 @@ public class DriveSubsytem extends Subsystem {
     }
 
     /**
-     * This sets the rightSideDecelerationSpeed of the motors to full to go foward
+     * This sets the rightSideDecelerationSpeed of the motors to full to go forward
      * Then it gets the distance that the robot has traveled
      */
     public void driveForward() {
@@ -119,10 +128,20 @@ public class DriveSubsytem extends Subsystem {
 
     public void rangeFinderDriveBackward() {
 
-        if(Robot.rangeFinderSubsystem.wallLessThenTenMetersAway()){
+        if(wallLessThenTenMetersAway()){
 
             driveSystem.tankDrive(1, 1);
             rightDrivingEncoder.getDistance();
+
+        }
+
+    }
+
+    public void rangeFinderTurning() {
+
+        if(wallLessThenTenMetersAway()) {
+
+            driveSystem.tankDrive(-1, 1);
 
         }
 
@@ -184,16 +203,6 @@ public class DriveSubsytem extends Subsystem {
     public void turning() {
 
         driveSystem.tankDrive(-1, 1);
-    }
-
-    public void rangeFinderTurning() {
-
-        if(Robot.rangeFinderSubsystem.wallLessThenTenMetersAway()) {
-
-            driveSystem.tankDrive(-1, 1);
-
-        }
-
     }
 
     /**

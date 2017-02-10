@@ -1,23 +1,21 @@
-
 package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- * Instructs the robot to climb
+ * Instructs the robot to shoot
  *
  * @author Benjamin Lash
  */
-public class ClimbCommand extends Command {
+public class Shooting extends Command {
 
     /**
-     * Requires climbSubsystem
+     * Requires shooting subsystem
      */
-    public ClimbCommand() {
+    public Shooting() {
 
-        requires(Robot.climbSubsystem);
-
+        requires(Robot.shootingSubsystem);
     }
 
     /**
@@ -28,11 +26,12 @@ public class ClimbCommand extends Command {
     }
 
     /**
-     * Continuously calls spinMotor
+     * Makes the motor move
      */
     public void execute() {
 
-        Robot.climbSubsystem.spinMotor();
+        Robot.shootingSubsystem.useShooter();
+        //Robot.shootingSubsystem.useSimpleShooter(Robot.oi.XboxJoystick.getY());
 
     }
 
@@ -41,7 +40,7 @@ public class ClimbCommand extends Command {
      */
     public boolean isFinished() {
 
-        return Robot.climbSubsystem.climberLimitSwitch();
+        return false;
 
     }
 
@@ -50,8 +49,8 @@ public class ClimbCommand extends Command {
      */
     protected void end() {
 
-        Robot.climbSubsystem.stopClimber();
 
+        Robot.shootingSubsystem.stopShooter();
     }
 
     /**
@@ -61,3 +60,5 @@ public class ClimbCommand extends Command {
 
     }
 }
+
+

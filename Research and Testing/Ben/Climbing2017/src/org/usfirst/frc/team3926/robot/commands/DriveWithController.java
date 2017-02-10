@@ -14,12 +14,12 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  *
  * @author Benjamin Lash
  */
-public class DriveCommand extends Command {
+public class DriveWithController extends Command {
 
     /**
      * Requires the driveSubsystem
      */
-    public DriveCommand() {
+    public DriveWithController() {
 
         requires(Robot.driveSubsystem);
 
@@ -51,7 +51,7 @@ public class DriveCommand extends Command {
     }
 
     /**
-     * DriveCommand has no condition which triggers it to finish
+     * DriveWithController has no condition which triggers it to finish
      */
     public boolean isFinished() {
 
