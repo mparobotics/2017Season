@@ -17,6 +17,7 @@ public class VisionTrackingSubsystem extends Subsystem {
     private NetworkTable table;
     /** An array used to store x values of contours which remain after filtering */
     private double[]     filteredXValues;
+
     /**
      * Constructs the network table
      * Constructs the xValues array
@@ -63,6 +64,7 @@ public class VisionTrackingSubsystem extends Subsystem {
      * @return An array with the speeds of each robot side for turning with vision tracking
      */
     public double[] visionTrackingTurningSpeeds() {
+
         mainFiltering();
 
         double[] forwardSpeedArray = visionTrackingForwardSpeeds();
@@ -81,17 +83,18 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Uses data from xValues and Filters to make an array of filteredXValues
      */
     private void mainFiltering() {
+
         double[] contourHeights = table.getNumberArray(RobotMap.CONTOUR_HEIGHTS_KEY, new double[0]);
         double[] xValues = table.getNumberArray(RobotMap.XVALUE_KEY, new double[0]);
 
-        boolean[] passedPreviousFilter = new boolean[xValues.length];
+        boolean[] passedAllFilters = new boolean[xValues.length];
         boolean[] passedCurrentFilter = new boolean[xValues.length];
 
-        Arrays.fill(passedPreviousFilter, true);
+        Arrays.fill(passedAllFilters, true);
         Arrays.fill(passedCurrentFilter, false);
 
-        partlyFilteredContourArrayCreation(passedPreviousFilter, passedCurrentFilter, contourHeights);
-        usingDistanceBetweenContours(passedPreviousFilter, passedCurrentFilter, contourHeights);
+        partlyFilteredContourArrayCreation(passedAllFilters, passedCurrentFilter, contourHeights);
+        usingDistanceBetweenContours(passedAllFilters, passedCurrentFilter, contourHeights);
 
         for (int i = 0, j = -1; i < xValues.length; i++) {
 
@@ -109,7 +112,7 @@ public class VisionTrackingSubsystem extends Subsystem {
     /**
      * Filters out contours which are not in a pair of contours in which one contour has double the height of the other
      */
-    private void partlyFilteredContourArrayCreation(boolean[] temporaryPassedFilters, boolean[] permanentPassedFilter,
+    private void partlyFilteredContourArrayCreation(boolean[] passedPreviousFilter, boolean[] passedCurrentFilter,
                                                     double[] contourHeights) {
 
         for (int i = 0; i < contourHeights.length; i++) {
@@ -118,10 +121,10 @@ public class VisionTrackingSubsystem extends Subsystem {
 
                 if ((contourHeights[j] > ((1 - RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2))) &&
                     contourHeights[j] < (1 + RobotMap.ALLOWABLE_ERROR) * (contourHeights[i] / 2) &&
-                    permanentPassedFilter[i] && permanentPassedFilter[j]) {
+                    passedPreviousFilter[i] && passedPreviousFilter[j]) {
 
-                    temporaryPassedFilters[i] = true;
-                    temporaryPassedFilters[j] = true;
+                    passedCurrentFilter[i] = true;
+                    passedCurrentFilter[j] = true;
 
                 }
 
@@ -129,8 +132,8 @@ public class VisionTrackingSubsystem extends Subsystem {
 
         }
 
-        permanentPassedFilter = temporaryPassedFilters;
-        Arrays.fill(temporaryPassedFilters, false);
+        passedPreviousFilter = passedCurrentFilter;
+        Arrays.fill(passedCurrentFilter, false);
 
     }
 
@@ -138,7 +141,7 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Filters out contours which are not part a pair of contours which have the same distance
      * between each other as half the area of the larger contour
      */
-    private void usingDistanceBetweenContours(boolean[] passedCurrentFilter, boolean[] passedPreviousFilter,
+    private void usingDistanceBetweenContours(boolean[] passedPreviousFilter, boolean[] passedCurrentFilter,
                                               double[] contourHeights) {
 
         double[] yValues = table.getNumberArray(RobotMap.YVALUE_KEY, new double[1]);
