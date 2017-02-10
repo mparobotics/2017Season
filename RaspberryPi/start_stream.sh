@@ -1,6 +1,6 @@
 #! /bin/sh
 # /home/pi/git/2017season/RasberryPi/contour_streamer.sh
-#symlinked to /usr/local/bin
+# symlinked to /usr/local/bin
 
 ### BEGIN INIT INFO 
 # Provides: 		mjpg_streamer
