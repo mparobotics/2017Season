@@ -15,8 +15,6 @@ public class VisionTrackingSubsystem extends Subsystem {
 
     /** Constructs the Network Table */
     private NetworkTable table;
-    /** An array used to store x values of contours which remain after filtering */
-    private double[]     filteredXValues;
 
     /**
      * Constructs the network table
@@ -45,7 +43,7 @@ public class VisionTrackingSubsystem extends Subsystem {
      */
     public double[] visionTrackingForwardSpeeds() {
 
-        mainFiltering();
+        double[] filteredXValues = filteredXValues();
 
         double forwardVisTrackSpeed1 = RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER);
         double forwardVisTrackSpeed2 = RobotMap.MAX_VIS_TRACK_SPEED;
@@ -65,7 +63,7 @@ public class VisionTrackingSubsystem extends Subsystem {
      */
     public double[] visionTrackingTurningSpeeds() {
 
-        mainFiltering();
+        double[] filteredXValues = filteredXValues();
 
         double[] forwardSpeedArray = visionTrackingForwardSpeeds();
 
@@ -82,10 +80,14 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Runs the filtering methods
      * Uses data from xValues and Filters to make an array of filteredXValues
      */
-    private void mainFiltering() {
+    /**
+     * An array used to store x values of contours which remain after filtering
+     */
+    private double[] filteredXValues() {
 
-        double[] contourHeights = table.getNumberArray(RobotMap.CONTOUR_HEIGHTS_KEY, new double[0]);
         double[] xValues = table.getNumberArray(RobotMap.XVALUE_KEY, new double[0]);
+        double[] contourHeights = table.getNumberArray(RobotMap.CONTOUR_HEIGHTS_KEY, new double[0]);
+        double[] xValuesFiltered = new double[xValues.length];
 
         boolean[] passedAllFilters = new boolean[xValues.length];
         boolean[] passedCurrentFilter = new boolean[xValues.length];
@@ -101,11 +103,12 @@ public class VisionTrackingSubsystem extends Subsystem {
             if (passedCurrentFilter[i]) {
 
                 j++;
-                filteredXValues[j] = xValues[i];
+                xValuesFiltered[j] = xValues[i];
 
             }
 
         }
+        return xValuesFiltered;
 
     }
 
