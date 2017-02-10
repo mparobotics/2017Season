@@ -10,40 +10,44 @@ class GripPythonVI:
     """
 
     def __init__(self):
-        """
-        initializes all values to presets or None if need to be set
+        """initializes all values to presets or None if need to be set
         """
 
         self.__resize_image_width = 320.0
         self.__resize_image_height = 240.0
-        self.__resize_image_interpolation = cv2.INTER_CUBIC
+        self.__resize_image_interpolation = cv2.INTER_LINEAR
 
         self.resize_image_output = None
 
         self.__rgb_threshold_input = self.resize_image_output
-        self.__rgb_threshold_red = [165.10791366906474, 255.0]
-        self.__rgb_threshold_green = [215.5575539568345, 255.0]
-        self.__rgb_threshold_blue = [222.43705035971223, 255.0]
+        self.__rgb_threshold_red = [133.00359712230215, 255.0]
+        self.__rgb_threshold_green = [247.66187050359716, 255.0]
+        self.__rgb_threshold_blue = [240.78237410071944, 255.0]
 
         self.rgb_threshold_output = None
 
-        self.__find_contours_input = self.rgb_threshold_output
+        self.__cv_medianblur_src = self.rgb_threshold_output
+        self.__cv_medianblur_ksize = 3.0
+
+        self.cv_medianblur_output = None
+
+        self.__find_contours_input = self.cv_medianblur_output
         self.__find_contours_external_only = False
 
         self.find_contours_output = None
 
         self.__filter_contours_contours = self.find_contours_output
-        self.__filter_contours_min_area = 20.0
-        self.__filter_contours_min_perimeter = 1.0
-        self.__filter_contours_min_width = 50.0
-        self.__filter_contours_max_width = 100.0
-        self.__filter_contours_min_height = 20.0
-        self.__filter_contours_max_height = 100
-        self.__filter_contours_solidity = [0.0, 100.0]
-        self.__filter_contours_max_vertices = 100
-        self.__filter_contours_min_vertices = 10.0
-        self.__filter_contours_min_ratio = 1.0
-        self.__filter_contours_max_ratio = 100
+        self.__filter_contours_min_area = 10.0
+        self.__filter_contours_min_perimeter = 2.0
+        self.__filter_contours_min_width = 20.0
+        self.__filter_contours_max_width = 30
+        self.__filter_contours_min_height = 8.0
+        self.__filter_contours_max_height = 1000
+        self.__filter_contours_solidity = [0.0, 100]
+        self.__filter_contours_max_vertices = 70.0
+        self.__filter_contours_min_vertices = 7.0
+        self.__filter_contours_min_ratio = 1.3
+        self.__filter_contours_max_ratio = 10.0
 
         self.filter_contours_output = None
 
@@ -61,8 +65,12 @@ class GripPythonVI:
         (self.rgb_threshold_output) = self.__rgb_threshold(self.__rgb_threshold_input, self.__rgb_threshold_red,
                                                            self.__rgb_threshold_green, self.__rgb_threshold_blue)
 
+        # Step CV_medianBlur0:
+        self.__cv_medianblur_src = self.rgb_threshold_output
+        (self.cv_medianblur_output) = self.__cv_medianblur(self.__cv_medianblur_src, self.__cv_medianblur_ksize)
+
         # Step Find_Contours0:
-        self.__find_contours_input = self.rgb_threshold_output
+        self.__find_contours_input = self.cv_medianblur_output
         (self.find_contours_output) = self.__find_contours(self.__find_contours_input,
                                                            self.__find_contours_external_only)
 
@@ -109,6 +117,17 @@ class GripPythonVI:
         return cv2.inRange(out, (red[0], green[0], blue[0]), (red[1], green[1], blue[1]))
 
     @staticmethod
+    def __cv_medianblur(src, k_size):
+        """Performs a median blur on the image.
+        Args:
+            src: A numpy.ndarray.
+            k_size: the scaling factor for the blur as a number.
+        Returns:
+            The result as a numpy.ndarray.
+        """
+        return cv2.medianBlur(src, (int)(k_size))
+
+    @staticmethod
     def __find_contours(input, external_only):
         """Sets the values of pixels in a binary image to their distance to the nearest black pixel.
         Args:
@@ -117,7 +136,7 @@ class GripPythonVI:
         Return:
             A list of numpy.ndarray where each one represents a contour.
         """
-        if external_only:
+        if (external_only):
             mode = cv2.RETR_EXTERNAL
         else:
             mode = cv2.RETR_LIST
@@ -149,23 +168,23 @@ class GripPythonVI:
         output = []
         for contour in input_contours:
             x, y, w, h = cv2.boundingRect(contour)
-            if w < min_width or w > max_width:
+            if (w < min_width or w > max_width):
                 continue
-            if h < min_height or h > max_height:
+            if (h < min_height or h > max_height):
                 continue
             area = cv2.contourArea(contour)
-            if area < min_area:
+            if (area < min_area):
                 continue
-            if cv2.arcLength(contour, True) < min_perimeter:
+            if (cv2.arcLength(contour, True) < min_perimeter):
                 continue
             hull = cv2.convexHull(contour)
             solid = 100 * area / cv2.contourArea(hull)
-            if solid < solidity[0] or solid > solidity[1]:
+            if (solid < solidity[0] or solid > solidity[1]):
                 continue
-            if len(contour) < min_vertex_count or len(contour) > max_vertex_count:
+            if (len(contour) < min_vertex_count or len(contour) > max_vertex_count):
                 continue
             ratio = (float)(w) / h
-            if ratio < min_ratio or ratio > max_ratio:
+            if (ratio < min_ratio or ratio > max_ratio):
                 continue
             output.append(contour)
         return output

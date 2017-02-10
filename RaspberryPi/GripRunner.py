@@ -38,6 +38,14 @@ def extra_processing(pipeline, frame):
     # The index of the contour in the list of all contours
     contour_number = 0
     # A for loop to process each contour individually
+
+    red_range = [230, 255.0]
+    green_range = [240, 255.0]
+    blue_range = [200, 255.0]
+
+    cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # frame = (cv2.inRange(frame, (red_range[0], green_range[0], blue_range[0]),
+    #                      (red_range[1], green_range[1], blue_range[1])))
     for contour in pipeline.filter_contours_output:
         x, y, w, h = cv2.boundingRect(contour)
         (center_x_positions.append(
@@ -46,10 +54,12 @@ def extra_processing(pipeline, frame):
         center_y_positions.append(y * image_scale + (h * image_scale / 2))
         widths.append(w * image_scale)
         heights.append(h * image_scale)
-        areas.append((w*image_scale) * (h*image_scale))
+        areas.append((w * image_scale) * (h * image_scale))
         draw_center = x + (w / 2), y + (h / 2)
+
         (cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED))
         cv2.putText(frame, str(contour_number), draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+
         contour_number += 1
     # The table from network tables to add data too
     table = NetworkTables.getTable('/vision/high_goal')
