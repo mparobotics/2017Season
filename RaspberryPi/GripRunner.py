@@ -54,7 +54,7 @@ def extra_processing(pipeline, frame):
         center_y_positions.append(y * image_scale + (h * image_scale / 2))
         widths.append(w * image_scale)
         heights.append(h * image_scale)
-        areas.append((w*image_scale) * (h*image_scale))
+        areas.append((w * image_scale) * (h * image_scale))
         draw_center = x + (w / 2), y + (h / 2)
 
         (cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED))
