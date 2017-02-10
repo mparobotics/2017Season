@@ -216,9 +216,9 @@ public class RobotMap {
     public final static double   BUFFER_ACCELERATION_AMOUNT          = MAX_BUFFER_DIFFERENCE;
     ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
-    public final static int      IMAGE_X                             = 160;
+    public final static int      IMAGE_X                             = 320;
     /** Size of the vision tracking image's Y axis */
-    public final static int      IMAGE_Y                             = 120;
+    public final static int      IMAGE_Y                             = 240;
     /** Center point on the screen */
     public final static int[]    SCREEN_CENTER                       = {IMAGE_X / 2, IMAGE_Y / 2};
     ///// Speed Buffer Configuration /////
