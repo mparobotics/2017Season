@@ -86,6 +86,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
 
+        driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
+
         ////////// User Interface and Control Initialization //////////
         oi = new OI();
         chooser = new SendableChooser<>();

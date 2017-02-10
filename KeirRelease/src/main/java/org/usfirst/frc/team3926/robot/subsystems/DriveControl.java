@@ -100,6 +100,9 @@ public class DriveControl extends Subsystem {
         if (safe)
             safeMode();
 
+        SmartDashboard.putBoolean("Straight mode", straight);
+        SmartDashboard.putBoolean("Safety mode", safe);
+
         driveSystem.tankDrive(leftSide, rightSide);
 
     }
@@ -116,7 +119,7 @@ public class DriveControl extends Subsystem {
 
         double[] contourCenter = visionTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
 
-        if (contourCenter[checkIndex] != RobotMap.ILLEGAL_DOUBLE) {
+        if (contourCenter.length != 0 && contourCenter[checkIndex] != RobotMap.ILLEGAL_DOUBLE) {
 
             contoursFound = true;
 
@@ -141,6 +144,8 @@ public class DriveControl extends Subsystem {
             setSpeed(0, 0);
             contoursFound = false;
         }
+
+        driveSystem.tankDrive(leftSide, rightSide);
 
         SmartDashboard.putBoolean("Move Left", moveLeft);
         SmartDashboard.putBoolean("Move Right", moveRight);
@@ -167,6 +172,8 @@ public class DriveControl extends Subsystem {
             leftSide *= -1;
         else
             setSpeed(0, 0);
+
+        driveSystem.tankDrive(leftSide, rightSide);
 
     }
 
@@ -209,7 +216,7 @@ public class DriveControl extends Subsystem {
     private void straightDrive() {
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER)
-            rightSide = leftSide;
+            leftSide = rightSide;
         else
             leftSide = rightSide;
     }

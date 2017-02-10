@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /***********************************************************************************************************************
@@ -20,6 +21,9 @@ public class CenterOnGears extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
 
+        SmartDashboard.putBoolean("Center on Gears: ", true);
+
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,6 +39,9 @@ public class CenterOnGears extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+
+        SmartDashboard.putBoolean("Center on Gears: ", false);
+
 
     }
 
