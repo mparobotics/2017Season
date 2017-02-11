@@ -28,11 +28,11 @@ public class StopRobot extends Command {
     }
 
     /**
-     * Call the {@link DriveSubsytem#deceleration()} function to decelerate before stopping
+     * Call the {@link DriveSubsytem#decelerationForward()} function to decelerate before stopping
      */
     public void execute() {
 
-        Robot.driveSubsystem.deceleration();
+        Robot.driveSubsystem.decelerationForward();
 
     }
 

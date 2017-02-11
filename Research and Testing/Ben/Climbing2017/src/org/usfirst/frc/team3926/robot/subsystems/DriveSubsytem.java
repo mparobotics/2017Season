@@ -27,9 +27,9 @@ public class DriveSubsytem extends Subsystem {
     private static Gyro          gyro;
     /** Distance traveled by the robot */
     private        double        distanceTraveled;
-    /** Speed variable for right side in the deceleration function */
+    /** Speed variable for right side in the decelerationForward function */
     private        double        rightSideDecelerationSpeed;
-    /** Speed variable for left side in the deceleration function */
+    /** Speed variable for left side in the decelerationForward function */
     private        double        leftSideDecelerationSpeed;
     /** Range Finder to find the distance of the Robot from the wall */
     private        AnalogInput   rangeFinder;
@@ -40,7 +40,7 @@ public class DriveSubsytem extends Subsystem {
      * Constructs the motors for the drive system
      * Constructs the accelerometer
      * Constructs the gyro
-     * Constructs the rightSideDecelerationSpeed variable which acts as the default deceleration speed
+     * Constructs the rightSideDecelerationSpeed variable which acts as the default decelerationForward speed
      */
     public DriveSubsytem() {
 
@@ -142,6 +142,15 @@ public class DriveSubsytem extends Subsystem {
     }
 
     /**
+     * Drives Backward If the wall is 10 meters away
+     */
+    public void driveBackward() {
+
+        driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
+
+    }
+
+    /**
      * Checks if the wall is less then then meters away
      *
      * @return if the wall is less than ten meters away
@@ -177,17 +186,17 @@ public class DriveSubsytem extends Subsystem {
      * Changes speed of the motor for the robot based on the robot's rate of acceleration until the Robot
      * reaches 0 speed
      */
-    public void deceleration() {
+    private void decelerationMath() {
 
         double acceleration = accelerometer.getX();
 
         if (acceleration < -5) {
 
-            rightSideDecelerationSpeed += RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+            rightSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
 
         } else if (acceleration > 0) {
 
-            rightSideDecelerationSpeed -= RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+            rightSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
 
         } else {
 
@@ -196,15 +205,42 @@ public class DriveSubsytem extends Subsystem {
 
         if (acceleration < -5) {
 
-            leftSideDecelerationSpeed += RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+            leftSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
 
         } else if (acceleration > 0) {
 
-            leftSideDecelerationSpeed -= RobotMap.DRIVE_FORWARD_SPEED_INCREMENT;
+            leftSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
 
         } else {
 
             leftSideDecelerationSpeed = 0;
+
+        }
+
+    }
+
+    /**
+     * Decelerates while going forward
+     */
+    public void decelerationForward() {
+
+        decelerationMath();
+        driveSystem.tankDrive(-leftSideDecelerationSpeed, rightSideDecelerationSpeed);
+
+    }
+
+    public void decelerationTurning() {
+
+        decelerationMath();
+        if(leftSideDecelerationSpeed == 0){
+
+            leftSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
+
+        }
+
+        if(rightSideDecelerationSpeed == 0){
+
+            rightSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
 
         }
 

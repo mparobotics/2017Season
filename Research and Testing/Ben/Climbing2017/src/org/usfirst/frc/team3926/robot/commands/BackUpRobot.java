@@ -4,54 +4,52 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- * Has the robot turn
+ * Makes the robot Drive forward
  *
  * @author Benjamin Lash
  */
-public class TurnRobot extends Command {
+public class BackUpRobot extends Command {
 
     /**
-     * Requires the robot driveSubsystem
+     * Requires the driveSubsystem
      */
-    public void TurnCommand() {
+    public BackUpRobot() {
 
         requires(Robot.driveSubsystem);
 
     }
 
     /**
-     * Activates the turning method
+     * No relevant variables or methods are needed for this function
      */
     public void initialize() {
 
     }
 
     /**
-     * Activates Turning Method
+     * Drives backward
      */
     public void execute() {
 
-        Robot.driveSubsystem.turning();
+        Robot.driveSubsystem.driveBackward();
 
     }
 
     /**
-     * Ends the command if the robot has turned 90 degrees
-     *
-     * @return {@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#hasRobotTurned}
+     * Checks if the robot has backed up 10 meters
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.hasRobotTurned();
+        return Robot.driveSubsystem.negativeTenMetersTraveled();
 
     }
 
     /**
-     * Decelerates the robot until it stops
+     * Resets the drivingEncoder so it can be used again for redoing this command or doing another command
      */
     public void end() {
 
-        Robot.driveSubsystem.deceleration();
+        Robot.driveSubsystem.resetEncoder();
 
     }
 
@@ -62,3 +60,4 @@ public class TurnRobot extends Command {
 
     }
 }
+
