@@ -30,9 +30,7 @@ public class Climber<T> extends Subsystem {
 
         this.limitSwitch = limitSwitch;
         motorController = Arrays.asList(motorControllers);
-
-        SmartDashboard.putBoolean("Climber Limit Switch: ", limitSwitch.get());
-
+        
     }
 
     /**
