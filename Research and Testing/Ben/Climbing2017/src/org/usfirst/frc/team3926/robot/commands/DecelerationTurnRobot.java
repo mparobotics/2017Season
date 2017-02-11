@@ -8,7 +8,7 @@ import org.usfirst.frc.team3926.robot.Robot;
  *
  * @author Benjamin Lash
  */
-public class RangeFinderTurning extends Command {
+public class DecelerationTurnRobot extends Command {
 
     /**
      * Requires the robot driveSubsystem
@@ -20,18 +20,18 @@ public class RangeFinderTurning extends Command {
     }
 
     /**
-     * Activates the turning method
+     * No method necessary to initialize this command
      */
     public void initialize() {
 
     }
 
     /**
-     * Turns The Robot
+     * Turns the Robot while deccelerationg
      */
     public void execute() {
 
-        Robot.driveSubsystem.rangeFinderTurning();
+        Robot.driveSubsystem.decelerationTurning();
 
     }
 
@@ -46,12 +46,8 @@ public class RangeFinderTurning extends Command {
 
     }
 
-    /**
-     * Decelerates the robot until it stops
-     */
     public void end() {
 
-        Robot.driveSubsystem.decelerationForward();
 
     }
 
@@ -61,5 +57,4 @@ public class RangeFinderTurning extends Command {
     public void interrupted() {
 
     }
-
 }

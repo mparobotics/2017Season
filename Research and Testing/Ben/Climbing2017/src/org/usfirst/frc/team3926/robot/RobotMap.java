@@ -11,24 +11,24 @@ public class RobotMap {
     //////////////////////////////////////////////////////Driving//////////////////////////////////////////////////////
     /////Precision Driving Multiplier/////
     /** Multipier used for when drivers want to go slower but more precise */
-    public static final  double PRECISION_DRIVING_MULTIPLIER              = 0.5;
+    public static final  double PRECISION_DRIVING_MULTIPLIER = 0.5;
     /////Driving Max Speed/////
     /** Max speed for the Robot when it is moving on it's own */
-    public static final  double MAX_AUTO_DRIVING_SPEED                    = 1;
+    public static final  double MAX_AUTO_DRIVING_SPEED       = 1;
     /////Driving Gyro/////
     /** Analog port for gyro */
-    public static final  int    GYRO_PORT                                 = 1;
+    public static final  int    GYRO_PORT                    = 1;
     /////Driving RPM regulation/////
     /** Increment which can adjust the speed of the robot so it it does not speed up too fast */
-    public static final  double DRIVE_FORWARD_SPEED_INCREMENT             = 0.1;
+    public static final  double DECELERATION_SPEED_INCREMENT = 0.1;
     /////Driving Deceleration/////
-    /** Default speed for the start of the deceleration function */
-    public static final  double DEFAULT_DECELERATION_SPEED                = 0.5;
+    /** Default speed for the start of the decelerationForward function */
+    public static final  double DEFAULT_DECELERATION_SPEED   = 0.5;
     /////Driving Talon CAN IDs/////
     /** CAN ID for the drivesystem's back right talon */
-    public static final  int    TALON_BR_CAN_ID                           = 0;
+    public static final  int    TALON_BR_CAN_ID              = 0;
     /** CAN ID for the drivesystem's front right talon */
-    public static final  int    TALON_FR_CAN_ID                           = 1;
+    public static final  int    TALON_FR_CAN_ID              = 1;
     /** CAN ID for the drivesystem's back left talon */
     public static final  int    TALON_BL_CAN_ID                           = 2;
     /** CAN ID for the drivesystem's front left talon */
@@ -151,8 +151,20 @@ public class RobotMap {
     public static final  int    XBOX_JOYSTICK_PORT                        = 2;
     ////////////////////////////////////////////////RangeFinder Movement///////////////////////////////////////////////
     /////RangeFinder Sensitivity/////
-    /** The meters per volt from the RangeFinder */
+    /** Meters per volt from the RangeFinder */
     public static final  int    RANGE_FINDER_SENSITIVITY                  = 5;
-
+    //////////////////////////////////////////////////Inserting Gear///////////////////////////////////////////////////
+    /////Inserting Gear Motor /////
+    /** CAN ID for gear insertion motor */
+    public static final  int    GEAR_INSERTION_MOTOR_ID                   = 1;
+    /** Motor speed of gear insertion */
+    public static final  double GEAR_INSERTION_SPEED                      = 1;
+    /////Gear Insertion Encoder/////
+    /** Port A for gear inserter encoder */
+    public static final  int    GEAR_INSERTION_ENCODER_PORT_A             = 1;
+    /** Port B for gear inserter encoder */
+    public static final  int    GEAR_INSERTION_ENCODER_PORT_B             = 2;
+    /** Max distance moved by gear inserter */
+    public static final  double GEAR_INSERTION_MAX_MOVEMENT               = 10;
 }
 

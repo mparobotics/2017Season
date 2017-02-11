@@ -25,6 +25,8 @@ public class Robot extends IterativeRobot {
     public static VisionTrackingSubsystem visionTrackingSubsystem = new VisionTrackingSubsystem();
     /** Instance of the PIDSubystem */
     public static PIDSubsystem            pidSubsystem            = new PIDLoopSubsystem();
+    /** Instance fo the InsertingGearSubsystem */
+    public static InsertingGearSubsystem  insertingGearSubsystem  = new InsertingGearSubsystem();
     /** Instance of the OI class */
     public static OI oi;
 
