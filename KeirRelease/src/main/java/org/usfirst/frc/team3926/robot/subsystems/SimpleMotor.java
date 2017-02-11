@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Controls the ball grabbing mechanism on the back of the robot
  */
-public class BallCollector<T> extends Subsystem {
+public class SimpleMotor<T> extends Subsystem {
 
     /** Motor controller responsible for the ball collector */
     private T motorController;
@@ -15,15 +15,15 @@ public class BallCollector<T> extends Subsystem {
     ////////////////////////////////////////// Constructors and Initializers ///////////////////////////////////////////
 
     /**
-     * Constructs the BallCollector class
+     * Constructs the SimpleMotor class
      *
      * @param motorController Motor controller that is responsible for the ball collector
      * @throws IllegalArgumentException If the motorController parameter is not a Talon or CANTalon
      */
-    public BallCollector(T motorController) {
+    public SimpleMotor(T motorController) {
 
         if (!(motorController instanceof CANTalon) && !(motorController instanceof Talon))
-            throw new IllegalArgumentException("Object given to BallCollector is not a supported motor controller");
+            throw new IllegalArgumentException("Object given to SimpleMotor is not a supported motor controller");
 
         this.motorController = motorController;
 

@@ -18,6 +18,7 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  * TODO driving based on encoder values
+ * TODO autonomous vision driving
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -51,6 +52,9 @@ public class DriveControl extends Subsystem {
         else
             driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
                                          RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
+
+        leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
+        rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
 
     }
 

@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
-import org.usfirst.frc.team3926.robot.subsystems.BallCollector;
 import org.usfirst.frc.team3926.robot.subsystems.Climber;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
+import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
 
 /***********************************************************************************************************************
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +26,8 @@ import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
  *      <p>
  *      Contact: klugewilliam@gmail.com
  *      </p>
+ *
+ *      TODO Gear placement command group
  ***********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
@@ -39,8 +41,10 @@ public class Robot extends IterativeRobot {
     public final static PIDControlledActuator agitator;
     /** Subsystem to control the robot's climbing mechanism */
     public final static Climber               climber;
-    /** Subsystem to control the robot's */
-    public final static BallCollector         ballCollector;
+    /** Subsystem to control the robot's ball collection mechanism */
+    public final static SimpleMotor           ballCollector;
+    /** Subsystem to control the robot's gear placement mechanism */
+    public final static SimpleMotor           gearPlacer;
 
     static { //Static initialization for subsystems
 
@@ -70,9 +74,14 @@ public class Robot extends IterativeRobot {
                                              new Talon(RobotMap.CLIMBER_SECOND_PWM_PORT)});
 
         ///// Ball Collector Initialization /////
-        ballCollector = new BallCollector<>(RobotMap.BALL_COLLECTION_USE_CAN_TALON ?
-                                            new CANTalon(RobotMap.BALL_COLLECTION_CAN_ID) :
-                                            new Talon(RobotMap.BALL_COLLECTION_PWM_PORT));
+        ballCollector = new SimpleMotor<>(RobotMap.BALL_COLLECTION_USE_CAN_TALON ?
+                                          new CANTalon(RobotMap.BALL_COLLECTION_CAN_ID) :
+                                          new Talon(RobotMap.BALL_COLLECTION_PWM_PORT));
+
+        ///// Gear Placer Initialization /////
+        gearPlacer = new SimpleMotor<>(RobotMap.GEAR_PLACEMENT_USE_CAN_TALON ?
+                                       new CANTalon(RobotMap.GEAR_PLACEMENT_CAN_ID) :
+                                       new Talon(RobotMap.GEAR_PLACEMENT_PWM_PORT));
 
     }
 
