@@ -26,13 +26,6 @@ public class DriveWithController extends Command {
     }
 
     /**
-     * This command should not be interrupted by any of the commands which could interrupt it
-     */
-    public void interrupted() {
-
-    }
-
-    /**
      * No relevant variables or methods are needed for this function
      */
     public void initialize() {
@@ -40,13 +33,13 @@ public class DriveWithController extends Command {
     }
 
     /**
-     * Continuously calls the driveMethod method
+     * Continuously calls driveMethod
      */
     public void execute() {
 
         Robot.driveSubsystem
                 .driveMethod(Robot.oi.rightStick.getY(), Robot.oi.leftStick.getY(), Robot.oi.leftStick.getRawButton
-                        (RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_INPUT_BUTTON_NUMBER));
+                        (RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER));
 
     }
 
@@ -63,6 +56,13 @@ public class DriveWithController extends Command {
      * No relevant variables or methods are needed for this function
      */
     public void end() {
+
+    }
+
+    /**
+     * This command should not be interrupted by any of the commands which could interrupt it
+     */
+    public void interrupted() {
 
     }
 }

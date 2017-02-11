@@ -37,13 +37,6 @@ public class StopRobot extends Command {
     }
 
     /**
-     * This command should not be interrupted by any of the commands which could interrupt it
-     */
-    public void interrupted() {
-
-    }
-
-    /**
      * Stops the robot if it has reached zero speed
      *
      * @return {@link DriveSubsytem#isSpeedZero()}
@@ -58,6 +51,13 @@ public class StopRobot extends Command {
      * No relevant variables or methods are needed for this function
      */
     public void end() {
+
+    }
+
+    /**
+     * This command should not be interrupted by any of the commands which could interrupt it
+     */
+    public void interrupted() {
 
     }
 

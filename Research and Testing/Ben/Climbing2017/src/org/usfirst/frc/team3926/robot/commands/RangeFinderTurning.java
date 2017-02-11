@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3926.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
-import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
 
 /**
  * Has the robot turn
@@ -24,34 +24,25 @@ public class RangeFinderTurning extends Command {
      */
     public void initialize() {
 
-        Robot.driveSubsystem.rangeFinderTurning();
-
     }
 
     /**
-     * Stores the the angle info from the {@link DriveSubsytem#Gyro()}
+     * Turns The Robot
      */
     public void execute() {
 
-        Robot.driveSubsystem.Gyro();
-
-    }
-
-    /**
-     * This command should not be interrupted by any of the commands which could interrupt it
-     */
-    public void interrupted() {
+        Robot.driveSubsystem.rangeFinderTurning();
 
     }
 
     /**
      * Ends the command if the robot has turned 90 degrees
      *
-     * @return {@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#HasRobotTurned}
+     * @return {@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#hasRobotTurned}
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.HasRobotTurned();
+        return Robot.driveSubsystem.hasRobotTurned();
 
     }
 
@@ -63,4 +54,12 @@ public class RangeFinderTurning extends Command {
         Robot.driveSubsystem.deceleration();
 
     }
+
+    /**
+     * This command should not be interrupted by any of the commands which could interrupt it
+     */
+    public void interrupted() {
+
+    }
+
 }

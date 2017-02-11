@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3926.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -17,34 +16,24 @@ import org.usfirst.frc.team3926.robot.subsystems.*;
 public class Robot extends IterativeRobot {
 
     /** Instance of the climbSubsystem */
-    public static ClimbSubsystem          climbSubsystem;
+    public static ClimbSubsystem          climbSubsystem          = new ClimbSubsystem();
     /** Instance of the driveSubsystem */
-    public static DriveSubsytem           driveSubsystem;
+    public static DriveSubsytem           driveSubsystem          = new DriveSubsytem();
     /** Instance of the shootingSubsystem */
-    public static ShootingSubsystem       shootingSubsystem;
+    public static ShootingSubsystem       shootingSubsystem       = new ShootingSubsystem();
     /** Instance of the visionTrackingSubsystem */
-    public static VisionTrackingSubsystem visionTrackingSubsystem;
+    public static VisionTrackingSubsystem visionTrackingSubsystem = new VisionTrackingSubsystem();
     /** Instance of the PIDSubystem */
-    public static PIDSubsystem            pidSubsystem;
+    public static PIDSubsystem            pidSubsystem            = new PIDLoopSubsystem();
     /** Instance of the OI class */
-    public static OI                      oi;
+    public static OI oi;
 
     /**
-     * Constructs an instance of the OI class
-     * Constructs an instance of the ClimbSubsystem
-     * Constructs an instance of the DriveSubsystem
-     * Constructs an instance of the ShootingSubsystem
-     * Constructs an instance of the VisionTrackingSubsystem
-     * Constructs an instance of the PIDLoopSubsystemSubsystem
+     * Constructs an instance of the OI class\
      */
     public void robotInit() {
 
         oi = new OI();
-        climbSubsystem = new ClimbSubsystem();
-        driveSubsystem = new DriveSubsytem();
-        shootingSubsystem = new ShootingSubsystem();
-        visionTrackingSubsystem = new VisionTrackingSubsystem();
-        pidSubsystem = new PIDLoopSubsystem();
 
     }
 
@@ -54,12 +43,6 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
-
-    }
-
-    public void disabledPeriodic() {
-
-        Scheduler.getInstance().run();
 
     }
 
@@ -76,16 +59,22 @@ public class Robot extends IterativeRobot {
 
     }
 
+    public void teleopInit() {
+
+    }
+
+    public void disabledPeriodic() {
+
+        Scheduler.getInstance().run();
+
+    }
+
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
 
         Scheduler.getInstance().run();
-
-    }
-
-    public void teleopInit() {
 
     }
 
@@ -106,4 +95,5 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
 
     }
+
 }
