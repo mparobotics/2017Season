@@ -14,41 +14,55 @@ import org.usfirst.frc.team3926.robot.Robot;
  ***********************************************************************************************************************/
 public class DriveToGears extends Command {
 
+    /**
+     * Constructs the DriveToGears command requiring {@link Robot#driveControl}
+     */
     public DriveToGears() {
 
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Tells the SmartDashboard that the DriveToGears command is running
+     */
     protected void initialize() {
 
         SmartDashboard.putBoolean("Drive to Gears: ", true);
 
-
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Drives the robot towards the gear target using
+     * {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#autonomousTank(boolean)}
+     */
     protected void execute() {
 
         Robot.driveControl.autonomousTank(true);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * isFinished() is not needed because this command is controlled with
+     * {@link org.usfirst.frc.team3926.robot.OI#driveToGear}
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     *
+     */
     protected void end() {
 
         SmartDashboard.putBoolean("Drive to Gears: ", false);
 
-
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Tells the SmartDashboard that the DriveToGears command is
+     */
     protected void interrupted() {
 
     }

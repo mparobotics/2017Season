@@ -14,40 +14,55 @@ import org.usfirst.frc.team3926.robot.Robot;
  ***********************************************************************************************************************/
 public class CenterOnGears extends Command {
 
+    /**
+     * Constructs the CenterOnGears command requiring {@link Robot#driveControl}
+     */
     public CenterOnGears() {
+
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Tells the SmartDashboard that the CenterOnGears command is running
+     */
     protected void initialize() {
 
         SmartDashboard.putBoolean("Center on Gears: ", true);
 
-
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Uses {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#center(boolean)} to center the robot on the
+     * gears target
+     */
     protected void execute() {
+
         Robot.driveControl.center(true);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * isFinished() is not needed here because this is controlled with
+     * {@link org.usfirst.frc.team3926.robot.OI#centerOnGear}
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     *
+     */
     protected void end() {
-
-        SmartDashboard.putBoolean("Center on Gears: ", false);
-
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Tells the SmartDashboard that the CenterOnGears command is done
+     */
     protected void interrupted() {
+
+        SmartDashboard.putBoolean("Center on Gears: ", false);
 
     }
 

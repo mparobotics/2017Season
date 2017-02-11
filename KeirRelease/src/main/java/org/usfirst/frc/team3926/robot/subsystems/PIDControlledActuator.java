@@ -45,11 +45,6 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
     /** Sensor to control the output of the PID loop */
     private S             sensor;
 
-    public PIDControlledActuator() {
-
-        super("", 0, 0, 0);
-    }
-
     /**
      * Constructs the PIDControlledActuator class with all values relevant to PID control.
      *

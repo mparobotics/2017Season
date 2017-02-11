@@ -14,7 +14,11 @@ import org.usfirst.frc.team3926.robot.Robot;
  ***********************************************************************************************************************/
 public class DriveTowardsHighGoal extends Command {
 
+    /**
+     * Constructs the DriveTowardsHighGoal command requiring {@link Robot#driveControl}
+     */
     public DriveTowardsHighGoal() {
+
         requires(Robot.driveControl);
     }
 
@@ -22,7 +26,6 @@ public class DriveTowardsHighGoal extends Command {
     protected void initialize() {
 
         SmartDashboard.putBoolean("Drive to High Goal: ", true);
-
 
     }
 
@@ -41,14 +44,13 @@ public class DriveTowardsHighGoal extends Command {
     // Called once after isFinished returns true
     protected void end() {
 
-        SmartDashboard.putBoolean("Drive to High Goal: ", false);
-
-
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+
+        SmartDashboard.putBoolean("Drive to High Goal: ", false);
 
     }
 

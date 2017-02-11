@@ -15,6 +15,7 @@ import org.usfirst.frc.team3926.robot.Robot;
 public class CenterOnHighGoal extends Command {
 
     public CenterOnHighGoal() {
+
         requires(Robot.driveControl);
     }
 
@@ -40,14 +41,13 @@ public class CenterOnHighGoal extends Command {
     // Called once after isFinished returns true
     protected void end() {
 
-        SmartDashboard.putBoolean("Center on High Goal: ", false);
-
-
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+
+        SmartDashboard.putBoolean("Center on High Goal: ", false);
 
     }
 

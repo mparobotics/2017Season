@@ -25,6 +25,7 @@ public class Climber<T> extends Subsystem {
      * @param limitSwitch      Limit switch to monitor the state of the climber
      * @param motorControllers All the motor controllers for this class to control
      */
+    @SafeVarargs
     public Climber(DigitalInput limitSwitch, T... motorControllers) {
 
         this.limitSwitch = limitSwitch;

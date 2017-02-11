@@ -30,6 +30,7 @@ public class AgitatorIdle extends Command {
     protected void initialize() {
 
         Robot.agitator.setSetpoint(RobotMap.AGITATOR_IDLE_SETPOINT);
+        Robot.agitator.enable();
 
     }
 
@@ -46,6 +47,8 @@ public class AgitatorIdle extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+
+        Robot.agitator.disable();
 
     }
 

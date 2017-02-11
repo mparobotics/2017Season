@@ -10,9 +10,13 @@ import org.usfirst.frc.team3926.robot.Robot;
  *         <p>
  *         Contact: klugewilliam@gmail.com
  *         </p>
+ * TODO this
  ***********************************************************************************************************************/
 public class DriveForward extends Command {
 
+    /**
+     * Constructs the DriveForward command requiring {@link Robot#driveControl}
+     */
     public DriveForward() {
 
         requires(Robot.driveControl);

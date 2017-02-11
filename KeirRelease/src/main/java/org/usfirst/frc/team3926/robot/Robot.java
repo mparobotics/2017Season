@@ -83,14 +83,18 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
 
-        driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
-
         ////////// User Interface and Control Initialization //////////
         oi = new OI();
         chooser = new SendableChooser<>();
         chooser.addDefault("Do Nothing", new DoNothing());
         chooser.addObject("Drive Forward", new DriveForward());
         SmartDashboard.putData("Autonomous mode", chooser);
+
+        try {
+            driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
+        } catch (Exception e) {
+            System.out.print("umm...don't worry about it dude");
+        }
 
     }
 

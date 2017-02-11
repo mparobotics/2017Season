@@ -16,6 +16,7 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  * <p>
  * Contact: klugewilliam@gmail.com
  * </p>
+ * TODO driving based on encoder values
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -26,9 +27,10 @@ public class DriveControl extends Subsystem {
     /** Object to handle actual driving of motors */
     private RobotDrive   driveSystem;
     /** Network table for vision processing of the high goal target */
-    private NetworkTable visionTable;
+    private NetworkTable visionTable = null;
     /** Vision processing booleans */
     private boolean      moveLeft, moveRight, contoursFound, centered;
+
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -68,6 +70,12 @@ public class DriveControl extends Subsystem {
     public void initNetworkTables(String networkTableName) {
 
         visionTable = NetworkTable.getTable(networkTableName);
+
+    }
+
+    public boolean networkTablesNotInitialized() {
+
+        return visionTable == null;
 
     }
 

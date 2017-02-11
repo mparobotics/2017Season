@@ -30,6 +30,7 @@ public class AgitatorFeed extends Command {
     protected void initialize() {
 
         Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
+        Robot.agitator.enable();
 
     }
 
@@ -50,6 +51,8 @@ public class AgitatorFeed extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+
+        Robot.agitator.disable();
 
     }
 
