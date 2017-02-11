@@ -25,7 +25,7 @@ public class UserDriveTank extends Command {
     }
 
     /**
-     * No initialization code is neeed
+     * No initialization code is needed
      */
     protected void initialize() {
 

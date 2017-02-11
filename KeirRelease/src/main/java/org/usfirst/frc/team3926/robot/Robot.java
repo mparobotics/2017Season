@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
+import org.usfirst.frc.team3926.robot.subsystems.BallCollector;
 import org.usfirst.frc.team3926.robot.subsystems.Climber;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
@@ -22,9 +23,9 @@ import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
  * directory.
  *
  * @author William Kluge
- * <p>
- *  Contact: klugewilliam@gmail.com
- * </p>
+ *      <p>
+ *      Contact: klugewilliam@gmail.com
+ *      </p>
  ***********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
@@ -38,6 +39,8 @@ public class Robot extends IterativeRobot {
     public final static PIDControlledActuator agitator;
     /** Subsystem to control the robot's climbing mechanism */
     public final static Climber               climber;
+    /** Subsystem to control the robot's */
+    public final static BallCollector         ballCollector;
 
     static { //Static initialization for subsystems
 
@@ -65,6 +68,11 @@ public class Robot extends IterativeRobot {
                                                 new CANTalon(RobotMap.CLIMBER_SECOND_CAN_ID)} :
                                 new Talon[] {new Talon(RobotMap.CLIMBER_PWM_PORT),
                                              new Talon(RobotMap.CLIMBER_SECOND_PWM_PORT)});
+
+        ///// Ball Collector Initialization /////
+        ballCollector = new BallCollector<>(RobotMap.BALL_COLLECTION_USE_CAN_TALON ?
+                                            new CANTalon(RobotMap.BALL_COLLECTION_CAN_ID) :
+                                            new Talon(RobotMap.BALL_COLLECTION_PWM_PORT));
 
     }
 

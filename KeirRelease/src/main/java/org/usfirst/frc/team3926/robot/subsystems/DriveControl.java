@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
 import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -30,6 +31,10 @@ public class DriveControl extends Subsystem {
     private NetworkTable visionTable = null;
     /** Vision processing booleans */
     private boolean moveLeft, moveRight, contoursFound, centered;
+    /** Encoder for the robot's left side */
+    private Encoder leftEncoder;
+    /** Encoder for the robot's right side */
+    private Encoder rightEncoder;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -114,7 +119,7 @@ public class DriveControl extends Subsystem {
      * @param targetGears Set this to true if vision tracking should work to center itself on gears not the high goal
      *                    target, which it will do if this is true
      */
-    public void autonomousTank(boolean targetGears) {
+    public void autonomousTank(boolean targetGears) { //TODO Add gear targeting
 
         int checkIndex = 0; //TODO add minor filtering
 

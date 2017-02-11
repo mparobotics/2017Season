@@ -89,19 +89,21 @@ public class RobotMap {
 
     /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */
-    public final static boolean  BALL_COLLECTION_USE_CAN_TALON       = true;
+    public final static boolean BALL_COLLECTION_USE_CAN_TALON      = true;
     /** CAN ID for ball collection system's motor controller (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true) */
-    public final static int      BALL_COLLECTION_CAN_ID              = 102;
+    public final static int     BALL_COLLECTION_CAN_ID             = 102;
     /** PWM ID for ball collection system's motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
-    public final static int      BALL_COLLECTION_PWM_PORT            = 6;
+    public final static int     BALL_COLLECTION_PWM_PORT           = 6;
+    /** Speed to set the ball collector motor to */
+    public final static double  BALL_COLLECTION_SPEED              = 1;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Use CANTalons for the drive base instead of PWM Talons */
-    public final static boolean  DRIVE_USE_CAN_TALON                 = true;
+    public final static boolean DRIVE_USE_CAN_TALON                = true;
     /** Invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION  = true;
+    public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION   = true;
+    public final static boolean INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
     /** Number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFETY_FACTOR                 = 0.50;
     ///// Encoder Values /////
@@ -144,37 +146,39 @@ public class RobotMap {
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                           = 0;
     /** Axis ID to use for the left speed in tank drive */
-    public final static int      XBOX_LEFT_SPEED_AXIS                = 1; //(Left joystick y)
+    public final static int     XBOX_LEFT_SPEED_AXIS               = 1; //(Left joystick y)
     /** Axis ID to use for the right speed in tank drive */
-    public final static int      XBOX_RIGHT_SPEED_AXIS               = 5; //(Right joystick y)
+    public final static int     XBOX_RIGHT_SPEED_AXIS              = 5; //(Right joystick y)
     /** Button ID to enter safety mode */
-    public final static int      XBOX_SAFTEY_MODE_BUTTON             = 1; //(A)
+    public final static int     XBOX_SAFTEY_MODE_BUTTON            = 1; //(A)
     /** Button ID to enter straight mode */
-    public final static int      XBOX_STRAIGHT_MODE_BUTTON           = 2; //(B)
+    public final static int     XBOX_STRAIGHT_MODE_BUTTON          = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */
-    public final static int      XBOX_CONTOUR_ERROR_BUTTON           = 5; //(Left bumper)
+    public final static int     XBOX_CONTOUR_ERROR_BUTTON          = 10; //(Left Stick Click)
     /** Button ID to center the robot on the vision target */
-    public final static int      XBOX_CENTER_ON_HIGH_GOAL_BUTTON     = 4; //(X)
+    public final static int     XBOX_CENTER_ON_HIGH_GOAL_BUTTON    = 4; //(X)
     /** Button ID to drive towards the center of the vision target */
-    public final static int      XBOX_DRIVE_TO_HIGH_GOAL_BUTTON      = 3; //(Y)
+    public final static int     XBOX_DRIVE_TO_HIGH_GOAL_BUTTON     = 3; //(Y)
     /** Button ID to drive towards the center of the gear's vision target */
-    public final static int      XBOX_CENTER_ON_GEAR_BUTTON          = 6; //(?)
+    public final static int     XBOX_CENTER_ON_GEAR_BUTTON         = 6; //(Right Bumper)
     /** Button ID to center the robot on the gear's vision target */
-    public final static int      XBOX_DRIVE_TO_GEAR_BUTTON           = 7; //(?)
+    public final static int     XBOX_DRIVE_TO_GEAR_BUTTON          = 5; //(Left Bumper)
     /** Button ID to turn on the shooter */
-    public final static int      XBOX_SHOOT_BUTTON                   = 8; //(?)
+    public final static int     XBOX_SHOOT_BUTTON                  = 7; //(Back)
     /** Button ID to activate the climber */
-    public final static int      XBOX_CLIMB_BUTTON                   = 9; //(?)
+    public final static int     XBOX_CLIMB_BUTTON                  = 9; //(Start)
+    /** Button ID to collect balls */
+    public final static int     XBOX_COLLECT_BUTTON                = 11; //(Right Stick Click)
 
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
-    public final static int      RIGHT_STICK_PORT                    = 0;
+    public final static int     RIGHT_STICK_PORT                   = 0;
     /** USB port number for left joystick */
-    public final static int      LEFT_STICK_PORT                     = 1;
+    public final static int     LEFT_STICK_PORT                    = 1;
     ///// Configuration for Driver's Primary Stick /////
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
-    public final static int      SAFTEY_MODE_BUTTON                  = 1;
+    public final static int     SAFTEY_MODE_BUTTON                 = 1;
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
     public final static int      CONTOUR_ERROR_BUTTON                = 5;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
@@ -185,22 +189,24 @@ public class RobotMap {
     /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
     public final static int      STRAIGHT_MODE_BUTTON                = 1;
     /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
-    public final static int      CENTER_ON_GEAR_BUTTON               = 3;
+    public final static int     CENTER_ON_GEAR_BUTTON              = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
-    public final static int      DRIVE_TO_GEAR_BUTTON                = 4;
+    public final static int     DRIVE_TO_GEAR_BUTTON               = 4;
     /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
-    public final static int      SHOOT_BUTTON                        = 5;
-    /** Buton ID on (?) to climb the rope */
-    public final static int      CLIMB_BUTTON                        = 6;
+    public final static int     SHOOT_BUTTON                       = 5;
+    /** Button ID on (?) to climb the rope */
+    public final static int     CLIMB_BUTTON                       = 6;
+    /** Button ID on (?) to collect balls */
+    public final static int     BALL_COLLECT_BUTTON                = 7;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String   TABLE_HIGH_GOAL_NAME                = "vision/high_goal";
+    public final static String  TABLE_HIGH_GOAL_NAME               = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
-    public final static String   SPEED_RIGHT_KEY                     = "rightSpeed";
+    public final static String  SPEED_RIGHT_KEY                    = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
-    public final static String   SPEED_LEFT_KEY                      = "leftSpeed";
+    public final static String  SPEED_LEFT_KEY                     = "leftSpeed";
     /** Map key for center x of a contour */
     public final static String   CONTOUR_X_KEY                       = "x";
     /** Map key for center y of a contour */
