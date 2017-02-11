@@ -20,9 +20,9 @@ class GripPythonVI:
         self.resize_image_output = None
 
         self.__rgb_threshold_input = self.resize_image_output
-        self.__rgb_threshold_red = [133.00359712230215, 255.0]
-        self.__rgb_threshold_green = [247.66187050359716, 255.0]
-        self.__rgb_threshold_blue = [240.78237410071944, 255.0]
+        self.__rgb_threshold_red = [247, 255.0]
+        self.__rgb_threshold_green = [245, 255.0]
+        self.__rgb_threshold_blue = [245, 255.0]
 
         self.rgb_threshold_output = None
 
