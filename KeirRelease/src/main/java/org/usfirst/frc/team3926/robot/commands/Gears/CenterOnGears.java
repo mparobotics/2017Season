@@ -8,9 +8,9 @@ import org.usfirst.frc.team3926.robot.Robot;
  * Centers the robot on the vision target for gear placement
  *
  * @author William Kluge
- *         <p>
- *         Contact: klugewilliam@gmail.com
- *         </p>
+ *      <p>
+ *      Contact: klugewilliam@gmail.com
+ *      </p>
  ***********************************************************************************************************************/
 public class CenterOnGears extends Command {
 
@@ -51,7 +51,7 @@ public class CenterOnGears extends Command {
     }
 
     /**
-     *
+     * end() is not needed here because this is controlled with {@link org.usfirst.frc.team3926.robot.OI#centerOnGear}
      */
     protected void end() {
 

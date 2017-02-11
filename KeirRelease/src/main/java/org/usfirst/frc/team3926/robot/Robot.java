@@ -22,9 +22,9 @@ import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
  * directory.
  *
  * @author William Kluge
- *         <p>
- *         Contact: klugewilliam@gmail.com
- *         </p>
+ * <p>
+ *  Contact: klugewilliam@gmail.com
+ * </p>
  ***********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {

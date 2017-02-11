@@ -22,32 +22,46 @@ public class DriveTowardsHighGoal extends Command {
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Tells the SmartDashboard that the DriveToHighGoal command is running
+     */
     protected void initialize() {
 
         SmartDashboard.putBoolean("Drive to High Goal: ", true);
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Drives towards the high goal vision target using
+     * {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#autonomousTank(boolean)}
+     */
     protected void execute() {
 
         Robot.driveControl.autonomousTank(false);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * isFinished() is not needed because this command is controlled by
+     * {@link org.usfirst.frc.team3926.robot.OI#driveToHighGoal}
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * end() is not needed because this command is controlled by
+     * {@link org.usfirst.frc.team3926.robot.OI#driveToHighGoal}
+     */
     protected void end() {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Tells the SmartDashboard
+     */
     protected void interrupted() {
 
         SmartDashboard.putBoolean("Drive to High Goal: ", false);

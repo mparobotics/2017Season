@@ -13,9 +13,9 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  * Enables driving of the robot with a tank drive scheme. This class contains anything relevant to actuating the drive
  * motors. This includes autonomous handling of the robot.
  * @author William Kluge
- * <p>
- * Contact: klugewilliam@gmail.com
- * </p>
+ *      <p>
+ *      Contact: klugewilliam@gmail.com
+ *      </p>
  * TODO driving based on encoder values
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
@@ -25,12 +25,11 @@ public class DriveControl extends Subsystem {
     /** Holds the speed for the left motor */
     private double leftSide  = 0;
     /** Object to handle actual driving of motors */
-    private RobotDrive   driveSystem;
+    private RobotDrive driveSystem;
     /** Network table for vision processing of the high goal target */
     private NetworkTable visionTable = null;
     /** Vision processing booleans */
-    private boolean      moveLeft, moveRight, contoursFound, centered;
-
+    private boolean moveLeft, moveRight, contoursFound, centered;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -70,16 +69,6 @@ public class DriveControl extends Subsystem {
     public void initNetworkTables(String networkTableName) {
 
         visionTable = NetworkTable.getTable(networkTableName);
-
-    }
-
-    /**
-     * Used to determine if the network tables have already been initialized
-     * @return Whether or not {@link #visionTable} is null
-     */
-    public boolean networkTablesNotInitialized() {
-
-        return visionTable == null;
 
     }
 

@@ -8,9 +8,12 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  * Spins the ball agitator to prevent balls from getting stuck
  *
  * @author William Kluge
- *         <p>
- *         Contact: klugewilliam@gmail.com
- *         </p>
+ * <p>
+ * Contact: klugewilliam@gmail.com
+ * </p>
+ * <p>
+ * Note: This is the default command of {@link Robot#agitator}
+ * </p>
  ***********************************************************************************************************************/
 public class AgitatorIdle extends Command {
 
@@ -44,6 +47,7 @@ public class AgitatorIdle extends Command {
 
     /**
      * This command is the default command and will never finish unless interrupted
+     *
      * @return false
      */
     protected boolean isFinished() {

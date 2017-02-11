@@ -14,37 +14,52 @@ import org.usfirst.frc.team3926.robot.Robot;
  ***********************************************************************************************************************/
 public class CenterOnHighGoal extends Command {
 
+    /**
+     * Constructs the CenterOnHighGoal command requiring {@link Robot#driveControl}
+     */
     public CenterOnHighGoal() {
 
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Tells the SmartDashboard that the CenterOnHighGoal command has started
+     */
     protected void initialize() {
 
         SmartDashboard.putBoolean("Center on High Goal: ", true);
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Centers on the high goal using {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#center(boolean)}
+     */
     protected void execute() {
 
         Robot.driveControl.center(false);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * isFinished() is not needed because this command is run using
+     * {@link org.usfirst.frc.team3926.robot.OI#centerOnHighGoal}
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * end() is not needed because this command is run using {@link org.usfirst.frc.team3926.robot.OI#centerOnHighGoal}
+     */
     protected void end() {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Tells the SmartDashboard that the CenterOnHighGoal command is done
+     */
     protected void interrupted() {
 
         SmartDashboard.putBoolean("Center on High Goal: ", false);

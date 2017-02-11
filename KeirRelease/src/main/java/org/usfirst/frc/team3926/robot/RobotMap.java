@@ -5,14 +5,14 @@ package org.usfirst.frc.team3926.robot;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
- * <p>
- * All options with the prefix XBOX are only used if {@link #XBOX_DRIVE_CONTROLLER} is true. If that is false, ignore
- * them
- * </p>
  * @author William Kluge
- * <p>
- * Contact: klugewilliam@gmail.com
- * </p>
+ *      <p>
+ *      Contact: klugewilliam@gmail.com
+ *      </p>
+ *      <p>
+ *      All options with the prefix XBOX are only used if {@link #XBOX_DRIVE_CONTROLLER} is true. If that is false,
+ *      ignore them
+ *      </p>
  **********************************************************************************************************************/
 @SuppressWarnings("WeakerAccess")
 public class RobotMap {
@@ -162,7 +162,10 @@ public class RobotMap {
     /** Button ID to center the robot on the gear's vision target */
     public final static int      XBOX_DRIVE_TO_GEAR_BUTTON           = 7; //(?)
     /** Button ID to turn on the shooter */
-    public final static int      XBOX_SHOOT_BUTTON                   = 8;
+    public final static int      XBOX_SHOOT_BUTTON                   = 8; //(?)
+    /** Button ID to activate the climber */
+    public final static int      XBOX_CLIMB_BUTTON                   = 9; //(?)
+
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
@@ -187,6 +190,8 @@ public class RobotMap {
     public final static int      DRIVE_TO_GEAR_BUTTON                = 4;
     /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
     public final static int      SHOOT_BUTTON                        = 5;
+    /** Buton ID on (?) to climb the rope */
+    public final static int      CLIMB_BUTTON                        = 6;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////

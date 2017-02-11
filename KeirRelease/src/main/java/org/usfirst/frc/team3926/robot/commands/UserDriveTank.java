@@ -11,23 +11,29 @@ import static org.usfirst.frc.team3926.robot.Robot.oi;
  *
  * @author William Kluge
  *         <p>
- *         klugewilliam@gmail.com
+ *         Contact: klugewilliam@gmail.com
  *         </p>
  ***********************************************************************************************************************/
 public class UserDriveTank extends Command {
 
+    /**
+     * Constructs the UserDriveTank command requiring {@link Robot#driveControl}
+     */
     public UserDriveTank() {
 
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * No initialization code is neeed
+     */
     protected void initialize() {
 
     }
 
     /**
-     * Called repeatedly when this Command is scheduled to run
+     * Calls {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#driveTank(double, double, boolean, boolean)}
+     * to control the drive base
      */
     protected void execute() {
 
@@ -41,21 +47,31 @@ public class UserDriveTank extends Command {
                                          oi.straightMode.get(), oi.safetyMode.get());
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * This is the default command for {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl}, so this isn't
+     * needed
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * This command never finishes
+     */
     protected void end() {
 
-        Robot.driveControl.reset();
+
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Sets the speeds of the drive train to 0
+     */
     protected void interrupted() {
+
+        Robot.driveControl.reset();
 
     }
 

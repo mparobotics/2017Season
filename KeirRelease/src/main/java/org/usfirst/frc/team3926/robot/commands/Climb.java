@@ -7,43 +7,60 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 /***********************************************************************************************************************
  * Command to make the robot climb
  * @author William Kluge
- * <p>
- *     Contact: klugewilliam@gmail.com
- * </p>
+ *      <p>
+ *      Contact: klugewilliam@gmail.com
+ *      </p>
  ***********************************************************************************************************************/
 public class Climb extends Command {
 
+    /**
+     * Constructs the Climb command using {@link Robot#climber}
+     */
     public Climb() {
 
         requires(Robot.climber);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * No initialization code is needed
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Sets the climbing motor to {@link RobotMap#CLIMBER_SPEED}
+     */
     protected void execute() {
 
         Robot.climber.climb(RobotMap.CLIMBER_SPEED);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * isFinished() is not needed because this command is controlled using
+     * {@link org.usfirst.frc.team3926.robot.OI#climb}
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * end() is not needed because this command is controlled using {@link org.usfirst.frc.team3926.robot.OI#climb}
+     */
     protected void end() {
 
-        Robot.climber.stopClimbing();
+
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Stops the robot from climbing
+     */
     protected void interrupted() {
+
+        Robot.climber.stopClimbing();
 
     }
 

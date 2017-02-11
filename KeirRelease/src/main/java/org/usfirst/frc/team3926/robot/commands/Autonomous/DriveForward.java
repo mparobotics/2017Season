@@ -22,7 +22,9 @@ public class DriveForward extends Command {
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     *
+     */
     protected void initialize() {
 
     }

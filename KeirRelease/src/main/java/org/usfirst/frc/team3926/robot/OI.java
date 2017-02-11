@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
+import org.usfirst.frc.team3926.robot.commands.Climb;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
@@ -37,6 +38,8 @@ public class OI {
     public Button   driveToGear;
     /** Button to use the shooter */
     public Button   shoot;
+    /** Button to climb */
+    public Button   climb;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -53,6 +56,7 @@ public class OI {
             centerOnGear = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_ON_GEAR_BUTTON);
             driveToGear = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_GEAR_BUTTON);
             shoot = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SHOOT_BUTTON);
+            climb = new JoystickButton(driverPrimaryStick, RobotMap.CLIMB_BUTTON);
         } else {
             driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
             driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
@@ -71,6 +75,7 @@ public class OI {
         driveToGear.whileHeld(new DriveForward());
         centerOnGear.whileHeld(new CenterOnGears());
         shoot.whileHeld(new ShootAndFeed());
+        climb.whileHeld(new Climb());
 
     }
 
