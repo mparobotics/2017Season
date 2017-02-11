@@ -7,10 +7,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class RangeFinderMovingCommandGroup extends CommandGroup {
 
+    /**
+     * Backs up Robot and Turns Robot if there is a wall 10 meters or less away
+     */
     public RangeFinderMovingCommandGroup() {
 
         addSequential(new RangeFinderDriveBackward());
-        addSequential(new RangeFinderDriveBackward());
+        addSequential(new RangeFinderTurning());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

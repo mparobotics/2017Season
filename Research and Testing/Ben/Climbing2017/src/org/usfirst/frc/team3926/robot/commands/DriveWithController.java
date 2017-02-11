@@ -40,13 +40,13 @@ public class DriveWithController extends Command {
     }
 
     /**
-     * Continuously calls the driveMethod method
+     * Continuously calls driveMethod
      */
     public void execute() {
 
         Robot.driveSubsystem
                 .driveMethod(Robot.oi.rightStick.getY(), Robot.oi.leftStick.getY(), Robot.oi.leftStick.getRawButton
-                        (RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_INPUT_BUTTON_NUMBER));
+                        (RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER));
 
     }
 

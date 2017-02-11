@@ -27,7 +27,7 @@ public class RangeFinderDriveBackward extends Command {
     }
 
     /**
-     * Calls the driveForward command to set the speed of the talons in the driveSystem to full
+     * Drives backward
      */
     public void execute() {
 
@@ -43,11 +43,11 @@ public class RangeFinderDriveBackward extends Command {
     }
 
     /**
-     * Checks if the robot has traveled 10 meters and stops it in that case
+     * Checks if the robot has backed up 10 meters
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.tenMetersTraveled();
+        return Robot.driveSubsystem.negativeTenMetersTraveled();
 
     }
 

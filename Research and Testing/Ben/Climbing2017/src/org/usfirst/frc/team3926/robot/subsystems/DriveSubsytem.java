@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.DriveWithController;
 
@@ -17,33 +18,21 @@ public class DriveSubsytem extends Subsystem {
     /** Encoder to track the forward motion of the robot */
     private static Encoder       rightDrivingEncoder;
     /** Encoder to track the forward motion of the robot */
-    private static  Encoder       leftDrivingEncoder;
+    private static Encoder       leftDrivingEncoder;
     /** Declares the drivesystem for the robot */
     private static RobotDrive    driveSystem;
-    /** Talon on the back right corner of the robot for the driveSystem */
-    private static Talon         talonBR;
-    /** Talon on the front right corner of the robot for the driveSystem */
-    private static Talon         talonFR;
-    /** Talon on the back left corner of the robot for the driveSystem */
-    private static Talon         talonBL;
-    /** Talon on the front left corner of the robot for the driveSystem */
-    private static Talon         talonFL;
     /** Distance traveled by the robot */
     private        double        distanceTraveled;
     /** Accelometer to track the robot's acceleration */
     private static Accelerometer accelerometer;
     /** Gyro to track the position of the Robot */
     private static Gyro          gyro;
-    /** Variable to track the acceleration of the motor */
-    private static double        acceleration;
     /** Speed variable for right side in the deceleration function */
     private        double        rightSideDecelerationSpeed;
     /** Speed variable for left side in the deceleration function */
     private        double        leftSideDecelerationSpeed;
-    /** Variable for the robots angle for the turning function */
-    private        double        currentAngle;
-
-    private AnalogInput rangeFinder;
+    /** Range Finder to find the distance of the Robot from the wall */
+    private        AnalogInput   rangeFinder;
 
     /**
      * Constructs the driving encoders
@@ -61,17 +50,13 @@ public class DriveSubsytem extends Subsystem {
                 new Encoder(RobotMap.RIGHT_DRIVING_ENCODER_PORT_A, RobotMap.RIGHT_DRIVING_ENCODER_PORT_B, false,
                             Encoder.EncodingType.k4X);
         leftDrivingEncoder = new Encoder(RobotMap.LEFT_DRIVING_ENCODER_PORT_A, RobotMap.LEFT_DRIVING_ENCODER_PORT_B,
-                                         false,
-                                         Encoder.EncodingType.k4X);
+                                         false, Encoder.EncodingType.k4X);
+
         rightDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
         leftDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
 
-        talonBR = new Talon(RobotMap.TALON_BR_CAN_ID);
-        talonFR = new Talon(RobotMap.TALON_FR_CAN_ID);
-        talonBL = new Talon(RobotMap.TALON_BL_CAN_ID);
-        talonFL = new Talon(RobotMap.TALON_FL_CAN_ID);
-
-        driveSystem = new RobotDrive(talonFL, talonBL, talonFR, talonBR);
+        driveSystem = new RobotDrive(new Talon(RobotMap.TALON_FL_CAN_ID), new Talon(RobotMap.TALON_BL_CAN_ID),
+                                     new Talon(RobotMap.TALON_FR_CAN_ID), new Talon(RobotMap.TALON_BR_CAN_ID));
 
         accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 
@@ -90,7 +75,12 @@ public class DriveSubsytem extends Subsystem {
 
     }
 
-    public boolean wallLessThenTenMetersAway(){
+    /**
+     * Checks if the wall is less then then meters away
+     *
+     * @return if the wall is less than ten meters away
+     */
+    private boolean wallLessThenTenMetersAway() {
 
         return rangeFinder.getValue() * RobotMap.RANGE_FINDER_SENSITIVITY <= 10;
 
@@ -105,13 +95,23 @@ public class DriveSubsytem extends Subsystem {
      */
     public void driveMethod(double rightStickHeight, double leftStickHeight, boolean leftButtonStatus) {
 
+
+
         if (leftButtonStatus) {
 
             rightStickHeight = leftStickHeight;
 
         }
 
-        driveSystem.tankDrive(leftStickHeight, rightStickHeight);
+
+        if(Robot.oi.precisionDrivingButton.get()){
+
+            rightStickHeight = rightStickHeight * RobotMap.PRECISION_DRIVING_MULTIPLIER;
+            leftStickHeight  = leftStickHeight  * RobotMap.PRECISION_DRIVING_MULTIPLIER;
+
+        }
+
+        driveSystem.tankDrive(leftStickHeight , rightStickHeight);
 
     }
 
@@ -121,29 +121,34 @@ public class DriveSubsytem extends Subsystem {
      */
     public void driveForward() {
 
-        driveSystem.tankDrive(1, 1);
+        driveSystem.tankDrive(RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
         distanceTraveled = rightDrivingEncoder.getDistance();
 
     }
 
+    /**
+     * Drives Backward If the wall is 10 meters away
+     */
     public void rangeFinderDriveBackward() {
 
-        if(wallLessThenTenMetersAway()){
+        if (wallLessThenTenMetersAway()) {
+            for (; !tenMetersTraveled(); ) {
 
-            driveSystem.tankDrive(1, 1);
-            rightDrivingEncoder.getDistance();
+                driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
+                rightDrivingEncoder.getDistance();
+
+            }
 
         }
 
     }
 
+    /**
+     * Turns after driving backward because the wall is less than ten meters away
+     */
     public void rangeFinderTurning() {
 
-        if(wallLessThenTenMetersAway()) {
-
-            driveSystem.tankDrive(-1, 1);
-
-        }
+        driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
 
     }
 
@@ -153,7 +158,7 @@ public class DriveSubsytem extends Subsystem {
      */
     public void deceleration() {
 
-        acceleration = accelerometer.getX();
+        double acceleration = accelerometer.getX();
 
         if (acceleration < -5) {
 
@@ -202,7 +207,8 @@ public class DriveSubsytem extends Subsystem {
      */
     public void turning() {
 
-        driveSystem.tankDrive(-1, 1);
+        driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
+
     }
 
     /**
@@ -211,15 +217,6 @@ public class DriveSubsytem extends Subsystem {
     public void resetEncoder() {
 
         rightDrivingEncoder.reset();
-
-    }
-
-    /**
-     * Gets the robots current angle with the gyro to find it's position
-     */
-    public void Gyro() {
-
-        currentAngle = gyro.getAngle();
 
     }
 
@@ -240,9 +237,9 @@ public class DriveSubsytem extends Subsystem {
      *
      * @return If the robot has turned 90 degrees since the last reset
      */
-    public boolean HasRobotTurned() {
+    public boolean hasRobotTurned() {
 
-        return currentAngle >= 90;
+        return gyro.getAngle() >= 90;
 
     }
 
@@ -253,7 +250,20 @@ public class DriveSubsytem extends Subsystem {
      */
     public boolean tenMetersTraveled() {
 
+        rightDrivingEncoder.get();
         return distanceTraveled >= 10;
+
+    }
+
+    /**
+     * Checks if the robot has backed up 10 meters
+     *
+     * @return if the robot has backed up 10 meters
+     */
+    public boolean negativeTenMetersTraveled() {
+
+        rightDrivingEncoder.get();
+        return distanceTraveled <= -10;
 
     }
 }

@@ -18,6 +18,9 @@ public class OI {
     public  Joystick rightStick                  = new Joystick(RobotMap.RIGHT_STICK_PORT);
     /** Left joystick */
     public  Joystick leftStick                   = new Joystick(RobotMap.LEFT_STICK_PORT);
+    /** Button for slowing the speed of the Robot */
+    public  Button   precisionDrivingButton      = new JoystickButton(rightStick,
+                                                                      RobotMap.PRECISE_DRIVING_BUTTON_NUMBER);
     ///** Xbox joystick */
     //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
     /** Button on the joystick that starts the Shooting */
@@ -36,7 +39,7 @@ public class OI {
      * Activates the vision tracking command if the vision tracking button is being held
      */
     OI() {
-
+        if
         climberButton.whenPressed(new Climb());
         shooterPIDButton.whileHeld(new ShootWithPID());
         visionTrackingTurningButton.whileHeld(new VisionTrackingTurning());
