@@ -37,7 +37,12 @@ def extra_processing(pipeline, frame):
     contour_number = 0
     # The table from network tables to add data to
     table = NetworkTables.getTable('/vision/high_goal')
-
+    red_range = [250, 255.0]
+    green_range = [240, 255.0]
+    blue_range = [240, 255.0]
+    cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # frame = (cv2.inRange(frame, (red_range[0], green_range[0], blue_range[0]),
+    #                      (red_range[1], green_range[1], blue_range[1])))
     for contour in pipeline.filter_contours_output:
 
         # The defining features of a contour. 0, 0 is top left corner
@@ -54,6 +59,7 @@ def extra_processing(pipeline, frame):
         areas.append(w * h)
 
         cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED)
+
         cv2.putText(frame, str(contour_number), draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
         cv2.putText(frame, coordinates, draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
 
@@ -80,6 +86,7 @@ def main():  # TODO optimize
     cap = cv2.VideoCapture(0)
     # pipeline from the grip generated file
     pipeline = GripPythonVI()
+    gain = 174
     # Setting width
     cap.set(3, x_resolution)
     # Setting height
@@ -90,7 +97,7 @@ def main():  # TODO optimize
         have_frame, frame = cap.read()
         if have_frame:
             pipeline.process(frame)
-            cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', extra_processing(pipeline, frame))
+            cv2.imwrite('/home/pi/git/2017Season/RaspberryPi/pic.jpg', extra_processing(pipeline, frame))
 
     print('Stopped Capturing')
 
