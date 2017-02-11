@@ -39,7 +39,7 @@ public class OI {
      * Activates the vision tracking command if the vision tracking button is being held
      */
     OI() {
-        if
+
         climberButton.whenPressed(new Climb());
         shooterPIDButton.whileHeld(new ShootWithPID());
         visionTrackingTurningButton.whileHeld(new VisionTrackingTurning());
