@@ -23,37 +23,45 @@ public class AgitatorIdle extends Command {
     }
 
     /**
-     * Called just before this Command runs the first time
      * This changes the setpoint of the ball agitator to the idle speed using
      * {@link org.usfirst.frc.team3926.robot.RobotMap#AGITATOR_IDLE_SETPOINT}
+     * <p>
+     * Note: The agitator's PID loop is enables in {@link Robot#robotInit()}, so it doesn't need to be enabled here
+     * </p>
      */
     protected void initialize() {
 
         Robot.agitator.setSetpoint(RobotMap.AGITATOR_IDLE_SETPOINT);
-        Robot.agitator.enable();
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * No code is needed to execute because PID loops run continuously
+     */
     protected void execute() {
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * This command is the default command and will never finish unless interrupted
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * This command is the default command and will never finish unless interrupted
+     */
     protected void end() {
-
-        Robot.agitator.disable();
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * If this command is ever interrupted, that means that {@link AgitatorFeed} has been started, and we will still
+     * need the PID loop enabled
+     */
     protected void interrupted() {
 
     }

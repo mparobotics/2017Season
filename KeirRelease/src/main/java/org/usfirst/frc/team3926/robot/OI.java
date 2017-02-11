@@ -7,10 +7,13 @@ import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
+ * TODO make it easier to switch what joystick something is on
+ * TODO Add auxiliary driver stick
  */
 public class OI {
 
@@ -32,6 +35,8 @@ public class OI {
     public Button   centerOnGear;
     /** Button to drive towards the gear's vision target */
     public Button   driveToGear;
+    /** Button to use the shooter */
+    public Button   shoot;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -47,6 +52,7 @@ public class OI {
             driveToHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_HIGH_GOAL_BUTTON);
             centerOnGear = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_ON_GEAR_BUTTON);
             driveToGear = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_GEAR_BUTTON);
+            shoot = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SHOOT_BUTTON);
         } else {
             driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
             driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
@@ -57,12 +63,14 @@ public class OI {
             driveToHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_HIGH_GOAL_BUTTON);
             centerOnGear = new JoystickButton(driverSecondaryStick, RobotMap.CENTER_ON_GEAR_BUTTON);
             driveToGear = new JoystickButton(driverSecondaryStick, RobotMap.DRIVE_TO_GEAR_BUTTON);
+            shoot = new JoystickButton(driverSecondaryStick, RobotMap.SHOOT_BUTTON);
         }
 
         centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());
         driveToHighGoal.whileHeld(new CenterOnHighGoal());
         driveToGear.whileHeld(new DriveForward());
         centerOnGear.whileHeld(new CenterOnGears());
+        shoot.whileHeld(new ShootAndFeed());
 
     }
 

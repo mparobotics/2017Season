@@ -11,6 +11,10 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  *         <p>
  *         Contact: klugewilliam@gmail.com
  *         </p>
+ *
+ * <p>
+ *     This command is part of the group {@link ShootAndFeed}
+ * </p>
  ***********************************************************************************************************************/
 public class AgitatorFeed extends Command {
 
@@ -23,24 +27,28 @@ public class AgitatorFeed extends Command {
     }
 
     /**
-     * Called just before this Command runs the first time
      * This changes the setpoint of ball agitator PID loop to
      * {@link org.usfirst.frc.team3926.robot.RobotMap#AGITATOR_FEED_SETPOINT}
+     * <p>
+     * Note: The agitator's PID loop is enabled in {@link Robot#robotInit()}, so it doesn't need to be enabled here
+     * </p>
      */
     protected void initialize() {
 
         Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
-        Robot.agitator.enable();
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Nothing needs to be executed because PID loops run continuously
+     */
     protected void execute() {
 
     }
 
     /**
-     * This method doesn't matter because we are using the whileHeld trigger
+     * isFinished() is not needed because this command is being controlled with
+     * {@link org.usfirst.frc.team3926.robot.OI#shoot}
      *
      * @return false
      */
@@ -49,15 +57,17 @@ public class AgitatorFeed extends Command {
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * end() is not needed because this command is being controlled with {@link org.usfirst.frc.team3926.robot.OI#shoot}
+     */
     protected void end() {
-
-        Robot.agitator.disable();
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Nothing needs to be disabled because we want the PID loop to continue. It will fall back to its default command,
+     * {@link AgitatorIdle}
+     */
     protected void interrupted() {
 
     }

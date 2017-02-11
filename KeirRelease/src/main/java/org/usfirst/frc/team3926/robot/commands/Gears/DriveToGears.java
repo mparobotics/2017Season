@@ -52,18 +52,18 @@ public class DriveToGears extends Command {
     }
 
     /**
-     *
+     * end() is not needed because this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#driveToGear}
      */
     protected void end() {
-
-        SmartDashboard.putBoolean("Drive to Gears: ", false);
 
     }
 
     /**
-     * Tells the SmartDashboard that the DriveToGears command is
+     * Tells the SmartDashboard that the DriveToGears command is finished
      */
     protected void interrupted() {
+
+        SmartDashboard.putBoolean("Drive to Gears: ", false);
 
     }
 

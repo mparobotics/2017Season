@@ -133,7 +133,7 @@ public class RobotMap {
     public final static int      BACK_LEFT_MOTOR_PWM                 = 3;
     ///// Autonomous Configuration /////
     /** Max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED                    = 0.50;
+    public final static double   AUTONOMOUS_SPEED                    = 1;
     /** TODO Maximum difference between the two sides speeds when driving autonomously (set this to 2 to disable) */
     public final static double   MAX_AUTONOMOUS_SPEED_DIFFERENCE     = 0.1;
 
@@ -161,6 +161,8 @@ public class RobotMap {
     public final static int      XBOX_CENTER_ON_GEAR_BUTTON          = 6; //(?)
     /** Button ID to center the robot on the gear's vision target */
     public final static int      XBOX_DRIVE_TO_GEAR_BUTTON           = 7; //(?)
+    /** Button ID to turn on the shooter */
+    public final static int      XBOX_SHOOT_BUTTON                   = 8;
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
@@ -183,6 +185,8 @@ public class RobotMap {
     public final static int      CENTER_ON_GEAR_BUTTON               = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
     public final static int      DRIVE_TO_GEAR_BUTTON                = 4;
+    /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
+    public final static int      SHOOT_BUTTON                        = 5;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////

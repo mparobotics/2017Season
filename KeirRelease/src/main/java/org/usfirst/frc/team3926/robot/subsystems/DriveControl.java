@@ -73,6 +73,10 @@ public class DriveControl extends Subsystem {
 
     }
 
+    /**
+     * Used to determine if the network tables have already been initialized
+     * @return Whether or not {@link #visionTable} is null
+     */
     public boolean networkTablesNotInitialized() {
 
         return visionTable == null;

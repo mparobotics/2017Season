@@ -96,6 +96,9 @@ public class Robot extends IterativeRobot {
             System.out.print("umm...don't worry about it dude");
         }
 
+        ///// System Preparation /////
+        agitator.enable(); //Enables the agitator PID loop
+
     }
 
     /**
@@ -144,12 +147,12 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
     }
 
+    /**
+     * Stops the autonomous command from continuing to run
+     */
     @Override
     public void teleopInit() {
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
+
         if (autonomousCommand != null)
             autonomousCommand.cancel();
     }

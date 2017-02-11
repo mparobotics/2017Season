@@ -9,6 +9,10 @@ import org.usfirst.frc.team3926.robot.Robot;
  * <p>
  *     Contact: klugewilliam@gmail.com
  * </p>
+ * <p>
+ *     This command is part of the group {@link ShootAndFeed}
+ * </p>
+ * TODO calculate range and speed needed
  ***********************************************************************************************************************/
 public class Shoot extends Command {
 
@@ -16,22 +20,32 @@ public class Shoot extends Command {
      * Constructs the Shoot command requiring {@link Robot#shooter}
      */
     public Shoot() {
+
         requires(Robot.shooter);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Enables the shooters PID loop
+     */
     protected void initialize() {
 
         Robot.shooter.enable();
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Once the PID loop is started, no code is needed to keep the scheduler updating it
+     * TODO calculate range and setpoint here
+     */
     protected void execute() {
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * isFinished is not needed becuase this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#}
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
@@ -42,13 +56,14 @@ public class Shoot extends Command {
      */
     protected void end() {
 
-        Robot.shooter.disable();
-
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * Disables the shooter PID loop when the
+     */
     protected void interrupted() {
+
+        Robot.shooter.disable();
 
     }
 
