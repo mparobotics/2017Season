@@ -22,10 +22,6 @@ public class ShootWithPID extends Command {
 
     }
 
-    protected void interrupted() {
-
-    }
-
     protected boolean isFinished() {
 
         return false;
@@ -35,6 +31,10 @@ public class ShootWithPID extends Command {
     protected void end() {
 
         Robot.pidSubsystem.disable();
+
+    }
+
+    protected void interrupted() {
 
     }
 }

@@ -36,13 +36,6 @@ public class DriveForward extends Command {
     }
 
     /**
-     * This command should not be interrupted by any of the commands which could interrupt it
-     */
-    public void interrupted() {
-
-    }
-
-    /**
      * Checks if the robot has traveled 10 meters and stops it in that case
      */
     public boolean isFinished() {
@@ -57,6 +50,13 @@ public class DriveForward extends Command {
     public void end() {
 
         Robot.driveSubsystem.resetEncoder();
+
+    }
+
+    /**
+     * This command should not be interrupted by any of the commands which could interrupt it
+     */
+    public void interrupted() {
 
     }
 }

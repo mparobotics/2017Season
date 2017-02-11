@@ -21,12 +21,12 @@ public class DriveSubsytem extends Subsystem {
     private static Encoder       leftDrivingEncoder;
     /** Declares the drivesystem for the robot */
     private static RobotDrive    driveSystem;
-    /** Distance traveled by the robot */
-    private        double        distanceTraveled;
     /** Accelometer to track the robot's acceleration */
     private static Accelerometer accelerometer;
     /** Gyro to track the position of the Robot */
     private static Gyro          gyro;
+    /** Distance traveled by the robot */
+    private        double        distanceTraveled;
     /** Speed variable for right side in the deceleration function */
     private        double        rightSideDecelerationSpeed;
     /** Speed variable for left side in the deceleration function */
@@ -67,22 +67,23 @@ public class DriveSubsytem extends Subsystem {
     }
 
     /**
+     * Makes robot move based off position of retroreflective tape
+     *
+     * @param visionTrackingLeftSpeed  (the first speed of the drive system)
+     * @param visionTrackingRightSpeed (the second speed in the drive system)
+     */
+    public static void visionTrackingMovement(double visionTrackingLeftSpeed, double visionTrackingRightSpeed) {
+
+        driveSystem.tankDrive(visionTrackingLeftSpeed, visionTrackingRightSpeed);
+
+    }
+
+    /**
      * Sets the default command to DriveWithController
      */
     public void initDefaultCommand() {
 
         new DriveWithController();
-
-    }
-
-    /**
-     * Checks if the wall is less then then meters away
-     *
-     * @return if the wall is less than ten meters away
-     */
-    private boolean wallLessThenTenMetersAway() {
-
-        return rangeFinder.getValue() * RobotMap.RANGE_FINDER_SENSITIVITY <= 10;
 
     }
 
@@ -95,23 +96,20 @@ public class DriveSubsytem extends Subsystem {
      */
     public void driveMethod(double rightStickHeight, double leftStickHeight, boolean leftButtonStatus) {
 
-
-
         if (leftButtonStatus) {
 
             rightStickHeight = leftStickHeight;
 
         }
 
-
-        if(Robot.oi.precisionDrivingButton.get()){
+        if (Robot.oi.precisionDrivingButton.get()) {
 
             rightStickHeight = rightStickHeight * RobotMap.PRECISION_DRIVING_MULTIPLIER;
-            leftStickHeight  = leftStickHeight  * RobotMap.PRECISION_DRIVING_MULTIPLIER;
+            leftStickHeight = leftStickHeight * RobotMap.PRECISION_DRIVING_MULTIPLIER;
 
         }
 
-        driveSystem.tankDrive(leftStickHeight , rightStickHeight);
+        driveSystem.tankDrive(leftStickHeight, rightStickHeight);
 
     }
 
@@ -140,6 +138,29 @@ public class DriveSubsytem extends Subsystem {
             }
 
         }
+
+    }
+
+    /**
+     * Checks if the wall is less then then meters away
+     *
+     * @return if the wall is less than ten meters away
+     */
+    private boolean wallLessThenTenMetersAway() {
+
+        return rangeFinder.getValue() * RobotMap.RANGE_FINDER_SENSITIVITY <= 10;
+
+    }
+
+    /**
+     * Checks if the robot has traveled 10 meters
+     *
+     * @return If the robot has traveled ten meters
+     */
+    public boolean tenMetersTraveled() {
+
+        rightDrivingEncoder.get();
+        return distanceTraveled >= 10;
 
     }
 
@@ -221,18 +242,6 @@ public class DriveSubsytem extends Subsystem {
     }
 
     /**
-     * Makes robot move based off position of retroreflective tape
-     *
-     * @param visionTrackingLeftSpeed  (the first speed of the drive system)
-     * @param visionTrackingRightSpeed (the second speed in the drive system)
-     */
-    public static void visionTrackingMovement(double visionTrackingLeftSpeed, double visionTrackingRightSpeed) {
-
-        driveSystem.tankDrive(visionTrackingLeftSpeed, visionTrackingRightSpeed);
-
-    }
-
-    /**
      * Checks if the robot has turned 90 degrees
      *
      * @return If the robot has turned 90 degrees since the last reset
@@ -240,18 +249,6 @@ public class DriveSubsytem extends Subsystem {
     public boolean hasRobotTurned() {
 
         return gyro.getAngle() >= 90;
-
-    }
-
-    /**
-     * Checks if the robot has traveled 10 meters
-     *
-     * @return If the robot has traveled ten meters
-     */
-    public boolean tenMetersTraveled() {
-
-        rightDrivingEncoder.get();
-        return distanceTraveled >= 10;
 
     }
 

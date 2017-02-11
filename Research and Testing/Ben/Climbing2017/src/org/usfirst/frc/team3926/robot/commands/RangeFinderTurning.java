@@ -36,13 +36,6 @@ public class RangeFinderTurning extends Command {
     }
 
     /**
-     * This command should not be interrupted by any of the commands which could interrupt it
-     */
-    public void interrupted() {
-
-    }
-
-    /**
      * Ends the command if the robot has turned 90 degrees
      *
      * @return {@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#hasRobotTurned}
@@ -59,6 +52,13 @@ public class RangeFinderTurning extends Command {
     public void end() {
 
         Robot.driveSubsystem.deceleration();
+
+    }
+
+    /**
+     * This command should not be interrupted by any of the commands which could interrupt it
+     */
+    public void interrupted() {
 
     }
 

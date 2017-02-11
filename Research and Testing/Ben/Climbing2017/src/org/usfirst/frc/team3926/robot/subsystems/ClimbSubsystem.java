@@ -14,13 +14,13 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 public class ClimbSubsystem extends Subsystem {
 
     /** Makes the talon than allows the robot to climb */
-    private static Talon climber;
+    private static Talon        climber;
     /** Makes a limit switch to stop the robot from climbing once it has reached the top */
     private static DigitalInput limitSwitch;
     /** Makes an encoder which will track the motor that climbs */
-    private static Encoder climbingEncoder;
+    private static Encoder      climbingEncoder;
     /** Defines the default speed of the motor that climbs */
-    private double climberMotorSpeed;
+    private        double       climberMotorSpeed;
 
     /**
      * Constructs the climber talon
@@ -47,6 +47,7 @@ public class ClimbSubsystem extends Subsystem {
 
     /**
      * Determines if the robot has finished climbing
+     *
      * @return If the limitswitch is activated and the robot has fully climbed
      */
     public boolean climberLimitSwitch() {

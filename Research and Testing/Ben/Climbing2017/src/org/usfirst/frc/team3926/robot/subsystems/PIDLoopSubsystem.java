@@ -25,7 +25,8 @@ public class PIDLoopSubsystem extends PIDSubsystem {
      */
     public PIDLoopSubsystem() {
 
-        super(RobotMap.SHOOTER_SUPER_NAME, RobotMap.SHOOTER_PID_LOOP_P, RobotMap.SHOOTER_PID_LOOP_I, RobotMap.SHOOTER_PID_LOOP_D);
+        super(RobotMap.SHOOTER_SUPER_NAME, RobotMap.SHOOTER_PID_LOOP_P, RobotMap.SHOOTER_PID_LOOP_I,
+              RobotMap.SHOOTER_PID_LOOP_D);
         shootingEncoder = new Encoder(RobotMap.SHOOTING_ENCODER_PORT_A, RobotMap.SHOOTING_ENCODER_PORT_B, false,
                                       Encoder.EncodingType.k4X);
         shooter = new Talon(RobotMap.SHOOTER_CAN_ID);
@@ -45,18 +46,18 @@ public class PIDLoopSubsystem extends PIDSubsystem {
     }
 
     /**
-     * No command uses this subsystm by default
-     */
-    protected void initDefaultCommand() {
-
-    }
-
-    /**
      * Based off of the shooter's rate it outputs speed to the shooter
      */
     protected void usePIDOutput(double output) {
 
         shooter.pidWrite(output);
+
+    }
+
+    /**
+     * No command uses this subsystm by default
+     */
+    protected void initDefaultCommand() {
 
     }
 

@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3926.robot.commands;
 
 /**
@@ -31,13 +30,6 @@ public class VisionTrackingForward extends Command {
     }
 
     /**
-     * No relevant variables or methods are needed for this function
-     */
-    protected void interrupted() {
-
-    }
-
-    /**
      * This command uses a while held method on a button to activate and deactivate meaning the isFinished function is
      * not needed
      */
@@ -51,6 +43,13 @@ public class VisionTrackingForward extends Command {
      * No relevant variables or methods are needed for this function
      */
     protected void end() {
+
+    }
+
+    /**
+     * No relevant variables or methods are needed for this function
+     */
+    protected void interrupted() {
 
     }
 

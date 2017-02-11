@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3926.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -47,12 +46,6 @@ public class Robot extends IterativeRobot {
 
     }
 
-    public void disabledPeriodic() {
-
-        Scheduler.getInstance().run();
-
-    }
-
     /**
      * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
      * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
@@ -66,16 +59,22 @@ public class Robot extends IterativeRobot {
 
     }
 
+    public void teleopInit() {
+
+    }
+
+    public void disabledPeriodic() {
+
+        Scheduler.getInstance().run();
+
+    }
+
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
 
         Scheduler.getInstance().run();
-
-    }
-
-    public void teleopInit() {
 
     }
 

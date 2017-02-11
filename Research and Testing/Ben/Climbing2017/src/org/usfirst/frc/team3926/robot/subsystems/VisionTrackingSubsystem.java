@@ -35,27 +35,6 @@ public class VisionTrackingSubsystem extends Subsystem {
     }
 
     /**
-     * Stores the speeds of drivesystem for driving toward the shooting target based off the
-     * position of retro-reflective tape
-     *
-     * @return Speeds of robot drivesystem while going forward with vision tracking based off position of
-     * retro-reflective tape
-     */
-    public double[] visionTrackingForwardSpeeds() {
-
-        double[] filteredXValues = filteredXValues();
-
-        double forwardVisTrackSpeed1 = RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER);
-        double forwardVisTrackSpeed2 = RobotMap.MAX_VIS_TRACK_SPEED;
-
-        return new double[] {(filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER) ?
-                             forwardVisTrackSpeed1 : forwardVisTrackSpeed2,
-                             (filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER) ?
-                             forwardVisTrackSpeed1 : forwardVisTrackSpeed2};
-
-    }
-
-    /**
      * Stores the speeds of the drive system for turning toward the shooting target based off the postion of
      * retro-reflective tape
      *
@@ -74,12 +53,6 @@ public class VisionTrackingSubsystem extends Subsystem {
 
     }
 
-    /**
-     * Fills the passedPreviousFilter with true
-     * Fills the passedCurrentFilter with false
-     * Runs the filtering methods
-     * Uses data from xValues and Filters to make an array of filteredXValues
-     */
     /**
      * An array used to store x values of contours which remain after filtering
      */
@@ -109,6 +82,34 @@ public class VisionTrackingSubsystem extends Subsystem {
 
         }
         return xValuesFiltered;
+
+    }
+
+    /**
+     * Fills the passedPreviousFilter with true
+     * Fills the passedCurrentFilter with false
+     * Runs the filtering methods
+     * Uses data from xValues and Filters to make an array of filteredXValues
+     */
+
+    /**
+     * Stores the speeds of drivesystem for driving toward the shooting target based off the
+     * position of retro-reflective tape
+     *
+     * @return Speeds of robot drivesystem while going forward with vision tracking based off position of
+     * retro-reflective tape
+     */
+    public double[] visionTrackingForwardSpeeds() {
+
+        double[] filteredXValues = filteredXValues();
+
+        double forwardVisTrackSpeed1 = RobotMap.MAX_VIS_TRACK_SPEED * (filteredXValues[0] / RobotMap.VIS_SCREEN_CENTER);
+        double forwardVisTrackSpeed2 = RobotMap.MAX_VIS_TRACK_SPEED;
+
+        return new double[] {(filteredXValues[0] < RobotMap.VIS_SCREEN_CENTER) ?
+                             forwardVisTrackSpeed1 : forwardVisTrackSpeed2,
+                             (filteredXValues[0] > RobotMap.VIS_SCREEN_CENTER) ?
+                             forwardVisTrackSpeed1 : forwardVisTrackSpeed2};
 
     }
 

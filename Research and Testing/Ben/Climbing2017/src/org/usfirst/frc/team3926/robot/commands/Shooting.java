@@ -49,7 +49,6 @@ public class Shooting extends Command {
      */
     protected void end() {
 
-
         Robot.shootingSubsystem.stopShooter();
     }
 

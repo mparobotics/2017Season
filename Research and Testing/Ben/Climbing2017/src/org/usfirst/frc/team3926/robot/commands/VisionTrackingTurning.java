@@ -28,13 +28,6 @@ public class VisionTrackingTurning extends Command {
 
     }
 
-    /**
-     * No relevant variables or methods are needed for this function
-     */
-    protected void interrupted() {
-
-    }
-
     protected boolean isFinished() {
 
         return false;
@@ -45,6 +38,13 @@ public class VisionTrackingTurning extends Command {
      * No relevant variables or methods are needed for this function
      */
     protected void end() {
+
+    }
+
+    /**
+     * No relevant variables or methods are needed for this function
+     */
+    protected void interrupted() {
 
     }
 
