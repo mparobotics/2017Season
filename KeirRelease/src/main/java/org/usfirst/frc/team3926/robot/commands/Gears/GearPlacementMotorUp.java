@@ -5,6 +5,7 @@ import org.usfirst.frc.team3926.robot.Robot;
 
 /**
  * Puts the gear placement system's motor up (letting the gear come out)
+ * TODO finish
  */
 public class GearPlacementMotorUp extends Command {
 

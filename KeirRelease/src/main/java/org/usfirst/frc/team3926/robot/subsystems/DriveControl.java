@@ -20,7 +20,7 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  *      </p>
  * TODO driving based on encoder values
  * TODO autonomous vision driving
- * TODO rangefinder
+ * TODO fallback trajectory based on last good contour
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -57,10 +57,10 @@ public class DriveControl extends Subsystem {
             driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
                                          RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
 
-        leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
-        rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
-
-        rangefinder = new Ultrasonic(RobotMap.RANGEFINDER_ECHO_PULSE_PORT, RobotMap.RANGEFINDER_TRIGGER_PULSE_PORT);
+        //leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
+        //rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
+        //TODO hook up these things ;p rawr exdee
+        //rangefinder = new Ultrasonic(RobotMap.RANGEFINDER_ECHO_PULSE_PORT, RobotMap.RANGEFINDER_TRIGGER_PULSE_PORT);
 
     }
 
@@ -151,6 +151,7 @@ public class DriveControl extends Subsystem {
                 centered = false;
                 moveLeft = true;
             } else {
+                setSpeed(RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = false;
                 centered = true;
@@ -183,11 +184,20 @@ public class DriveControl extends Subsystem {
         autonomousTank(targetGears);
 
         if (moveLeft)
-            rightSide *= -1;
+            setSpeed(leftSide * RobotMap.TURNING_SPEED_MULTIPLIER, rightSide * -RobotMap.TURNING_SPEED_MULTIPLIER);
         else if (moveRight)
-            leftSide *= -1;
+            setSpeed(leftSide * -RobotMap.TURNING_SPEED_MULTIPLIER, rightSide * RobotMap.TURNING_SPEED_MULTIPLIER);
         else
             setSpeed(0, 0);
+
+        driveSystem.tankDrive(leftSide, rightSide);
+
+    }
+
+    /**
+     * Keeps the robot driving based on it's current left and right side speed values
+     */
+    public void continueDriving() {
 
         driveSystem.tankDrive(leftSide, rightSide);
 

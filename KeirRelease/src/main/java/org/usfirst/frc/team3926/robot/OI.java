@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.Climb;
+import org.usfirst.frc.team3926.robot.commands.ContinueTrajectory;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CollectBalls;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
+import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,9 +22,9 @@ import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
 public class OI {
 
     /** Joystick on the drivers right side (or the XBox controller for driving the robot) */
-    public Joystick driverPrimaryStick;
+    public Joystick              driverPrimaryStick;
     /** Joystick on the drivers left side (or not used) */
-    public Joystick driverSecondaryStick;
+    public Joystick              driverSecondaryStick;
     /** Button to make the robot drive straight */
     public Button   straightMode;
     /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFETY_FACTOR} */
@@ -30,19 +32,21 @@ public class OI {
     /** Button to signify that the robot has made an incorrect action based off of a contour */
     public Button   contourError;
     /** Button to center the robot on the vision target */
-    public Button   centerOnHighGoal;
+    public Button                centerOnHighGoal;
     /** Button to activate driving the robot towards the center of a vision target */
-    public Button   driveToHighGoal;
+    public Button                driveToHighGoal;
     /** Button to center on the gear's vision target */
-    public Button   centerOnGear;
+    public Button                centerOnGear;
     /** Button to drive towards the gear's vision target */
-    public Button   driveToGear;
+    public Button                driveToGear;
     /** Button to use the shooter */
-    public Button   shoot;
+    public Button                shoot;
     /** Button to climb */
-    public Button   climb;
+    public Button                climb;
     /** Button to collect balls */
-    public Button   collectBalls;
+    public Button                collectBalls;
+    /** Trigger to continue driving based on the robot's current trajectory */
+    public SaveTrajectoryTrigger saveTrajectoryTrigger;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -52,7 +56,7 @@ public class OI {
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
             driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);
             straightMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_STRAIGHT_MODE_BUTTON);
-            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFTEY_MODE_BUTTON);
+            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_SAFETY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CONTOUR_ERROR_BUTTON);
             centerOnHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_CENTER_ON_HIGH_GOAL_BUTTON);
             driveToHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_DRIVE_TO_HIGH_GOAL_BUTTON);
@@ -83,6 +87,7 @@ public class OI {
         shoot.whileHeld(new ShootAndFeed());
         climb.whileHeld(new Climb());
         collectBalls.whileHeld(new CollectBalls());
+        saveTrajectoryTrigger.whileActive(new ContinueTrajectory());
 
     }
 

@@ -27,7 +27,7 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  *
- *      TODO Gear placement command group
+ *      TODO ear placement command group
  ***********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
         ///// Shooter Initialization ////
         shooter = new PIDControlledActuator<>
                 ("Shooter PID Control", (RobotMap.SHOOTER_USE_CAN_TALON) ? new CANTalon(RobotMap.SHOOTER_CAN_ID) :
-                                        new Talon(RobotMap.SHOOTER_CAN_ID),
+                                        new Talon(RobotMap.SHOOTER_PWM_ID),
                  new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
                  PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
                  RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
@@ -189,6 +189,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void testPeriodic() {
 
+        SmartDashboard.putNumber("XBOX POV", oi.driverPrimaryStick.getPOV());
         LiveWindow.run();
     }
 }
