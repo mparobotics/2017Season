@@ -3,10 +3,10 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3926.robot.commands.ClimbCommand;
-import org.usfirst.frc.team3926.robot.commands.PIDShootingCommand;
-import org.usfirst.frc.team3926.robot.commands.VisionTrackingForwardCommand;
-import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurningCommand;
+import org.usfirst.frc.team3926.robot.commands.Climb;
+import org.usfirst.frc.team3926.robot.commands.ShootWithPID;
+import org.usfirst.frc.team3926.robot.commands.VisionTrackingForward;
+import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurning;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,27 +20,27 @@ public class OI {
     public  Joystick leftStick                   = new Joystick(RobotMap.LEFT_STICK_PORT);
     ///** Xbox joystick */
     //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
-    /** Button on the joystick that starts the ShootingCommand */
+    /** Button on the joystick that starts the Shooting */
     private Button   shooterPIDButton            = new JoystickButton(rightStick, RobotMap.PID_SHOOTER_BUTTON_NUMBER);
-    /** Button on the joystick that starts the ClimbCommand */
+    /** Button on the joystick that starts the Climb */
     private Button   climberButton               = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
-    /** Button on the joystick that starts the VisionTrackingTurningCommand */
+    /** Button on the joystick that starts the VisionTrackingTurning */
     private Button   visionTrackingTurningButton = new JoystickButton(leftStick, RobotMap
             .VISION_TRACKING_TURNING_BUTTON_NUMBER);
-    /** Button on the joystick that starts the VisionTrackingForwardCommand */
+    /** Button on the joystick that starts the VisionTrackingForward */
     private Button   visionTrackingForwardButton = new JoystickButton(leftStick, RobotMap.
             VISION_TRACKING_FORWARD_BUTTON_NUMBER);
 
     /**
-     * Activates the ClimbCommand and the ShootingCommand if the buttons made for them are pressed
+     * Activates the Climb and the Shooting if the buttons made for them are pressed
      * Activates the vision tracking command if the vision tracking button is being held
      */
     OI() {
 
-        climberButton.whenPressed(new ClimbCommand());
-        shooterPIDButton.whileHeld(new PIDShootingCommand());
-        visionTrackingTurningButton.whileHeld(new VisionTrackingTurningCommand());
-        visionTrackingForwardButton.whileHeld(new VisionTrackingForwardCommand());
+        climberButton.whenPressed(new Climb());
+        shooterPIDButton.whileHeld(new ShootWithPID());
+        visionTrackingTurningButton.whileHeld(new VisionTrackingTurning());
+        visionTrackingForwardButton.whileHeld(new VisionTrackingForward());
 
     }
     //// CREATING BUTTONS

@@ -6,9 +6,9 @@ import org.usfirst.frc.team3926.robot.Robot;
 /**
  * Created by blash20 on 2/4/17.
  */
-public class PIDShootingCommand extends Command {
+public class ShootWithPID extends Command {
 
-    public PIDShootingCommand() {
+    public ShootWithPID() {
 
     }
 

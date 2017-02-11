@@ -10,8 +10,6 @@ from grip import GripPythonVI  #
 # except ImportError:
 #     pass
 
-# The scale of the image after it has been resized, Default camera resolution is 640x480 so ratio is 0.5
-image_scale = 0.5
 # The x side of the camera resolution being used for processing
 x_resolution = 320
 # The y side of the camera resolution being used for processing
@@ -37,32 +35,30 @@ def extra_processing(pipeline, frame):
     areas = []
     # The index of the contour in the list of all contours
     contour_number = 0
-    # A for loop to process each contour individually
+    # The table from network tables to add data to
+    table = NetworkTables.getTable('/vision/high_goal')
 
-    red_range = [230, 255.0]
-    green_range = [240, 255.0]
-    blue_range = [200, 255.0]
-
-    cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    # frame = (cv2.inRange(frame, (red_range[0], green_range[0], blue_range[0]),
-    #                      (red_range[1], green_range[1], blue_range[1])))
     for contour in pipeline.filter_contours_output:
-        x, y, w, h = cv2.boundingRect(contour)
-        (center_x_positions.append(
-            x * image_scale + (w * image_scale / 2)))  # X and Y are coordinates of the top-left corner
-        #  of the bounding box
-        center_y_positions.append(y * image_scale + (h * image_scale / 2))
-        widths.append(w * image_scale)
-        heights.append(h * image_scale)
-        areas.append((w * image_scale) * (h * image_scale))
-        draw_center = x + (w / 2), y + (h / 2)
 
-        (cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED))
+        # The defining features of a contour. 0, 0 is top left corner
+        x, y, w, h = cv2.boundingRect(contour)
+        # The center of the contour as a coordinate pair
+        draw_center = x + (w / 2), y + (h / 2)
+        # The coordinates of the top left point of the contour as a string
+        coordinates = str(x) + "," + str(y)
+
+        center_x_positions.append(x + (w / 2)) # X and Y are coordinates of the top-left corner of the bounding box
+        center_y_positions.append(y + (h / 2))
+        widths.append(w)
+        heights.append(h)
+        areas.append(w * h)
+
+        cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED)
         cv2.putText(frame, str(contour_number), draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+        cv2.putText(frame, coordinates, draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
 
         contour_number += 1
-    # The table from network tables to add data too
-    table = NetworkTables.getTable('/vision/high_goal')
+
     table.putNumberArray('x', center_x_positions)
     table.putNumberArray('y', center_y_positions)
     table.putNumberArray('width', widths)
@@ -75,22 +71,25 @@ def main():  # TODO optimize
 
     """
     Grabs image from webcam, processes it with opencv to search for contours, publishes these contours to a NetworkTable
-    and also to mjpg-Streamer.
+    and also to mjpg-Streamer for human use.
     :return: None
     """
-    print("testing pycharm")
+
     NetworkTables.initialize(server='roboRIO-3926-FRC.local')  # Change the number to your team number if not MPA
     # Grabs the data from camera on port 0
     cap = cv2.VideoCapture(0)
-    cap.set(3, x_resolution)  # width
-    cap.set(4, y_resolution)  # height
     # pipeline from the grip generated file
     pipeline = GripPythonVI()
+    # Setting width
+    cap.set(3, x_resolution)
+    # Setting height
+    cap.set(4, y_resolution)
+
     while cap.isOpened():
+        # have frame is true is camera exists, frame is the data from camera
         have_frame, frame = cap.read()
         if have_frame:
             pipeline.process(frame)
-            # extra_processing(pipeline)
             cv2.imwrite('/home/pi/git/2017Season/RasberryPi/pic.jpg', extra_processing(pipeline, frame))
 
     print('Stopped Capturing')

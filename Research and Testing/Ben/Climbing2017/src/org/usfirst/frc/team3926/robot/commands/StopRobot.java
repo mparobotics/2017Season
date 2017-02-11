@@ -2,18 +2,19 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
 
 /**
- * Makes the robot Drive forward
+ * Makes the robot slow
  *
  * @author Benjamin Lash
  */
-public class RangeFinderDriveBackwardCommand extends Command {
+public class StopRobot extends Command {
 
     /**
      * Requires the driveSubsystem
      */
-    public RangeFinderDriveBackwardCommand() {
+    public void StoppingCommand() {
 
         requires(Robot.driveSubsystem);
 
@@ -27,11 +28,11 @@ public class RangeFinderDriveBackwardCommand extends Command {
     }
 
     /**
-     * Calls the driveForward command to set the speed of the talons in the driveSystem to full
+     * Call the {@link DriveSubsytem#deceleration()} function to decelerate before stopping
      */
     public void execute() {
 
-        Robot.driveSubsystem.rangeFinderDriveBackward();
+        Robot.driveSubsystem.deceleration();
 
     }
 
@@ -43,21 +44,21 @@ public class RangeFinderDriveBackwardCommand extends Command {
     }
 
     /**
-     * Checks if the robot has traveled 10 meters and stops it in that case
+     * Stops the robot if it has reached zero speed
+     *
+     * @return {@link DriveSubsytem#isSpeedZero()}
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.tenMetersTraveled();
+        return Robot.driveSubsystem.isSpeedZero();
 
     }
 
     /**
-     * Resets the drivingEncoder so it can be used again for redoing this command or doing another command
+     * No relevant variables or methods are needed for this function
      */
     public void end() {
 
-        Robot.driveSubsystem.resetEncoder();
-
     }
-}
 
+}

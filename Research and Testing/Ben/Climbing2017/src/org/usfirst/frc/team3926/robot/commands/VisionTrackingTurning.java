@@ -8,7 +8,7 @@ import org.usfirst.frc.team3926.robot.Robot;
  *
  * @author Benjamin Lash
  */
-public class VisionTrackingTurningCommand extends Command {
+public class VisionTrackingTurning extends Command {
 
     /**
      * No relevant variables or methods are needed for this function

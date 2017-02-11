@@ -8,12 +8,12 @@ import org.usfirst.frc.team3926.robot.Robot;
  *
  * @author Benjamin Lash
  */
-public class DriveForwardCommand extends Command {
+public class RangeFinderDriveBackward extends Command {
 
     /**
      * Requires the driveSubsystem
      */
-    public DriveForwardCommand() {
+    public RangeFinderDriveBackward() {
 
         requires(Robot.driveSubsystem);
 
@@ -31,7 +31,7 @@ public class DriveForwardCommand extends Command {
      */
     public void execute() {
 
-        Robot.driveSubsystem.driveForward();
+        Robot.driveSubsystem.rangeFinderDriveBackward();
 
     }
 

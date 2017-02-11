@@ -1,38 +1,39 @@
 package org.usfirst.frc.team3926.robot.commands;
-
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem;
 
 /**
- * Makes the robot slow
+ * Has the robot turn
  *
  * @author Benjamin Lash
  */
-public class StoppingCommand extends Command {
+public class RangeFinderTurning extends Command {
 
     /**
-     * Requires the driveSubsystem
+     * Requires the robot driveSubsystem
      */
-    public void StoppingCommand() {
+    public void TurnCommand() {
 
         requires(Robot.driveSubsystem);
 
     }
 
     /**
-     * No relevant variables or methods are needed for this function
+     * Activates the turning method
      */
     public void initialize() {
+
+        Robot.driveSubsystem.rangeFinderTurning();
 
     }
 
     /**
-     * Call the {@link DriveSubsytem#deceleration()} function to decelerate before stopping
+     * Stores the the angle info from the {@link DriveSubsytem#Gyro()}
      */
     public void execute() {
 
-        Robot.driveSubsystem.deceleration();
+        Robot.driveSubsystem.Gyro();
 
     }
 
@@ -44,21 +45,22 @@ public class StoppingCommand extends Command {
     }
 
     /**
-     * Stops the robot if it has reached zero speed
+     * Ends the command if the robot has turned 90 degrees
      *
-     * @return {@link DriveSubsytem#isSpeedZero()}
+     * @return {@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#HasRobotTurned}
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.isSpeedZero();
+        return Robot.driveSubsystem.HasRobotTurned();
 
     }
 
     /**
-     * No relevant variables or methods are needed for this function
+     * Decelerates the robot until it stops
      */
     public void end() {
 
-    }
+        Robot.driveSubsystem.deceleration();
 
+    }
 }
