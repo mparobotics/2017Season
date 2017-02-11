@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.robot.subsystems;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,7 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  *      </p>
  * TODO driving based on encoder values
  * TODO autonomous vision driving
+ * TODO rangefinder
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -33,9 +35,11 @@ public class DriveControl extends Subsystem {
     /** Vision processing booleans */
     private boolean moveLeft, moveRight, contoursFound, centered;
     /** Encoder for the robot's left side */
-    private Encoder leftEncoder;
+    private Encoder    leftEncoder;
     /** Encoder for the robot's right side */
-    private Encoder rightEncoder;
+    private Encoder    rightEncoder;
+    /** Rangefinder for autonomous distance finding */
+    private Ultrasonic rangefinder;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -55,6 +59,8 @@ public class DriveControl extends Subsystem {
 
         leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
         rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
+
+        rangefinder = new Ultrasonic(RobotMap.RANGEFINDER_ECHO_PULSE_PORT, RobotMap.RANGEFINDER_TRIGGER_PULSE_PORT);
 
     }
 
@@ -184,6 +190,20 @@ public class DriveControl extends Subsystem {
             setSpeed(0, 0);
 
         driveSystem.tankDrive(leftSide, rightSide);
+
+    }
+
+    /**
+     * Checks if the robot is at or closer than desiredDistance
+     *
+     * @param desiredDistance Distance to check if the robot is closer to an object than
+     */
+    public boolean withinDistance(double desiredDistance) {
+
+        if (RobotMap.RANGEFINDER_USE_MILLIMETERS)
+            return rangefinder.getRangeMM() <= desiredDistance;
+        else
+            return rangefinder.getRangeInches() <= desiredDistance;
 
     }
 

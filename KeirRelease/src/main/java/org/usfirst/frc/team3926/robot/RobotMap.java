@@ -99,21 +99,29 @@ public class RobotMap {
 
     //////////////////////////////////////// Gear Placement Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the gear placement mechanism's motor */
-    public final static boolean  GEAR_PLACEMENT_USE_CAN_TALON       = true;
+    public final static boolean GEAR_PLACEMENT_USE_CAN_TALON       = true;
     /** CAN ID for the gear placement system's motor (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is true */
-    public final static int      GEAR_PLACEMENT_CAN_ID              = 121;
+    public final static int     GEAR_PLACEMENT_CAN_ID              = 121;
     /** PWM port for the gear placement system (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is false) */
-    public final static int      GEAR_PLACEMENT_PWM_PORT            = 9;
+    public final static int     GEAR_PLACEMENT_PWM_PORT            = 9;
     /** Speed to set the gear placement motor to */
-    public final static double   GEAR_PLACEMENT_SPEED               = 0.5;
+    public final static double  GEAR_PLACEMENT_SPEED               = 0.5;
+
+    ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
+    /** DIO port for the rangefinder's echo pulse output */
+    public final static int     RANGEFINDER_ECHO_PULSE_PORT        = 8;
+    /** DIO port for the rangefinder's trigger pulse input */
+    public final static int     RANGEFINDER_TRIGGER_PULSE_PORT     = 9;
+    /** Whether or not to use millimeters for the rangefinder instead of inches */
+    public final static boolean RANGEFINDER_USE_MILLIMETERS        = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Use CANTalons for the drive base instead of PWM Talons */
-    public final static boolean  DRIVE_USE_CAN_TALON                = true;
+    public final static boolean DRIVE_USE_CAN_TALON                = true;
     /** Invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
+    public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
+    public final static boolean INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
     /** Number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
     ///// Encoder Values /////

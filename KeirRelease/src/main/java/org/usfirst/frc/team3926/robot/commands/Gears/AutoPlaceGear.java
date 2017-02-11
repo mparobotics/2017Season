@@ -3,26 +3,22 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * TODO command group to lock onto the gear vision target and drive to it
  */
 public class AutoPlaceGear extends CommandGroup {
 
+    /**
+     * Constructs the AutoPlaceGear command group
+     */
     public AutoPlaceGear() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
+        //TODO drive forward
+        //TODO turn to vision target
+        //TODO drive to vison target
+        //TODO put gear motor up
+        //TODO turn and drive backwards
+        //TODO put gear motor down
 
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
     }
+
 }

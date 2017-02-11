@@ -41,8 +41,7 @@ public class DriveToGears extends Command {
     }
 
     /**
-     * isFinished() is not needed because this command is controlled with
-     * {@link org.usfirst.frc.team3926.robot.OI#driveToGear}
+     * TODO autonomous finished method
      *
      * @return false
      */
@@ -52,9 +51,11 @@ public class DriveToGears extends Command {
     }
 
     /**
-     * end() is not needed because this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#driveToGear}
+     * Tells the SmartDashboard that the DriveToGears command is finished
      */
     protected void end() {
+
+        SmartDashboard.putBoolean("Drive to Gears: ", false);
 
     }
 
