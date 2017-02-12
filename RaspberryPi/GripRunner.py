@@ -3,6 +3,7 @@
 import cv2
 from networktables import NetworkTables
 from grip import GripPythonVI  #
+import numpy
 
 # This is just to unconfuse PyCharm  NOTE: Not needed when using remote interpreter
 # try:
@@ -37,10 +38,10 @@ def extra_processing(pipeline, frame):
     contour_number = 0
     # The table from network tables to add data to
     table = NetworkTables.getTable('/vision/high_goal')
-    red_range = [250, 255.0]
-    green_range = [240, 255.0]
-    blue_range = [240, 255.0]
-    cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # red_range = [0, 255]
+    # green_range = [100, 255.0]
+    # blue_range = [0, 255]
+    # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     # frame = (cv2.inRange(frame, (red_range[0], green_range[0], blue_range[0]),
     #                      (red_range[1], green_range[1], blue_range[1])))
     for contour in pipeline.filter_contours_output:
@@ -52,7 +53,7 @@ def extra_processing(pipeline, frame):
         # The coordinates of the top left point of the contour as a string
         coordinates = str(x) + "," + str(y)
 
-        center_x_positions.append(x + (w / 2)) # X and Y are coordinates of the top-left corner of the bounding box
+        center_x_positions.append(x + (w / 2))  # X and Y are coordinates of the top-left corner of the bounding box
         center_y_positions.append(y + (h / 2))
         widths.append(w)
         heights.append(h)
@@ -61,12 +62,12 @@ def extra_processing(pipeline, frame):
         cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED)
 
         cv2.putText(frame, str(contour_number), draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
-        cv2.putText(frame, coordinates, draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+        # cv2.putText(frame, coordinates, draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
 
         contour_number += 1
 
-    table.putNumberArray('x', center_x_positions)
-    table.putNumberArray('y', center_y_positions)
+    table.putNumberArray('center_x', center_x_positions)
+    table.putNumberArray('center_y', center_y_positions)
     table.putNumberArray('width', widths)
     table.putNumberArray('height', heights)
     table.putNumberArray('area', areas)
@@ -91,6 +92,8 @@ def main():  # TODO optimize
     cap.set(3, x_resolution)
     # Setting height
     cap.set(4, y_resolution)
+    
+    # cap.set(cv2.CAP_PROP_GAIN, 1)
 
     while cap.isOpened():
         # have frame is true is camera exists, frame is the data from camera
