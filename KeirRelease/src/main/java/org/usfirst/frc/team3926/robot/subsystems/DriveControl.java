@@ -104,8 +104,8 @@ public class DriveControl extends Subsystem {
     /**
      * Drives the robot in a tank configuration
      *
-     * @param rightSpeed The speed to set the right motor
-     * @param leftSpeed  The speed to set the left motor
+     * @param rightSpeed Speed to set the right motor
+     * @param leftSpeed  Speed to set the left motor
      * @param straight   Whether or not the robot should drive straight
      * @param safe       Whether or not to reduce robot speed
      */
@@ -123,6 +123,18 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putBoolean("Safety mode", safe);
 
         driveSystem.tankDrive(leftSide, rightSide);
+
+    }
+
+    /**
+     * Drives the robot in tank configuration
+     *
+     * @param rightSpeed Speed to set the right side of the drive train
+     * @param leftSpeed  Speed to set the left side of the drive train
+     */
+    public void driveTank(double rightSpeed, double leftSpeed) {
+
+        setSpeed(leftSpeed, rightSpeed);
 
     }
 

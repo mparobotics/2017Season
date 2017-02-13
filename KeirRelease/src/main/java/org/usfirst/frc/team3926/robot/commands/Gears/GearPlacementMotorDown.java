@@ -4,10 +4,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Puts the gear placement system's motor down (blocking the gear from falling out)
  */
 public class GearPlacementMotorDown extends Command {
+
+    private long startTime;
 
     /**
      * Constructs the GearPlacementMotorDown command requiring {@link Robot#gearPlacer}
@@ -15,6 +19,8 @@ public class GearPlacementMotorDown extends Command {
     public GearPlacementMotorDown() {
 
         requires(Robot.gearPlacer);
+        startTime = System.nanoTime();
+
     }
 
     /**
@@ -31,10 +37,14 @@ public class GearPlacementMotorDown extends Command {
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Tells if the amount of time desired to run the motor has passed
+     *
+     * @return If enough time has passed
+     */
     protected boolean isFinished() {
 
-        return false;
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_DOWN_TIME;
     }
 
     /**

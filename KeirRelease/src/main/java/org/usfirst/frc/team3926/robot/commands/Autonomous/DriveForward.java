@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * Drives the robot forward during autonomous
@@ -14,12 +15,16 @@ import org.usfirst.frc.team3926.robot.Robot;
  ***********************************************************************************************************************/
 public class DriveForward extends Command {
 
+    private double driveDistance;
+
     /**
      * Constructs the DriveForward command requiring {@link Robot#driveControl}
      */
-    public DriveForward() {
+    public DriveForward(double driveDistance) {
 
         requires(Robot.driveControl);
+        this.driveDistance = driveDistance;
+
     }
 
     /**
@@ -32,12 +37,15 @@ public class DriveForward extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
+        Robot.driveControl.driveTank(RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-        return false;
+        return Robot.driveControl.leftEncoderCheck(driveDistance) &&
+               Robot.driveControl.rightEncoderCheck(driveDistance);
     }
 
     // Called once after isFinished returns true

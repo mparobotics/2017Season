@@ -104,7 +104,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         chooser = new SendableChooser<>();
         chooser.addDefault("Do Nothing", new DoNothing());
-        chooser.addObject("Drive Forward", new DriveForward());
+        chooser.addObject("Drive Forward", new DriveForward(RobotMap.AUTONOMOUS_DRIVE_FORWARD_DISTANCE));
         SmartDashboard.putData("Autonomous mode", chooser);
 
         try {

@@ -14,10 +14,7 @@ public class AutoPlaceGear extends CommandGroup {
 
         //TODO drive forward
         //TODO turn to vision target
-        //TODO drive to vison target
-        //TODO put gear motor up
-        //TODO turn and drive backwards
-        //TODO put gear motor down
+        addSequential(new PlaceGear());
 
     }
 

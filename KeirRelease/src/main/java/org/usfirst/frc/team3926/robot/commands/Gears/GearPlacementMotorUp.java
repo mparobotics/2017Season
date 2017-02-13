@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Puts the gear placement system's motor up (letting the gear come out)
  * TODO finish
  */
 public class GearPlacementMotorUp extends Command {
+
+    private long startTime;
 
     /**
      * Constructs the GearPlacementMotorUp command requiring {@link Robot#gearPlacer}
@@ -16,6 +20,9 @@ public class GearPlacementMotorUp extends Command {
     public GearPlacementMotorUp() {
 
         requires(Robot.gearPlacer);
+
+        startTime = System.nanoTime();
+
     }
 
     /**
@@ -37,7 +44,7 @@ public class GearPlacementMotorUp extends Command {
      */
     protected boolean isFinished() {
 
-        return false;
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_UP_TIME;
     }
 
     /**
