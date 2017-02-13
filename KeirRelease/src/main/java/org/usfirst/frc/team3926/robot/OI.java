@@ -75,7 +75,8 @@ public class OI {
             driveToHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_HIGH_GOAL_BUTTON);
             centerOnGear = new JoystickButton(driverSecondaryStick, RobotMap.CENTER_ON_GEAR_BUTTON);
             driveToGear = new JoystickButton(driverSecondaryStick, RobotMap.DRIVE_TO_GEAR_BUTTON);
-            shoot = new JoystickButton(driverSecondaryStick, RobotMap.SHOOT_BUTTON);
+            shoot = new JoystickButton(driverPrimaryStick, RobotMap.SHOOT_BUTTON);
+            feed = new JoystickButton(driverSecondaryStick, RobotMap.AGITATE_BUTTON);
             climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
         }
@@ -84,7 +85,8 @@ public class OI {
         driveToHighGoal.whileHeld(new CenterOnHighGoal());
         driveToGear.whileHeld(new DriveForward());
         centerOnGear.whileHeld(new CenterOnGears());
-        shoot.whileHeld(new ShootAndFeed());
+        shoot.whileHeld(new Shoot());
+        feed.whileHeld(new AgitatorFeed());
         climb.whileHeld(new Climb());
         collectBalls.whileHeld(new CollectBalls());
         saveTrajectoryTrigger.whileActive(new ContinueTrajectory());

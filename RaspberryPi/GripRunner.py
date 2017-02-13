@@ -17,6 +17,20 @@ x_resolution = 320
 y_resolution = 240
 
 
+def out_of_x_range(x, w, h):
+    if ((x < 44) or (x > 232)) and w*h < 200:  #TODO test for real dimensions
+        return False
+    else:
+        return True
+
+
+def out_of_y_range(y, w, h):
+    if ((y < 33) or (y > 174)) and w*h < 200:
+        return False
+    else:
+        return True
+
+
 def extra_processing(pipeline, frame):
     """
     Performs extra processing on the pipeline's outputs and publishes data to NetworkTables and an MJPG Stream.
@@ -48,23 +62,24 @@ def extra_processing(pipeline, frame):
 
         # The defining features of a contour. 0, 0 is top left corner
         x, y, w, h = cv2.boundingRect(contour)
-        # The center of the contour as a coordinate pair
-        draw_center = x + (w / 2), y + (h / 2)
-        # The coordinates of the top left point of the contour as a string
-        coordinates = str(x) + "," + str(y)
+        if out_of_x_range(x, w, h) and out_of_y_range(y, w, h):
+            # The center of the contour as a coordinate pair
+            draw_center = x + (w / 2), y + (h / 2)
+            # The coordinates of the top left point of the contour as a string
+            coordinates = str(x) + "," + str(y)
 
-        center_x_positions.append(x + (w / 2))  # X and Y are coordinates of the top-left corner of the bounding box
-        center_y_positions.append(y + (h / 2))
-        widths.append(w)
-        heights.append(h)
-        areas.append(w * h)
+            center_x_positions.append(x + (w / 2))  # X and Y are coordinates of the top-left corner of the bounding box
+            center_y_positions.append(y + (h / 2))
+            widths.append(w)
+            heights.append(h)
+            areas.append(w * h)
 
-        cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED)
+            cv2.drawContours(frame, contour, -1, (255, 0, 120), cv2.FILLED)
 
-        cv2.putText(frame, str(contour_number), draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
-        # cv2.putText(frame, coordinates, draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+            cv2.putText(frame, str(contour_number), draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+            # cv2.putText(frame, coordinates, draw_center, cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
 
-        contour_number += 1
+            contour_number += 1
 
     table.putNumberArray('center_x', center_x_positions)
     table.putNumberArray('center_y', center_y_positions)

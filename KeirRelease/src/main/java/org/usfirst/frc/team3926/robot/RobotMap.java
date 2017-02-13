@@ -207,7 +207,7 @@ public class RobotMap {
     public final static int     LEFT_STICK_PORT                    = 1;
     ///// Configuration for Driver's Primary Stick /////
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
-    public final static int     SAFTEY_MODE_BUTTON                 = 1;
+    public final static int     SAFTEY_MODE_BUTTON                 = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
     public final static int      CONTOUR_ERROR_BUTTON               = 5;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
@@ -216,13 +216,15 @@ public class RobotMap {
     public final static int      DRIVE_TO_HIGH_GOAL_BUTTON          = 3;
     ///// Configuration for Driver's Secondary Stick /////
     /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
-    public final static int      STRAIGHT_MODE_BUTTON               = 1;
+    public final static int      STRAIGHT_MODE_BUTTON               = 10;
     /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
     public final static int      CENTER_ON_GEAR_BUTTON              = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
     public final static int      DRIVE_TO_GEAR_BUTTON               = 4;
-    /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
-    public final static int      SHOOT_BUTTON                       = 5;
+    /** Button ID on {@link OI#driverPrimaryStick} to shoot the ball and enable the agitator to feed mode */
+    public final static int      SHOOT_BUTTON                       = 1;
+    /** Button ID on {@link OI#driverSecondaryStick} to enable the agitator */
+    public final static int      AGITATE_BUTTON                     = 1
     /** Button ID on (?) to climb the rope */
     public final static int      CLIMB_BUTTON                       = 6;
     /** Button ID on (?) to collect balls */
