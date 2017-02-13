@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  * Puts the gear placement system's motor down (blocking the gear from falling out)
@@ -16,8 +17,12 @@ public class GearPlacementMotorDown extends Command {
         requires(Robot.gearPlacer);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Sets the speed of the gear placement motor
+     */
     protected void initialize() {
+
+        Robot.gearPlacer.setCollectorSpeed(-RobotMap.GEAR_PLACEMENT_SPEED);
 
     }
 

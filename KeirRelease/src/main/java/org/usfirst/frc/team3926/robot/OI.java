@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.Climb;
+import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
+import org.usfirst.frc.team3926.robot.commands.Debugging.RangefinderCheck;
+import org.usfirst.frc.team3926.robot.commands.Debugging.RightDriveEncoderCheck;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CollectBalls;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
-import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
 import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 
 /**
@@ -22,31 +24,35 @@ import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 public class OI {
 
     /** Joystick on the drivers right side (or the XBox controller for driving the robot) */
-    public Joystick driverPrimaryStick;
+    public Joystick              driverPrimaryStick;
     /** Joystick on the drivers left side (or not used) */
-    public Joystick driverSecondaryStick;
+    public Joystick              driverSecondaryStick;
     /** Button to make the robot drive straight */
-    public Button   straightMode;
+    public Button                straightMode;
     /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFETY_FACTOR} */
-    public Button   safetyMode;
+    public Button                safetyMode;
     /** Button to signify that the robot has made an incorrect action based off of a contour */
-    public Button   contourError;
+    public Button                contourError;
     /** Button to center the robot on the vision target */
-    public Button   centerOnHighGoal;
+    public Button                centerOnHighGoal;
     /** Button to activate driving the robot towards the center of a vision target */
-    public Button   driveToHighGoal;
+    public Button                driveToHighGoal;
     /** Button to center on the gear's vision target */
-    public Button   centerOnGear;
+    public Button                centerOnGear;
     /** Button to drive towards the gear's vision target */
-    public Button   driveToGear;
+    public Button                driveToGear;
     /** Button to use the shooter */
-    public Button   shoot;
+    public Button                shoot;
     /** Button to climb */
     public Button                climb;
     /** Button to collect balls */
     public Button                collectBalls;
     /** Trigger to continue driving based on the robot's current trajectory */
     public SaveTrajectoryTrigger saveTrajectoryTrigger;
+    ///// Debugging Buttons /////
+    public Button                rightDrivetrainEncoder;
+    public Button                leftDrivetrainEncoder;
+    public Button                drivetrainRangefinder;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -80,6 +86,15 @@ public class OI {
             feed = new JoystickButton(driverSecondaryStick, RobotMap.AGITATE_BUTTON);
             climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
+            ///// Debugging Buttons /////
+            if (RobotMap.DEBUG) {
+                rightDrivetrainEncoder = new JoystickButton(driverPrimaryStick, RobotMap.RIGHT_DRIVE_ENCODER_CHECK);
+                leftDrivetrainEncoder = new JoystickButton(driverPrimaryStick, RobotMap.LEFT_DRIVE_ENCODER_CHECK);
+                drivetrainRangefinder = new JoystickButton(driverPrimaryStick, RobotMap.RANGEFINDER_CHECK);
+                rightDrivetrainEncoder.whenPressed(new RightDriveEncoderCheck());
+                leftDrivetrainEncoder.whenPressed(new LeftDriveEncoderCheck());
+                drivetrainRangefinder.whenPressed(new RangefinderCheck());
+            }
         }
 
         centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());

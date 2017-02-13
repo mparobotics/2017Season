@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3926.robot.commands.Gears;
+package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

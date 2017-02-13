@@ -27,7 +27,7 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  *
- *      TODO ear placement command group
+ *      TODO gear placement command group
  ***********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
@@ -185,11 +185,14 @@ public class Robot extends IterativeRobot {
 
     /**
      * This function is called periodically during test mode
+     * Currently this has the shooter's and the agitator's PID loops
      */
     @Override
     public void testPeriodic() {
 
-        SmartDashboard.putNumber("XBOX POV", oi.driverPrimaryStick.getPOV());
+        LiveWindow.addActuator("shooter", "Shooter PID Loop", shooter.getPIDController());
+        LiveWindow.addActuator("agitator", "Agitator PID Loop", agitator.getPIDController());
         LiveWindow.run();
     }
+
 }
