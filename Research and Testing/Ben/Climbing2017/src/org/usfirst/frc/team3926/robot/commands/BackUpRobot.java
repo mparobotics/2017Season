@@ -11,6 +11,7 @@ import org.usfirst.frc.team3926.robot.Robot;
 public class BackUpRobot extends Command {
 
     int wantedDistance;
+
     /**
      * Requires the driveSubsystem
      */

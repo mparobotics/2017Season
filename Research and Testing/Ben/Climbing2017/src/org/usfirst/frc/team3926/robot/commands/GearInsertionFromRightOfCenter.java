@@ -3,14 +3,14 @@ package org.usfirst.frc.team3926.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-/**
- *  Drives to airship and inserts gear
- *  Goes to baseline
- */
 public class GearInsertionFromRightOfCenter extends CommandGroup {
 
+    /**
+     * Moves robot to airship
+     * Deposits Gear
+     * Moves robot to base line
+     */
     public GearInsertionFromRightOfCenter() {
-
 
         addSequential(new DriveForward(RobotMap.DISTANCE_FROM_WALL_TO_AIRSHIP / 2));
         addSequential(new DecelerationTurn(45));

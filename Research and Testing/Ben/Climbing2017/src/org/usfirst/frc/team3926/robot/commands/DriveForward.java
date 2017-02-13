@@ -8,9 +8,10 @@ import org.usfirst.frc.team3926.robot.Robot;
  *
  * @author Benjamin Lash
  */
-public class DriveForward extends Command{
+public class DriveForward extends Command {
 
     int wantedDistance;
+
     /**
      * Requires the driveSubsystem
      */

@@ -97,13 +97,13 @@ public class DriveSubsytem extends Subsystem {
      */
     public void driveMethod(double rightStickHeight, double leftStickHeight, boolean leftButtonStatus) {
 
-        if (Robot.oi.equalizeRobotSpeedsButton.get()) {
+        if (Robot.oi.goStraightButton.get()) {
 
             rightStickHeight = leftStickHeight;
 
         }
 
-        if (Robot.oi.precisionDrivingButton.get()) {
+        if (Robot.oi.safeModeButton.get()) {
 
             rightStickHeight = rightStickHeight * RobotMap.PRECISION_DRIVING_MULTIPLIER;
             leftStickHeight = leftStickHeight * RobotMap.PRECISION_DRIVING_MULTIPLIER;
@@ -150,6 +150,32 @@ public class DriveSubsytem extends Subsystem {
     }
 
     /**
+     * Method which uses paramater of desired distance to travel to go forward or backward
+     */
+    public void autoDriveDesiredDistance(double desiredDistance) {
+
+        if (desiredDistance > 0) {
+
+            for (; distanceTraveled < desiredDistance; ) {
+
+                rightDrivingEncoder.get();
+                driveSystem.tankDrive(RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
+
+            }
+
+        } else {
+
+            for (; distanceTraveled < desiredDistance; ) {
+
+                rightDrivingEncoder.get();
+                driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
+
+            }
+
+        }
+    }
+
+    /**
      * Checks if the robot has traveled 10 meters
      *
      * @return If the robot has traveled ten meters
@@ -167,6 +193,16 @@ public class DriveSubsytem extends Subsystem {
     public void rangeFinderTurning() {
 
         driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
+
+    }
+
+    /**
+     * Decelerates while going forward
+     */
+    public void decelerationForward() {
+
+        decelerationMath();
+        driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
 
     }
 
@@ -212,14 +248,9 @@ public class DriveSubsytem extends Subsystem {
 
     /**
      * Decelerates while going forward
+     *
+     * @param desiredAngle
      */
-    public void decelerationForward() {
-
-        decelerationMath();
-        driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
-
-    }
-
     public void decelerationTurning(double desiredAngle) {
 
         decelerationMath();
@@ -297,10 +328,11 @@ public class DriveSubsytem extends Subsystem {
         rightDrivingEncoder.reset();
 
     }
+
     /**
      * Resets the gyro
      */
-    public void resetGyro(){
+    public void resetGyro() {
 
         gyro.reset();
 
@@ -327,32 +359,6 @@ public class DriveSubsytem extends Subsystem {
         rightDrivingEncoder.get();
         return distanceTraveled <= desiredDistance;
 
-    }
-
-    /**
-     * Method which uses paramater of desired distance to travel to go forward or backward
-     */
-    public void autoDriveDesiredDistance(double desiredDistance) {
-
-        if (desiredDistance > 0) {
-
-            for (; distanceTraveled < desiredDistance; ) {
-
-                rightDrivingEncoder.get();
-                driveSystem.tankDrive(RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
-
-            }
-
-        } else {
-
-            for (; distanceTraveled < desiredDistance; ) {
-
-                rightDrivingEncoder.get();
-                driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
-
-            }
-
-        }
     }
 
 }

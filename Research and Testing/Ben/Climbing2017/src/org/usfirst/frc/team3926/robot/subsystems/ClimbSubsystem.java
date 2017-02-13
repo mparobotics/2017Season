@@ -71,8 +71,6 @@ public class ClimbSubsystem extends Subsystem {
      */
     public void spinClimberPIDLoop() {
 
-
-
         double climbingSpeed = climbingEncoder.getRate();
 
         if (climbingSpeed < RobotMap.CLIMBER_RPM_TARGET && climberSpeedInput < RobotMap.CLIMBER_MAX_SPEED) {

@@ -18,8 +18,6 @@ public class VisionTrackingSubsystem extends Subsystem {
 
     /**
      * Constructs the network table
-     * Constructs the xValues array
-     * Constructs the areas array
      */
     public VisionTrackingSubsystem() {
 
@@ -91,7 +89,6 @@ public class VisionTrackingSubsystem extends Subsystem {
      * Runs the filtering methods
      * Uses data from xValues and Filters to make an array of filteredXValues
      */
-
     /**
      * Stores the speeds of drivesystem for driving toward the shooting target based off the
      * position of retro-reflective tape

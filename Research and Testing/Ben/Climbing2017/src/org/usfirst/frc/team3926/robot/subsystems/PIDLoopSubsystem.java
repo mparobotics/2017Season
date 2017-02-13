@@ -56,7 +56,7 @@ public class PIDLoopSubsystem extends PIDSubsystem {
     }
 
     /**
-     * No command uses this subsystm by default
+     * No command uses this subsystem by default
      */
     protected void initDefaultCommand() {
 

@@ -12,30 +12,30 @@ public class InsertingGearSubsystem extends Subsystem {
 
     private Talon   gearInserter;
     private Encoder gearInsertionEncoder;
-    public int      distanceTraveledByGearInserter;
+    public  int     distanceTraveledByGearInserter;
 
     public void initDefaultCommand() {
 
         gearInserter = new Talon(RobotMap.GEAR_INSERTION_MOTOR_ID);
         gearInsertionEncoder = new Encoder(RobotMap.GEAR_INSERTION_ENCODER_PORT_A,
-                                           RobotMap.GEAR_INSERTION_ENCODER_PORT_B,false,Encoder.EncodingType.k4X);
+                                           RobotMap.GEAR_INSERTION_ENCODER_PORT_B, false, Encoder.EncodingType.k4X);
 
     }
 
-    public void insertingGear(){
+    public void insertingGear() {
 
         gearInserter.set(RobotMap.GEAR_INSERTION_SPEED);
         distanceTraveledByGearInserter = gearInsertionEncoder.get();
 
     }
 
-    public boolean hasGearBeenInserted(){
+    public boolean hasGearBeenInserted() {
 
         return distanceTraveledByGearInserter >= RobotMap.GEAR_INSERTION_MAX_MOVEMENT;
 
     }
 
-    public void resetGearInsertionEncoder(){
+    public void resetGearInsertionEncoder() {
 
         gearInsertionEncoder.reset();
 

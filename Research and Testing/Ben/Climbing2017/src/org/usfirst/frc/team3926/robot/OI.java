@@ -15,14 +15,14 @@ import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurning;
 public class OI {
 
     /** Right joystick */
-    public  Joystick rightStick                  = new Joystick(RobotMap.RIGHT_STICK_PORT);
+    public  Joystick rightStick       = new Joystick(RobotMap.RIGHT_STICK_PORT);
     /** Left joystick */
-    public  Joystick leftStick                   = new Joystick(RobotMap.LEFT_STICK_PORT);
+    public  Joystick leftStick        = new Joystick(RobotMap.LEFT_STICK_PORT);
     /** Button on the joystick that equalizes the speed of each robot side */
-    public  Button   equalizeRobotSpeedsButton   = new JoystickButton(leftStick,
-                                                                      RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER);
+    public  Button   goStraightButton = new JoystickButton(leftStick,
+                                                           RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER);
     /** Button for slowing the speed of the Robot */
-    public  Button   precisionDrivingButton      = new JoystickButton(rightStick,
+    public  Button   safeModeButton   = new JoystickButton(rightStick,
                                                                       RobotMap.PRECISE_DRIVING_BUTTON_NUMBER);
     ///** Xbox joystick */
     //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
