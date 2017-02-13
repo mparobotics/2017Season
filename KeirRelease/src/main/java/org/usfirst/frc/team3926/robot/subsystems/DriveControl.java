@@ -40,6 +40,8 @@ public class DriveControl extends Subsystem {
     private Encoder    rightEncoder;
     /** Rangefinder for autonomous distance finding */
     private Ultrasonic rangefinder;
+    /** TODO Gyroscope for driving */
+    //private Gyro gyroscope;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -61,6 +63,7 @@ public class DriveControl extends Subsystem {
         //rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
         //TODO hook up these things ;p rawr exdee
         //rangefinder = new Ultrasonic(RobotMap.RANGEFINDER_ECHO_PULSE_PORT, RobotMap.RANGEFINDER_TRIGGER_PULSE_PORT);
+        //gyroscope = new Bu
 
     }
 
@@ -129,24 +132,29 @@ public class DriveControl extends Subsystem {
      * @param targetGears Set this to true if vision tracking should work to center itself on gears not the high goal
      *                    target, which it will do if this is true
      */
-    public void autonomousTank(boolean targetGears) { //TODO Add gear targeting
+    public void autonomousTank(boolean targetGears) {
 
         int checkIndex = 0; //TODO add minor filtering
 
         double[] contourCenter = visionTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
 
-        if (contourCenter.length != 0 && contourCenter[checkIndex] != RobotMap.ILLEGAL_DOUBLE) {
+        if (contourCenter.length != 0) {
+
+            double target = (targetGears) ? (contourCenter[0] + contourCenter[1]) / 2 : contourCenter[0];
+
+            if (target == RobotMap.ILLEGAL_DOUBLE)
+                return;
 
             contoursFound = true;
 
-            if (contourCenter[checkIndex] > RobotMap.SCREEN_CENTER[0] * (1 + RobotMap.ALLOWABLE_ERROR)) {
-                setSpeed(RobotMap.AUTONOMOUS_SPEED, ((contourCenter[checkIndex] - RobotMap.SCREEN_CENTER[0]) /
+            if (target > RobotMap.SCREEN_CENTER[0] * (1 + RobotMap.ALLOWABLE_ERROR)) {
+                setSpeed(RobotMap.AUTONOMOUS_SPEED, ((target - RobotMap.SCREEN_CENTER[0]) /
                                                      RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
                 moveLeft = false;
                 moveRight = true;
                 centered = false;
-            } else if (contourCenter[checkIndex] < RobotMap.SCREEN_CENTER[0] * (1 - RobotMap.ALLOWABLE_ERROR)) {
-                setSpeed((contourCenter[checkIndex] / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED, 0);
+            } else if (target < RobotMap.SCREEN_CENTER[0] * (1 - RobotMap.ALLOWABLE_ERROR)) {
+                setSpeed((target / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED, 0);
                 moveRight = false;
                 centered = false;
                 moveLeft = true;
@@ -207,6 +215,7 @@ public class DriveControl extends Subsystem {
      * Checks if the robot is at or closer than desiredDistance
      *
      * @param desiredDistance Distance to check if the robot is closer to an object than
+     * @return If the rangefinder's measured distance is less than or equal to the desired distance
      */
     public boolean withinDistance(double desiredDistance) {
 
@@ -214,6 +223,40 @@ public class DriveControl extends Subsystem {
             return rangefinder.getRangeMM() <= desiredDistance;
         else
             return rangefinder.getRangeInches() <= desiredDistance;
+
+    }
+
+    /**
+     * Checks if the robot has traveled past a value on the right side
+     *
+     * @param rightEncoderValue Value to check if the right encoder has passed
+     * @return If the right encoder on the drive train has traveled past the given distance
+     */
+    public boolean rightEncoderCheck(double rightEncoderValue) {
+
+        return rightEncoder.getDistance() >= rightEncoderValue;
+
+    }
+
+    /**
+     * Checks if the robot has traveled past a value on the left side
+     *
+     * @param leftEncoderValue Value to check if the left encoder has passed
+     * @return If the left encoder's distance value if past the given distance
+     */
+    public boolean leftEncoderCheck(double leftEncoderValue) {
+
+        return leftEncoder.getDistance() >= leftEncoderValue;
+
+    }
+
+    /**
+     * @param desiredAngle Angle to turn to
+     * @return Whether or not the robot has reached the desired angle
+     */
+    public boolean turnToAngle(double desiredAngle) {
+
+        return true;
 
     }
 
@@ -271,6 +314,37 @@ public class DriveControl extends Subsystem {
 
         rightSide *= RobotMap.DRIVE_SAFETY_FACTOR;
         leftSide *= RobotMap.DRIVE_SAFETY_FACTOR;
+    }
+
+    ////////////////////////////////////////////// Drive Sensor Recording //////////////////////////////////////////////
+
+    /**
+     * Prints the value of the drive train's right encoder and than resets the encoder
+     */
+    public void printResetRightEncoder() {
+
+        System.out.println("Right Encoder: " + rightEncoder.get());
+        rightEncoder.reset();
+
+    }
+
+    /**
+     * Prints the value of the drive train's left encoder and than resets the encoder
+     */
+    public void printResetLeftEncoder() {
+
+        System.out.println("Left Encoder: " + leftEncoder.get());
+        leftEncoder.reset();
+
+    }
+
+    /**
+     * Prints the value of the rangefinder
+     */
+    public void printRangefinder() {
+
+        System.out.println("Range: " + rangefinder.getRangeInches() + " inches");
+
     }
 
 }
