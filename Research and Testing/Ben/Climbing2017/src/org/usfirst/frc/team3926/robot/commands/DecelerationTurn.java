@@ -8,14 +8,17 @@ import org.usfirst.frc.team3926.robot.Robot;
  *
  * @author Benjamin Lash
  */
-public class DecelerationTurnRobot extends Command {
+public class DecelerationTurn extends Command {
+
+    double wantedDegrees;
 
     /**
      * Requires the robot driveSubsystem
      */
-    public void TurnCommand() {
+    public DecelerationTurn(double desiredDegrees) {
 
         requires(Robot.driveSubsystem);
+        wantedDegrees = desiredDegrees;
 
     }
 
@@ -31,7 +34,7 @@ public class DecelerationTurnRobot extends Command {
      */
     public void execute() {
 
-        Robot.driveSubsystem.decelerationTurning();
+        Robot.driveSubsystem.decelerationTurning(wantedDegrees);
 
     }
 
@@ -42,12 +45,11 @@ public class DecelerationTurnRobot extends Command {
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.hasRobotTurned();
+        return Robot.driveSubsystem.hasRobotTurned(wantedDegrees);
 
     }
 
     public void end() {
-
 
     }
 

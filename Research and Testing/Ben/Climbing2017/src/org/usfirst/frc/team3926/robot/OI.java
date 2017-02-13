@@ -18,6 +18,9 @@ public class OI {
     public  Joystick rightStick                  = new Joystick(RobotMap.RIGHT_STICK_PORT);
     /** Left joystick */
     public  Joystick leftStick                   = new Joystick(RobotMap.LEFT_STICK_PORT);
+    /** Button on the joystick that equalizes the speed of each robot side */
+    public  Button   equalizeRobotSpeedsButton   = new JoystickButton(leftStick,
+                                                                      RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER);
     /** Button for slowing the speed of the Robot */
     public  Button   precisionDrivingButton      = new JoystickButton(rightStick,
                                                                       RobotMap.PRECISE_DRIVING_BUTTON_NUMBER);
@@ -28,11 +31,11 @@ public class OI {
     /** Button on the joystick that starts the Climb */
     private Button   climberButton               = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
     /** Button on the joystick that starts the VisionTrackingTurning */
-    private Button   visionTrackingTurningButton = new JoystickButton(leftStick, RobotMap
-            .VISION_TRACKING_TURNING_BUTTON_NUMBER);
+    private Button   visionTrackingTurningButton = new JoystickButton(leftStick,
+                                                                      RobotMap.VISION_TRACKING_TURNING_BUTTON_NUMBER);
     /** Button on the joystick that starts the VisionTrackingForward */
-    private Button   visionTrackingForwardButton = new JoystickButton(leftStick, RobotMap.
-            VISION_TRACKING_FORWARD_BUTTON_NUMBER);
+    private Button   visionTrackingForwardButton = new JoystickButton(leftStick,
+                                                                      RobotMap.VISION_TRACKING_FORWARD_BUTTON_NUMBER);
 
     /**
      * Activates the Climb and the Shooting if the buttons made for them are pressed

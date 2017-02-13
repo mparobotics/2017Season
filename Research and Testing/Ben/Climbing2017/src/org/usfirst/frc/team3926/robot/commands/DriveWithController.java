@@ -37,9 +37,9 @@ public class DriveWithController extends Command {
      */
     public void execute() {
 
-        Robot.driveSubsystem
-                .driveMethod(Robot.oi.rightStick.getY(), Robot.oi.leftStick.getY(), Robot.oi.leftStick.getRawButton
-                        (RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER));
+        Robot.driveSubsystem.driveMethod(Robot.oi.rightStick.getY(), Robot.oi.leftStick.getY(),
+                                         Robot.oi.leftStick.getRawButton
+                                                 (RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER));
 
     }
 

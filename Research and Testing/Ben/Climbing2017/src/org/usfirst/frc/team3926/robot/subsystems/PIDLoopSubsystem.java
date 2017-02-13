@@ -27,6 +27,7 @@ public class PIDLoopSubsystem extends PIDSubsystem {
 
         super(RobotMap.SHOOTER_SUPER_NAME, RobotMap.SHOOTER_PID_LOOP_P, RobotMap.SHOOTER_PID_LOOP_I,
               RobotMap.SHOOTER_PID_LOOP_D);
+
         shootingEncoder = new Encoder(RobotMap.SHOOTING_ENCODER_PORT_A, RobotMap.SHOOTING_ENCODER_PORT_B, false,
                                       Encoder.EncodingType.k4X);
         shooter = new Talon(RobotMap.SHOOTER_CAN_ID);

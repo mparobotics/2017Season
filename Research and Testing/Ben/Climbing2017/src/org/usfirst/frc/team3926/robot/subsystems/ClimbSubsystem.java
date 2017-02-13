@@ -20,7 +20,7 @@ public class ClimbSubsystem extends Subsystem {
     /** Makes an encoder which will track the motor that climbs */
     private static Encoder      climbingEncoder;
     /** Defines the default speed of the motor that climbs */
-    private        double       climberMotorSpeed;
+    private        double       climberSpeedInput;
 
     /**
      * Constructs the climber talon
@@ -34,7 +34,7 @@ public class ClimbSubsystem extends Subsystem {
                                       Encoder.EncodingType.k4X);
         climbingEncoder.setDistancePerPulse(RobotMap.CLIMBING_ENCODER_DISTANCE_PER_PULSE);
         limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH_DIGITAL_INPUT_NUMBER);
-        climberMotorSpeed = RobotMap.DEFAULT_CLIMBER_SPEED;
+        climberSpeedInput = RobotMap.DEFAULT_CLIMBER_SPEED;
 
     }
 
@@ -67,25 +67,27 @@ public class ClimbSubsystem extends Subsystem {
 
     /**
      * Sets the speed of the climber motor
-     * Adds to or subtracts from climberMotorSpeed if the RPM of the climbing motor is above or below target
+     * Adds to or subtracts from climberSpeedInput if the RPM of the climbing motor is above or below target
      */
-    public void spinMotor() {
+    public void spinClimberPIDLoop() {
+
+
 
         double climbingSpeed = climbingEncoder.getRate();
 
-        if (climbingSpeed < RobotMap.CLIMBER_RPM_TARGET && climberMotorSpeed < RobotMap.CLIMBER_MAX_SPEED) {
+        if (climbingSpeed < RobotMap.CLIMBER_RPM_TARGET && climberSpeedInput < RobotMap.CLIMBER_MAX_SPEED) {
 
-            climberMotorSpeed += RobotMap.CLIMBER_SPEED_INCREMENT;
-
-        }
-
-        if (climbingSpeed > RobotMap.CLIMBER_RPM_TARGET && climberMotorSpeed > RobotMap.CLIMBER_MIN_SPEED) {
-
-            climberMotorSpeed -= RobotMap.CLIMBER_SPEED_INCREMENT;
+            climberSpeedInput += (RobotMap.CLIMBER_RPM_TARGET - climbingSpeed) * RobotMap.CLIMBER_PID_P_VALUE;
 
         }
 
-        climber.set(climberMotorSpeed);
+        if (climbingSpeed > RobotMap.CLIMBER_RPM_TARGET && climberSpeedInput > RobotMap.CLIMBER_MIN_SPEED) {
+
+            climberSpeedInput -= (climbingSpeed - RobotMap.CLIMBER_RPM_TARGET) * RobotMap.CLIMBER_PID_P_VALUE;
+
+        }
+
+        climber.set(climberSpeedInput);
 
     }
 

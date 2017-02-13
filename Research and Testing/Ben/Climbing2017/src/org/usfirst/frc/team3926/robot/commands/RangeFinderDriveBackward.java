@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  * Makes the robot Drive forward
@@ -40,7 +41,7 @@ public class RangeFinderDriveBackward extends Command {
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.negativeTenMetersTraveled();
+        return Robot.driveSubsystem.properNegativeDistanceTraveled(-RobotMap.AUTO_DRIVE_BACKWARD_DISTANCE);
 
     }
 

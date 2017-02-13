@@ -62,7 +62,8 @@ public class DriveSubsytem extends Subsystem {
 
         gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 
-        rightSideDecelerationSpeed = RobotMap.DEFAULT_DECELERATION_SPEED;
+        rightSideDecelerationSpeed = RobotMap.MAX_AUTO_DRIVING_SPEED;
+        leftSideDecelerationSpeed = RobotMap.MAX_AUTO_DRIVING_SPEED;
 
     }
 
@@ -96,7 +97,7 @@ public class DriveSubsytem extends Subsystem {
      */
     public void driveMethod(double rightStickHeight, double leftStickHeight, boolean leftButtonStatus) {
 
-        if (leftButtonStatus) {
+        if (Robot.oi.equalizeRobotSpeedsButton.get()) {
 
             rightStickHeight = leftStickHeight;
 
@@ -130,23 +131,10 @@ public class DriveSubsytem extends Subsystem {
     public void rangeFinderDriveBackward() {
 
         if (wallLessThenTenMetersAway()) {
-            for (; !tenMetersTraveled(); ) {
 
-                driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
-                rightDrivingEncoder.getDistance();
-
-            }
+            autoDriveDesiredDistance(-RobotMap.AUTO_DRIVE_BACKWARD_DISTANCE);
 
         }
-
-    }
-
-    /**
-     * Drives Backward If the wall is 10 meters away
-     */
-    public void driveBackward() {
-
-        driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
 
     }
 
@@ -166,10 +154,10 @@ public class DriveSubsytem extends Subsystem {
      *
      * @return If the robot has traveled ten meters
      */
-    public boolean tenMetersTraveled() {
+    public boolean properDistanceTraveled(int desiredDistance) {
 
         rightDrivingEncoder.get();
-        return distanceTraveled >= 10;
+        return distanceTraveled >= desiredDistance;
 
     }
 
@@ -190,32 +178,35 @@ public class DriveSubsytem extends Subsystem {
 
         double acceleration = accelerometer.getX();
 
-        if (acceleration < -5) {
+        if (acceleration < -2) {
 
             rightSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
-
-        } else if (acceleration > 0) {
-
-            rightSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
-
-        } else {
-
-            rightSideDecelerationSpeed = 0;
-        }
-
-        if (acceleration < -5) {
 
             leftSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
 
         } else if (acceleration > 0) {
 
+            rightSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
+
             leftSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
 
-        } else {
+        } else if (rightSideDecelerationSpeed < 0.2 && rightSideDecelerationSpeed >= 0) {
+
+            rightSideDecelerationSpeed = 0;
 
             leftSideDecelerationSpeed = 0;
-
         }
+
+        /*if (acceleration < -2) {
+
+
+        } else if (acceleration > 0) {
+
+
+        } else if (leftSideDecelerationSpeed < 0.2 && leftSideDecelerationSpeed >= 0) {
+
+
+        }*/
 
     }
 
@@ -225,26 +216,50 @@ public class DriveSubsytem extends Subsystem {
     public void decelerationForward() {
 
         decelerationMath();
-        driveSystem.tankDrive(-leftSideDecelerationSpeed, rightSideDecelerationSpeed);
+        driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
 
     }
 
-    public void decelerationTurning() {
+    public void decelerationTurning(double desiredAngle) {
 
         decelerationMath();
-        if(leftSideDecelerationSpeed == 0){
+        if (desiredAngle > 0) {
 
-            leftSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
+            if (leftSideDecelerationSpeed < RobotMap.BASICALLY_ZERO &&
+                leftSideDecelerationSpeed > -RobotMap.BASICALLY_ZERO) {
+
+                leftSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
+
+            }
+
+            if (rightSideDecelerationSpeed < RobotMap.BASICALLY_ZERO &&
+                rightSideDecelerationSpeed > RobotMap.BASICALLY_ZERO) {
+
+                rightSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
+
+            }
+
+            driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
+
+        } else {
+
+            if (leftSideDecelerationSpeed < RobotMap.BASICALLY_ZERO &&
+                leftSideDecelerationSpeed > -RobotMap.BASICALLY_ZERO) {
+
+                leftSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
+
+            }
+
+            if (rightSideDecelerationSpeed < RobotMap.BASICALLY_ZERO &&
+                rightSideDecelerationSpeed > -RobotMap.BASICALLY_ZERO) {
+
+                rightSideDecelerationSpeed -= RobotMap.DECELERATION_SPEED_INCREMENT;
+
+            }
+
+            driveSystem.tankDrive(-leftSideDecelerationSpeed, -rightSideDecelerationSpeed);
 
         }
-
-        if(rightSideDecelerationSpeed == 0){
-
-            rightSideDecelerationSpeed += RobotMap.DECELERATION_SPEED_INCREMENT;
-
-        }
-
-        driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
 
     }
 
@@ -255,16 +270,22 @@ public class DriveSubsytem extends Subsystem {
      */
     public boolean isSpeedZero() {
 
-        return rightSideDecelerationSpeed == 0 && leftSideDecelerationSpeed == 0;
-
+        return rightSideDecelerationSpeed < RobotMap.BASICALLY_ZERO &&
+               rightSideDecelerationSpeed > -RobotMap.BASICALLY_ZERO &&
+               leftSideDecelerationSpeed < RobotMap.BASICALLY_ZERO &&
+               leftSideDecelerationSpeed > -RobotMap.BASICALLY_ZERO;
     }
 
     /**
      * Sets the driveSystem to values that make it turn
      */
-    public void turning() {
+    public void turnDesiredAngle(int desiredAngle, double leftTurningSpeed, double rightTurningSpeed) {
 
-        driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
+        for (; gyro.getAngle() < desiredAngle; ) {
+
+            driveSystem.tankDrive(leftTurningSpeed, rightTurningSpeed);
+
+        }
 
     }
 
@@ -276,15 +297,23 @@ public class DriveSubsytem extends Subsystem {
         rightDrivingEncoder.reset();
 
     }
+    /**
+     * Resets the gyro
+     */
+    public void resetGyro(){
+
+        gyro.reset();
+
+    }
 
     /**
      * Checks if the robot has turned 90 degrees
      *
      * @return If the robot has turned 90 degrees since the last reset
      */
-    public boolean hasRobotTurned() {
+    public boolean hasRobotTurned(double desiredAngle) {
 
-        return gyro.getAngle() >= 90;
+        return gyro.getAngle() >= desiredAngle;
 
     }
 
@@ -293,11 +322,38 @@ public class DriveSubsytem extends Subsystem {
      *
      * @return if the robot has backed up 10 meters
      */
-    public boolean negativeTenMetersTraveled() {
+    public boolean properNegativeDistanceTraveled(int desiredDistance) {
 
         rightDrivingEncoder.get();
-        return distanceTraveled <= -10;
+        return distanceTraveled <= desiredDistance;
 
     }
+
+    /**
+     * Method which uses paramater of desired distance to travel to go forward or backward
+     */
+    public void autoDriveDesiredDistance(double desiredDistance) {
+
+        if (desiredDistance > 0) {
+
+            for (; distanceTraveled < desiredDistance; ) {
+
+                rightDrivingEncoder.get();
+                driveSystem.tankDrive(RobotMap.MAX_AUTO_DRIVING_SPEED, RobotMap.MAX_AUTO_DRIVING_SPEED);
+
+            }
+
+        } else {
+
+            for (; distanceTraveled < desiredDistance; ) {
+
+                rightDrivingEncoder.get();
+                driveSystem.tankDrive(-RobotMap.MAX_AUTO_DRIVING_SPEED, -RobotMap.MAX_AUTO_DRIVING_SPEED);
+
+            }
+
+        }
+    }
+
 }
 

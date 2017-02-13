@@ -8,14 +8,16 @@ import org.usfirst.frc.team3926.robot.Robot;
  *
  * @author Benjamin Lash
  */
-public class DriveForward extends Command {
+public class DriveForward extends Command{
 
+    int wantedDistance;
     /**
      * Requires the driveSubsystem
      */
-    public DriveForward() {
+    public DriveForward(int desiredDistance) {
 
         requires(Robot.driveSubsystem);
+        wantedDistance = desiredDistance;
 
     }
 
@@ -31,7 +33,7 @@ public class DriveForward extends Command {
      */
     public void execute() {
 
-        Robot.driveSubsystem.driveForward();
+        Robot.driveSubsystem.autoDriveDesiredDistance(wantedDistance);
 
     }
 
@@ -40,7 +42,7 @@ public class DriveForward extends Command {
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.tenMetersTraveled();
+        return Robot.driveSubsystem.properDistanceTraveled(wantedDistance);
 
     }
 

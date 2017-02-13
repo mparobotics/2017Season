@@ -10,12 +10,15 @@ import org.usfirst.frc.team3926.robot.Robot;
  */
 public class BackUpRobot extends Command {
 
+    int wantedDistance;
     /**
      * Requires the driveSubsystem
      */
-    public BackUpRobot() {
+    public BackUpRobot(int desiredDistance) {
 
         requires(Robot.driveSubsystem);
+
+        wantedDistance = desiredDistance;
 
     }
 
@@ -31,7 +34,7 @@ public class BackUpRobot extends Command {
      */
     public void execute() {
 
-        Robot.driveSubsystem.driveBackward();
+        Robot.driveSubsystem.autoDriveDesiredDistance(wantedDistance);
 
     }
 
@@ -40,7 +43,7 @@ public class BackUpRobot extends Command {
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.negativeTenMetersTraveled();
+        return Robot.driveSubsystem.properNegativeDistanceTraveled(wantedDistance);
 
     }
 

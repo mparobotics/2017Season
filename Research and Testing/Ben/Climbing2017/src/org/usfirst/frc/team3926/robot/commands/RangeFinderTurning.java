@@ -24,6 +24,8 @@ public class RangeFinderTurning extends Command {
      */
     public void initialize() {
 
+        Robot.driveSubsystem.resetGyro();
+
     }
 
     /**
@@ -42,7 +44,7 @@ public class RangeFinderTurning extends Command {
      */
     public boolean isFinished() {
 
-        return Robot.driveSubsystem.hasRobotTurned();
+        return Robot.driveSubsystem.hasRobotTurned(90);
 
     }
 
@@ -50,8 +52,6 @@ public class RangeFinderTurning extends Command {
      * Decelerates the robot until it stops
      */
     public void end() {
-
-        Robot.driveSubsystem.decelerationForward();
 
     }
 

@@ -9,26 +9,37 @@ package org.usfirst.frc.team3926.robot;
 public class RobotMap {
 
     //////////////////////////////////////////////////////Driving//////////////////////////////////////////////////////
+    /////Autonomous Driving/////
+    /** Second Leg of journey to Airship */
+    public static final  int    SECOND_AIRSHIP_JOUNEY_LEG_DISTANCE        = 4;
+    /** Distance from starting line to base line */
+    public static final  int    DISTANCE_TO_BASELINE                      = 15;
+    /** Distance used to drive backward autonomously */
+    public static final  int    AUTO_DRIVE_BACKWARD_DISTANCE              = 10;
+    /** Space a small bit away from zero that should be treated as zero */
+    public static final  double BASICALLY_ZERO                            = 0.01;
+    /** Distance from wall to airship (climbing tower) */
+    public static final  int    DISTANCE_FROM_WALL_TO_AIRSHIP             = 10;
+    /** Distance to travel after turning away from airship */
+    public static final  int    DISTANCE_TRAVELED_AFTER_DEPOSITING_GEAR   = 10;
+    /** Default speed for the start of the decelerationForward function */
+    public static final  double DEFAULT_DECELERATION_SPEED                = 0.5;
+    /** Increment which can adjust the speed of the robot so it it does not speed up too fast */
+    public static final  double DECELERATION_SPEED_INCREMENT              = 0.1;
     /////Precision Driving Multiplier/////
     /** Multipier used for when drivers want to go slower but more precise */
-    public static final  double PRECISION_DRIVING_MULTIPLIER = 0.5;
+    public static final  double PRECISION_DRIVING_MULTIPLIER              = 0.5;
     /////Driving Max Speed/////
     /** Max speed for the Robot when it is moving on it's own */
-    public static final  double MAX_AUTO_DRIVING_SPEED       = 1;
+    public static final  double MAX_AUTO_DRIVING_SPEED                    = 1;
     /////Driving Gyro/////
     /** Analog port for gyro */
-    public static final  int    GYRO_PORT                    = 1;
-    /////Driving RPM regulation/////
-    /** Increment which can adjust the speed of the robot so it it does not speed up too fast */
-    public static final  double DECELERATION_SPEED_INCREMENT = 0.1;
-    /////Driving Deceleration/////
-    /** Default speed for the start of the decelerationForward function */
-    public static final  double DEFAULT_DECELERATION_SPEED   = 0.5;
+    public static final  int    GYRO_PORT                                 = 1;
     /////Driving Talon CAN IDs/////
     /** CAN ID for the drivesystem's back right talon */
-    public static final  int    TALON_BR_CAN_ID              = 0;
+    public static final  int    TALON_BR_CAN_ID                           = 0;
     /** CAN ID for the drivesystem's front right talon */
-    public static final  int    TALON_FR_CAN_ID              = 1;
+    public static final  int    TALON_FR_CAN_ID                           = 1;
     /** CAN ID for the drivesystem's back left talon */
     public static final  int    TALON_BL_CAN_ID                           = 2;
     /** CAN ID for the drivesystem's front left talon */
@@ -94,11 +105,8 @@ public class RobotMap {
     public static final  String NETWORK_TABLE_NAME                        = "GRIP/ContourReport";
     //////////////////////////////////////////////////////Climbing/////////////////////////////////////////////////////
     /////Climbing Motor Speed Regulation/////
-    /**
-     * Increment the robot uses to adjust the speed input for the climber to acheive the desired Rpm, i.e
-     * CLIMBER_RPM_TARGET
-     */
-    public static final  double CLIMBER_SPEED_INCREMENT                   = 0.1;
+    /** P value of climber pid loop */
+    public static final  double CLIMBER_PID_P_VALUE                       = 0.5;
     /**
      * Ideal RPM of the climber which is acheived by adjusting the speed input of the climber using
      * CLIMBER_SPEED_INCREMENT

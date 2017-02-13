@@ -27,11 +27,11 @@ public class Climb extends Command {
     }
 
     /**
-     * Continuously calls spinMotor
+     * Continuously calls spinClimberPIDLoop
      */
     public void execute() {
 
-        Robot.climbSubsystem.spinMotor();
+        Robot.climbSubsystem.spinClimberPIDLoop();
 
     }
 
