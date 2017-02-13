@@ -20,9 +20,9 @@ class GripPythonVI:
         self.resize_image_output = None
 
         self.__rgb_threshold_input = self.resize_image_output
-        self.__rgb_threshold_red = [247, 255.0]
-        self.__rgb_threshold_green = [245, 255.0]
-        self.__rgb_threshold_blue = [245, 255.0]
+        self.__rgb_threshold_red = [0, 249.0]
+        self.__rgb_threshold_green = [160, 255.0]
+        self.__rgb_threshold_blue = [0, 249.0]
 
         self.rgb_threshold_output = None
 
@@ -37,17 +37,17 @@ class GripPythonVI:
         self.find_contours_output = None
 
         self.__filter_contours_contours = self.find_contours_output
-        self.__filter_contours_min_area = 10.0
-        self.__filter_contours_min_perimeter = 2.0
-        self.__filter_contours_min_width = 20.0
-        self.__filter_contours_max_width = 30
-        self.__filter_contours_min_height = 8.0
+        self.__filter_contours_min_area = 0.1
+        self.__filter_contours_min_perimeter = 0.1
+        self.__filter_contours_min_width = 0.1
+        self.__filter_contours_max_width = 300
+        self.__filter_contours_min_height = 0.1
         self.__filter_contours_max_height = 1000
         self.__filter_contours_solidity = [0.0, 100]
-        self.__filter_contours_max_vertices = 70.0
-        self.__filter_contours_min_vertices = 7.0
-        self.__filter_contours_min_ratio = 1.3
-        self.__filter_contours_max_ratio = 10.0
+        self.__filter_contours_max_vertices = 7000.0
+        self.__filter_contours_min_vertices = 0.1
+        self.__filter_contours_min_ratio = 0
+        self.__filter_contours_max_ratio = 100000
 
         self.filter_contours_output = None
 
