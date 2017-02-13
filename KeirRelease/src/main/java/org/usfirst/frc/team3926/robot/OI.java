@@ -3,7 +3,7 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
+import org.usfirst.frc.team3926.robot.commands.Autonomous.PlaceGear;
 import org.usfirst.frc.team3926.robot.commands.Climb;
 import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
 import org.usfirst.frc.team3926.robot.commands.Debugging.RangefinderCheck;
@@ -100,7 +100,7 @@ public class OI {
 
         centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());
         driveToHighGoal.whileHeld(new CenterOnHighGoal());
-        driveToGear.whileHeld(new DriveForward());
+        driveToGear.whileHeld(new PlaceGear());
         centerOnGear.whileHeld(new CenterOnGears());
         shoot.whileHeld(new ShootAndFeed());
         //feed.whileHeld(new AgitatorFeed());

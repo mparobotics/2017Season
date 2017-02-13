@@ -38,20 +38,22 @@ public class RobotMap {
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double   GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double   GEAR_MOTOR_UP_TIME                 = 1000;
+    public final static double  GEAR_MOTOR_UP_TIME      = 1000;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double   GEAR_MOTOR_DOWN_TIME               = 1000;
+    public final static double  GEAR_MOTOR_DOWN_TIME    = 1000;
+    /** Gear backup direction */
+    public final static double  GEAR_BACKUP_DISTANCE    = 10; //TODO figure out this distance
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter */
-    public final static boolean  SHOOTER_USE_CAN_TALON              = true;
+    public final static boolean SHOOTER_USE_CAN_TALON   = true;
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
-    public final static int      SHOOTER_CAN_ID                     = 100;
+    public final static int     SHOOTER_CAN_ID          = 100;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int      SHOOTER_PWM_ID                     = 4;
+    public final static int     SHOOTER_PWM_ID          = 4;
     /** DIO port for the shooter's encoder's A channel */
     public final static int      SHOOTER_ENCODER_A_CHANNEL          = 0;
     /** DIO port for the shooter's encoder's B channel */

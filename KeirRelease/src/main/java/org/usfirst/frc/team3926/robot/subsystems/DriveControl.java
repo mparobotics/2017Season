@@ -35,9 +35,9 @@ public class DriveControl extends Subsystem {
     /** Vision processing booleans */
     private boolean moveLeft, moveRight, contoursFound, centered;
     /** Encoder for the robot's left side */
-    private Encoder    leftEncoder;
+    public  Encoder    leftEncoder;
     /** Encoder for the robot's right side */
-    private Encoder    rightEncoder;
+    public  Encoder    rightEncoder;
     /** Rangefinder for autonomous distance finding */
     private Ultrasonic rangefinder;
     /** TODO Gyroscope for driving */

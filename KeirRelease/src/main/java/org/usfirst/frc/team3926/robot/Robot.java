@@ -28,6 +28,7 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  *      </p>
  *
  *      TODO gear placement command group
+ *      TODO "make up a code" (sumner - 2k17) that reverses all motor directions
  ***********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
