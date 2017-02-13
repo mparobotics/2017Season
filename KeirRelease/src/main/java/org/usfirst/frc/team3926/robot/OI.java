@@ -12,6 +12,7 @@ import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CollectBalls;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.DriveTowardsHighGoal;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
 import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 
 /**
@@ -83,7 +84,7 @@ public class OI {
             centerOnGear = new JoystickButton(driverSecondaryStick, RobotMap.CENTER_ON_GEAR_BUTTON);
             driveToGear = new JoystickButton(driverSecondaryStick, RobotMap.DRIVE_TO_GEAR_BUTTON);
             shoot = new JoystickButton(driverPrimaryStick, RobotMap.SHOOT_BUTTON);
-            feed = new JoystickButton(driverSecondaryStick, RobotMap.AGITATE_BUTTON);
+            //feed = new JoystickButton(driverSecondaryStick, RobotMap.AGITATE_BUTTON);
             climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
             ///// Debugging Buttons /////
@@ -101,8 +102,8 @@ public class OI {
         driveToHighGoal.whileHeld(new CenterOnHighGoal());
         driveToGear.whileHeld(new DriveForward());
         centerOnGear.whileHeld(new CenterOnGears());
-        shoot.whileHeld(new Shoot());
-        feed.whileHeld(new AgitatorFeed());
+        shoot.whileHeld(new ShootAndFeed());
+        //feed.whileHeld(new AgitatorFeed());
         climb.whileHeld(new Climb());
         collectBalls.whileHeld(new CollectBalls());
         //saveTrajectoryTrigger.toggleWhenActive(new ContinueTrajectory());
