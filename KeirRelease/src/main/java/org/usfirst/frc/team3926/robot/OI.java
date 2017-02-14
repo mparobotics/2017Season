@@ -28,6 +28,8 @@ public class OI {
     public Joystick              driverPrimaryStick;
     /** Joystick on the drivers left side (or not used) */
     public Joystick              driverSecondaryStick;
+    /** Joystick to use for the auxiliary driver */
+    public Joystick              auxillaryStick;
     /** Button to make the robot drive straight */
     public Button                straightMode;
     /** Button to reduce the speed of the robot by {@link RobotMap#DRIVE_SAFETY_FACTOR} */
@@ -51,8 +53,11 @@ public class OI {
     /** Trigger to continue driving based on the robot's current trajectory */
     public SaveTrajectoryTrigger saveTrajectoryTrigger;
     ///// Debugging Buttons /////
+    /** Prints the value of the drive train's right encoder and resets its value */
     public Button                rightDrivetrainEncoder;
+    /** Prints the value of the drive train's left encoder and resets its value */
     public Button                leftDrivetrainEncoder;
+    /** Prints the value of the drive train's rangefinder */
     public Button                drivetrainRangefinder;
 
     /**

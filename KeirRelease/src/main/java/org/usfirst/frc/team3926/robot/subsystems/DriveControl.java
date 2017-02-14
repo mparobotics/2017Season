@@ -96,6 +96,8 @@ public class DriveControl extends Subsystem {
 
         rightSide = 0;
         leftSide = 0;
+        rightEncoder.reset();
+        leftEncoder.reset();
     }
 
     //////////////////////////////////////////////// Robot Driving /////////////////////////////////////////////////////
@@ -245,7 +247,7 @@ public class DriveControl extends Subsystem {
      */
     public boolean rightEncoderCheck(double rightEncoderValue) {
 
-        return rightEncoder.getDistance() >= rightEncoderValue;
+        return Math.abs(rightEncoder.getDistance()) >= Math.abs(rightEncoderValue);
 
     }
 
@@ -257,12 +259,13 @@ public class DriveControl extends Subsystem {
      */
     public boolean leftEncoderCheck(double leftEncoderValue) {
 
-        return leftEncoder.getDistance() >= leftEncoderValue;
+        return Math.abs(leftEncoder.getDistance()) >= Math.abs(leftEncoderValue);
 
     }
 
     /**
      * TODO finish
+     *
      * @param desiredAngle Angle to turn to
      * @return Whether or not the robot has reached the desired angle
      */
