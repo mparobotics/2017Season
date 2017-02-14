@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class GearPlacementMotorUp extends Command {
 
+    /** Time (in system nano time) that this command started */
     private long startTime;
 
     /**
@@ -33,13 +34,15 @@ public class GearPlacementMotorUp extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * No code needs to be executed during this command
+     */
     protected void execute() {
 
     }
 
     /**
-     * @return false
+     * @return If the amount of time specified by {@link RobotMap#GEAR_MOTOR_UP_TIME}
      */
     protected boolean isFinished() {
 

@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class GearPlacementMotorDown extends Command {
 
+    /** Time (in system nano time) that this command started */
     private long startTime;
 
     /**
@@ -32,7 +33,9 @@ public class GearPlacementMotorDown extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * No code needs to be executed during this command
+     */
     protected void execute() {
 
     }
@@ -40,7 +43,7 @@ public class GearPlacementMotorDown extends Command {
     /**
      * Tells if the amount of time desired to run the motor has passed
      *
-     * @return If enough time has passed
+     * @return If the amount of time specified by {@link RobotMap#GEAR_MOTOR_DOWN_TIME}
      */
     protected boolean isFinished() {
 

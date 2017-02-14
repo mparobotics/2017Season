@@ -53,6 +53,7 @@ public class RobotMap {
     public final static double  GEAR_TURN_RIGHT_DISTANCE          = 4; //TODO figure out what this should be
     /** Whether or not to turn left when placing the gear */
     public final static boolean GEAR_TURN_LEFT                    = true;
+    /***/
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////

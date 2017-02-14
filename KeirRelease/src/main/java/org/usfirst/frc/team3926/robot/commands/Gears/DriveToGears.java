@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * Drive towards the gear placement vision target
@@ -41,13 +42,13 @@ public class DriveToGears extends Command {
     }
 
     /**
-     * TODO autonomous finished method
+     * Checks if the robot is within the allowed distance away from the gear placement peg wall
      *
-     * @return false
+     * @return If the robot is within the allowed distance away from the gear placement peg wall
      */
     protected boolean isFinished() {
 
-        return false;
+        return Robot.driveControl.withinDistance(RobotMap.GEAR_PLACEMENT_DISTANCE);
     }
 
     /**
