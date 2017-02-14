@@ -18,7 +18,6 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  *      <p>
  *      Contact: klugewilliam@gmail.com
  *      </p>
- * TODO driving based on encoder values
  * TODO autonomous vision driving
  * TODO fallback trajectory based on last good contour
  **********************************************************************************************************************/

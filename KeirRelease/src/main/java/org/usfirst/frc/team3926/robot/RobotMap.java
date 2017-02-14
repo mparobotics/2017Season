@@ -34,34 +34,40 @@ public class RobotMap {
 
     ///////////////////////////////////////////// Autonomous Configuration /////////////////////////////////////////////
     /** Distance to drive forward for the autonomous DriveForward command (whe used by itself) */
-    public final static double   AUTONOMOUS_DRIVE_FORWARD_DISTANCE  = 10; //TODO find this value
+    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE = 10; //TODO find this value
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double  GEAR_PLACEMENT_DISTANCE = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE           = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double  GEAR_MOTOR_UP_TIME      = 1000;
+    public final static double  GEAR_MOTOR_UP_TIME                = 1000;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double  GEAR_MOTOR_DOWN_TIME    = 1000;
+    public final static double  GEAR_MOTOR_DOWN_TIME              = 1000;
     /** Gear backup direction */
-    public final static double  GEAR_BACKUP_DISTANCE    = 10; //TODO figure out this distance
+    public final static double  GEAR_BACKUP_DISTANCE              = 10; //TODO figure out this distance
+    /** Distance for the left side of the robot to travel when turning from the gear target */
+    public final static double  GEAR_TURN_LEFT_DISTANCE           = 4; //TODO figure out what this should be
+    /** Distance for the right side of the robot to travel when turning from the gear target */
+    public final static double  GEAR_TURN_RIGHT_DISTANCE          = 4; //TODO figure out what this should be
+    /** Whether or not to turn left when placing the gear */
+    public final static boolean GEAR_TURN_LEFT                    = true;
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter */
-    public final static boolean SHOOTER_USE_CAN_TALON   = true;
+    public final static boolean SHOOTER_USE_CAN_TALON             = true;
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
-    public final static int     SHOOTER_CAN_ID          = 100;
+    public final static int     SHOOTER_CAN_ID                    = 100;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int     SHOOTER_PWM_ID          = 4;
+    public final static int     SHOOTER_PWM_ID                    = 4;
     /** DIO port for the shooter's encoder's A channel */
-    public final static int      SHOOTER_ENCODER_A_CHANNEL          = 0;
+    public final static int     SHOOTER_ENCODER_A_CHANNEL         = 0;
     /** DIO port for the shooter's encoder's B channel */
-    public final static int      SHOOTER_ENCODER_B_CHANNEL          = 1;
+    public final static int     SHOOTER_ENCODER_B_CHANNEL         = 1;
     /** Setpoint for the shooter's PID loop */
-    public final static double   SHOOTER_SETPOINT                   = 200; //TODO figure out what this should be
+    public final static double  SHOOTER_SETPOINT                  = 200; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double   SHOOTER_PROPORTIONAL               = 0.001; //TODO figure out what this should be
+    public final static double  SHOOTER_PROPORTIONAL              = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
     public final static double   SHOOTER_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the shooter's */
