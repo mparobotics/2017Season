@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Puts the gear placement system's motor up (letting the gear come out)
- * TODO finish
  */
 public class GearPlacementMotorUp extends Command {
 

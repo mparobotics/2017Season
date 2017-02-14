@@ -13,6 +13,7 @@ import static org.usfirst.frc.team3926.robot.Robot.oi;
  *         <p>
  *         Contact: klugewilliam@gmail.com
  *         </p>
+ *         TODO add reverse direction method
  ***********************************************************************************************************************/
 public class UserDriveTank extends Command {
 

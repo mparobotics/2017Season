@@ -24,6 +24,8 @@ import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
  *      If it is not being clicked, it is -1
  *      All values in between are also available
  *      </p>
+ *
+ *      TODO make gear placement values less static during teleop
  **********************************************************************************************************************/
 @SuppressWarnings("WeakerAccess")
 public class RobotMap {
