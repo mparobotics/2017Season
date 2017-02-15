@@ -8,7 +8,7 @@ import org.usfirst.frc.team3926.robot.commands.Gears.DriveToGears;
 import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorDown;
 import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
 
-/**
+/***********************************************************************************************************************
  * Command group to drive to the gear target and place it. This can be called during another autonomous group or during
  * teleop
  * @author William Kluge
@@ -16,7 +16,7 @@ import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
  *     Contact: klugewilliam@gmail.com
  *     </p>
  * TODO figure out actual values
- */
+ **********************************************************************************************************************/
 public class PlaceGear extends CommandGroup {
 
     public PlaceGear() {

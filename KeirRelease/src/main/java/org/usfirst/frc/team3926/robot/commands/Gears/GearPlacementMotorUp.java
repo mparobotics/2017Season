@@ -6,13 +6,13 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 import java.util.concurrent.TimeUnit;
 
-/**
+/***********************************************************************************************************************
  * Puts the gear placement system's motor up (letting the gear come out)
  * @author William Kluge
  *     <p>
  *     Contact: klugewilliam@gmail.com
  *     </p>
- */
+ **********************************************************************************************************************/
 public class GearPlacementMotorUp extends Command {
 
     /** Time (in system nano time) that this command started */

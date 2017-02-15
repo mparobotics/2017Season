@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-/**
+/***********************************************************************************************************************
  * Turns the robot based on each drive encoders individual values
  * <p>
  *     This is essentially a more complex version of {@link AutoStraightDrive}
@@ -14,7 +14,7 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  *     <p>
  *     Contact: klugewilliam@gmail.com
  *     </p>
- */
+ **********************************************************************************************************************/
 public class IndividualSideDrive extends Command {
 
     /** Distance for the left side of the robot to travel */

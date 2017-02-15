@@ -5,17 +5,18 @@ import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 
-/**
+/***********************************************************************************************************************
  * Drives the robot in a straight line for a set distance
  * <p>
- *     Note: this is not intended to be used for teleop driving. For driving in a straight line at variable speeds see
- *     {@link DriveControl#straightDrive()}
+ * Note: this is not intended to be used for teleop driving. For driving in a straight line at variable speeds see
+ * {@link DriveControl#straightDrive()}
  * </p>
+ *
  * @author William Kluge
- * <p>
- *     Contact: klugewilliam@gmail.com
- * </p>
- */
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ **********************************************************************************************************************/
 public class AutoStraightDrive extends Command {
 
     /** Distance that the robot should drive (forwards or backwards) */
@@ -55,6 +56,7 @@ public class AutoStraightDrive extends Command {
 
     /**
      * Checks if both sides of the robot have traveled for the needed distance
+     *
      * @return If both sides of the robot have traveled for the desired distance
      */
     protected boolean isFinished() {

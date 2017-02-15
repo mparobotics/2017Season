@@ -3,13 +3,13 @@ package org.usfirst.frc.team3926.robot.commands.Debugging;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
-/**
+/***********************************************************************************************************************
  * DEBUGGING COMMAND Prints the value of the rangefinder
  * @author William Kluge
  *     <p>
  *     Contact: klugewilliam@gmail.com
  *     </p>
- */
+ **********************************************************************************************************************/
 public class RangefinderCheck extends Command {
 
     public RangefinderCheck() {

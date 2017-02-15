@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 
-/**
+/***********************************************************************************************************************
  * Keeps the robot on its current course
  * @author William Kluge
  *     <p>
  *     Contact: klugewilliam@gmail.com
  *     </p>
- */
+ **********************************************************************************************************************/
 public class ContinueTrajectory extends Command {
 
     /**

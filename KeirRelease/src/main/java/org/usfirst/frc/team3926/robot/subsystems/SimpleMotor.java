@@ -4,13 +4,13 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
+/***********************************************************************************************************************
  * Controls the ball grabbing mechanism on the back of the robot
  * @author William Kluge
  *     <p>
  *     Contact: klugewilliam@gmail.com
  *     </p>
- */
+ **********************************************************************************************************************/
 public class SimpleMotor<T> extends Subsystem {
 
     /** Motor controller responsible for the ball collector */

@@ -3,13 +3,13 @@ package org.usfirst.frc.team3926.robot.commands.Debugging;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
-/**
+/***********************************************************************************************************************
  * DEBUGGING COMMAND Prints the value of the drive train's right encoder and resets its value
  * @author William Kluge
- * <p>
+ *     <p>
  *     Contact: klugewilliam@gmail.com
- * </p>
- */
+ *     </p>
+ **********************************************************************************************************************/
 public class RightDriveEncoderCheck extends Command {
 
     public RightDriveEncoderCheck() {
