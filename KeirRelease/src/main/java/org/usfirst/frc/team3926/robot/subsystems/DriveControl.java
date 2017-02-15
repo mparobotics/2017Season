@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
 import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,11 +34,11 @@ public class DriveControl extends Subsystem {
     /** Vision processing booleans */
     private boolean moveLeft, moveRight, contoursFound, centered;
     /** Encoder for the robot's left side */
-    public  Encoder    leftEncoder;
+    public  Encoder     leftEncoder;
     /** Encoder for the robot's right side */
-    public  Encoder    rightEncoder;
+    public  Encoder     rightEncoder;
     /** Rangefinder for autonomous distance finding */
-    private Ultrasonic rangefinder;
+    private AnalogInput rangefinder;
     /** TODO Gyroscope for driving */
     //private Gyro gyroscope;
 
@@ -61,7 +61,7 @@ public class DriveControl extends Subsystem {
         //leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
         //rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
         //TODO hook up these things ;p rawr exdee
-        //rangefinder = new Ultrasonic(RobotMap.RANGEFINDER_ECHO_PULSE_PORT, RobotMap.RANGEFINDER_TRIGGER_PULSE_PORT);
+        rangefinder = new AnalogInput(RobotMap.RANGEFINDER_ANALOG_IN_PORT);
         //gyroscope = new Bu
 
     }
@@ -232,10 +232,7 @@ public class DriveControl extends Subsystem {
      */
     public boolean withinDistance(double desiredDistance) {
 
-        if (RobotMap.RANGEFINDER_USE_MILLIMETERS)
-            return rangefinder.getRangeMM() <= desiredDistance;
-        else
-            return rangefinder.getRangeInches() <= desiredDistance;
+        return getRangeMM() <= desiredDistance;
 
     }
 
@@ -358,7 +355,18 @@ public class DriveControl extends Subsystem {
      */
     public void printRangefinder() {
 
-        System.out.println("Range: " + rangefinder.getRangeInches() + " inches");
+        System.out.println("Range: " + getRangeMM() + " mm");
+
+    }
+
+    /**
+     * Gets the range value from the rangefinder in millimeters
+     *
+     * @return Range detected with the rangefinder in millimeters
+     */
+    private double getRangeMM() {
+
+        return rangefinder.getVoltage() / RobotMap.RANGEFINDER_V5MM;
 
     }
 
