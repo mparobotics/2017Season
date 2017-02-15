@@ -11,6 +11,10 @@ import java.util.List;
 
 /**
  * Subsystem to handle climbing on the robot TODO document better
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class Climber<T> extends Subsystem {
 

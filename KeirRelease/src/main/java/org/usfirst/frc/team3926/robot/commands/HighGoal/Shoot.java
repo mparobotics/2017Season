@@ -5,13 +5,13 @@ import org.usfirst.frc.team3926.robot.Robot;
 
 /***********************************************************************************************************************
  * Command to make the robot shoot at the high goal
+ *      <p>
+ *      This command is part of the group {@link ShootAndFeed}
+ *      </p>
+ *
  * @author William Kluge
  *      <p>
  *      Contact: klugewilliam@gmail.com
- *      </p>
- *
- *      <p>
- *      This command is part of the group {@link ShootAndFeed}
  *      </p>
  * TODO calculate range and speed needed
  ***********************************************************************************************************************/

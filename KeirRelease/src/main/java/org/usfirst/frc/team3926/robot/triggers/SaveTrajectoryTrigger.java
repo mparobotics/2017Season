@@ -8,6 +8,11 @@ import org.usfirst.frc.team3926.robot.Robot;
  * <p>
  * Note: This is a temporary solution that only supports the XBox controller as the primary stick
  * </p>
+ *
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class SaveTrajectoryTrigger extends Trigger {
 

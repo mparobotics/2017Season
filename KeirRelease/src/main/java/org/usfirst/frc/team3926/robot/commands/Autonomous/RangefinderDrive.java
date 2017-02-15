@@ -7,6 +7,10 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 /**
  * Drives the robot to within a specified distance of something
  * TODO allow driving backwards
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class RangefinderDrive extends Command {
 

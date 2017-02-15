@@ -6,6 +6,11 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  * Activates the ball collector
+ *
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
  */
 public class CollectBalls extends Command {
 
@@ -18,7 +23,7 @@ public class CollectBalls extends Command {
     }
 
     /**
-     * Speed of the collector is set here
+     * Speed of the collector is set to {@link RobotMap#BALL_COLLECTION_SPEED}
      */
     protected void initialize() {
 

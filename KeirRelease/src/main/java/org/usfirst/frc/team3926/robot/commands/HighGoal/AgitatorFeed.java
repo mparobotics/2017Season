@@ -6,15 +6,14 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * Command to spin the agitator to feed balls into the shooter
+ * <p>
+ *  This command is part of the group {@link ShootAndFeed}
+ * </p>
  *
  * @author William Kluge
  *      <p>
  *      Contact: klugewilliam@gmail.com
  *      </p>
- *
- * <p>
- *  This command is part of the group {@link ShootAndFeed}
- * </p>
  ***********************************************************************************************************************/
 public class AgitatorFeed extends Command {
 

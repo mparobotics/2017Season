@@ -7,6 +7,10 @@ import org.usfirst.frc.team3926.robot.commands.Driving.IndividualSideDrive;
 
 /**
  * TODO command group to lock onto the gear vision target and drive to it
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class AutoPlaceGear extends CommandGroup {
 

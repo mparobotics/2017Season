@@ -5,6 +5,10 @@ import org.usfirst.frc.team3926.robot.Robot;
 
 /**
  * Calls the {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#leftEncoderCheck(double)} method
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class LeftDriveEncoderCheck extends Command {
 

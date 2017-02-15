@@ -2,42 +2,61 @@ package org.usfirst.frc.team3926.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 
 /**
  * Keeps the robot on its current course
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class ContinueTrajectory extends Command {
 
+    /**
+     * Constructs the ContinueTrajectory command requiring {@link Robot#driveControl}
+     */
     public ContinueTrajectory() {
 
         requires(Robot.driveControl);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Nothing needs to be initialized for this command
+     */
     protected void initialize() {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Calls the {@link DriveControl#continueDriving()} command
+     */
     protected void execute() {
 
         Robot.driveControl.continueDriving();
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Controlled with whileHeld, this is not needed
+     *
+     * @return false
+     */
     protected boolean isFinished() {
 
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * Controlled with whileHeld, this is not needed
+     */
     protected void end() {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    /**
+     * No code needs to run when this command is interrupted
+     */
     protected void interrupted() {
 
     }

@@ -11,6 +11,10 @@ import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
  *     Note: this is not intended to be used for teleop driving. For driving in a straight line at variable speeds see
  *     {@link DriveControl#straightDrive()}
  * </p>
+ * @author William Kluge
+ * <p>
+ *     Contact: klugewilliam@gmail.com
+ * </p>
  */
 public class AutoStraightDrive extends Command {
 

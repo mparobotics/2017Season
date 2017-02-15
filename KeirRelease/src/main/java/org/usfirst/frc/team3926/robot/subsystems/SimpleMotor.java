@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Controls the ball grabbing mechanism on the back of the robot
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class SimpleMotor<T> extends Subsystem {
 

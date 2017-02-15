@@ -8,6 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Puts the gear placement system's motor down (blocking the gear from falling out)
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class GearPlacementMotorDown extends Command {
 

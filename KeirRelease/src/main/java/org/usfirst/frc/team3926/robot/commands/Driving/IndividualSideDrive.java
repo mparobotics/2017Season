@@ -9,6 +9,11 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  * <p>
  *     This is essentially a more complex version of {@link AutoStraightDrive}
  * </p>
+ *
+ * @author William Kluge
+ *     <p>
+ *     Contact: klugewilliam@gmail.com
+ *     </p>
  */
 public class IndividualSideDrive extends Command {
 

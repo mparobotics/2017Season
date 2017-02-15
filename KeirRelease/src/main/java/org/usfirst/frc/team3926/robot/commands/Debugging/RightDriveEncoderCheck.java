@@ -4,7 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 
 /**
- *
+ * DEBUGGING COMMAND Prints the value of the drive train's right encoder and resets its value
+ * @author William Kluge
+ * <p>
+ *     Contact: klugewilliam@gmail.com
+ * </p>
  */
 public class RightDriveEncoderCheck extends Command {
 
