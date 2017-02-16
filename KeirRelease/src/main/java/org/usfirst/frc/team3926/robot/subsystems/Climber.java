@@ -4,7 +4,6 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +37,18 @@ public class Climber<T> extends Subsystem {
     }
 
     /**
+     * Constructor for the Climber class
+     *
+     * @param motorControllers All the motor controllers for this class to control
+     */
+    @SafeVarargs
+    public Climber(T... motorControllers) {
+
+        motorController = Arrays.asList(motorControllers);
+
+    }
+
+    /**
      * Activates the robot's climber
      *
      * @param climbSpeed Speed to climb at
@@ -46,7 +57,7 @@ public class Climber<T> extends Subsystem {
 
         setSpeeds(climbSpeed);
 
-        SmartDashboard.putBoolean("Climber Limit Switch: ", limitSwitch.get());
+        //SmartDashboard.putBoolean("Climber Limit Switch: ", limitSwitch.get());
 
     }
 
