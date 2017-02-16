@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /***********************************************************************************************************************
  * This class controls a motor controller (of type T) via a sensor (of type S).
@@ -44,6 +45,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
     private T             acutator;
     /** Sensor to control the output of the PID loop */
     private S             sensor;
+    /** Name of this subsystem */
+    private String        name;
 
     /**
      * Constructs the PIDControlledActuator class with all values relevant to PID control.
@@ -67,6 +70,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setSetpoint(target);
         setAbsoluteTolerance(absoluteTolerance);
 
+        this.name = name;
         this.acutator = actuator;
         this.sensor = sensor;
 
@@ -99,6 +103,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setSetpoint(target);
         setAbsoluteTolerance(absoluteTolerance);
 
+        this.name = name;
         this.acutator = actuator;
         this.sensor = sensor;
 
@@ -135,6 +140,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
         this.acutator = actuator;
         this.sensor = sensor;
+        this.name = name;
 
         if (sensor instanceof PIDSource)
             throw new IllegalArgumentException("The constructor for sensors not deriving from PIDSourceType was used," +
@@ -167,6 +173,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
         this.acutator = actuator;
         this.sensor = sensor;
+        this.name = name;
 
         if (sensor instanceof PIDSource)
             throw new IllegalArgumentException("The constructor for sensors not deriving from PIDSourceType was used," +
@@ -186,20 +193,25 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      */
     protected double returnPIDInput() {
 
+        double returnValue = 0;
+
         if (sensor instanceof PIDSource) {
 
-            return ((PIDSource) sensor).pidGet();
+            returnValue = ((PIDSource) sensor).pidGet();
 
         } else if (sensor instanceof Accelerometer) {
 
             switch (sensorPurpose) {
 
                 case XAccel:
-                    return ((Accelerometer) sensor).getX();
+                    returnValue = ((Accelerometer) sensor).getX();
+                    break;
                 case YAccel:
-                    return ((Accelerometer) sensor).getY();
+                    returnValue = ((Accelerometer) sensor).getY();
+                    break;
                 case ZAccel:
-                    return ((Accelerometer) sensor).getZ();
+                    returnValue = ((Accelerometer) sensor).getZ();
+                    break;
                 default:
                     throw new IllegalStateException("Sensor is an Accelerometer, but no axis was configured to check");
 
@@ -210,19 +222,28 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
             switch (sensorPurpose) {
 
                 case Angle:
-                    return ((Gyro) sensor).getAngle();
+                    returnValue = ((Gyro) sensor).getAngle();
+                    break;
                 case Rate:
-                    return ((Gyro) sensor).getRate();
+                    returnValue = ((Gyro) sensor).getRate();
+                    break;
                 default:
                     throw new IllegalStateException("Sensor is a Gyro, but the purpose of the sensor is not to detect" +
                                                     " angle or rate.");
 
             }
 
+        } else {
+
+            throw new IllegalStateException(
+                    "No supported sensor type was found. Make sure that the template is being " +
+                    "used correctly.");
+
         }
 
-        throw new IllegalStateException("No supported sensor type was found. Make sure that the template is being " +
-                                        "used correctly.");
+        SmartDashboard.putNumber(name, returnValue);
+
+        return returnValue;
 
     }
 

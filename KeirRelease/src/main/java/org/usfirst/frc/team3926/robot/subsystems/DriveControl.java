@@ -360,6 +360,7 @@ public class DriveControl extends Subsystem {
 
     /**
      * Gets the range value from the rangefinder in millimeters
+     * TODO fix
      *
      * @return Range detected with the rangefinder in millimeters
      */
