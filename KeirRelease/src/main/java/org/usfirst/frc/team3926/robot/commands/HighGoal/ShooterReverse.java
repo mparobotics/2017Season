@@ -6,6 +6,11 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  * Runs the shooter backwards to get stuck balls out
+ *
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
  */
 public class ShooterReverse extends Command {
 
