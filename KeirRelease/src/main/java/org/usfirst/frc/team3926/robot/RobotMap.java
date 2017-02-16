@@ -59,21 +59,21 @@ public class RobotMap {
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
     public final static int     SHOOTER_CAN_ID                      = 3;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int     SHOOTER_PWM_ID                      = 4;
+    public final static int    SHOOTER_PWM_ID                      = 4;
     /** DIO port for the shooter's encoder's A channel */
-    public final static int     SHOOTER_ENCODER_A_CHANNEL           = 0;
+    public final static int    SHOOTER_ENCODER_A_CHANNEL           = 0;
     /** DIO port for the shooter's encoder's B channel */
-    public final static int     SHOOTER_ENCODER_B_CHANNEL           = 1;
+    public final static int    SHOOTER_ENCODER_B_CHANNEL           = 1;
     /**  */
-    public final static double  SHOOTER_ENCODER_DISTANCE_PER_PULSE  = 1 / 20;
+    public final static double SHOOTER_ENCODER_DISTANCE_PER_PULSE  = 1 / 20;
     /** Setpoint for the shooter's PID loop */
-    public final static double  SHOOTER_SETPOINT                    = 200; //TODO figure out what this should be
+    public final static double SHOOTER_SETPOINT                    = 600; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_PROPORTIONAL                = 0.001; //TODO figure out what this should be
+    public final static double SHOOTER_PROPORTIONAL                = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_INTEGRAL                    = 0; //TODO figure out what this should be
+    public final static double SHOOTER_INTEGRAL                    = 0; //TODO figure out what this should be
     /** Derivative multiplier for the shooter's */
-    public final static double   SHOOTER_DERIVATIVE                  = 0; //TODO figure out what this should be
+    public final static double SHOOTER_DERIVATIVE                  = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
     public final static double  SHOOTER_ABSOLUTE_TOLERANCE          = 0.1; //TODO figure out what this should be
     ///// Ball Agitator Motor Configuration /////
@@ -84,21 +84,21 @@ public class RobotMap {
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
     public final static int     AGITATOR_PWM_PORT                   = 5;
     /** DIO port for the agitator's encoder's A channel */
-    public final static int     AGITATOR_ENCODER_A_CHANNEL          = 2;
+    public final static int    AGITATOR_ENCODER_A_CHANNEL          = 2;
     /** DIO port for the agitator's encoder's B channel */
-    public final static int     AGITATOR_ENCODER_B_CHANNEL          = 3;
+    public final static int    AGITATOR_ENCODER_B_CHANNEL          = 3;
     /** The agitator's encoder has 7 pulses per revolution, this makes the encoder measure in rotations */
-    public final static double  AGITATOR_ENCODER_DISTANCE_PER_PULSE = 1 / 7;
+    public final static double AGITATOR_ENCODER_DISTANCE_PER_PULSE = 1 / 7;
     /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
-    public final static double  AGITATOR_FEED_SETPOINT              = 200; //TODO figure out what this should be
+    public final static double AGITATOR_FEED_SETPOINT              = -400; //TODO figure out what this should be
     /** Setpoint for the agitator's PID loop when it is sitting idle */
-    public final static double  AGITATOR_IDLE_SETPOINT              = 100; //TODO add actual value
+    public final static double AGITATOR_IDLE_SETPOINT              = -100; //TODO add actual value
     /** Proportional multiplier for the agitator's PID loop */
-    public final static double   AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
+    public final static double AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the agitator's PID loop */
-    public final static double   AGITATOR_INTEGRAL                   = 0; //TODO figure out what this should be
+    public final static double AGITATOR_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the agitator's */
-    public final static double   AGITATOR_DERIVATIVE                 = 0; //TODO figure out what this should be
+    public final static double AGITATOR_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the agitator's set point */
     public final static double  AGITATOR_ABSOLUTE_TOLERANCE         = 0.1; //TODO figure out what this should be
 
@@ -246,22 +246,22 @@ public class RobotMap {
     /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
     public final static int      SHOOT_BUTTON                        = 5;
     /** Button ID on (?) to climb the rope */
-    public final static int      CLIMB_BUTTON                        = 6;
+    public final static int    CLIMB_BUTTON                        = 6;
     /** Button ID on (?) to collect balls */
-    public final static int      BALL_COLLECT_BUTTON                 = 7;
+    public final static int    BALL_COLLECT_BUTTON                 = 7;
 
     ///// Debugging Buttons /////
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
-    public final static int      RIGHT_DRIVE_ENCODER_CHECK           = 11;
+    public final static int    RIGHT_DRIVE_ENCODER_CHECK           = 11;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
-    public final static int      LEFT_DRIVE_ENCODER_CHECK            = 12;
+    public final static int    LEFT_DRIVE_ENCODER_CHECK            = 8;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
-    public final static int      RANGEFINDER_CHECK                   = 10;
+    public final static int    RANGEFINDER_CHECK                   = 10;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String   TABLE_HIGH_GOAL_NAME                = "vision/high_goal";
+    public final static String TABLE_HIGH_GOAL_NAME                = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
     public final static String   SPEED_RIGHT_KEY                     = "rightSpeed";
     /** Map key for the speed of the left side of the robot */

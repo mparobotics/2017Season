@@ -35,13 +35,16 @@ public class AgitatorFeed extends Command {
     protected void initialize() {
 
         Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
+        Robot.agitator.enable();
 
     }
 
     /**
-     * Nothing needs to be executed because PID loops run continuously
+     * TODO finish testing this
      */
     protected void execute() {
+
+        Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
 
     }
 

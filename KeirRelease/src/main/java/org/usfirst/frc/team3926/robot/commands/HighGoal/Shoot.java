@@ -14,6 +14,7 @@ import org.usfirst.frc.team3926.robot.Robot;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  * TODO calculate range and speed needed
+ * TODO reverse speed direction to get balls out
  ***********************************************************************************************************************/
 public class Shoot extends Command {
 

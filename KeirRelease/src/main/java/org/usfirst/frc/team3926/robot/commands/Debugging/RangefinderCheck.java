@@ -9,6 +9,8 @@ import org.usfirst.frc.team3926.robot.Robot;
  *     <p>
  *     Contact: klugewilliam@gmail.com
  *     </p>
+ *
+ * TODO fix rangefinder nfinite value
  **********************************************************************************************************************/
 public class RangefinderCheck extends Command {
 
