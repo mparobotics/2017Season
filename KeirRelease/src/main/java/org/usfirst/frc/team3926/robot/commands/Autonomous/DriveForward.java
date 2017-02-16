@@ -19,6 +19,7 @@ public class DriveForward extends Command {
 
     /**
      * Constructs the DriveForward command requiring {@link Robot#driveControl}
+     * @param driveDistance Distance to drive forward
      */
     public DriveForward(double driveDistance) {
 

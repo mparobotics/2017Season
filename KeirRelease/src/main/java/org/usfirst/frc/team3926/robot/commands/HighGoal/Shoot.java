@@ -43,7 +43,7 @@ public class Shoot extends Command {
     }
 
     /**
-     * isFinished is not needed becuase this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#}
+     * isFinished is not needed because this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#shoot}
      *
      * @return false
      */

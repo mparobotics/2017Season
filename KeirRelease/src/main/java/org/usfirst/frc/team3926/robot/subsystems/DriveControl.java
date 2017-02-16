@@ -19,7 +19,7 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  * TODO autonomous vision driving
- * TODO fallback trajectory based on last good contour
+ * TODO add offset for driving to gears
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -39,8 +39,6 @@ public class DriveControl extends Subsystem {
     public  Encoder     rightEncoder;
     /** Rangefinder for autonomous distance finding */
     private AnalogInput rangefinder;
-    /** TODO Gyroscope for driving */
-    //private Gyro gyroscope;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -199,6 +197,7 @@ public class DriveControl extends Subsystem {
      * To actually get data this calls {@link #autonomousTank(boolean)} and than inverts the speed on the opposite of
      * the side to move to, this causes the robot to turn.
      * </p>
+     * @param targetGears Whether or not this is being run to focus on the gear targets
      */
     public void center(boolean targetGears) {
 

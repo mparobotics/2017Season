@@ -19,6 +19,7 @@ public class RangefinderDrive extends Command {
 
     /**
      * Constructs the RangefinderDrive command requiring {@link Robot#driveControl}
+     * @param distance Distance to travel until
      */
     public RangefinderDrive(double distance) {
 
