@@ -197,6 +197,7 @@ public class DriveControl extends Subsystem {
      * To actually get data this calls {@link #autonomousTank(boolean)} and than inverts the speed on the opposite of
      * the side to move to, this causes the robot to turn.
      * </p>
+     *
      * @param targetGears Whether or not this is being run to focus on the gear targets
      */
     public void center(boolean targetGears) {
@@ -298,6 +299,10 @@ public class DriveControl extends Subsystem {
 
         if (leftSpeed != RobotMap.ILLEGAL_DOUBLE)
             SmartDashboard.putNumber("Left Speed: ", leftSide);
+
+        SmartDashboard.putNumber("Rangefinder Voltage: ", rangefinder.getVoltage());
+        SmartDashboard
+                .putNumber("Rangefinder Range (cm): ", rangefinder.getVoltage() * RobotMap.RANGEFINDER_VOLTAGE_RATIO);
 
     }
 

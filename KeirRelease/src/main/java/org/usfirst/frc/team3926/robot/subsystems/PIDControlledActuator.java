@@ -193,7 +193,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      */
     protected double returnPIDInput() {
 
-        double returnValue = 0;
+        double returnValue;
 
         if (sensor instanceof PIDSource) {
 
@@ -241,7 +241,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
         }
 
-        SmartDashboard.putNumber(name, returnValue);
+        SmartDashboard.putNumber(name + " PIDInput", returnValue);
+        SmartDashboard.putNumber(name + " Setpoint", getSetpoint());
 
         return returnValue;
 

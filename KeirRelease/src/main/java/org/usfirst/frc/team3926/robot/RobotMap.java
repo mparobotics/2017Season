@@ -40,9 +40,9 @@ public class RobotMap {
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double   GEAR_PLACEMENT_DISTANCE             = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE             = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double   GEAR_MOTOR_UP_TIME                  = 1000;
+    public final static double  GEAR_MOTOR_UP_TIME                  = 1000;
     /** Time (in milliseconds) that it takes to put the gear motor down */
     public final static double  GEAR_MOTOR_DOWN_TIME                = 1000;
     /** Gear backup direction */
@@ -140,9 +140,11 @@ public class RobotMap {
 
     ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
     /** DIO port for the rangefinder's echo pulse output */
-    public final static int     RANGEFINDER_ANALOG_IN_PORT          = 0;
+    public final static int     RANGEFINDER_ANALOG_IN_PORT          = 3;
     /** Amount of volts per 5 millimeters */
     public final static double  RANGEFINDER_V5MM                    = 5 / 4096;
+    /** Max range of the rangefinder divided by the max voltage of the analog input */
+    public final static double  RANGEFINDER_VOLTAGE_RATIO           = 645 / 5;
     /** Whether or not to use millimeters for the rangefinder instead of inches */
     public final static boolean RANGEFINDER_USE_MILLIMETERS         = false;
 
@@ -195,13 +197,13 @@ public class RobotMap {
     public final static boolean XBOX_DRIVE_CONTROLLER               = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
-    public final static int      XBOX_PORT                           = 0;
+    public final static int     XBOX_PORT                           = 0;
     /** Axis ID to use for the left speed in tank drive */
-    public final static int      XBOX_LEFT_SPEED_AXIS                = 1; //(Left joystick y)
+    public final static int     XBOX_LEFT_SPEED_AXIS                = 1; //(Left joystick y)
     /** Axis ID to use for the right speed in tank drive */
-    public final static int      XBOX_RIGHT_SPEED_AXIS               = 5; //(Right joystick y)
+    public final static int     XBOX_RIGHT_SPEED_AXIS               = 5; //(Right joystick y)
     /** Button ID to enter safety mode */
-    public final static int      XBOX_SAFETY_MODE_BUTTON             = 1; //(A)
+    public final static int     XBOX_SAFETY_MODE_BUTTON             = 1; //(A)
     /** Button ID to enter straight mode */
     public final static int      XBOX_STRAIGHT_MODE_BUTTON           = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */
@@ -233,12 +235,12 @@ public class RobotMap {
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
     public final static int      CONTOUR_ERROR_BUTTON                = 5;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
-    public final static int      CENTER_ON_HIGH_BUTTON_BUTTON        = 4;
+    public final static int     CENTER_ON_HIGH_BUTTON_BUTTON        = 4;
     /** Button ID on {@link OI#driverPrimaryStick} to drive towards the center of the vision target */
-    public final static int      DRIVE_TO_HIGH_GOAL_BUTTON           = 3;
+    public final static int     DRIVE_TO_HIGH_GOAL_BUTTON           = 3;
     ///// Configuration for Driver's Secondary Stick /////
     /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
-    public final static int      STRAIGHT_MODE_BUTTON                = 1;
+    public final static int     STRAIGHT_MODE_BUTTON                = 1;
     /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
     public final static int     CENTER_ON_GEAR_BUTTON               = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
@@ -271,14 +273,14 @@ public class RobotMap {
     /** Map key for center y of a contour */
     public final static String  CONTOUR_Y_KEY                       = "center_y";
     /** Map key for contour height */
-    public final static String   CONTOUR_HEIGHT_KEY                  = "height";
+    public final static String  CONTOUR_HEIGHT_KEY                  = "height";
     /** Map key for contour width */
-    public final static String   CONTOUR_WIDTH_KEY                   = "width";
+    public final static String  CONTOUR_WIDTH_KEY                   = "width";
     /** Map key for SmartFilter pass status */
-    public final static String   SMARTFILTER_PASS_KEY                = "smartFilter";
+    public final static String  SMARTFILTER_PASS_KEY                = "smartFilter";
     ///// Smart Filter Configuration /////
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
-    public final static double   ALLOWABLE_ERROR                     = 0.05;
+    public final static double  ALLOWABLE_ERROR                     = 0.05;
     ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
     public final static int      IMAGE_X                             = 320;
