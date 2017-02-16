@@ -58,11 +58,11 @@ public class DriveControl extends Subsystem {
             driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
                                          RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
 
-        //leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
-        //rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
-        //TODO hook up these things ;p rawr exdee
+        leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
+        leftEncoder.setDistancePerPulse(RobotMap.DRIVE_ENCODER_DISTANCE_PER_PULSE);
+        rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
+        rightEncoder.setDistancePerPulse(RobotMap.DRIVE_ENCODER_DISTANCE_PER_PULSE);
         rangefinder = new AnalogInput(RobotMap.RANGEFINDER_ANALOG_IN_PORT);
-        //gyroscope = new Bu
 
     }
 
@@ -289,10 +289,10 @@ public class DriveControl extends Subsystem {
             rightSide = leftSide = 0;
 
         if (RobotMap.INVERT_RIGHT_DRIVE_MOTOR_DIRECTION)
-            rightSpeed *= -1;
+            rightSide *= -1;
 
         if (RobotMap.INVERT_LEFT_DRIVE_MOTOR_DIRECTION)
-            leftSpeed *= -1;
+            leftSide *= -1;
 
         if (rightSpeed != RobotMap.ILLEGAL_DOUBLE)
             SmartDashboard.putNumber("Right Speed: ", rightSide);

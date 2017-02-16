@@ -179,18 +179,20 @@ public class Robot extends IterativeRobot {
     static { //Static initialization for subsystems
 
         ///// Shooter Initialization ////
+        Encoder shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL);
+        shooterEncoder.setDistancePerPulse(RobotMap.ENCODER_RPM_DISTANCE_PER_PULSE);
         shooter = new PIDControlledActuator<>
                 ("Shooter PID Control", (RobotMap.SHOOTER_USE_CAN_TALON) ? new CANTalon(RobotMap.SHOOTER_CAN_ID) :
-                                        new Talon(RobotMap.SHOOTER_PWM_ID),
-                 new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL),
+                                        new Talon(RobotMap.SHOOTER_PWM_ID), shooterEncoder,
                  PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
                  RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
 
         ///// Agitator Initialization /////
+        Encoder agitatorEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL);
+        agitatorEncoder.setDistancePerPulse(RobotMap.ENCODER_RPM_DISTANCE_PER_PULSE);
         agitator = new PIDControlledActuator<>
                 ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
-                                         new Talon(RobotMap.AGITATOR_PWM_PORT),
-                 new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL, RobotMap.AGITATOR_ENCODER_B_CHANNEL),
+                                         new Talon(RobotMap.AGITATOR_PWM_PORT), agitatorEncoder,
                  PIDSourceType.kRate, RobotMap.AGITATOR_FEED_SETPOINT, RobotMap.AGITATOR_PROPORTIONAL,
                  RobotMap.AGITATOR_INTEGRAL, RobotMap.AGITATOR_DERIVATIVE, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE);
         agitator.createDefaultCommand(new AgitatorIdle());

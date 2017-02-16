@@ -32,51 +32,51 @@ public class RobotMap {
 
     ///////////////////////////////////////////// Enable/Disable Features //////////////////////////////////////////////
     /** Use code specifically made for debugging the robot */
-    public final static boolean DEBUG                              = true;
+    public final static boolean  DEBUG                              = true;
 
     ///////////////////////////////////////////// Autonomous Configuration /////////////////////////////////////////////
     /** Distance to drive forward for the autonomous DriveForward command (whe used by itself) */
-    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE  = 10; //TODO find this value
+    public final static double   AUTONOMOUS_DRIVE_FORWARD_DISTANCE  = 10; //TODO find this value
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double  GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
+    public final static double   GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double  GEAR_MOTOR_UP_TIME                 = 1000;
+    public final static double   GEAR_MOTOR_UP_TIME                 = 1000;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double  GEAR_MOTOR_DOWN_TIME               = 1000;
+    public final static double   GEAR_MOTOR_DOWN_TIME               = 1000;
     /** Gear backup direction */
-    public final static double  GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
+    public final static double   GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
     /** Distance for the left side of the robot to travel when turning from the gear target */
-    public final static double  GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
+    public final static double   GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
-    public final static double  GEAR_TURN_RIGHT_DISTANCE           = 4; //TODO figure out what this should be
+    public final static double   GEAR_TURN_RIGHT_DISTANCE           = 4; //TODO figure out what this should be
     /** Whether or not to turn left when placing the gear */
-    public final static boolean GEAR_TURN_LEFT                     = true;
+    public final static boolean  GEAR_TURN_LEFT                     = true;
     /***/
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter */
-    public final static boolean SHOOTER_USE_CAN_TALON              = true;
+    public final static boolean  SHOOTER_USE_CAN_TALON              = true;
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
-    public final static int     SHOOTER_CAN_ID                     = 100;
+    public final static int      SHOOTER_CAN_ID                     = 100;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int     SHOOTER_PWM_ID                     = 4;
+    public final static int      SHOOTER_PWM_ID                     = 4;
     /** DIO port for the shooter's encoder's A channel */
-    public final static int     SHOOTER_ENCODER_A_CHANNEL          = 0;
+    public final static int      SHOOTER_ENCODER_A_CHANNEL          = 0;
     /** DIO port for the shooter's encoder's B channel */
-    public final static int     SHOOTER_ENCODER_B_CHANNEL          = 1;
+    public final static int      SHOOTER_ENCODER_B_CHANNEL          = 1;
     /** Setpoint for the shooter's PID loop */
-    public final static double  SHOOTER_SETPOINT                   = 200; //TODO figure out what this should be
+    public final static double   SHOOTER_SETPOINT                   = 200; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_PROPORTIONAL               = 0.001; //TODO figure out what this should be
+    public final static double   SHOOTER_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_INTEGRAL                   = 0; //TODO figure out what this should be
+    public final static double   SHOOTER_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the shooter's */
-    public final static double  SHOOTER_DERIVATIVE                 = 0; //TODO figure out what this should be
+    public final static double   SHOOTER_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
-    public final static double  SHOOTER_ABSOLUTE_TOLERANCE         = 0; //TODO figure out what this should be
+    public final static double   SHOOTER_ABSOLUTE_TOLERANCE         = 0; //TODO figure out what this should be
     ///// Ball Agitator Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter's ball agitator */
     public final static boolean  AGITATOR_USE_CAN_TALON             = true;
@@ -131,47 +131,49 @@ public class RobotMap {
     /** Enable/Disable using CAN based talons for the gear placement mechanism's motor */
     public final static boolean  GEAR_PLACEMENT_USE_CAN_TALON       = true;
     /** CAN ID for the gear placement system's motor (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is true */
-    public final static int     GEAR_PLACEMENT_CAN_ID              = 121;
+    public final static int      GEAR_PLACEMENT_CAN_ID              = 121;
     /** PWM port for the gear placement system (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is false) */
-    public final static int     GEAR_PLACEMENT_PWM_PORT            = 9;
+    public final static int      GEAR_PLACEMENT_PWM_PORT            = 9;
     /** Speed to set the gear placement motor to */
-    public final static double  GEAR_PLACEMENT_SPEED               = 0.5;
+    public final static double   GEAR_PLACEMENT_SPEED               = 0.5;
 
     ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
     /** DIO port for the rangefinder's echo pulse output */
-    public final static int     RANGEFINDER_ANALOG_IN_PORT         = 0;
+    public final static int      RANGEFINDER_ANALOG_IN_PORT         = 0;
     /** Amount of volts per 5 millimeters */
-    public final static double  RANGEFINDER_V5MM                   = 5 / 4096;
+    public final static double   RANGEFINDER_V5MM                   = 5 / 4096;
     /** Whether or not to use millimeters for the rangefinder instead of inches */
-    public final static boolean RANGEFINDER_USE_MILLIMETERS        = false;
+    public final static boolean  RANGEFINDER_USE_MILLIMETERS        = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Use CANTalons for the drive base instead of PWM Talons */
-    public final static boolean DRIVE_USE_CAN_TALON                = true;
+    public final static boolean  DRIVE_USE_CAN_TALON                = true;
     /** Invert motor direction for the drive train's right side */
-    public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
+    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
     public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
     /** Number to multiply times the speed of the robot when the driver enables saftey mode */
     public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
     ///// Encoder Values /////
     /** DIO port for the drive train's right encoder A channel */
-    public final static int      DRIVE_RIGHT_ENCODER_A_CHANNEL      = 5;
+    public final static int    DRIVE_RIGHT_ENCODER_A_CHANNEL    = 5;
     /** DIO port for the drive train's right encoder B channel */
-    public final static int      DRIVE_RIGHT_ENCODER_B_CHANNEL      = 6;
+    public final static int    DRIVE_RIGHT_ENCODER_B_CHANNEL    = 6;
     /** DIO port for the drive train's left encoder A channel */
-    public final static int      DRIVE_LEFT_ENCODER_A_CHANNEL       = 7;
+    public final static int    DRIVE_LEFT_ENCODER_A_CHANNEL     = 7;
     /** DIO port for the drive train's left encoder B channel */
-    public final static int      DRIVE_LEFT_ENCODER_B_CHANNEL       = 8;
+    public final static int    DRIVE_LEFT_ENCODER_B_CHANNEL     = 8;
+    /**  */
+    public final static double DRIVE_ENCODER_DISTANCE_PER_PULSE = 6 * Math.PI;
     ///// Motor CAN IDs /////
     /** CAN ID for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_CAN              = 1;
+    public final static int    FRONT_RIGHT_MOTOR_CAN            = 1;
     /** CAN ID for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_CAN               = 4;
+    public final static int    BACK_RIGHT_MOTOR_CAN             = 4;
     /** CAN ID for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_CAN               = 3;
+    public final static int    FRONT_LEFT_MOTOR_CAN             = 3;
     /** CAN ID for back left motor */
-    public final static int      BACK_LEFT_MOTOR_CAN                = 2;
+    public final static int    BACK_LEFT_MOTOR_CAN              = 2;
     ///// Motor PWM IDs /////
     /** PWM port for front right motor */
     public final static int      FRONT_RIGHT_MOTOR_PWM              = 0;
@@ -189,7 +191,7 @@ public class RobotMap {
 
     ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
-    public final static boolean  XBOX_DRIVE_CONTROLLER              = true;
+    public final static boolean  XBOX_DRIVE_CONTROLLER              = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                          = 0;
@@ -285,12 +287,10 @@ public class RobotMap {
     public final static int[]    SCREEN_CENTER                      = {IMAGE_X / 2, IMAGE_Y / 2};
 
     ////////////////////////////////////////// Code Quality of Life Variables //////////////////////////////////////////
-    /** Index to always use for accessing the left speed in an array */
-    public final static int      LEFT_INDEX                         = 0;
-    /** Index to always use for accessing the right speed in an array */
-    public final static int      RIGHT_INDEX                        = 1;
     /** Default value to use in when getting values from NetworkTables */
     public final static double[] DEFAULT_VALUE                      = new double[0];
+    /** This will set the distance per rotation to one, so it will be in RPMs */
+    public final static double   ENCODER_RPM_DISTANCE_PER_PULSE     = 1 / 2048;
 
     //////////////////////////////////////// Illegal Values (to signify errors) ////////////////////////////////////////
     /** Illegal array to return from NetworkVisionProcessing if an value could not be gotten */
