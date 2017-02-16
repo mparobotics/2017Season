@@ -44,11 +44,11 @@ public class RobotMap {
     /** Time (in milliseconds) that it takes to put the gear motor up */
     public final static double   GEAR_MOTOR_UP_TIME                  = 1000;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double   GEAR_MOTOR_DOWN_TIME                = 1000;
+    public final static double  GEAR_MOTOR_DOWN_TIME                = 1000;
     /** Gear backup direction */
-    public final static double   GEAR_BACKUP_DISTANCE                = 10; //TODO figure out this distance
+    public final static double  GEAR_BACKUP_DISTANCE                = 10; //TODO figure out this distance
     /** Distance for the left side of the robot to travel when turning from the gear target */
-    public final static double   GEAR_TURN_LEFT_DISTANCE             = 4; //TODO figure out what this should be
+    public final static double  GEAR_TURN_LEFT_DISTANCE             = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
     public final static double  GEAR_TURN_RIGHT_DISTANCE            = 4; //TODO figure out what this should be
 
@@ -59,21 +59,21 @@ public class RobotMap {
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
     public final static int     SHOOTER_CAN_ID                      = 3;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int    SHOOTER_PWM_ID                      = 4;
+    public final static int     SHOOTER_PWM_ID                      = 4;
     /** DIO port for the shooter's encoder's A channel */
-    public final static int    SHOOTER_ENCODER_A_CHANNEL           = 0;
+    public final static int     SHOOTER_ENCODER_A_CHANNEL           = 0;
     /** DIO port for the shooter's encoder's B channel */
-    public final static int    SHOOTER_ENCODER_B_CHANNEL           = 1;
+    public final static int     SHOOTER_ENCODER_B_CHANNEL           = 1;
     /**  */
-    public final static double SHOOTER_ENCODER_DISTANCE_PER_PULSE  = 1 / 20;
+    public final static double  SHOOTER_ENCODER_DISTANCE_PER_PULSE  = 1 / 20;
     /** Setpoint for the shooter's PID loop */
-    public final static double SHOOTER_SETPOINT                    = 600; //TODO figure out what this should be
+    public final static double  SHOOTER_SETPOINT                    = 600; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double SHOOTER_PROPORTIONAL                = 0.001; //TODO figure out what this should be
+    public final static double  SHOOTER_PROPORTIONAL                = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
-    public final static double SHOOTER_INTEGRAL                    = 0; //TODO figure out what this should be
+    public final static double  SHOOTER_INTEGRAL                    = 0; //TODO figure out what this should be
     /** Derivative multiplier for the shooter's */
-    public final static double SHOOTER_DERIVATIVE                  = 0; //TODO figure out what this should be
+    public final static double  SHOOTER_DERIVATIVE                  = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
     public final static double  SHOOTER_ABSOLUTE_TOLERANCE          = 0.1; //TODO figure out what this should be
     ///// Ball Agitator Motor Configuration /////
@@ -84,21 +84,21 @@ public class RobotMap {
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
     public final static int     AGITATOR_PWM_PORT                   = 5;
     /** DIO port for the agitator's encoder's A channel */
-    public final static int    AGITATOR_ENCODER_A_CHANNEL          = 2;
+    public final static int     AGITATOR_ENCODER_A_CHANNEL          = 2;
     /** DIO port for the agitator's encoder's B channel */
-    public final static int    AGITATOR_ENCODER_B_CHANNEL          = 3;
+    public final static int     AGITATOR_ENCODER_B_CHANNEL          = 3;
     /** The agitator's encoder has 7 pulses per revolution, this makes the encoder measure in rotations */
-    public final static double AGITATOR_ENCODER_DISTANCE_PER_PULSE = 1 / 7;
+    public final static double  AGITATOR_ENCODER_DISTANCE_PER_PULSE = 1 / 7;
     /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
-    public final static double AGITATOR_FEED_SETPOINT              = -400; //TODO figure out what this should be
+    public final static double  AGITATOR_FEED_SETPOINT              = 400; //TODO figure out what this should be
     /** Setpoint for the agitator's PID loop when it is sitting idle */
-    public final static double AGITATOR_IDLE_SETPOINT              = -100; //TODO add actual value
+    public final static double  AGITATOR_IDLE_SETPOINT              = 100; //TODO add actual value
     /** Proportional multiplier for the agitator's PID loop */
-    public final static double AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
+    public final static double  AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the agitator's PID loop */
-    public final static double AGITATOR_INTEGRAL                   = 0; //TODO figure out what this should be
+    public final static double  AGITATOR_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the agitator's */
-    public final static double AGITATOR_DERIVATIVE                 = 0; //TODO figure out what this should be
+    public final static double  AGITATOR_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the agitator's set point */
     public final static double  AGITATOR_ABSOLUTE_TOLERANCE         = 0.1; //TODO figure out what this should be
 
@@ -142,9 +142,9 @@ public class RobotMap {
     /** DIO port for the rangefinder's echo pulse output */
     public final static int     RANGEFINDER_ANALOG_IN_PORT          = 0;
     /** Amount of volts per 5 millimeters */
-    public final static double   RANGEFINDER_V5MM                    = 5 / 4096;
+    public final static double  RANGEFINDER_V5MM                    = 5 / 4096;
     /** Whether or not to use millimeters for the rangefinder instead of inches */
-    public final static boolean  RANGEFINDER_USE_MILLIMETERS         = false;
+    public final static boolean RANGEFINDER_USE_MILLIMETERS         = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Use CANTalons for the drive base instead of PWM Talons */
@@ -186,13 +186,13 @@ public class RobotMap {
     public final static int     BACK_LEFT_MOTOR_PWM                 = 3;
     ///// Autonomous Configuration /////
     /** Max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED                    = 0.5;
+    public final static double  AUTONOMOUS_SPEED                    = 0.5;
     /** Multiplier for turning speed with autonomous driving */
-    public final static double   TURNING_SPEED_MULTIPLIER            = 0.5;
+    public final static double  TURNING_SPEED_MULTIPLIER            = 0.5;
 
     ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
-    public final static boolean  XBOX_DRIVE_CONTROLLER               = false;
+    public final static boolean XBOX_DRIVE_CONTROLLER               = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                           = 0;
@@ -240,36 +240,36 @@ public class RobotMap {
     /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
     public final static int      STRAIGHT_MODE_BUTTON                = 1;
     /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
-    public final static int      CENTER_ON_GEAR_BUTTON               = 3;
+    public final static int     CENTER_ON_GEAR_BUTTON               = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
-    public final static int      DRIVE_TO_GEAR_BUTTON                = 4;
+    public final static int     DRIVE_TO_GEAR_BUTTON                = 4;
     /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
-    public final static int      SHOOT_BUTTON                        = 5;
+    public final static int     SHOOT_BUTTON                        = 5;
     /** Button ID on (?) to climb the rope */
-    public final static int    CLIMB_BUTTON                        = 6;
+    public final static int     CLIMB_BUTTON                        = 6;
     /** Button ID on (?) to collect balls */
-    public final static int    BALL_COLLECT_BUTTON                 = 7;
+    public final static int     BALL_COLLECT_BUTTON                 = 7;
 
     ///// Debugging Buttons /////
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
-    public final static int    RIGHT_DRIVE_ENCODER_CHECK           = 11;
+    public final static int     RIGHT_DRIVE_ENCODER_CHECK           = 11;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
-    public final static int    LEFT_DRIVE_ENCODER_CHECK            = 8;
+    public final static int     LEFT_DRIVE_ENCODER_CHECK            = 8;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
-    public final static int    RANGEFINDER_CHECK                   = 10;
+    public final static int     RANGEFINDER_CHECK                   = 10;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String TABLE_HIGH_GOAL_NAME                = "vision/high_goal";
+    public final static String  TABLE_HIGH_GOAL_NAME                = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
-    public final static String   SPEED_RIGHT_KEY                     = "rightSpeed";
+    public final static String  SPEED_RIGHT_KEY                     = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
-    public final static String   SPEED_LEFT_KEY                      = "leftSpeed";
+    public final static String  SPEED_LEFT_KEY                      = "leftSpeed";
     /** Map key for center x of a contour */
-    public final static String   CONTOUR_X_KEY                       = "center_x";
+    public final static String  CONTOUR_X_KEY                       = "center_x";
     /** Map key for center y of a contour */
-    public final static String   CONTOUR_Y_KEY                       = "center_y";
+    public final static String  CONTOUR_Y_KEY                       = "center_y";
     /** Map key for contour height */
     public final static String   CONTOUR_HEIGHT_KEY                  = "height";
     /** Map key for contour width */
