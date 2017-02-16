@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands.HighGoal;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * Command to make the robot shoot at the high goal
@@ -14,7 +15,6 @@ import org.usfirst.frc.team3926.robot.Robot;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  * TODO calculate range and speed needed
- * TODO reverse speed direction to get balls out
  ***********************************************************************************************************************/
 public class Shoot extends Command {
 
@@ -40,6 +40,10 @@ public class Shoot extends Command {
      * TODO calculate range and setpoint here
      */
     protected void execute() {
+
+        double calculatedSetpoint = RobotMap.SHOOTER_SETPOINT;
+
+        Robot.shooter.setSetpoint(calculatedSetpoint);
 
     }
 

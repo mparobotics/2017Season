@@ -126,6 +126,7 @@ public class DriveControl extends Subsystem {
 
         SmartDashboard.putBoolean("Straight mode", straight);
         SmartDashboard.putBoolean("Safety mode", safe);
+        SmartDashboard.putBoolean("Invert Drive", invert);
 
         driveSystem.tankDrive(leftSide, rightSide);
 
