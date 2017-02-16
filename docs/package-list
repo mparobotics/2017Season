@@ -1,0 +1,9 @@
+org.usfirst.frc.team3926.robot
+org.usfirst.frc.team3926.robot.commands
+org.usfirst.frc.team3926.robot.commands.Autonomous
+org.usfirst.frc.team3926.robot.commands.Debugging
+org.usfirst.frc.team3926.robot.commands.Driving
+org.usfirst.frc.team3926.robot.commands.Gears
+org.usfirst.frc.team3926.robot.commands.HighGoal
+org.usfirst.frc.team3926.robot.subsystems
+org.usfirst.frc.team3926.robot.triggers
