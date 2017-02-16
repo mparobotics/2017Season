@@ -59,6 +59,8 @@ public class OI {
     public Button                leftDrivetrainEncoder;
     /** Prints the value of the drive train's rangefinder */
     public Button                drivetrainRangefinder;
+    /** Toggles the inverted direction of the drivetrains */
+    public Button                invertDriveDirection;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -82,7 +84,7 @@ public class OI {
             driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
             driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
             straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
-            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFTEY_MODE_BUTTON);
+            safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFETY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.CONTOUR_ERROR_BUTTON);
             centerOnHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.CENTER_ON_HIGH_BUTTON_BUTTON);
             driveToHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_HIGH_GOAL_BUTTON);
@@ -92,6 +94,7 @@ public class OI {
             //feed = new JoystickButton(driverSecondaryStick, RobotMap.AGITATE_BUTTON);
             climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
+            invertDriveDirection = new JoystickButton(driverPrimaryStick, RobotMap.TOGGLE_INVERT_DRIVE_BUTTON);
             ///// Debugging Buttons /////
             if (RobotMap.DEBUG) {
                 rightDrivetrainEncoder = new JoystickButton(driverPrimaryStick, RobotMap.RIGHT_DRIVE_ENCODER_CHECK);

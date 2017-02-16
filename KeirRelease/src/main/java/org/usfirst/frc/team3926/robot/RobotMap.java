@@ -36,7 +36,7 @@ public class RobotMap {
 
     ///////////////////////////////////////////// Autonomous Configuration /////////////////////////////////////////////
     /** Distance to drive forward for the autonomous DriveForward command (whe used by itself) */
-    public final static double   AUTONOMOUS_DRIVE_FORWARD_DISTANCE   = 10; //TODO find this value
+    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE   = 10; //TODO find this value
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
@@ -205,13 +205,13 @@ public class RobotMap {
     /** Button ID to enter safety mode */
     public final static int     XBOX_SAFETY_MODE_BUTTON             = 1; //(A)
     /** Button ID to enter straight mode */
-    public final static int      XBOX_STRAIGHT_MODE_BUTTON           = 2; //(B)
+    public final static int     XBOX_STRAIGHT_MODE_BUTTON           = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */
-    public final static int      XBOX_CONTOUR_ERROR_BUTTON           = 9; //(Left Stick Click)
+    public final static int     XBOX_CONTOUR_ERROR_BUTTON           = 9; //(Left Stick Click)
     /** Button ID to center the robot on the vision target */
-    public final static int      XBOX_CENTER_ON_HIGH_GOAL_BUTTON     = 4; //(X)
+    public final static int     XBOX_CENTER_ON_HIGH_GOAL_BUTTON     = 4; //(X)
     /** Button ID to drive towards the center of the vision target */
-    public final static int      XBOX_DRIVE_TO_HIGH_GOAL_BUTTON      = 3; //(Y)
+    public final static int     XBOX_DRIVE_TO_HIGH_GOAL_BUTTON      = 3; //(Y)
     /** Button ID to drive towards the center of the gear's vision target */
     public final static int      XBOX_CENTER_ON_GEAR_BUTTON          = 6; //(Right Bumper)
     /** Button ID to center the robot on the gear's vision target */
@@ -221,19 +221,21 @@ public class RobotMap {
     /** Button ID to activate the climber */
     public final static int      XBOX_CLIMB_BUTTON                   = 8; //(Start)
     /** Button ID to collect balls */
-    public final static int      XBOX_COLLECT_BUTTON                 = 10; //(Right Stick Click)
+    public final static int     XBOX_COLLECT_BUTTON                 = 10; //(Right Stick Click)
 
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
-    public final static int      RIGHT_STICK_PORT                    = 0;
+    public final static int     RIGHT_STICK_PORT                    = 0;
     /** USB port number for left joystick */
-    public final static int      LEFT_STICK_PORT                     = 1;
+    public final static int     LEFT_STICK_PORT                     = 1;
     ///// Configuration for Driver's Primary Stick /////
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
-    public final static int      SAFTEY_MODE_BUTTON                  = 1;
+    public final static int     SAFETY_MODE_BUTTON                  = 1;
+    /** Button ID on {@link OI#driverPrimaryStick} to toggle invert drive direction */
+    public final static int     TOGGLE_INVERT_DRIVE_BUTTON          = 5;
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
-    public final static int      CONTOUR_ERROR_BUTTON                = 5;
+    public final static int     CONTOUR_ERROR_BUTTON                = 7;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
     public final static int     CENTER_ON_HIGH_BUTTON_BUTTON        = 4;
     /** Button ID on {@link OI#driverPrimaryStick} to drive towards the center of the vision target */
@@ -283,11 +285,11 @@ public class RobotMap {
     public final static double  ALLOWABLE_ERROR                     = 0.05;
     ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
-    public final static int      IMAGE_X                             = 320;
+    public final static int     IMAGE_X                             = 320;
     /** Size of the vision tracking image's Y axis */
-    public final static int      IMAGE_Y                             = 240;
+    public final static int     IMAGE_Y                             = 240;
     /** Center point on the screen */
-    public final static int[]    SCREEN_CENTER                       = {IMAGE_X / 2, IMAGE_Y / 2};
+    public final static int[]   SCREEN_CENTER                       = {IMAGE_X / 2, IMAGE_Y / 2};
 
     ////////////////////////////////////////// Code Quality of Life Variables //////////////////////////////////////////
     /** Default value to use in when getting values from NetworkTables */

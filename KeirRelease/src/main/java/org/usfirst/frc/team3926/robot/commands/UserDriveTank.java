@@ -17,6 +17,9 @@ import static org.usfirst.frc.team3926.robot.Robot.oi;
  ***********************************************************************************************************************/
 public class UserDriveTank extends Command {
 
+    private boolean invertDirection;
+    private boolean toggleButtonLastState;
+
     /**
      * Constructs the UserDriveTank command requiring {@link Robot#driveControl}
      */
@@ -33,19 +36,34 @@ public class UserDriveTank extends Command {
     }
 
     /**
-     * Calls {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#driveTank(double, double, boolean, boolean)}
+     * Calls
+     * {@link org.usfirst.frc.team3926.robot.subsystems.DriveControl#driveTank(double, double, boolean, boolean, boolean)}
      * to control the drive base
      */
     protected void execute() {
+
+        if (Robot.oi.invertDriveDirection.get()) {
+
+            if (!toggleButtonLastState)
+                invertDirection = !invertDirection;
+
+            toggleButtonLastState = true;
+
+        } else {
+
+            toggleButtonLastState = false;
+            invertDirection = !invertDirection;
+
+        }
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER)
             Robot.driveControl.driveTank(oi.driverPrimaryStick.getRawAxis(RobotMap.XBOX_RIGHT_SPEED_AXIS),
                                          oi.driverPrimaryStick.getRawAxis(RobotMap.XBOX_LEFT_SPEED_AXIS),
                                          oi.straightMode.get(),
-                                         oi.safetyMode.get());
+                                         oi.safetyMode.get(), false);
         else
             Robot.driveControl.driveTank(oi.driverPrimaryStick.getY(), oi.driverSecondaryStick.getY(),
-                                         oi.straightMode.get(), oi.safetyMode.get());
+                                         oi.straightMode.get(), oi.safetyMode.get(), invertDirection);
     }
 
     /**
@@ -63,7 +81,6 @@ public class UserDriveTank extends Command {
      * This command never finishes
      */
     protected void end() {
-
 
     }
 

@@ -107,8 +107,9 @@ public class DriveControl extends Subsystem {
      * @param leftSpeed  Speed to set the left motor
      * @param straight   Whether or not the robot should drive straight
      * @param safe       Whether or not to reduce robot speed
+     * @param invert     Whether or not to invert the drive direction of the robot
      */
-    public void driveTank(double rightSpeed, double leftSpeed, boolean straight, boolean safe) {
+    public void driveTank(double rightSpeed, double leftSpeed, boolean straight, boolean safe, boolean invert) {
 
         setSpeed(rightSpeed, leftSpeed);
 
@@ -117,6 +118,11 @@ public class DriveControl extends Subsystem {
 
         if (safe)
             safeMode();
+
+        if (invert) {
+            leftSide *= -1;
+            rightSide *= -1;
+        }
 
         SmartDashboard.putBoolean("Straight mode", straight);
         SmartDashboard.putBoolean("Safety mode", safe);
