@@ -80,24 +80,26 @@ public class OI {
             collectBalls = new JoystickButton(driverPrimaryStick, RobotMap.XBOX_COLLECT_BUTTON);
             saveTrajectoryTrigger = new SaveTrajectoryTrigger();
         } else {
+            ///// Stick Initiation /////
             driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
             driverSecondaryStick = new Joystick(RobotMap.LEFT_STICK_PORT);
-            straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
+            ///// Primary Stick /////
             safetyMode = new JoystickButton(driverPrimaryStick, RobotMap.SAFETY_MODE_BUTTON);
             contourError = new JoystickButton(driverPrimaryStick, RobotMap.CONTOUR_ERROR_BUTTON);
             centerOnHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.CENTER_ON_HIGH_BUTTON_BUTTON);
             driveToHighGoal = new JoystickButton(driverPrimaryStick, RobotMap.DRIVE_TO_HIGH_GOAL_BUTTON);
-            centerOnGear = new JoystickButton(driverSecondaryStick, RobotMap.CENTER_ON_GEAR_BUTTON);
-            driveToGear = new JoystickButton(driverSecondaryStick, RobotMap.DRIVE_TO_GEAR_BUTTON);
             shoot = new JoystickButton(driverPrimaryStick, RobotMap.SHOOT_BUTTON);
-            //feed = new JoystickButton(driverSecondaryStick, RobotMap.AGITATE_BUTTON);
-            climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
-            collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
             invertDriveDirection = new JoystickButton(driverPrimaryStick, RobotMap.TOGGLE_INVERT_DRIVE_BUTTON);
             reverseShooter = new JoystickButton(driverPrimaryStick, RobotMap.REVERSE_SHOOT_DIRECTION);
+            ///// Secondary Stick /////
+            straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
+            centerOnGear = new JoystickButton(driverSecondaryStick, RobotMap.CENTER_ON_GEAR_BUTTON);
+            driveToGear = new JoystickButton(driverSecondaryStick, RobotMap.DRIVE_TO_GEAR_BUTTON);
+            climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
+            collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
             ///// Debugging Buttons /////
             if (RobotMap.DEBUG) {
-                rightDrivetrainEncoder = new JoystickButton(driverPrimaryStick, RobotMap.RIGHT_DRIVE_ENCODER_CHECK);
+                rightDrivetrainEncoder = new JoystickButton(driverSecondaryStick, RobotMap.RIGHT_DRIVE_ENCODER_CHECK);
                 leftDrivetrainEncoder = new JoystickButton(driverPrimaryStick, RobotMap.LEFT_DRIVE_ENCODER_CHECK);
                 drivetrainRangefinder = new JoystickButton(driverPrimaryStick, RobotMap.RANGEFINDER_CHECK);
                 rightDrivetrainEncoder.whenPressed(new RightDriveEncoderCheck());

@@ -228,52 +228,52 @@ public class RobotMap {
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
-    public final static int      RIGHT_STICK_PORT                    = 0;
+    public final static int    RIGHT_STICK_PORT             = 0;
     /** USB port number for left joystick */
-    public final static int      LEFT_STICK_PORT                     = 1;
+    public final static int    LEFT_STICK_PORT              = 1;
     ///// Configuration for Driver's Primary Stick /////
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
-    public final static int      SAFETY_MODE_BUTTON                  = 1;
+    public final static int    SAFETY_MODE_BUTTON           = 1;
     /** Button ID on {@link OI#driverPrimaryStick} to toggle invert drive direction */
-    public final static int      TOGGLE_INVERT_DRIVE_BUTTON          = 5;
+    public final static int    TOGGLE_INVERT_DRIVE_BUTTON   = 8;
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
-    public final static int      CONTOUR_ERROR_BUTTON                = 7;
+    public final static int    CONTOUR_ERROR_BUTTON         = 7;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
-    public final static int      CENTER_ON_HIGH_BUTTON_BUTTON        = 4;
+    public final static int    CENTER_ON_HIGH_BUTTON_BUTTON = 3;
     /** Button ID on {@link OI#driverPrimaryStick} to drive towards the center of the vision target */
-    public final static int      DRIVE_TO_HIGH_GOAL_BUTTON           = 3;
+    public final static int    DRIVE_TO_HIGH_GOAL_BUTTON    = 2;
+    /** Button ID on {@link OI#driverPrimaryStick} to shoot the ball and enable the agitator to feed mode */
+    public final static int    SHOOT_BUTTON                 = 5;
+    /** Button ID to reverse the shooting direction (to get stuck balls out) */
+    public final static int    REVERSE_SHOOT_DIRECTION      = 4;
     ///// Configuration for Driver's Secondary Stick /////
     /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
-    public final static int      STRAIGHT_MODE_BUTTON                = 1;
+    public final static int    STRAIGHT_MODE_BUTTON         = 1;
     /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
-    public final static int      CENTER_ON_GEAR_BUTTON               = 3;
+    public final static int    CENTER_ON_GEAR_BUTTON        = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
-    public final static int      DRIVE_TO_GEAR_BUTTON                = 4;
-    /** Button ID on {@link OI#driverSecondaryStick} to shoot the ball and enable the agitator to feed mode */
-    public final static int      SHOOT_BUTTON                        = 5;
-    /** Button ID to reverse the shooting direction (to get stuck balls out) */
-    public final static int      REVERSE_SHOOT_DIRECTION             = 8;
+    public final static int    DRIVE_TO_GEAR_BUTTON         = 2;
     /** Button ID on (?) to climb the rope */
-    public final static int      CLIMB_BUTTON                        = 6;
+    public final static int    CLIMB_BUTTON                 = 9;
     /** Button ID on (?) to collect balls */
-    public final static int      BALL_COLLECT_BUTTON                 = 7;
+    public final static int    BALL_COLLECT_BUTTON          = 5;
 
     ///// Debugging Buttons /////
-    /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
-    public final static int      RIGHT_DRIVE_ENCODER_CHECK           = 11;
+    /** Button ID on {@link OI#driverSecondaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
+    public final static int    RIGHT_DRIVE_ENCODER_CHECK    = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
-    public final static int      LEFT_DRIVE_ENCODER_CHECK            = 8;
+    public final static int    LEFT_DRIVE_ENCODER_CHECK     = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
-    public final static int      RANGEFINDER_CHECK                   = 10;
+    public final static int    RANGEFINDER_CHECK            = 9;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String   TABLE_HIGH_GOAL_NAME                = "vision/high_goal";
+    public final static String TABLE_HIGH_GOAL_NAME         = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
-    public final static String   SPEED_RIGHT_KEY                     = "rightSpeed";
+    public final static String SPEED_RIGHT_KEY              = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
-    public final static String   SPEED_LEFT_KEY                      = "leftSpeed";
+    public final static String SPEED_LEFT_KEY               = "leftSpeed";
     /** Map key for center x of a contour */
     public final static String   CONTOUR_X_KEY                       = "center_x";
     /** Map key for center y of a contour */
