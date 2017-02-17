@@ -51,7 +51,8 @@ public class GearPlacementMotorDown extends Command {
      */
     protected boolean isFinished() {
 
-        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_DOWN_TIME;
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_DOWN_TIME ||
+               Robot.oi.cancelCommand.get();
     }
 
     /**

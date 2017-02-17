@@ -48,7 +48,8 @@ public class DriveToGears extends Command {
      */
     protected boolean isFinished() {
 
-        return Robot.driveControl.withinDistance(RobotMap.GEAR_PLACEMENT_DISTANCE);
+        return Robot.driveControl.withinDistance(RobotMap.GEAR_PLACEMENT_DISTANCE) ||
+               Robot.oi.cancelCommand.get();
     }
 
     /**

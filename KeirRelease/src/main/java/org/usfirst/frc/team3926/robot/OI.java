@@ -22,7 +22,7 @@ import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 public class OI {
 
     /** Joystick on the drivers right side (or the XBox controller for driving the robot) */
-    public Joystick driverPrimaryStick;
+    public Joystick              driverPrimaryStick;
     /** Joystick on the drivers left side (or not used) */
     public Joystick              driverSecondaryStick;
     /** Joystick to use for the auxiliary driver */
@@ -51,15 +51,17 @@ public class OI {
     public SaveTrajectoryTrigger saveTrajectoryTrigger;
     ///// Debugging Buttons /////
     /** Prints the value of the drive train's right encoder and resets its value */
-    public Button   rightDrivetrainEncoder;
+    public Button                rightDrivetrainEncoder;
     /** Prints the value of the drive train's left encoder and resets its value */
-    public Button   leftDrivetrainEncoder;
+    public Button                leftDrivetrainEncoder;
     /** Prints the value of the drive train's rangefinder */
-    public Button   drivetrainRangefinder;
+    public Button                drivetrainRangefinder;
     /** Toggles the inverted direction of the drivetrains */
-    public Button   invertDriveDirection;
-    /**  */
-    public Button   reverseShooter;
+    public Button                invertDriveDirection;
+    /** Runs the shooter backwards */
+    public Button                reverseShooter;
+    /** Cancel the current autonomous command */
+    public Button                cancelCommand;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -97,6 +99,7 @@ public class OI {
             driveToGear = new JoystickButton(driverSecondaryStick, RobotMap.DRIVE_TO_GEAR_BUTTON);
             climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
+            cancelCommand = new JoystickButton(driverSecondaryStick, RobotMap.CANCEL_COMMAND);
             ///// Debugging Buttons /////
             if (RobotMap.DEBUG) {
                 rightDrivetrainEncoder = new JoystickButton(driverSecondaryStick, RobotMap.RIGHT_DRIVE_ENCODER_CHECK);

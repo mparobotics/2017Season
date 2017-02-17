@@ -50,7 +50,8 @@ public class GearPlacementMotorUp extends Command {
      */
     protected boolean isFinished() {
 
-        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_UP_TIME;
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_UP_TIME ||
+               Robot.oi.cancelCommand.get();
     }
 
     /**
