@@ -154,31 +154,31 @@ public class RobotMap {
     /** Use CANTalons for the drive base instead of PWM Talons */
     public final static boolean  DRIVE_USE_CAN_TALON                 = true;
     /** Invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION  = true;
+    public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION   = true;
+    public final static boolean INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
     /** Number to multiply times the speed of the robot when the driver enables safety mode */
-    public final static double   DRIVE_SAFETY_FACTOR                 = 0.50;
+    public final static double  DRIVE_SAFETY_FACTOR                = 0.50;
     ///// Encoder Values /////
     /** DIO port for the drive train's right encoder A channel */
-    public final static int      DRIVE_RIGHT_ENCODER_A_CHANNEL       = 8;
+    public final static int     DRIVE_RIGHT_ENCODER_A_CHANNEL      = 6;
     /** DIO port for the drive train's right encoder B channel */
-    public final static int      DRIVE_RIGHT_ENCODER_B_CHANNEL       = 7;
+    public final static int     DRIVE_RIGHT_ENCODER_B_CHANNEL      = 7;
     /** DIO port for the drive train's left encoder A channel */
-    public final static int      DRIVE_LEFT_ENCODER_A_CHANNEL        = 5;
+    public final static int     DRIVE_LEFT_ENCODER_A_CHANNEL       = 4;
     /** DIO port for the drive train's left encoder B channel */
-    public final static int      DRIVE_LEFT_ENCODER_B_CHANNEL        = 6;
+    public final static int     DRIVE_LEFT_ENCODER_B_CHANNEL       = 5;
     /**  */
-    public final static double   DRIVE_ENCODER_DISTANCE_PER_PULSE    = 6 * Math.PI / 20;
+    public final static double  DRIVE_ENCODER_DISTANCE_PER_PULSE   = 6 * Math.PI / 20;
     ///// Motor CAN IDs /////
     /** CAN ID for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_CAN               = 4;
+    public final static int     FRONT_RIGHT_MOTOR_CAN              = 4;
     /** CAN ID for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_CAN                = 5;
+    public final static int     BACK_RIGHT_MOTOR_CAN               = 5;
     /** CAN ID for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_CAN                = 7;
+    public final static int     FRONT_LEFT_MOTOR_CAN               = 7;
     /** CAN ID for back left motor */
-    public final static int      BACK_LEFT_MOTOR_CAN                 = 8;
+    public final static int     BACK_LEFT_MOTOR_CAN                = 8;
     ///// Motor PWM IDs /////
     /** PWM port for front right motor */
     public final static int      FRONT_RIGHT_MOTOR_PWM               = 0;

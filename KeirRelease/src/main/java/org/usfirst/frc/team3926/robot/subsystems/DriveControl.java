@@ -97,8 +97,8 @@ public class DriveControl extends Subsystem {
 
         rightSide = 0;
         leftSide = 0;
-        rightEncoder.reset();
-        leftEncoder.reset();
+        //rightEncoder.reset();
+        //leftEncoder.reset();
     }
 
     //////////////////////////////////////////////// Robot Driving /////////////////////////////////////////////////////
@@ -313,8 +313,8 @@ public class DriveControl extends Subsystem {
 
         SmartDashboard.putNumber("Rangefinder Voltage:", rangefinder.getVoltage());
         SmartDashboard.putNumber("Rangefinder Range (mm):", getRangeMM());
-        SmartDashboard.putNumber("Left Rate:", leftEncoder.getRate());
-        SmartDashboard.putNumber("Right Rate:", rightEncoder.getRate());
+        SmartDashboard.putNumber("Left Rate:", leftEncoder.get());
+        SmartDashboard.putNumber("Right Rate:", rightEncoder.get());
 
     }
 

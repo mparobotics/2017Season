@@ -73,6 +73,7 @@ public class OI {
         Robot.shooterEncoder.startLiveWindowMode();
         LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooterEncoder);
         LiveWindow.addActuator("agitator", "Agitator PID Loop", Robot.agitator.getPIDController());
+        LiveWindow.addSensor("agitator", "Agitator Encoder", Robot.agitatorEncoder);
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
             driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);

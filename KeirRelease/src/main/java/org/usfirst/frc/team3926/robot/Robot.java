@@ -177,6 +177,8 @@ public class Robot extends IterativeRobot {
     public final static SimpleMotor           gearPlacer;
     /***/
     public final static Encoder               shooterEncoder;
+    /***/
+    public final static Encoder               agitatorEncoder;
 
     static { //Static initialization for subsystems
 
@@ -191,8 +193,8 @@ public class Robot extends IterativeRobot {
                  RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
 
         ///// Agitator Initialization /////
-        Encoder agitatorEncoder = new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL,
-                                              RobotMap.AGITATOR_ENCODER_B_CHANNEL, true, CounterBase.EncodingType.k4X);
+        agitatorEncoder = new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL,
+                                      RobotMap.AGITATOR_ENCODER_B_CHANNEL, true, CounterBase.EncodingType.k4X);
         agitatorEncoder.setDistancePerPulse(RobotMap.AGITATOR_ENCODER_DISTANCE_PER_PULSE);
         agitator = new PIDControlledActuator<>
                 ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
@@ -242,11 +244,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Drive Forward", new DriveForward(RobotMap.AUTONOMOUS_DRIVE_FORWARD_DISTANCE));
         SmartDashboard.putData("Autonomous mode", chooser);
 
-        try {
-            driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
-        } catch (Exception e) {
-            System.out.print("umm...don't worry about it dude");
-        }
+        driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
 
         ///// System Preparation /////
         agitator.enable(); //Enables the agitator PID loop
@@ -316,8 +314,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
 
-        if (shooter.sensor instanceof Encoder)
-            ((Encoder) shooter.sensor).getRate();
         Scheduler.getInstance().run();
     }
 

@@ -32,6 +32,8 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  ***********************************************************************************************************************/
 public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
+    private Encoder encoder;
+
     /** Holds what the sensor is supposed to be checking for */
     private enum SensorPurpose {
         Rate,
@@ -108,6 +110,9 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         this.name = name;
         this.actuator = actuator;
         this.sensor = sensor;
+
+        if (sensor instanceof Encoder)
+            encoder = (Encoder) sensor; //TODO remove after debugging
 
         if (sensor instanceof PIDSource)
             ((PIDSource) sensor).setPIDSourceType(pidSourceType);
@@ -197,10 +202,11 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
         double returnValue = RobotMap.ILLEGAL_DOUBLE;
 
-        if (sensor instanceof Encoder) { //TODO generalize this again
+        if (encoder != null)
+            returnValue = encoder.pidGet();
+        else if (sensor instanceof PIDSource) {
 
-            returnValue = ((Encoder) sensor).pidGet();
-            //returnValue = -9;
+            returnValue = ((PIDSource) sensor).pidGet();
 
         } else if (sensor instanceof Accelerometer) {
 
@@ -263,6 +269,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      */
     @Override
     protected void usePIDOutput(double output) {
+
+        SmartDashboard.putNumber(name + " PID Output", output);
 
         if (actuator instanceof PIDOutput)
             ((PIDOutput) actuator).pidWrite(output);
