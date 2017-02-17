@@ -10,6 +10,8 @@ import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
 import org.usfirst.frc.team3926.robot.commands.Debugging.RangefinderCheck;
 import org.usfirst.frc.team3926.robot.commands.Debugging.RightDriveEncoderCheck;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
+import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorDown;
+import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.*;
 import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 
@@ -23,7 +25,7 @@ import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 public class OI {
 
     /** Joystick on the drivers right side (or the XBox controller for driving the robot) */
-    public Joystick              driverPrimaryStick;
+    public Joystick driverPrimaryStick;
     /** Joystick on the drivers left side (or not used) */
     public Joystick              driverSecondaryStick;
     /** Joystick to use for the auxiliary driver */
@@ -54,15 +56,19 @@ public class OI {
     /** Prints the value of the drive train's right encoder and resets its value */
     public Button                rightDrivetrainEncoder;
     /** Prints the value of the drive train's left encoder and resets its value */
-    public Button                leftDrivetrainEncoder;
+    public Button   leftDrivetrainEncoder;
     /** Prints the value of the drive train's rangefinder */
-    public Button                drivetrainRangefinder;
+    public Button   drivetrainRangefinder;
     /** Toggles the inverted direction of the drivetrains */
-    public Button                invertDriveDirection;
+    public Button   invertDriveDirection;
     /** Runs the shooter backwards */
-    public Button                reverseShooter;
+    public Button   reverseShooter;
     /** Cancel the current autonomous command */
-    public Button                cancelCommand;
+    public Button   cancelCommand;
+    /***/
+    public Button   gearMotorUp;
+    /***/
+    public Button   gearMotorDown;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -101,6 +107,8 @@ public class OI {
             shoot = new JoystickButton(driverPrimaryStick, RobotMap.SHOOT_BUTTON);
             invertDriveDirection = new JoystickButton(driverPrimaryStick, RobotMap.TOGGLE_INVERT_DRIVE_BUTTON);
             reverseShooter = new JoystickButton(driverPrimaryStick, RobotMap.REVERSE_SHOOT_DIRECTION);
+            gearMotorDown = new JoystickButton(driverPrimaryStick, RobotMap.GEAR_DOWN_BUTTON);
+            gearMotorUp = new JoystickButton(driverPrimaryStick, RobotMap.GEAR_UP_BUTTON);
             ///// Secondary Stick /////
             straightMode = new JoystickButton(driverSecondaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
             centerOnGear = new JoystickButton(driverSecondaryStick, RobotMap.CENTER_ON_GEAR_BUTTON);
@@ -129,6 +137,8 @@ public class OI {
         collectBalls.whileHeld(new CollectBalls());
         //saveTrajectoryTrigger.toggleWhenActive(new ContinueTrajectory());
         reverseShooter.whileHeld(new ShooterReverse());
+        gearMotorDown.whenPressed(new GearPlacementMotorDown());
+        gearMotorUp.whenPressed(new GearPlacementMotorUp());
 
     }
 

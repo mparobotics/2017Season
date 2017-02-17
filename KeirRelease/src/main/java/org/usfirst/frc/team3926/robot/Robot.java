@@ -156,6 +156,8 @@ import org.usfirst.frc.team3926.robot.subsystems.*;
 - Make up a code (Sumner Wu - 2k17)
  *      TODO gear placement command group
  *      TODO "make up a code" (sumner - 2k17) that reverses all motor directions
+ *      TODO collector reverse
+ *      TODO raise up encoder
  *      Right and left drive rate working with AM-103
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})

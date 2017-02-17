@@ -313,8 +313,10 @@ public class DriveControl extends Subsystem {
 
         SmartDashboard.putNumber("Rangefinder Voltage:", rangefinder.getVoltage());
         SmartDashboard.putNumber("Rangefinder Range (mm):", getRangeMM());
-        SmartDashboard.putNumber("Left Rate:", leftEncoder.get());
-        SmartDashboard.putNumber("Right Rate:", rightEncoder.get());
+        SmartDashboard.putNumber("Left Rate:", Math.round(leftEncoder.getRate() * 100) / 100);
+        System.out.println("Left Rate: " + leftEncoder.getRate());
+        SmartDashboard.putNumber("Right Rate:", Math.round(rightEncoder.getRate() * 100) / 100);
+        System.out.println("Right Rate: " + rightEncoder.getRate());
 
     }
 
@@ -383,8 +385,9 @@ public class DriveControl extends Subsystem {
      */
     private double getRangeMM() {
 
-        SmartDashboard.putNumber("Calculated V5mm", rangefinder.getVoltage() / 4096);
+        SmartDashboard.putNumber("Calculated V5mm", rangefinder.getVoltage() / RobotMap.RANGEFINDER_BITS);
         SmartDashboard.putNumber("Used V5mm", RobotMap.RANGEFINDER_V5MM);
+        SmartDashboard.putNumber("39.37 times voltage", rangefinder.getVoltage() * 39.37);
 
         return (rangefinder.getVoltage() / RobotMap.RANGEFINDER_V5MM) * 5;
 

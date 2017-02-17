@@ -66,7 +66,7 @@ public class ShooterSubsystem extends PIDSubsystem {
     protected void usePIDOutput(double output) {
 
         SmartDashboard.putNumber("Shooter PID Control Output", output);
-        SmartDashboard.putNumber("Shooter PID Control Input", encoder.getRate());
+        SmartDashboard.putNumber("Shooter PID Control Input", Math.round(encoder.getRate() * 100) / 100);
         SmartDashboard.putNumber("Shooter PID Control Setpoint", getSetpoint());
         shooterMotor.set(output);
 
