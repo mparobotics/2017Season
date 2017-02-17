@@ -59,7 +59,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * @param proportional      Multiplier for the proportional value
      * @param integral          Multiplier for the integral value (area under the curve) of the actuators get() method
      * @param derivative        Multiplier for the derivative value (instantaneous slope) of the actuators get() method
-     * @param forward           yeah...idk man
+     * @param forward           Slope of the graph relating an output value to its target
      * @param period            Amount of time between PID loop updates
      * @param absoluteTolerance Percent that the system is allowed to be off of the target
      */

@@ -86,21 +86,21 @@ public class RobotMap {
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
     public final static int      AGITATOR_PWM_PORT                   = 5;
     /** DIO port for the agitator's encoder's A channel */
-    public final static int      AGITATOR_ENCODER_A_CHANNEL          = 2;
+    public final static int    AGITATOR_ENCODER_A_CHANNEL          = 2;
     /** DIO port for the agitator's encoder's B channel */
-    public final static int      AGITATOR_ENCODER_B_CHANNEL          = 3;
+    public final static int    AGITATOR_ENCODER_B_CHANNEL          = 3;
     /** The agitator's encoder has 7 pulses per revolution, this makes the encoder measure in rotations */
-    public final static double   AGITATOR_ENCODER_DISTANCE_PER_PULSE = 1 / 7;
+    public final static double AGITATOR_ENCODER_DISTANCE_PER_PULSE = 1 / 7;
     /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
-    public final static double   AGITATOR_FEED_SETPOINT              = 400; //TODO figure out what this should be
+    public final static double AGITATOR_FEED_SETPOINT              = -400; //TODO figure out what this should be
     /** Setpoint for the agitator's PID loop when it is sitting idle */
-    public final static double   AGITATOR_IDLE_SETPOINT              = 100; //TODO add actual value
+    public final static double AGITATOR_IDLE_SETPOINT              = -100; //TODO add actual value
     /** Proportional multiplier for the agitator's PID loop */
-    public final static double   AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
+    public final static double AGITATOR_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the agitator's PID loop */
-    public final static double   AGITATOR_INTEGRAL                   = 0; //TODO figure out what this should be
+    public final static double AGITATOR_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the agitator's */
-    public final static double   AGITATOR_DERIVATIVE                 = 0; //TODO figure out what this should be
+    public final static double AGITATOR_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the agitator's set point */
     public final static double   AGITATOR_ABSOLUTE_TOLERANCE         = 0.1; //TODO figure out what this should be
 

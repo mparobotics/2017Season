@@ -52,7 +52,6 @@ public class UserDriveTank extends Command {
         } else {
 
             toggleButtonLastState = false;
-            invertDirection = !invertDirection;
 
         }
 

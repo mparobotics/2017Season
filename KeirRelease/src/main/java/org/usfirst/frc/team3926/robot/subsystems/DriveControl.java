@@ -120,8 +120,9 @@ public class DriveControl extends Subsystem {
             safeMode();
 
         if (invert) {
-            leftSide *= -1;
-            rightSide *= -1;
+            double leftSave = leftSide;
+            leftSide = -rightSpeed;
+            rightSide = -leftSave;
         }
 
         SmartDashboard.putBoolean("Straight mode", straight);
@@ -308,8 +309,7 @@ public class DriveControl extends Subsystem {
             SmartDashboard.putNumber("Left Speed: ", leftSide);
 
         SmartDashboard.putNumber("Rangefinder Voltage: ", rangefinder.getVoltage());
-        SmartDashboard
-                .putNumber("Rangefinder Range (cm): ", rangefinder.getVoltage() * RobotMap.RANGEFINDER_VOLTAGE_RATIO);
+        SmartDashboard.putNumber("Rangefinder Range (mm): ", getRangeMM());
 
     }
 
