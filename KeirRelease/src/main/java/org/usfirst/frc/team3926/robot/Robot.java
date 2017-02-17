@@ -1,10 +1,7 @@
 package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -178,11 +175,14 @@ public class Robot extends IterativeRobot {
     public final static SimpleMotor           ballCollector;
     /** Subsystem to control the robot's gear placement mechanism */
     public final static SimpleMotor           gearPlacer;
+    /***/
+    public final static Encoder               shooterEncoder;
 
     static { //Static initialization for subsystems
 
         ///// Shooter Initialization ////
-        Encoder shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL);
+        shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL,
+                                     false, CounterBase.EncodingType.k4X);
         shooterEncoder.setDistancePerPulse(RobotMap.SHOOTER_ENCODER_DISTANCE_PER_PULSE);
         shooter = new PIDControlledActuator<>
                 ("Shooter PID Control", (RobotMap.SHOOTER_USE_CAN_TALON) ? new CANTalon(RobotMap.SHOOTER_CAN_ID) :
@@ -192,7 +192,7 @@ public class Robot extends IterativeRobot {
 
         ///// Agitator Initialization /////
         Encoder agitatorEncoder = new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL,
-                                              RobotMap.AGITATOR_ENCODER_B_CHANNEL, true);
+                                              RobotMap.AGITATOR_ENCODER_B_CHANNEL, true, CounterBase.EncodingType.k4X);
         agitatorEncoder.setDistancePerPulse(RobotMap.AGITATOR_ENCODER_DISTANCE_PER_PULSE);
         agitator = new PIDControlledActuator<>
                 ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
@@ -316,6 +316,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
 
+        if (shooter.sensor instanceof Encoder)
+            ((Encoder) shooter.sensor).getRate();
         Scheduler.getInstance().run();
     }
 
@@ -326,8 +328,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void testPeriodic() {
 
-        LiveWindow.addActuator("shooter", "Shooter PID Loop", shooter.getPIDController());
-        LiveWindow.addActuator("agitator", "Agitator PID Loop", agitator.getPIDController());
+        SmartDashboard.putNumber("shooter encoder value", shooterEncoder.getRate());
         LiveWindow.run();
     }
 

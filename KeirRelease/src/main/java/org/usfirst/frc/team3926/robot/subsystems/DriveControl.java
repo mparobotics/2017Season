@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.subsystems;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -56,9 +57,11 @@ public class DriveControl extends Subsystem {
             driveSystem = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR_PWM, RobotMap.BACK_LEFT_MOTOR_PWM,
                                          RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
 
-        leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL);
+        leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL,
+                                  false, CounterBase.EncodingType.k4X);
         leftEncoder.setDistancePerPulse(RobotMap.DRIVE_ENCODER_DISTANCE_PER_PULSE);
-        rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL);
+        rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL,
+                                   false, CounterBase.EncodingType.k4X);
         rightEncoder.setDistancePerPulse(RobotMap.DRIVE_ENCODER_DISTANCE_PER_PULSE);
         rangefinder = new AnalogInput(RobotMap.RANGEFINDER_ANALOG_IN_PORT);
 
@@ -121,7 +124,7 @@ public class DriveControl extends Subsystem {
 
         if (invert) {
             double leftSave = leftSide;
-            leftSide = -rightSpeed;
+            leftSide = -rightSide;
             rightSide = -leftSave;
         }
 
@@ -308,8 +311,10 @@ public class DriveControl extends Subsystem {
         if (leftSpeed != RobotMap.ILLEGAL_DOUBLE)
             SmartDashboard.putNumber("Left Speed: ", leftSide);
 
-        SmartDashboard.putNumber("Rangefinder Voltage: ", rangefinder.getVoltage());
-        SmartDashboard.putNumber("Rangefinder Range (mm): ", getRangeMM());
+        SmartDashboard.putNumber("Rangefinder Voltage:", rangefinder.getVoltage());
+        SmartDashboard.putNumber("Rangefinder Range (mm):", getRangeMM());
+        SmartDashboard.putNumber("Left Rate:", leftEncoder.getRate());
+        SmartDashboard.putNumber("Right Rate:", rightEncoder.getRate());
 
     }
 

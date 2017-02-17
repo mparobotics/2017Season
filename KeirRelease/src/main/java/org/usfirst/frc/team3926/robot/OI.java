@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.PlaceGear;
 import org.usfirst.frc.team3926.robot.commands.Climb;
 import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
@@ -67,6 +68,11 @@ public class OI {
      * Constructs the OI class as specified by various options in {@link RobotMap}
      */
     OI() {
+
+        LiveWindow.addActuator("shooter", "Shooter PID Loop", Robot.shooter.getPIDController());
+        Robot.shooterEncoder.startLiveWindowMode();
+        LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooterEncoder);
+        LiveWindow.addActuator("agitator", "Agitator PID Loop", Robot.agitator.getPIDController());
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
             driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);

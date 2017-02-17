@@ -59,32 +59,32 @@ public class RobotMap {
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
     public final static int     SHOOTER_CAN_ID                      = 3;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int     SHOOTER_PWM_ID                      = 4;
+    public final static int     SHOOTER_PWM_ID                     = 4;
     /** DIO port for the shooter's encoder's A channel */
-    public final static int      SHOOTER_ENCODER_A_CHANNEL           = 0;
+    public final static int     SHOOTER_ENCODER_A_CHANNEL          = 0;
     /** DIO port for the shooter's encoder's B channel */
-    public final static int      SHOOTER_ENCODER_B_CHANNEL           = 1;
+    public final static int     SHOOTER_ENCODER_B_CHANNEL          = 1;
     /** This sets the shooter to count 1 unit per rotation of the motor, this gives us the rotational speed */
-    public final static double   SHOOTER_ENCODER_DISTANCE_PER_PULSE  = 1 / 20;
+    public final static double  SHOOTER_ENCODER_DISTANCE_PER_PULSE = 1 / 40;
     /** Setpoint for the shooter's PID loop */
-    public final static double   SHOOTER_SETPOINT                    = 600; //TODO figure out what this should be
+    public final static double  SHOOTER_SETPOINT                   = 600; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double   SHOOTER_PROPORTIONAL                = 0.001; //TODO figure out what this should be
+    public final static double  SHOOTER_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
-    public final static double   SHOOTER_INTEGRAL                    = 0; //TODO figure out what this should be
+    public final static double  SHOOTER_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the shooter's */
-    public final static double   SHOOTER_DERIVATIVE                  = 0; //TODO figure out what this should be
+    public final static double  SHOOTER_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
-    public final static double   SHOOTER_ABSOLUTE_TOLERANCE          = 0.1; //TODO figure out what this should be
+    public final static double  SHOOTER_ABSOLUTE_TOLERANCE         = 0.1; //TODO figure out what this should be
     /** Speed to run the shooter at when running it in reverse */
-    public final static double   SHOOTER_REVERSE_SPEED               = -200;
+    public final static double  SHOOTER_REVERSE_SPEED              = -500;
     ///// Ball Agitator Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter's ball agitator */
-    public final static boolean AGITATOR_USE_CAN_TALON              = true;
+    public final static boolean AGITATOR_USE_CAN_TALON             = true;
     /** CAN ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is true) */
-    public final static int     AGITATOR_CAN_ID                     = 1;
+    public final static int     AGITATOR_CAN_ID                    = 1;
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
-    public final static int     AGITATOR_PWM_PORT                   = 5;
+    public final static int     AGITATOR_PWM_PORT                  = 5;
     /** DIO port for the agitator's encoder's A channel */
     public final static int     AGITATOR_ENCODER_A_CHANNEL          = 2;
     /** DIO port for the agitator's encoder's B channel */

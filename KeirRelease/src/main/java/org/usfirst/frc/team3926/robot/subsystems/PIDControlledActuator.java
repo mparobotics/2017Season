@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * This class controls a motor controller (of type T) via a sensor (of type S).
@@ -42,9 +44,9 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
     /** Holds what the current purpose of the sensor is */
     private SensorPurpose sensorPurpose;
     /** Actuator being controlled by this PIDSubsystem */
-    private T             acutator;
+    private T             actuator;
     /** Sensor to control the output of the PID loop */
-    private S             sensor;
+    public  S             sensor; //TODO remove this debugging setting
     /** Name of this subsystem */
     private String        name;
 
@@ -59,7 +61,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * @param proportional      Multiplier for the proportional value
      * @param integral          Multiplier for the integral value (area under the curve) of the actuators get() method
      * @param derivative        Multiplier for the derivative value (instantaneous slope) of the actuators get() method
-     * @param forward           Slope of the graph relating an output value to its target
+     * @param forward           Slope of the graph relating an output value to its sensor value
      * @param period            Amount of time between PID loop updates
      * @param absoluteTolerance Percent that the system is allowed to be off of the target
      */
@@ -71,7 +73,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setAbsoluteTolerance(absoluteTolerance);
 
         this.name = name;
-        this.acutator = actuator;
+        this.actuator = actuator;
         this.sensor = sensor;
 
         if (sensor instanceof PIDSource)
@@ -104,7 +106,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setAbsoluteTolerance(absoluteTolerance);
 
         this.name = name;
-        this.acutator = actuator;
+        this.actuator = actuator;
         this.sensor = sensor;
 
         if (sensor instanceof PIDSource)
@@ -138,7 +140,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setSetpoint(target);
         setAbsoluteTolerance(absoluteTolerance);
 
-        this.acutator = actuator;
+        this.actuator = actuator;
         this.sensor = sensor;
         this.name = name;
 
@@ -171,7 +173,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setSetpoint(target);
         setAbsoluteTolerance(absoluteTolerance);
 
-        this.acutator = actuator;
+        this.actuator = actuator;
         this.sensor = sensor;
         this.name = name;
 
@@ -193,11 +195,12 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      */
     protected double returnPIDInput() {
 
-        double returnValue;
+        double returnValue = RobotMap.ILLEGAL_DOUBLE;
 
-        if (sensor instanceof PIDSource) {
+        if (sensor instanceof Encoder) { //TODO generalize this again
 
-            returnValue = ((PIDSource) sensor).pidGet();
+            returnValue = ((Encoder) sensor).pidGet();
+            //returnValue = -9;
 
         } else if (sensor instanceof Accelerometer) {
 
@@ -244,7 +247,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         SmartDashboard.putNumber(name + " PIDInput", returnValue);
         SmartDashboard.putNumber(name + " Setpoint", getSetpoint());
 
-        return returnValue;
+        return (returnValue != RobotMap.ILLEGAL_DOUBLE) ? returnValue : 0;
 
     }
 
@@ -261,8 +264,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
     @Override
     protected void usePIDOutput(double output) {
 
-        if (acutator instanceof PIDOutput)
-            ((PIDOutput) acutator).pidWrite(output);
+        if (actuator instanceof PIDOutput)
+            ((PIDOutput) actuator).pidWrite(output);
         else
             throw new IllegalArgumentException("PIDControlledActuator was created with an actuator that does not " +
                                                "extend PIDOutput.");
