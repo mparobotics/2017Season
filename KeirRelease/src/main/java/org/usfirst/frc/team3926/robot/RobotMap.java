@@ -67,7 +67,7 @@ public class RobotMap {
     /** This sets the shooter to count 1 unit per rotation of the motor, this gives us the rotational speed */
     public final static double  SHOOTER_ENCODER_DISTANCE_PER_PULSE = 1 / 40;
     /** Setpoint for the shooter's PID loop */
-    public final static double  SHOOTER_SETPOINT                   = 600; //TODO figure out what this should be
+    public final static double  SHOOTER_SETPOINT                   = /*600*/100; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
     public final static double  SHOOTER_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
@@ -136,23 +136,23 @@ public class RobotMap {
     /** CAN ID for the gear placement system's motor (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is true */
     public final static int      GEAR_PLACEMENT_CAN_ID               = 9;
     /** PWM port for the gear placement system (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is false) */
-    public final static int      GEAR_PLACEMENT_PWM_PORT             = 9;
+    public final static int     GEAR_PLACEMENT_PWM_PORT            = 9;
     /** Speed to set the gear placement motor to */
-    public final static double   GEAR_PLACEMENT_SPEED                = 0.5;
+    public final static double  GEAR_PLACEMENT_SPEED               = 0.5;
 
     ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
     /** DIO port for the rangefinder's echo pulse output */
-    public final static int      RANGEFINDER_ANALOG_IN_PORT          = 3;
+    public final static int     RANGEFINDER_ANALOG_IN_PORT         = 3;
     /** Amount of volts per 5 millimeters */
-    public final static double   RANGEFINDER_V5MM                    = 5 / 4096;
+    public final static double  RANGEFINDER_V5MM                   = 0.00122070312;
     /** Max range of the rangefinder divided by the max voltage of the analog input */
-    public final static double   RANGEFINDER_VOLTAGE_RATIO           = 645 / 5;
+    public final static double  RANGEFINDER_VOLTAGE_RATIO          = 645 / 5;
     /** Whether or not to use millimeters for the rangefinder instead of inches */
-    public final static boolean  RANGEFINDER_USE_MILLIMETERS         = false;
+    public final static boolean RANGEFINDER_USE_MILLIMETERS        = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Use CANTalons for the drive base instead of PWM Talons */
-    public final static boolean  DRIVE_USE_CAN_TALON                 = true;
+    public final static boolean DRIVE_USE_CAN_TALON                = true;
     /** Invert motor direction for the drive train's right side */
     public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */

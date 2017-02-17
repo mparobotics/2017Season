@@ -35,11 +35,11 @@ public class DriveControl extends Subsystem {
     /** Vision processing booleans */
     private boolean moveLeft, moveRight, contoursFound, centered;
     /** Encoder for the robot's left side */
-    public  Encoder     leftEncoder;
+    public Encoder     leftEncoder;
     /** Encoder for the robot's right side */
-    public  Encoder     rightEncoder;
+    public Encoder     rightEncoder;
     /** Rangefinder for autonomous distance finding */
-    private AnalogInput rangefinder;
+    public AnalogInput rangefinder;
 
     ////////////////////////////////////////// Initializers and Constructors ///////////////////////////////////////////
 
@@ -383,7 +383,10 @@ public class DriveControl extends Subsystem {
      */
     private double getRangeMM() {
 
-        return rangefinder.getVoltage() / RobotMap.RANGEFINDER_V5MM;
+        SmartDashboard.putNumber("Calculated V5mm", rangefinder.getVoltage() / 4096);
+        SmartDashboard.putNumber("Used V5mm", RobotMap.RANGEFINDER_V5MM);
+
+        return (rangefinder.getVoltage() / RobotMap.RANGEFINDER_V5MM) * 5;
 
     }
 

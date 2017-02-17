@@ -10,10 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
-import org.usfirst.frc.team3926.robot.subsystems.Climber;
-import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
-import org.usfirst.frc.team3926.robot.subsystems.PIDControlledActuator;
-import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
+import org.usfirst.frc.team3926.robot.subsystems.*;
 
 /***********************************************************************************************************************
  * The VM is configured to automatically run this class, and to call the
@@ -158,6 +155,7 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
 - Make up a code (Sumner Wu - 2k17)
  *      TODO gear placement command group
  *      TODO "make up a code" (sumner - 2k17) that reverses all motor directions
+ *      Right and left drive rate working with AM-103
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
@@ -168,7 +166,7 @@ public class Robot extends IterativeRobot {
     /** Subsystem to control the robot's shooter */
     public final static PIDControlledActuator shooter;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
-    public final static PIDControlledActuator agitator;
+    public final static EncoderPIDSystem      agitator;
     /** Subsystem to control the robot's climbing mechanism */
     public final static Climber               climber;
     /** Subsystem to control the robot's ball collection mechanism */
@@ -178,7 +176,7 @@ public class Robot extends IterativeRobot {
     /***/
     public final static Encoder               shooterEncoder;
     /***/
-    public final static Encoder               agitatorEncoder;
+    //public final static Encoder               agitatorEncoder;
 
     static { //Static initialization for subsystems
 
@@ -193,14 +191,18 @@ public class Robot extends IterativeRobot {
                  RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
 
         ///// Agitator Initialization /////
-        agitatorEncoder = new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL,
-                                      RobotMap.AGITATOR_ENCODER_B_CHANNEL, true, CounterBase.EncodingType.k4X);
-        agitatorEncoder.setDistancePerPulse(RobotMap.AGITATOR_ENCODER_DISTANCE_PER_PULSE);
-        agitator = new PIDControlledActuator<>
-                ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
-                                         new Talon(RobotMap.AGITATOR_PWM_PORT), agitatorEncoder,
-                 PIDSourceType.kRate, RobotMap.AGITATOR_FEED_SETPOINT, RobotMap.AGITATOR_PROPORTIONAL,
-                 RobotMap.AGITATOR_INTEGRAL, RobotMap.AGITATOR_DERIVATIVE, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE);
+//        agitatorEncoder = new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL,
+//                                      RobotMap.AGITATOR_ENCODER_B_CHANNEL, true, CounterBase.EncodingType.k4X);
+//        agitatorEncoder.setDistancePerPulse(1/2048);
+//        agitator = new PIDControlledActuator<>
+//                ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
+//                                         new Talon(RobotMap.AGITATOR_PWM_PORT), agitatorEncoder,
+//                 PIDSourceType.kRate, RobotMap.AGITATOR_FEED_SETPOINT, RobotMap.AGITATOR_PROPORTIONAL,
+//                 RobotMap.AGITATOR_INTEGRAL, RobotMap.AGITATOR_DERIVATIVE, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE);
+        agitator = new EncoderPIDSystem(new CANTalon(RobotMap.AGITATOR_CAN_ID), "Agitator PID Control",
+                                        RobotMap.AGITATOR_PROPORTIONAL, RobotMap.AGITATOR_INTEGRAL,
+                                        RobotMap.AGITATOR_DERIVATIVE, 0.015, 0, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE,
+                                        /*RobotMap.AGITATOR_FEED_SETPOINT*/0);
         agitator.createDefaultCommand(new AgitatorIdle());
 
         ///// Climber Initialization /////
@@ -260,6 +262,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
 
+        agitator.disable();
+
     }
 
     @Override
@@ -313,6 +317,12 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
+
+        //TODO remove debugging
+        if (oi.driverPrimaryStick.getRawButton(11))
+            gearPlacer.setCollectorSpeed(0.5);
+        else
+            gearPlacer.setCollectorSpeed(0);
 
         Scheduler.getInstance().run();
     }
