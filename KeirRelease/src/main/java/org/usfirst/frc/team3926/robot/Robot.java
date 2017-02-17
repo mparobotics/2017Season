@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -164,45 +165,23 @@ public class Robot extends IterativeRobot {
     /** Instance of DriveControl to allow driving of the robot's base */
     public final static DriveControl driveControl = new DriveControl();
     /** Subsystem to control the robot's shooter */
-    public final static PIDControlledActuator shooter;
+    public final static ShooterSubsystem shooter = new ShooterSubsystem();
+    ;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
-    public final static EncoderPIDSystem      agitator;
+    public final static AgitatorSystem agitator;
     /** Subsystem to control the robot's climbing mechanism */
-    public final static Climber               climber;
+    public final static Climber        climber;
     /** Subsystem to control the robot's ball collection mechanism */
-    public final static SimpleMotor           ballCollector;
+    public final static SimpleMotor    ballCollector;
     /** Subsystem to control the robot's gear placement mechanism */
-    public final static SimpleMotor           gearPlacer;
-    /***/
-    public final static Encoder               shooterEncoder;
-    /***/
-    //public final static Encoder               agitatorEncoder;
+    public final static SimpleMotor    gearPlacer;
 
     static { //Static initialization for subsystems
 
-        ///// Shooter Initialization ////
-        shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL,
-                                     false, CounterBase.EncodingType.k4X);
-        shooterEncoder.setDistancePerPulse(RobotMap.SHOOTER_ENCODER_DISTANCE_PER_PULSE);
-        shooter = new PIDControlledActuator<>
-                ("Shooter PID Control", (RobotMap.SHOOTER_USE_CAN_TALON) ? new CANTalon(RobotMap.SHOOTER_CAN_ID) :
-                                        new Talon(RobotMap.SHOOTER_PWM_ID), shooterEncoder,
-                 PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT, RobotMap.SHOOTER_PROPORTIONAL,
-                 RobotMap.SHOOTER_INTEGRAL, RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+        ///// Shooter Initialization ///
 
         ///// Agitator Initialization /////
-//        agitatorEncoder = new Encoder(RobotMap.AGITATOR_ENCODER_A_CHANNEL,
-//                                      RobotMap.AGITATOR_ENCODER_B_CHANNEL, true, CounterBase.EncodingType.k4X);
-//        agitatorEncoder.setDistancePerPulse(1/2048);
-//        agitator = new PIDControlledActuator<>
-//                ("Agitator PID Control", (RobotMap.AGITATOR_USE_CAN_TALON) ? new CANTalon(RobotMap.AGITATOR_CAN_ID) :
-//                                         new Talon(RobotMap.AGITATOR_PWM_PORT), agitatorEncoder,
-//                 PIDSourceType.kRate, RobotMap.AGITATOR_FEED_SETPOINT, RobotMap.AGITATOR_PROPORTIONAL,
-//                 RobotMap.AGITATOR_INTEGRAL, RobotMap.AGITATOR_DERIVATIVE, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE);
-        agitator = new EncoderPIDSystem(new CANTalon(RobotMap.AGITATOR_CAN_ID), "Agitator PID Control",
-                                        RobotMap.AGITATOR_PROPORTIONAL, RobotMap.AGITATOR_INTEGRAL,
-                                        RobotMap.AGITATOR_DERIVATIVE, 0.015, 0, RobotMap.AGITATOR_ABSOLUTE_TOLERANCE,
-                                        /*RobotMap.AGITATOR_FEED_SETPOINT*/0);
+        agitator = new AgitatorSystem();
         agitator.createDefaultCommand(new AgitatorIdle());
 
         ///// Climber Initialization /////
@@ -334,7 +313,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void testPeriodic() {
 
-        SmartDashboard.putNumber("shooter encoder value", shooterEncoder.getRate());
         LiveWindow.run();
     }
 
