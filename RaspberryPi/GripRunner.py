@@ -18,14 +18,14 @@ y_resolution = 240
 
 
 def out_of_x_range(x, w, h):
-    if ((x < 44) or (x > 232)) and w*h < 200:  #TODO test for real dimensions
+    if ((x < 106) or (x > 212)) and w*h < 100:  #TODO test for real dimensions
         return False
     else:
         return True
 
 
 def out_of_y_range(y, w, h):
-    if ((y < 33) or (y > 174)) and w*h < 200:
+    if ((y < 80) or (y > 160)) and w*h < 100:
         return False
     else:
         return True
