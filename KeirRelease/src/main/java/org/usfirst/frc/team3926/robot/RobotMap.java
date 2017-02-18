@@ -48,9 +48,9 @@ public class RobotMap {
     /** Gear backup direction */
     public final static double   GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
     /** Distance for the left side of the robot to travel when turning from the gear target */
-    public final static double   GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
+    public final static double  GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
-    public final static double   GEAR_TURN_RIGHT_DISTANCE           = 4; //TODO figure out what this should be
+    public final static double  GEAR_TURN_RIGHT_DISTANCE           = 4; //TODO figure out what this should be
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
@@ -76,9 +76,9 @@ public class RobotMap {
     public final static double  SHOOTER_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
     public final static double  SHOOTER_ABSOLUTE_TOLERANCE         = 0.1; //TODO figure out what this should be
-    /***/
+    /** Feed forward value for the shooter's PID loop */
     public final static double  SHOOTER_FEED_FORWARD               = 0;
-    /***/
+    /** Update period for the shooter's PID loop */
     public final static double  SHOOTER_PERIOD                     = 0.15;
     /** Speed to run the shooter at when running it in reverse */
     public final static double  SHOOTER_REVERSE_SPEED              = -500;
@@ -107,9 +107,9 @@ public class RobotMap {
     public final static double  AGITATOR_DERIVATIVE                = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the agitator's set point */
     public final static double  AGITATOR_ABSOLUTE_TOLERANCE        = 0.1; //TODO figure out what this should be
-    /***/
+    /** Feed forward value for the agitator PID loop */
     public final static double  AGITATOR_FEED_FORWARD              = 0;
-    /***/
+    /** Update period for the agitator PID loop */
     public final static double  AGITATOR_PERIOD                    = 0.15;
 
     /////////////////////////////////////////////// Climber Configuration //////////////////////////////////////////////
@@ -126,17 +126,17 @@ public class RobotMap {
     /** DIO port for the climbing system's limit switch */
     //public final static int      CLIMBER_LIMIT_SWITCH_PORT           = 4; Taken out of design
     /** Speed to climb at */
-    public final static double   CLIMBER_SPEED                      = 1;
+    public final static double  CLIMBER_SPEED                      = 1;
 
     /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */
-    public final static boolean  BALL_COLLECTION_USE_CAN_TALON      = true;
+    public final static boolean BALL_COLLECTION_USE_CAN_TALON      = true;
     /** CAN ID for ball collection system's motor controller (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true) */
     public final static int      BALL_COLLECTION_CAN_ID             = 2;
     /** PWM port for ball collection motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
-    public final static int      BALL_COLLECTION_PWM_PORT           = 6;
+    public final static int     BALL_COLLECTION_PWM_PORT           = 6;
     /** Speed to set the ball collector motor to */
-    public final static double   BALL_COLLECTION_SPEED              = 1;
+    public final static double  BALL_COLLECTION_SPEED              = 1;
 
     //////////////////////////////////////// Gear Placement Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the gear placement mechanism's motor */
@@ -147,11 +147,13 @@ public class RobotMap {
     public final static int     GEAR_PLACEMENT_PWM_PORT            = 9;
     /** Speed to set the gear placement motor to */
     public final static double  GEAR_PLACEMENT_SPEED               = 0.5;
+    /** Whether or not to reverse the direction of the gear retention arm motor */
+    public final static boolean REVERSE_GEAR_DIRECTION             = false;
 
     ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
     /** DIO port for the rangefinder's echo pulse output */
     public final static int     RANGEFINDER_ANALOG_IN_PORT         = 3;
-    /***/
+    /** Resolution of the ADC to use for rangefinder calculations (roboRIO has 12-bit ADC, so this is 2^12) */
     public final static int     RANGEFINDER_BITS                   = 4096;
     /** Amount of volts per 5 millimeters */
     public final static double  RANGEFINDER_V5MM                   = RANGEFINDER_BITS / 5;
@@ -191,13 +193,13 @@ public class RobotMap {
     public final static int     BACK_LEFT_MOTOR_CAN                = 8;
     ///// Motor PWM IDs /////
     /** PWM port for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_PWM              = 0;
+    public final static int     FRONT_RIGHT_MOTOR_PWM              = 0;
     /** PWM port for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_PWM               = 1;
+    public final static int     BACK_RIGHT_MOTOR_PWM               = 1;
     /** PWM port for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_PWM               = 2;
+    public final static int     FRONT_LEFT_MOTOR_PWM               = 2;
     /** PWM port for back left motor */
-    public final static int      BACK_LEFT_MOTOR_PWM                = 3;
+    public final static int     BACK_LEFT_MOTOR_PWM                = 3;
     ///// Autonomous Configuration /////
     /** Max speed for the robot to travel during autonomous */
     public final static double   AUTONOMOUS_SPEED                   = 0.5;
@@ -238,12 +240,12 @@ public class RobotMap {
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
-    public final static int      RIGHT_STICK_PORT                   = 0;
+    public final static int     RIGHT_STICK_PORT                   = 0;
     /** USB port number for left joystick */
-    public final static int      LEFT_STICK_PORT                    = 1;
+    public final static int     LEFT_STICK_PORT                    = 1;
     ///// Configuration for Driver's Primary Stick /////
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
-    public final static int      SAFETY_MODE_BUTTON                 = 1;
+    public final static int     SAFETY_MODE_BUTTON                 = 1;
     /** Button ID on {@link OI#driverPrimaryStick} to toggle invert drive direction */
     public final static int     TOGGLE_INVERT_DRIVE_BUTTON         = 8;
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
@@ -276,11 +278,11 @@ public class RobotMap {
 
     ///// Debugging Buttons /////
     /** Button ID on {@link OI#driverSecondaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
-    public final static int      RIGHT_DRIVE_ENCODER_CHECK          = 10;
+    public final static int     RIGHT_DRIVE_ENCODER_CHECK          = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
-    public final static int      LEFT_DRIVE_ENCODER_CHECK           = 10;
+    public final static int     LEFT_DRIVE_ENCODER_CHECK           = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
-    public final static int      RANGEFINDER_CHECK                  = 9;
+    public final static int     RANGEFINDER_CHECK                  = 9;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////

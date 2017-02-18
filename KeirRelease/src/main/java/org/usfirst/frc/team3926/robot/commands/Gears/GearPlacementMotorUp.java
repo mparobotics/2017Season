@@ -48,7 +48,8 @@ public class GearPlacementMotorUp extends Command {
     }
 
     /**
-     * @return If the amount of time specified by {@link RobotMap#GEAR_MOTOR_UP_TIME}
+     * @return If the amount of time specified by {@link RobotMap#GEAR_MOTOR_UP_TIME} or if the user has manually
+     * canceled the command
      */
     protected boolean isFinished() {
 

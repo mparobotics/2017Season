@@ -65,9 +65,9 @@ public class OI {
     public Button   reverseShooter;
     /** Cancel the current autonomous command */
     public Button   cancelCommand;
-    /***/
+    /** Runs the gear motor to put the arm up */
     public Button   gearMotorUp;
-    /***/
+    /** Runs the gear motor to put the arm down */
     public Button   gearMotorDown;
 
     /**
@@ -132,10 +132,8 @@ public class OI {
         driveToGear.whileHeld(new PlaceGear());
         centerOnGear.whileHeld(new CenterOnGears());
         shoot.whileHeld(new ShootAndFeed());
-        //feed.whileHeld(new AgitatorFeed());
         climb.whileHeld(new Climb());
         collectBalls.whileHeld(new CollectBalls());
-        //saveTrajectoryTrigger.toggleWhenActive(new ContinueTrajectory());
         reverseShooter.whileHeld(new ShooterReverse());
         gearMotorDown.whileHeld(new GearPlacementMotorDown());
         gearMotorUp.whileHeld(new GearPlacementMotorUp());

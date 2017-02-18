@@ -49,7 +49,8 @@ public class GearPlacementMotorDown extends Command {
     /**
      * Tells if the amount of time desired to run the motor has passed
      *
-     * @return If the amount of time specified by {@link RobotMap#GEAR_MOTOR_DOWN_TIME}
+     * @return If the amount of time specified by {@link RobotMap#GEAR_MOTOR_DOWN_TIME} or if the user has manually
+     * canceled the command
      */
     protected boolean isFinished() {
 

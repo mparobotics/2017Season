@@ -9,15 +9,14 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-/**
- * This class is an example of using an encoder.
- * <p>
- * Proportional: A constant value to use to change towards the target. This is the simplest way to make a PID loop
- * (however it is really just a P loop than). If the system is below the target, this gets added. If a system is above
- * its target, this gets added. If this is the only value in the loop, the system will oscillate around the target and
- * rarely actually hit it.
- * </p>
- */
+/***********************************************************************************************************************
+ * This is a (hopefully) temporary class, just like {@link ShooterSubsystem}
+ *
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ **********************************************************************************************************************/
 public class AgitatorSystem extends PIDSubsystem {
 
     private Encoder  encoder;

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -32,8 +31,6 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  ***********************************************************************************************************************/
 public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
-    private Encoder encoder;
-
     /** Holds what the sensor is supposed to be checking for */
     private enum SensorPurpose {
         Rate,
@@ -48,7 +45,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
     /** Actuator being controlled by this PIDSubsystem */
     private T             actuator;
     /** Sensor to control the output of the PID loop */
-    public  S             sensor; //TODO remove this debugging setting
+    public  S             sensor; //TODO remove debugging access modifier setting
     /** Name of this subsystem */
     private String        name;
 

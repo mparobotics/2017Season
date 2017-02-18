@@ -8,9 +8,14 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-/**
+/***********************************************************************************************************************
+ * This subsystem is a (hopefully) temporary patch that I used when trying to figure out
  *
- */
+ * @author William Kluge
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ **********************************************************************************************************************/
 public class ShooterSubsystem extends PIDSubsystem {
 
     private Encoder  encoder;
@@ -72,6 +77,9 @@ public class ShooterSubsystem extends PIDSubsystem {
 
     }
 
+    /**
+     * We do not create a default command for the shooter
+     */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new SpinTestMotor());

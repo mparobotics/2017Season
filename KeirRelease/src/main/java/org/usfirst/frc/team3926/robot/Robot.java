@@ -27,8 +27,6 @@ import org.usfirst.frc.team3926.robot.subsystems.*;
  * @author Joe Brooksbank
  *      TODO gear placement command group
  *      TODO collector reverse
- *      TODO raise up encoder
- *      Right and left drive rate working with AM-103
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
@@ -38,7 +36,6 @@ public class Robot extends IterativeRobot {
     public final static DriveControl     driveControl = new DriveControl();
     /** Subsystem to control the robot's shooter */
     public final static ShooterSubsystem shooter      = new ShooterSubsystem();
-    ;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
     public final static AgitatorSystem agitator;
     /** Subsystem to control the robot's climbing mechanism */
@@ -117,6 +114,9 @@ public class Robot extends IterativeRobot {
 
     }
 
+    /**
+     * TODO test if constructing things here will fix the instantiation issue
+     */
     @Override
     public void disabledPeriodic() {
 
