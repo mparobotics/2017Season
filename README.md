@@ -27,13 +27,13 @@ MPAROR's repository for all code made for Keir, our robot for the STEAMWORKS com
    
 * ###Research and Testing
    Each of the files in here are miscalaneous files from when the code team (William Kluge, Joe Brooksbank, Annie Portoghese, and Ben Lash) was doing testing/learing during the season. These files are not nessesarily meant to be used as examples of how systems should be made, and we can't garentee that all of these projects would work, but if you're interested in exploring some code you can look here. Here are some excerpts from this directory that contain notes or code that might be valuable.
-   * William/EncoderTestingII
+   * <b>William/EncoderTestingII</b><br>
       This project is a basic example of a PID loop implimented with the command based methodology. This code has been tested and works. If you are stuck on how to get started with a PID loop, this might be helpful to you.
-   * William/CommandBasedTesting/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java
+   * <b>William/CommandBasedTesting/src/org/usfirst/frc/team3926/subsystems/NetworkVisionProcessing.java</b><br>
       At the top of this file are a bunch of notes when we were first doing vision processing. This was before we figured out how to calibrate the camera with v4l2-ctl so it isn't nessesarily useful for Keir, but if you can't figure out how to get good results using only OpenCV than check out the filtering methods here.
-   * Joe/
+   * <b>Joe/</b><br>
       If you're looking for OpenCV and RaspberryPi stuff, Joe did most of his testing within <a href="https://github.com/mparobotics/2017Season/tree/master/RaspberryPi"> the RaspberryPi</a> folder; look there.
-   * Ben/ & Annie/
+   * <b>Ben/ and Annie/</b><br>
       All of their projects are when they were learning to code, so these projects are all them exploring WPILib and Java. They are not all be perfect, but may act as a good reference on where to start with a particular type of sensor.
       
 * ###Template Projects/TestCommand
