@@ -137,8 +137,8 @@ public class OI {
         collectBalls.whileHeld(new CollectBalls());
         //saveTrajectoryTrigger.toggleWhenActive(new ContinueTrajectory());
         reverseShooter.whileHeld(new ShooterReverse());
-        gearMotorDown.whenPressed(new GearPlacementMotorDown());
-        gearMotorUp.whenPressed(new GearPlacementMotorUp());
+        gearMotorDown.whileHeld(new GearPlacementMotorDown());
+        gearMotorUp.whileHeld(new GearPlacementMotorUp());
 
     }
 

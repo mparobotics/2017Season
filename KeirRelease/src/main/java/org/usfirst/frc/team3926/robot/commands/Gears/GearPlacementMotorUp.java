@@ -43,6 +43,8 @@ public class GearPlacementMotorUp extends Command {
      */
     protected void execute() {
 
+        Robot.gearPlacer.setCollectorSpeed(RobotMap.GEAR_PLACEMENT_SPEED);
+
     }
 
     /**

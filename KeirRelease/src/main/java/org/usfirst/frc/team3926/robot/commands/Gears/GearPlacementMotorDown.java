@@ -33,7 +33,7 @@ public class GearPlacementMotorDown extends Command {
      */
     protected void initialize() {
 
-        Robot.gearPlacer.setCollectorSpeed(-RobotMap.GEAR_PLACEMENT_SPEED);
+        Robot.gearPlacer.setCollectorSpeed(RobotMap.GEAR_PLACEMENT_SPEED * -1);
 
     }
 
@@ -41,6 +41,8 @@ public class GearPlacementMotorDown extends Command {
      * No code needs to be executed during this command
      */
     protected void execute() {
+
+        Robot.gearPlacer.setCollectorSpeed(RobotMap.GEAR_PLACEMENT_SPEED * -1);
 
     }
 

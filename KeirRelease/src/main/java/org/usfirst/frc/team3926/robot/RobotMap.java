@@ -55,74 +55,74 @@ public class RobotMap {
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter */
-    public final static boolean  SHOOTER_USE_CAN_TALON              = true;
+    public final static boolean SHOOTER_USE_CAN_TALON              = true;
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
-    public final static int      SHOOTER_CAN_ID                     = 3;
+    public final static int     SHOOTER_CAN_ID                     = 3;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int     SHOOTER_PWM_ID                = 4;
+    public final static int     SHOOTER_PWM_ID                     = 4;
     /** DIO port for the shooter's encoder's A channel */
-    public final static int     SHOOTER_ENCODER_A_CHANNEL     = 0;
+    public final static int     SHOOTER_ENCODER_A_CHANNEL          = 0;
     /** DIO port for the shooter's encoder's B channel */
-    public final static int     SHOOTER_ENCODER_B_CHANNEL     = 1;
+    public final static int     SHOOTER_ENCODER_B_CHANNEL          = 1;
     /** This sets the shooter to count 1 unit per rotation of the motor, this gives us the rotational speed */
-    public final static double  SHOOTER_ENCODER_PULSE_PER_REV = 40;
+    public final static double  SHOOTER_ENCODER_PULSE_PER_REV      = 40;
     /** Setpoint for the shooter's PID loop */
-    public final static double  SHOOTER_SETPOINT              = 600; //TODO figure out what this should be
+    public final static double  SHOOTER_SETPOINT                   = 600; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_PROPORTIONAL          = 0.001; //TODO figure out what this should be
+    public final static double  SHOOTER_PROPORTIONAL               = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_INTEGRAL              = 0; //TODO figure out what this should be
+    public final static double  SHOOTER_INTEGRAL                   = 0; //TODO figure out what this should be
     /** Derivative multiplier for the shooter's */
-    public final static double  SHOOTER_DERIVATIVE            = 0; //TODO figure out what this should be
+    public final static double  SHOOTER_DERIVATIVE                 = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
-    public final static double  SHOOTER_ABSOLUTE_TOLERANCE    = 0.1; //TODO figure out what this should be
+    public final static double  SHOOTER_ABSOLUTE_TOLERANCE         = 0.1; //TODO figure out what this should be
     /***/
-    public final static double  SHOOTER_FEED_FORWARD          = 0;
+    public final static double  SHOOTER_FEED_FORWARD               = 0;
     /***/
-    public final static double  SHOOTER_PERIOD                = 0.15;
+    public final static double  SHOOTER_PERIOD                     = 0.15;
     /** Speed to run the shooter at when running it in reverse */
-    public final static double  SHOOTER_REVERSE_SPEED         = -500;
+    public final static double  SHOOTER_REVERSE_SPEED              = -500;
     ///// Ball Agitator Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter's ball agitator */
-    public final static boolean AGITATOR_USE_CAN_TALON        = true;
+    public final static boolean AGITATOR_USE_CAN_TALON             = true;
     /** CAN ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is true) */
-    public final static int     AGITATOR_CAN_ID               = 1;
+    public final static int     AGITATOR_CAN_ID                    = 1;
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
-    public final static int      AGITATOR_PWM_PORT                  = 5;
+    public final static int     AGITATOR_PWM_PORT                  = 5;
     /** DIO port for the agitator's encoder's A channel */
-    public final static int      AGITATOR_ENCODER_A_CHANNEL         = 2;
+    public final static int     AGITATOR_ENCODER_A_CHANNEL         = 2;
     /** DIO port for the agitator's encoder's B channel */
-    public final static int      AGITATOR_ENCODER_B_CHANNEL         = 3;
+    public final static int     AGITATOR_ENCODER_B_CHANNEL         = 3;
     /** The agitator's encoder has 7 pulses per revolution, this makes the encoder measure in rotations */
-    public final static double   AGITATOR_ENCODER_PULSES_PER_REV    = 7;
+    public final static double  AGITATOR_ENCODER_PULSES_PER_REV    = 7;
     /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
-    public final static double   AGITATOR_FEED_SETPOINT             = -400; //TODO figure out what this should be
+    public final static double  AGITATOR_FEED_SETPOINT             = -400; //TODO figure out what this should be
     /** Setpoint for the agitator's PID loop when it is sitting idle */
-    public final static double   AGITATOR_IDLE_SETPOINT             = 0; //TODO add actual value
+    public final static double  AGITATOR_IDLE_SETPOINT             = 0; //TODO add actual value
     /** Proportional multiplier for the agitator's PID loop */
-    public final static double   AGITATOR_PROPORTIONAL              = 0.001; //TODO figure out what this should be
+    public final static double  AGITATOR_PROPORTIONAL              = 0.001; //TODO figure out what this should be
     /** Integral multiplier for the agitator's PID loop */
-    public final static double  AGITATOR_INTEGRAL             = 0; //TODO figure out what this should be
+    public final static double  AGITATOR_INTEGRAL                  = 0; //TODO figure out what this should be
     /** Derivative multiplier for the agitator's */
-    public final static double  AGITATOR_DERIVATIVE           = 0; //TODO figure out what this should be
+    public final static double  AGITATOR_DERIVATIVE                = 0; //TODO figure out what this should be
     /** Absolute tolerance (allowable error from set point) from the agitator's set point */
-    public final static double  AGITATOR_ABSOLUTE_TOLERANCE   = 0.1; //TODO figure out what this should be
+    public final static double  AGITATOR_ABSOLUTE_TOLERANCE        = 0.1; //TODO figure out what this should be
     /***/
-    public final static double  AGITATOR_FEED_FORWARD         = 0;
+    public final static double  AGITATOR_FEED_FORWARD              = 0;
     /***/
-    public final static double  AGITATOR_PERIOD               = 0.15;
+    public final static double  AGITATOR_PERIOD                    = 0.15;
 
     /////////////////////////////////////////////// Climber Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the climbing mechanism */
-    public final static boolean CLIMBER_USE_CAN_TALON         = true;
+    public final static boolean CLIMBER_USE_CAN_TALON              = true;
     /** CAN ID for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
-    public final static int     CLIMBER_CAN_ID                = 6;
+    public final static int     CLIMBER_CAN_ID                     = 6;
     /** CAN ID for the climbing system's second motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
-    public final static int      CLIMBER_SECOND_CAN_ID              = 10;
+    public final static int     CLIMBER_SECOND_CAN_ID              = 10;
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
-    public final static int      CLIMBER_PWM_PORT                   = 7;
+    public final static int     CLIMBER_PWM_PORT                   = 7;
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
-    public final static int      CLIMBER_SECOND_PWM_PORT            = 8;
+    public final static int     CLIMBER_SECOND_PWM_PORT            = 8;
     /** DIO port for the climbing system's limit switch */
     //public final static int      CLIMBER_LIMIT_SWITCH_PORT           = 4; Taken out of design
     /** Speed to climb at */
@@ -140,54 +140,55 @@ public class RobotMap {
 
     //////////////////////////////////////// Gear Placement Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the gear placement mechanism's motor */
-    public final static boolean  GEAR_PLACEMENT_USE_CAN_TALON       = true;
+    public final static boolean GEAR_PLACEMENT_USE_CAN_TALON       = true;
     /** CAN ID for the gear placement system's motor (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is true */
-    public final static int      GEAR_PLACEMENT_CAN_ID              = 9;
+    public final static int     GEAR_PLACEMENT_CAN_ID              = 9;
     /** PWM port for the gear placement system (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is false) */
-    public final static int     GEAR_PLACEMENT_PWM_PORT       = 9;
+    public final static int     GEAR_PLACEMENT_PWM_PORT            = 9;
     /** Speed to set the gear placement motor to */
-    public final static double  GEAR_PLACEMENT_SPEED          = 0.5;
+    public final static double  GEAR_PLACEMENT_SPEED               = 0.5;
 
     ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
     /** DIO port for the rangefinder's echo pulse output */
-    public final static int     RANGEFINDER_ANALOG_IN_PORT    = 3;
-    public final static int     RANGEFINDER_BITS              = 4096;
+    public final static int     RANGEFINDER_ANALOG_IN_PORT         = 3;
+    /***/
+    public final static int     RANGEFINDER_BITS                   = 4096;
     /** Amount of volts per 5 millimeters */
-    public final static double  RANGEFINDER_V5MM              = RANGEFINDER_BITS / 5;
+    public final static double  RANGEFINDER_V5MM                   = RANGEFINDER_BITS / 5;
     /** Max range of the rangefinder divided by the max voltage of the analog input */
-    public final static double  RANGEFINDER_VOLTAGE_RATIO     = 645 / 5;
+    public final static double  RANGEFINDER_VOLTAGE_RATIO          = 645 / 5;
     /** Whether or not to use millimeters for the rangefinder instead of inches */
-    public final static boolean RANGEFINDER_USE_MILLIMETERS   = false;
+    public final static boolean RANGEFINDER_USE_MILLIMETERS        = false;
 
     /////////////////////////////////////////////// Drive Configuration ////////////////////////////////////////////////
     /** Use CANTalons for the drive base instead of PWM Talons */
-    public final static boolean DRIVE_USE_CAN_TALON           = true;
+    public final static boolean DRIVE_USE_CAN_TALON                = true;
     /** Invert motor direction for the drive train's right side */
-    public final static boolean  INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
+    public final static boolean INVERT_RIGHT_DRIVE_MOTOR_DIRECTION = true;
     /** Invert motor direction for the drive train's left side */
-    public final static boolean  INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
+    public final static boolean INVERT_LEFT_DRIVE_MOTOR_DIRECTION  = true;
     /** Number to multiply times the speed of the robot when the driver enables safety mode */
-    public final static double   DRIVE_SAFETY_FACTOR                = 0.50;
+    public final static double  DRIVE_SAFETY_FACTOR                = 0.50;
     ///// Encoder Values /////
     /** DIO port for the drive train's right encoder A channel */
-    public final static int      DRIVE_RIGHT_ENCODER_A_CHANNEL      = 6;
+    public final static int     DRIVE_RIGHT_ENCODER_A_CHANNEL      = 6;
     /** DIO port for the drive train's right encoder B channel */
-    public final static int      DRIVE_RIGHT_ENCODER_B_CHANNEL      = 7;
+    public final static int     DRIVE_RIGHT_ENCODER_B_CHANNEL      = 7;
     /** DIO port for the drive train's left encoder A channel */
-    public final static int      DRIVE_LEFT_ENCODER_A_CHANNEL       = 4;
+    public final static int     DRIVE_LEFT_ENCODER_A_CHANNEL       = 4;
     /** DIO port for the drive train's left encoder B channel */
-    public final static int      DRIVE_LEFT_ENCODER_B_CHANNEL       = 5;
+    public final static int     DRIVE_LEFT_ENCODER_B_CHANNEL       = 5;
     /**  */
-    public final static double   DRIVE_ENCODER_DISTANCE_PER_PULSE   = 6 * Math.PI / 20;
+    public final static double  DRIVE_ENCODER_DISTANCE_PER_PULSE   = (6 * Math.PI) / 40;
     ///// Motor CAN IDs /////
     /** CAN ID for front right motor */
-    public final static int      FRONT_RIGHT_MOTOR_CAN              = 4;
+    public final static int     FRONT_RIGHT_MOTOR_CAN              = 4;
     /** CAN ID for back right motor */
-    public final static int      BACK_RIGHT_MOTOR_CAN               = 5;
+    public final static int     BACK_RIGHT_MOTOR_CAN               = 5;
     /** CAN ID for front left motor */
-    public final static int      FRONT_LEFT_MOTOR_CAN               = 7;
+    public final static int     FRONT_LEFT_MOTOR_CAN               = 7;
     /** CAN ID for back left motor */
-    public final static int      BACK_LEFT_MOTOR_CAN                = 8;
+    public final static int     BACK_LEFT_MOTOR_CAN                = 8;
     ///// Motor PWM IDs /////
     /** PWM port for front right motor */
     public final static int      FRONT_RIGHT_MOTOR_PWM              = 0;
@@ -244,34 +245,34 @@ public class RobotMap {
     /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
     public final static int      SAFETY_MODE_BUTTON                 = 1;
     /** Button ID on {@link OI#driverPrimaryStick} to toggle invert drive direction */
-    public final static int      TOGGLE_INVERT_DRIVE_BUTTON         = 8;
+    public final static int     TOGGLE_INVERT_DRIVE_BUTTON         = 8;
     /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
-    public final static int      CONTOUR_ERROR_BUTTON               = 7;
+    public final static int     CONTOUR_ERROR_BUTTON               = 7;
     /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
-    public final static int      CENTER_ON_HIGH_BUTTON_BUTTON       = 3;
+    public final static int     CENTER_ON_HIGH_BUTTON_BUTTON       = 3;
     /** Button ID on {@link OI#driverPrimaryStick} to drive towards the center of the vision target */
-    public final static int     DRIVE_TO_HIGH_GOAL_BUTTON     = 2;
+    public final static int     DRIVE_TO_HIGH_GOAL_BUTTON          = 2;
     /** Button ID on {@link OI#driverPrimaryStick} to shoot the ball and enable the agitator to feed mode */
-    public final static int     SHOOT_BUTTON                  = 5;
+    public final static int     SHOOT_BUTTON                       = 5;
     /** Button ID to reverse the shooting direction (to get stuck balls out) */
-    public final static int     REVERSE_SHOOT_DIRECTION       = 4;
+    public final static int     REVERSE_SHOOT_DIRECTION            = 4;
     /** Button ID on {@link OI#driverPrimaryStick} to put the gear holder down */
-    public final static int     GEAR_DOWN_BUTTON              = 11;
+    public final static int     GEAR_DOWN_BUTTON                   = 11;
     /** Button ID on {@link OI#driverPrimaryStick} to put the gear holder up */
-    public final static int     GEAR_UP_BUTTON                = 12;
+    public final static int     GEAR_UP_BUTTON                     = 6;
     ///// Configuration for Driver's Secondary Stick /////
     /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
-    public final static int     STRAIGHT_MODE_BUTTON          = 1;
+    public final static int     STRAIGHT_MODE_BUTTON               = 1;
     /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
-    public final static int     CENTER_ON_GEAR_BUTTON         = 3;
+    public final static int     CENTER_ON_GEAR_BUTTON              = 3;
     /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
-    public final static int     DRIVE_TO_GEAR_BUTTON          = 2;
+    public final static int     DRIVE_TO_GEAR_BUTTON               = 2;
     /** Button ID on {@link OI#driverSecondaryStick} to climb the rope */
-    public final static int      CLIMB_BUTTON                       = 9;
+    public final static int     CLIMB_BUTTON                       = 9;
     /** Button ID on {@link OI#driverSecondaryStick} to collect balls */
-    public final static int      BALL_COLLECT_BUTTON                = 5;
+    public final static int     BALL_COLLECT_BUTTON                = 5;
     /** Button ID on {@link OI#driverSecondaryStick} to cancel the current autonomous command */
-    public final static int      CANCEL_COMMAND                     = 8;
+    public final static int     CANCEL_COMMAND                     = 8;
 
     ///// Debugging Buttons /////
     /** Button ID on {@link OI#driverSecondaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */

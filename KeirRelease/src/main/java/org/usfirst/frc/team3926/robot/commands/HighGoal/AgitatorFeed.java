@@ -34,6 +34,11 @@ public class AgitatorFeed extends Command {
      */
     protected void initialize() {
 
+//        try {
+//            wait(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
         Robot.agitator.enable();
 
