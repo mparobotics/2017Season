@@ -248,6 +248,18 @@ public class DriveControl extends Subsystem {
     }
 
     /**
+     * Checks if the robot is at or closer than the range that targetVoltage corresponds to
+     *
+     * @param targetVoltage Voltage given by the rangefinder at a specific range
+     * @return If the rangefinder's current voltage is less than or equal to the targetVoltage
+     */
+    public boolean withinRangefinderVoltage(double targetVoltage) {
+
+        return rangefinder.getVoltage() <= targetVoltage;
+
+    }
+
+    /**
      * Checks if the robot has traveled past a value on the right side
      *
      * @param rightEncoderValue Value to check if the right encoder has passed

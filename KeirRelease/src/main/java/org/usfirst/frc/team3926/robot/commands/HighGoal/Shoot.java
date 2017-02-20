@@ -44,7 +44,6 @@ public class Shoot extends Command {
         double calculatedSetpoint = RobotMap.SHOOTER_SETPOINT;
 
         Robot.shooter.setSetpoint(calculatedSetpoint);
-
     }
 
     /**
@@ -70,7 +69,6 @@ public class Shoot extends Command {
     protected void interrupted() {
 
         Robot.shooter.disable();
-
     }
 
 }
