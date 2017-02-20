@@ -32,34 +32,36 @@ public class RobotMap {
 
     ///////////////////////////////////////////// Enable/Disable Features //////////////////////////////////////////////
     /** Use code specifically made for debugging the robot */
-    public final static boolean  DEBUG                              = true;
+    public final static boolean DEBUG                             = true;
 
     ///////////////////////////////////////////// Autonomous Configuration /////////////////////////////////////////////
     /** Distance to drive forward for the autonomous DriveForward command (whe used by itself) */
-    public final static double   AUTONOMOUS_DRIVE_FORWARD_DISTANCE  = 10; //TODO find this value
+    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE = 10; //TODO find this value
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double   GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE           = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double  GEAR_MOTOR_UP_TIME                 = 500;
+    public final static double  GEAR_MOTOR_UP_TIME                = 500;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double  GEAR_MOTOR_DOWN_TIME               = 500;
+    public final static double  GEAR_MOTOR_DOWN_TIME              = 500;
     /** Gear backup direction */
-    public final static double  GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
+    public final static double  GEAR_BACKUP_DISTANCE              = 10; //TODO figure out this distance
     /** Distance for the left side of the robot to travel when turning from the gear target */
-    public final static double  GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
+    public final static double  GEAR_TURN_LEFT_DISTANCE           = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
-    public final static double  GEAR_TURN_RIGHT_DISTANCE           = 4; //TODO figure out what this should be
+    public final static double  GEAR_TURN_RIGHT_DISTANCE          = 4; //TODO figure out what this should be
+    /** Voltage of the rangefinder when the robot should stop driving forward */
+    public final static double  GEAR_PLACEMENT_VOLTAGE            = 0.2;
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
     /** Enable/Disable using CAN based talons for the shooter */
-    public final static boolean SHOOTER_USE_CAN_TALON              = true;
+    public final static boolean SHOOTER_USE_CAN_TALON             = true;
     /** CAN ID for the the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is true) */
-    public final static int     SHOOTER_CAN_ID                     = 3;
+    public final static int     SHOOTER_CAN_ID                    = 3;
     /** PWM port for the shooter's motor controller (used if {@link #SHOOTER_USE_CAN_TALON} is false) */
-    public final static int     SHOOTER_PWM_ID                     = 4;
+    public final static int     SHOOTER_PWM_ID                    = 4;
     /** DIO port for the shooter's encoder's A channel */
     public final static int     SHOOTER_ENCODER_A_CHANNEL          = 0;
     /** DIO port for the shooter's encoder's B channel */
@@ -190,43 +192,43 @@ public class RobotMap {
     /** Max speed for the robot to travel during autonomous */
     public final static double  AUTONOMOUS_SPEED                   = 0.5;
     /** Multiplier for turning speed with autonomous driving */
-    public final static double  TURNING_SPEED_MULTIPLIER           = 0.5;
+    public final static double  TURNING_SPEED_MULTIPLIER          = 0.5;
 
     ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
-    public final static boolean XBOX_DRIVE_CONTROLLER              = false;
+    public final static boolean XBOX_DRIVE_CONTROLLER             = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
-    public final static int      XBOX_PORT                          = 0;
+    public final static int     XBOX_PORT                         = 0;
     /** Axis ID to use for the left speed in tank drive */
-    public final static int      XBOX_LEFT_SPEED_AXIS               = 1; //(Left joystick y)
+    public final static int     XBOX_LEFT_SPEED_AXIS              = 1; //(Left joystick y)
     /** Axis ID to use for the right speed in tank drive */
-    public final static int      XBOX_RIGHT_SPEED_AXIS              = 5; //(Right joystick y)
+    public final static int     XBOX_RIGHT_SPEED_AXIS             = 5; //(Right joystick y)
     /** Button ID to enter safety mode */
-    public final static int      XBOX_SAFETY_MODE_BUTTON            = 1; //(A)
+    public final static int     XBOX_SAFETY_MODE_BUTTON           = 1; //(A)
     /** Button ID to enter straight mode */
-    public final static int      XBOX_STRAIGHT_MODE_BUTTON          = 2; //(B)
+    public final static int     XBOX_STRAIGHT_MODE_BUTTON         = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */
-    public final static int      XBOX_CONTOUR_ERROR_BUTTON          = 9; //(Left Stick Click)
+    public final static int     XBOX_CONTOUR_ERROR_BUTTON         = 9; //(Left Stick Click)
     /** Button ID to center the robot on the vision target */
-    public final static int      XBOX_CENTER_ON_HIGH_GOAL_BUTTON    = 4; //(X)
+    public final static int     XBOX_CENTER_ON_HIGH_GOAL_BUTTON   = 4; //(X)
     /** Button ID to drive towards the center of the vision target */
-    public final static int      XBOX_DRIVE_TO_HIGH_GOAL_BUTTON     = 3; //(Y)
+    public final static int     XBOX_DRIVE_TO_HIGH_GOAL_BUTTON    = 3; //(Y)
     /** Button ID to drive towards the center of the gear's vision target */
-    public final static int      XBOX_CENTER_ON_GEAR_BUTTON         = 6; //(Right Bumper)
+    public final static int     XBOX_CENTER_ON_GEAR_BUTTON        = 6; //(Right Bumper)
     /** Button ID to center the robot on the gear's vision target */
-    public final static int      XBOX_DRIVE_TO_GEAR_BUTTON          = 5; //(Left Bumper)
+    public final static int     XBOX_DRIVE_TO_GEAR_BUTTON         = 5; //(Left Bumper)
     /** Button ID to turn on the shooter */
-    public final static int     XBOX_SHOOT_BUTTON                  = 7; //(Back)
+    public final static int     XBOX_SHOOT_BUTTON                 = 7; //(Back)
     /** Button ID to activate the climber */
-    public final static int     XBOX_CLIMB_BUTTON                  = 8; //(Start)
+    public final static int     XBOX_CLIMB_BUTTON                 = 8; //(Start)
     /** Button ID to collect balls */
-    public final static int     XBOX_COLLECT_BUTTON                = 10; //(Right Stick Click)
+    public final static int     XBOX_COLLECT_BUTTON               = 10; //(Right Stick Click)
 
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
-    public final static int     RIGHT_STICK_PORT                   = 0;
+    public final static int     RIGHT_STICK_PORT                  = 0;
     /** USB port number for left joystick */
     public final static int     LEFT_STICK_PORT                    = 1;
     ///// Configuration for Driver's Primary Stick /////
@@ -273,29 +275,29 @@ public class RobotMap {
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String  TABLE_HIGH_GOAL_NAME               = "vision/high_goal";
+    public final static String  TABLE_HIGH_GOAL_NAME              = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
-    public final static String  SPEED_RIGHT_KEY                    = "rightSpeed";
+    public final static String  SPEED_RIGHT_KEY                   = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
-    public final static String  SPEED_LEFT_KEY                     = "leftSpeed";
+    public final static String  SPEED_LEFT_KEY                    = "leftSpeed";
     /** Map key for center x of a contour */
-    public final static String   CONTOUR_X_KEY                      = "center_x";
+    public final static String  CONTOUR_X_KEY                     = "center_x";
     /** Map key for center y of a contour */
-    public final static String   CONTOUR_Y_KEY                      = "center_y";
+    public final static String  CONTOUR_Y_KEY                     = "center_y";
     /** Map key for contour height */
-    public final static String   CONTOUR_HEIGHT_KEY                 = "height";
+    public final static String  CONTOUR_HEIGHT_KEY                = "height";
     /** Map key for contour width */
-    public final static String   CONTOUR_WIDTH_KEY                  = "width";
+    public final static String  CONTOUR_WIDTH_KEY                 = "width";
     /** Map key for SmartFilter pass status */
-    public final static String   SMARTFILTER_PASS_KEY               = "smartFilter";
+    public final static String  SMARTFILTER_PASS_KEY              = "smartFilter";
     ///// Smart Filter Configuration /////
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
-    public final static double   ALLOWABLE_ERROR                    = 0.05;
+    public final static double  ALLOWABLE_ERROR                   = 0.05;
     ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
-    public final static int      IMAGE_X                            = 320;
+    public final static int     IMAGE_X                           = 320;
     /** Size of the vision tracking image's Y axis */
-    public final static int      IMAGE_Y                            = 240;
+    public final static int     IMAGE_Y                           = 240;
     /** Center point on the screen */
     public final static int[]    SCREEN_CENTER                      = {IMAGE_X / 2, IMAGE_Y / 2};
 

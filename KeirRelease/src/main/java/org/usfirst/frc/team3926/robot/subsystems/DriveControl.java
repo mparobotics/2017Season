@@ -227,6 +227,30 @@ public class DriveControl extends Subsystem {
     }
 
     /**
+     * Tells if the robot is centered on the vision target
+     *
+     * @return If both sides of the robot at driving at the same speed (this will only happen after running the
+     * autonomous driving commands if the robot is centered)
+     */
+    public boolean isCentered() {
+
+        return leftSide == RobotMap.AUTONOMOUS_SPEED && rightSide == RobotMap.AUTONOMOUS_SPEED;
+
+    }
+
+    /**
+     * @param targetGears
+     * @return
+     */
+    public boolean lostTarget(boolean targetGears) {
+
+        int visionArraySize = visionTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length;
+
+        return (targetGears) ? visionArraySize == 2 : visionArraySize == 1;
+
+    }
+
+    /**
      * Keeps the robot driving based on it's current left and right side speed values
      */
     public void continueDriving() {

@@ -15,17 +15,20 @@ import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.*;
 import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 
-/**
+/***********************************************************************************************************************
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
- * TODO make it easier to switch what joystick something is on
+ * @author William Kluge
+ *      <p>
+ *      Contact: klugewilliam@gmail.com
+ *      </p>
  * TODO Add auxiliary driver stick
  * TODO add SmartDashboard joystick choice
- */
+ **********************************************************************************************************************/
 public class OI {
 
     /** Joystick on the drivers right side (or the XBox controller for driving the robot) */
-    public Joystick driverPrimaryStick;
+    public Joystick              driverPrimaryStick;
     /** Joystick on the drivers left side (or not used) */
     public Joystick              driverSecondaryStick;
     /** Joystick to use for the auxiliary driver */
@@ -56,29 +59,36 @@ public class OI {
     /** Prints the value of the drive train's right encoder and resets its value */
     public Button                rightDrivetrainEncoder;
     /** Prints the value of the drive train's left encoder and resets its value */
-    public Button   leftDrivetrainEncoder;
+    public Button                leftDrivetrainEncoder;
     /** Prints the value of the drive train's rangefinder */
-    public Button   drivetrainRangefinder;
+    public Button                drivetrainRangefinder;
     /** Toggles the inverted direction of the drivetrains */
-    public Button   invertDriveDirection;
+    public Button                invertDriveDirection;
     /** Runs the shooter backwards */
-    public Button   reverseShooter;
+    public Button                reverseShooter;
     /** Cancel the current autonomous command */
-    public Button   cancelCommand;
+    public Button                cancelCommand;
     /** Runs the gear motor to put the arm up */
-    public Button   gearMotorUp;
+    public Button                gearMotorUp;
     /** Runs the gear motor to put the arm down */
-    public Button   gearMotorDown;
+    public Button                gearMotorDown;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
+     * <p>
+     * Note: LiveWindow control is also handled here
+     * </p>
      */
     OI() {
 
+        ///// Shooter /////
         LiveWindow.addActuator("shooter", "Shooter PID Loop", Robot.shooter.getPIDController());
         Robot.shooterEncoder.startLiveWindowMode();
-        //LiveWindow.addSensor("agitator", "Agitator Encoder", Robot.agitatorEncoder);
+        LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooterEncoder);
+        ///// Drive Control Sensors /////
         LiveWindow.addSensor("drive", "Rangefinder", Robot.driveControl.rangefinder);
+        LiveWindow.addSensor("drive", "Left Encoder", Robot.driveControl.leftEncoder);
+        LiveWindow.addSensor("drive", "Right Encoder", Robot.driveControl.rightEncoder);
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
             driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);
@@ -125,16 +135,19 @@ public class OI {
             }
         }
 
+        ///// High Goal Commands /////
         centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());
         driveToHighGoal.whileHeld(new CenterOnHighGoal());
-        driveToGear.whileHeld(new PlaceGear());
-        centerOnGear.whileHeld(new CenterOnGears());
         shoot.whileHeld(new ShootAndFeed());
-        climb.whileHeld(new Climb());
         collectBalls.whileHeld(new CollectBalls());
         reverseShooter.whileHeld(new ShooterReverse());
+        ///// Gear Commands /////
+        driveToGear.whileHeld(new PlaceGear());
+        centerOnGear.whileHeld(new CenterOnGears());
         gearMotorDown.whileHeld(new GearPlacementMotorDown());
         gearMotorUp.whileHeld(new GearPlacementMotorUp());
+        ///// Misc Commands /////
+        climb.whileHeld(new Climb());
 
     }
 
