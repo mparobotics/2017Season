@@ -76,7 +76,7 @@ public class OI {
     OI() {
 
         LiveWindow.addActuator("shooter", "Shooter PID Loop", Robot.shooter.getPIDController());
-        //Robot.shooterEncoder.startLiveWindowMode();
+        Robot.shooterEncoder.startLiveWindowMode();
         //LiveWindow.addSensor("agitator", "Agitator Encoder", Robot.agitatorEncoder);
         LiveWindow.addSensor("drive", "Rangefinder", Robot.driveControl.rangefinder);
 

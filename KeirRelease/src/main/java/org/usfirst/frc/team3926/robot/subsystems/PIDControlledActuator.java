@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3926.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -45,7 +46,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
     /** Actuator being controlled by this PIDSubsystem */
     private T             actuator;
     /** Sensor to control the output of the PID loop */
-    public  S             sensor; //TODO remove debugging access modifier setting
+    public  S             sensor; //TODO remove this debugging setting
     /** Name of this subsystem */
     private String        name;
 
@@ -53,6 +54,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * Constructs the PIDControlledActuator class with all values relevant to PID control.
      *
      * @param name              Name of the PIDSubsystem
+     * @param actuator          Object to actuate with this system
+     * @param sensor            Object used to sense what this system is doing
      * @param pidSourceType     Source type of the sensors purpose
      * @param target            Target value for the actuator to reach
      * @param proportional      Multiplier for the proportional value
@@ -62,7 +65,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * @param period            Amount of time between PID loop updates
      * @param absoluteTolerance Percent that the system is allowed to be off of the target
      */
-    public PIDControlledActuator(String name, PIDSourceType pidSourceType, double target, double
+    public PIDControlledActuator(String name, T actuator, S sensor, PIDSourceType pidSourceType, double target, double
             proportional, double integral, double derivative, double forward, double period, double absoluteTolerance) {
 
         super(name, proportional, integral, derivative, forward, period);
@@ -70,13 +73,15 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setAbsoluteTolerance(absoluteTolerance);
 
         this.name = name;
+        this.actuator = actuator;
+        this.sensor = sensor;
 
-//        if (sensor instanceof PIDSource)
-//            ((PIDSource) sensor).setPIDSourceType(pidSourceType);
-//        else
-//            throw new IllegalArgumentException("The constructor for sensors deriving from PIDSourceType was used, but" +
-//                                               " the sensor is not a child of that class. Use the other constructor " +
-//                                               "to resolve this error");
+        if (sensor instanceof PIDSource)
+            ((PIDSource) sensor).setPIDSourceType(pidSourceType);
+        else
+            throw new IllegalArgumentException("The constructor for sensors deriving from PIDSourceType was used, but" +
+                                               " the sensor is not a child of that class. Use the other constructor " +
+                                               "to resolve this error");
 
     }
 
@@ -84,6 +89,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * Constructs the PIDControlledActuator class with all values relevant to PID control.
      *
      * @param name              Name of the PIDSubsystem
+     * @param actuator          Object to actuate with this system
+     * @param sensor            Object used to sense what this system is doing
      * @param pidSourceType     Source type of the sensors purpose
      * @param target            Target value for the actuator to reach
      * @param proportional      Multiplier for the proportional value
@@ -91,7 +98,7 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * @param derivative        Multiplier for the derivative value (instantaneous slope) of the actuators get() method
      * @param absoluteTolerance Percent that the system is allowed to be off of the target
      */
-    public PIDControlledActuator(String name, PIDSourceType pidSourceType, double target, double
+    public PIDControlledActuator(String name, T actuator, S sensor, PIDSourceType pidSourceType, double target, double
             proportional, double integral, double derivative, double absoluteTolerance) {
 
         super(name, proportional, integral, derivative);
@@ -99,13 +106,15 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
         setAbsoluteTolerance(absoluteTolerance);
 
         this.name = name;
+        this.actuator = actuator;
+        this.sensor = sensor;
 
-//        if (sensor instanceof PIDSource)
-//            ((PIDSource) sensor).setPIDSourceType(pidSourceType);
-//        else
-//            throw new IllegalArgumentException("The constructor for sensors deriving from PIDSourceType was used, but" +
-//                                               " the sensor is not a child of that class. Use the other constructor " +
-//                                               "to resolve this error");
+        if (sensor instanceof PIDSource)
+            ((PIDSource) sensor).setPIDSourceType(pidSourceType);
+        else
+            throw new IllegalArgumentException("The constructor for sensors deriving from PIDSourceType was used, but" +
+                                               " the sensor is not a child of that class. Use the other constructor " +
+                                               "to resolve this error");
 
     }
 
@@ -113,6 +122,8 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * Constructs the PIDControlledActuator class with all values relevant to PID control.
      *
      * @param name              Name of the PIDSubsystem
+     * @param actuator          Object to actuate with this system
+     * @param sensor            Object used to sense what this system is doing
      * @param sensorPurpose     What the sensor is supposed to measure
      * @param target            Target value for the actuator to reach
      * @param proportional      Multiplier for the proportional value
@@ -122,41 +133,15 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      * @param period            Amount of time between PID loop updates
      * @param absoluteTolerance Percent that the system is allowed to be off of the target
      */
-    public PIDControlledActuator(String name, SensorPurpose sensorPurpose, double target, double
+    public PIDControlledActuator(String name, T actuator, S sensor, SensorPurpose sensorPurpose, double target, double
             proportional, double integral, double derivative, double forward, double period, double absoluteTolerance) {
 
         super(name, proportional, integral, derivative, forward, period);
         setSetpoint(target);
         setAbsoluteTolerance(absoluteTolerance);
 
-        this.name = name;
-
-//        if (sensor instanceof PIDSource)
-//            throw new IllegalArgumentException("The constructor for sensors not deriving from PIDSourceType was used," +
-//                                               " but the sensor is a child of that class. Use the other constructor " +
-//                                               "to resolve this error");
-//        else
-//            this.sensorPurpose = sensorPurpose;
-
-    }
-
-    /**
-     * Constructs the PIDControlledActuator class with all values relevant to PID control.
-     *
-     * @param name              Name of the PIDSubsystem
-     * @param sensorPurpose     What the sensor is supposed to measure
-     * @param target            Target value for the actuator to reach
-     * @param proportional      Multiplier for the proportional value
-     * @param integral          Multiplier for the integral value (area under the curve) of the actuators get() method
-     * @param derivative        Multiplier for the derivative value (instantaneous slope) of the actuators get() method
-     * @param absoluteTolerance Percent that the system is allowed to be off of the target
-     */
-    public PIDControlledActuator(String name, SensorPurpose sensorPurpose, double target, double
-            proportional, double integral, double derivative, double absoluteTolerance) {
-
-        super(name, proportional, integral, derivative);
-        setSetpoint(target);
-        setAbsoluteTolerance(absoluteTolerance);
+        this.actuator = actuator;
+        this.sensor = sensor;
         this.name = name;
 
         if (sensor instanceof PIDSource)
@@ -168,15 +153,36 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
     }
 
-    public void setSensor(S sensor) {
+    /**
+     * Constructs the PIDControlledActuator class with all values relevant to PID control.
+     *
+     * @param name              Name of the PIDSubsystem
+     * @param actuator          Object to actuate with this system
+     * @param sensor            Object used to sense what this system is doing
+     * @param sensorPurpose     What the sensor is supposed to measure
+     * @param target            Target value for the actuator to reach
+     * @param proportional      Multiplier for the proportional value
+     * @param integral          Multiplier for the integral value (area under the curve) of the actuators get() method
+     * @param derivative        Multiplier for the derivative value (instantaneous slope) of the actuators get() method
+     * @param absoluteTolerance Percent that the system is allowed to be off of the target
+     */
+    public PIDControlledActuator(String name, T actuator, S sensor, SensorPurpose sensorPurpose, double target, double
+            proportional, double integral, double derivative, double absoluteTolerance) {
 
-        this.sensor = sensor;
-
-    }
-
-    public void setActuator(T actuator) {
+        super(name, proportional, integral, derivative);
+        setSetpoint(target);
+        setAbsoluteTolerance(absoluteTolerance);
 
         this.actuator = actuator;
+        this.sensor = sensor;
+        this.name = name;
+
+        if (sensor instanceof PIDSource)
+            throw new IllegalArgumentException("The constructor for sensors not deriving from PIDSourceType was used," +
+                                               " but the sensor is a child of that class. Use the other constructor " +
+                                               "to resolve this error");
+        else
+            this.sensorPurpose = sensorPurpose;
 
     }
 
@@ -191,9 +197,10 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
 
         double returnValue = RobotMap.ILLEGAL_DOUBLE;
 
-        if (sensor instanceof PIDSource) {
+        if (sensor instanceof Encoder) { //TODO generalize this again
 
-            returnValue = ((PIDSource) sensor).pidGet();
+            returnValue = ((Encoder) sensor).pidGet();
+            //returnValue = -9;
 
         } else if (sensor instanceof Accelerometer) {
 
@@ -256,8 +263,6 @@ public class PIDControlledActuator<T, S> extends PIDSubsystem {
      */
     @Override
     protected void usePIDOutput(double output) {
-
-        SmartDashboard.putNumber(name + " PID Output", output);
 
         if (actuator instanceof PIDOutput)
             ((PIDOutput) actuator).pidWrite(output);
