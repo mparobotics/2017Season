@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
-import org.usfirst.frc.team3926.robot.subsystems.*;
+import org.usfirst.frc.team3926.robot.subsystems.Climber;
+import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
+import org.usfirst.frc.team3926.robot.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
 
 /***********************************************************************************************************************
  * The VM is configured to automatically run this class, and to call the
@@ -36,22 +39,18 @@ public class Robot extends IterativeRobot {
     public final static DriveControl     driveControl = new DriveControl();
     /** Subsystem to control the robot's shooter */
     public final static ShooterSubsystem shooter      = new ShooterSubsystem();
-    /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
-    public final static AgitatorSystem agitator;
     /** Subsystem to control the robot's climbing mechanism */
-    public final static Climber        climber;
+    public final static Climber     climber;
     /** Subsystem to control the robot's ball collection mechanism */
-    public final static SimpleMotor    ballCollector;
+    public final static SimpleMotor ballCollector;
     /** Subsystem to control the robot's gear placement mechanism */
-    public final static SimpleMotor    gearPlacer;
+    public final static SimpleMotor gearPlacer;
+    /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
+    public final static SimpleMotor agitator;
 
     static { //Static initialization for subsystems
 
         ///// Shooter Initialization ///
-
-        ///// Agitator Initialization /////
-        agitator = new AgitatorSystem();
-        agitator.createDefaultCommand(new AgitatorIdle());
 
         ///// Climber Initialization /////
         climber = new Climber<>(RobotMap.CLIMBER_USE_CAN_TALON ?
@@ -69,6 +68,12 @@ public class Robot extends IterativeRobot {
         gearPlacer = new SimpleMotor<>(RobotMap.GEAR_PLACEMENT_USE_CAN_TALON ?
                                        new CANTalon(RobotMap.GEAR_PLACEMENT_CAN_ID) :
                                        new Talon(RobotMap.GEAR_PLACEMENT_PWM_PORT));
+
+        ///// Agitator Initialization /////
+        agitator = new SimpleMotor<>(RobotMap.AGITATOR_USE_CAN_TALON ?
+                                     new CANTalon(RobotMap.AGITATOR_CAN_ID) :
+                                     new Talon(RobotMap.AGITATOR_PWM_PORT));
+        agitator.createDefaultCommand(new AgitatorIdle());
 
     }
 
@@ -96,9 +101,6 @@ public class Robot extends IterativeRobot {
 
         driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
 
-        ///// System Preparation /////
-        agitator.enable(); //Enables the agitator PID loop
-
     }
 
     /**
@@ -110,7 +112,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
 
-        agitator.disable();
+        agitator.set(0);
 
     }
 
@@ -171,9 +173,9 @@ public class Robot extends IterativeRobot {
 
         //TODO remove debugging
         if (oi.driverPrimaryStick.getRawButton(11))
-            gearPlacer.setCollectorSpeed(0.5);
+            gearPlacer.set(0.5);
         else
-            gearPlacer.setCollectorSpeed(0);
+            gearPlacer.set(0);
 
         Scheduler.getInstance().run();
     }

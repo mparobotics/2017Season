@@ -26,21 +26,24 @@ public class AgitatorFeed extends Command {
     }
 
     /**
-     * This changes the setpoint of ball agitator PID loop to
+     * This changes the setpoint of ball agitator to
      * {@link org.usfirst.frc.team3926.robot.RobotMap#AGITATOR_FEED_SETPOINT}
      * <p>
-     * Note: The agitator's PID loop is enabled in {@link Robot#robotInit()}, so it doesn't need to be enabled here
+     * Note: If {@link RobotMap#AGITATOR_DELAY_START}, the agitator will wait for
+     * {@link RobotMap#AGITATOR_DELAY_TIME} milliseconds before starting
      * </p>
      */
     protected void initialize() {
 
-//        try {
-//            wait(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
-        Robot.agitator.enable();
+        if (RobotMap.AGITATOR_DELAY_START) {
+            try {
+                wait(RobotMap.AGITATOR_DELAY_TIME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Robot.agitator.set(RobotMap.AGITATOR_FEED_SETPOINT);
 
     }
 
@@ -49,7 +52,7 @@ public class AgitatorFeed extends Command {
      */
     protected void execute() {
 
-        Robot.agitator.setSetpoint(RobotMap.AGITATOR_FEED_SETPOINT);
+        Robot.agitator.set(RobotMap.AGITATOR_FEED_SETPOINT);
 
     }
 
@@ -65,17 +68,20 @@ public class AgitatorFeed extends Command {
     }
 
     /**
-     * end() is not needed because this command is being controlled with {@link org.usfirst.frc.team3926.robot.OI#shoot}
+     * Sets the agitator to its idle speed
      */
     protected void end() {
+
+        Robot.agitator.set(RobotMap.AGITATOR_IDLE_SETPOINT);
 
     }
 
     /**
-     * Nothing needs to be disabled because we want the PID loop to continue. It will fall back to its default command,
-     * {@link AgitatorIdle}
+     * Sets the agitator to its idle speed
      */
     protected void interrupted() {
+
+        Robot.agitator.set(RobotMap.AGITATOR_IDLE_SETPOINT);
 
     }
 

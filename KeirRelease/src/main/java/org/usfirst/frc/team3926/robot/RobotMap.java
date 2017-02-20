@@ -42,11 +42,11 @@ public class RobotMap {
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
     public final static double   GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double   GEAR_MOTOR_UP_TIME                 = 500;
+    public final static double  GEAR_MOTOR_UP_TIME                 = 500;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double   GEAR_MOTOR_DOWN_TIME               = 500;
+    public final static double  GEAR_MOTOR_DOWN_TIME               = 500;
     /** Gear backup direction */
-    public final static double   GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
+    public final static double  GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
     /** Distance for the left side of the robot to travel when turning from the gear target */
     public final static double  GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
@@ -89,28 +89,14 @@ public class RobotMap {
     public final static int     AGITATOR_CAN_ID                    = 1;
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
     public final static int     AGITATOR_PWM_PORT                  = 5;
-    /** DIO port for the agitator's encoder's A channel */
-    public final static int     AGITATOR_ENCODER_A_CHANNEL         = 2;
-    /** DIO port for the agitator's encoder's B channel */
-    public final static int     AGITATOR_ENCODER_B_CHANNEL         = 3;
-    /** The agitator's encoder has 7 pulses per revolution, this makes the encoder measure in rotations */
-    public final static double  AGITATOR_ENCODER_PULSES_PER_REV    = 7;
     /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
-    public final static double  AGITATOR_FEED_SETPOINT             = -400; //TODO figure out what this should be
+    public final static double  AGITATOR_FEED_SETPOINT             = -0.4; //TODO figure out what this should be
     /** Setpoint for the agitator's PID loop when it is sitting idle */
     public final static double  AGITATOR_IDLE_SETPOINT             = 0; //TODO add actual value
-    /** Proportional multiplier for the agitator's PID loop */
-    public final static double  AGITATOR_PROPORTIONAL              = 0.001; //TODO figure out what this should be
-    /** Integral multiplier for the agitator's PID loop */
-    public final static double  AGITATOR_INTEGRAL                  = 0; //TODO figure out what this should be
-    /** Derivative multiplier for the agitator's */
-    public final static double  AGITATOR_DERIVATIVE                = 0; //TODO figure out what this should be
-    /** Absolute tolerance (allowable error from set point) from the agitator's set point */
-    public final static double  AGITATOR_ABSOLUTE_TOLERANCE        = 0.1; //TODO figure out what this should be
-    /** Feed forward value for the agitator PID loop */
-    public final static double  AGITATOR_FEED_FORWARD              = 0;
-    /** Update period for the agitator PID loop */
-    public final static double  AGITATOR_PERIOD                    = 0.15;
+    /** Whether or not there should be a delay before the agitator starts */
+    public final static boolean AGITATOR_DELAY_START               = true;
+    /** Amount of time (in milliseconds) for the agitator to wait before starting */
+    public final static long    AGITATOR_DELAY_TIME                = 500;
 
     /////////////////////////////////////////////// Climber Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the climbing mechanism */
@@ -132,7 +118,7 @@ public class RobotMap {
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */
     public final static boolean BALL_COLLECTION_USE_CAN_TALON      = true;
     /** CAN ID for ball collection system's motor controller (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true) */
-    public final static int      BALL_COLLECTION_CAN_ID             = 2;
+    public final static int     BALL_COLLECTION_CAN_ID             = 2;
     /** PWM port for ball collection motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
     public final static int     BALL_COLLECTION_PWM_PORT           = 6;
     /** Speed to set the ball collector motor to */
@@ -202,13 +188,13 @@ public class RobotMap {
     public final static int     BACK_LEFT_MOTOR_PWM                = 3;
     ///// Autonomous Configuration /////
     /** Max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED                   = 0.5;
+    public final static double  AUTONOMOUS_SPEED                   = 0.5;
     /** Multiplier for turning speed with autonomous driving */
-    public final static double   TURNING_SPEED_MULTIPLIER           = 0.5;
+    public final static double  TURNING_SPEED_MULTIPLIER           = 0.5;
 
     ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
-    public final static boolean  XBOX_DRIVE_CONTROLLER              = false;
+    public final static boolean XBOX_DRIVE_CONTROLLER              = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                          = 0;
@@ -231,11 +217,11 @@ public class RobotMap {
     /** Button ID to center the robot on the gear's vision target */
     public final static int      XBOX_DRIVE_TO_GEAR_BUTTON          = 5; //(Left Bumper)
     /** Button ID to turn on the shooter */
-    public final static int      XBOX_SHOOT_BUTTON                  = 7; //(Back)
+    public final static int     XBOX_SHOOT_BUTTON                  = 7; //(Back)
     /** Button ID to activate the climber */
-    public final static int      XBOX_CLIMB_BUTTON                  = 8; //(Start)
+    public final static int     XBOX_CLIMB_BUTTON                  = 8; //(Start)
     /** Button ID to collect balls */
-    public final static int      XBOX_COLLECT_BUTTON                = 10; //(Right Stick Click)
+    public final static int     XBOX_COLLECT_BUTTON                = 10; //(Right Stick Click)
 
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
@@ -287,11 +273,11 @@ public class RobotMap {
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
     /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String   TABLE_HIGH_GOAL_NAME               = "vision/high_goal";
+    public final static String  TABLE_HIGH_GOAL_NAME               = "vision/high_goal";
     /** Map key for the speed of the right side of the robot */
-    public final static String   SPEED_RIGHT_KEY                    = "rightSpeed";
+    public final static String  SPEED_RIGHT_KEY                    = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
-    public final static String   SPEED_LEFT_KEY                     = "leftSpeed";
+    public final static String  SPEED_LEFT_KEY                     = "leftSpeed";
     /** Map key for center x of a contour */
     public final static String   CONTOUR_X_KEY                      = "center_x";
     /** Map key for center y of a contour */

@@ -27,7 +27,7 @@ public class CollectBalls extends Command {
      */
     protected void initialize() {
 
-        Robot.ballCollector.setCollectorSpeed(RobotMap.BALL_COLLECTION_SPEED);
+        Robot.ballCollector.set(RobotMap.BALL_COLLECTION_SPEED);
 
     }
 
@@ -65,7 +65,7 @@ public class CollectBalls extends Command {
      */
     protected void interrupted() {
 
-        Robot.ballCollector.setCollectorSpeed(0);
+        Robot.ballCollector.set(0);
 
     }
 

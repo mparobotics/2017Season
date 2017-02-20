@@ -26,15 +26,12 @@ public class AgitatorIdle extends Command {
     }
 
     /**
-     * This changes the setpoint of the ball agitator to the idle speed using
+     * Changes the setpoint of the ball agitator to
      * {@link org.usfirst.frc.team3926.robot.RobotMap#AGITATOR_IDLE_SETPOINT}
-     * <p>
-     * Note: The agitator's PID loop is enables in {@link Robot#robotInit()}, so it doesn't need to be enabled here
-     * </p>
      */
     protected void initialize() {
 
-        Robot.agitator.setSetpoint(RobotMap.AGITATOR_IDLE_SETPOINT);
+        Robot.agitator.set(RobotMap.AGITATOR_IDLE_SETPOINT);
 
     }
 

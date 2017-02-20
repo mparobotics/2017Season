@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.subsystems;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /***********************************************************************************************************************
@@ -185,6 +186,17 @@ public class SimpleMotor<T> extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
+    /**
+     * Sets the default command for this subsystem
+     *
+     * @param newCommand Command to set as default
+     */
+    public void createDefaultCommand(Command newCommand) {
+
+        setDefaultCommand(newCommand);
+
+    }
+
     ///////////////////////////////////////////////// Ball Collecting //////////////////////////////////////////////////
 
     /**
@@ -192,7 +204,7 @@ public class SimpleMotor<T> extends Subsystem {
      *
      * @param speed the speed to set {@link #motorController} to
      */
-    public void setCollectorSpeed(double speed) {
+    public void set(double speed) {
 
         if (motorController instanceof CANTalon)
             ((CANTalon) motorController).set(speed);
