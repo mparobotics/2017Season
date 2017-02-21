@@ -12,6 +12,8 @@ import org.usfirst.frc.team3926.robot.OI;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
 
+import java.util.Arrays;
+
 /***********************************************************************************************************************
  * Enables driving of the robot with a tank drive scheme. This class contains anything relevant to actuating the drive
  * motors. This includes autonomous handling of the robot.
@@ -106,6 +108,12 @@ public class DriveControl extends Subsystem {
 
         leftEncoder.reset();
         rightEncoder.reset();
+    }
+
+    public String getContourAreas() {
+
+        return Arrays.toString(highGoalTable.getNumberArray(RobotMap.CONTOUR_AREA_KEY, RobotMap.DEFAULT_VALUE));
+
     }
 
     //////////////////////////////////////////////// Robot Driving /////////////////////////////////////////////////////

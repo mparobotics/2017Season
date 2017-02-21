@@ -6,9 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.PlaceGear;
 import org.usfirst.frc.team3926.robot.commands.Climb;
-import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
-import org.usfirst.frc.team3926.robot.commands.Debugging.RangefinderCheck;
-import org.usfirst.frc.team3926.robot.commands.Debugging.RightDriveEncoderCheck;
+import org.usfirst.frc.team3926.robot.commands.Debugging.*;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorDown;
 import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
@@ -61,19 +59,21 @@ public class OI {
     /** Prints the value of the drive train's left encoder and resets its value */
     public Button                leftDrivetrainEncoder;
     /** Prints the value of the drive train's rangefinder */
-    public Button drivetrainRangefinder;
+    public Button   drivetrainRangefinder;
     /** Toggles the inverted direction of the drivetrains */
-    public Button invertDriveDirection;
+    public Button   invertDriveDirection;
     /** Runs the shooter backwards */
-    public Button reverseShooter;
+    public Button   reverseShooter;
     /** Cancel the current autonomous command */
-    public Button cancelCommand;
+    public Button   cancelCommand;
     /** Runs the gear motor to put the arm up */
-    public Button gearMotorUp;
+    public Button   gearMotorUp;
     /** Runs the gear motor to put the arm down */
-    public Button gearMotorDown;
+    public Button   gearMotorDown;
     /***/
-    public Button placeGear;
+    public Button   placeGear;
+    public Joystick debugStick;
+    public Button   printShooterValues, increaseShooterSpeed, decreaseShooterSpeed, debugShoot;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -135,6 +135,14 @@ public class OI {
                 rightDrivetrainEncoder.whenPressed(new RightDriveEncoderCheck());
                 leftDrivetrainEncoder.whenPressed(new LeftDriveEncoderCheck());
                 drivetrainRangefinder.whenPressed(new RangefinderCheck());
+                debugStick = new Joystick(2);
+                printShooterValues = new JoystickButton(debugStick, 4);
+                printShooterValues.whenPressed(new PrintShootingInfo());
+                increaseShooterSpeed = new JoystickButton(debugStick, 1);
+                decreaseShooterSpeed = new JoystickButton(debugStick, 2);
+                debugShoot = new JoystickButton(debugStick, 3);
+                debugShoot.whileHeld(new DebugShoot());
+
             }
         }
 

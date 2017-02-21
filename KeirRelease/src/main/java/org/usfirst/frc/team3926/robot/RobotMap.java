@@ -25,7 +25,12 @@ import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
  *      All values in between are also available
  *      </p>
  *
- *      TODO make gear placement values less static during teleop
+ *      TODO Test shooter vision
+ *      TODO find shooter ranges
+ *      TODO tune shooter PID loops
+ *      TODO finish gear placement auto
+ *      TODO shooting auto
+ *      TODO winch testing
  **********************************************************************************************************************/
 @SuppressWarnings("WeakerAccess")
 public class RobotMap {
@@ -90,13 +95,13 @@ public class RobotMap {
     /** Setpoint for the shooter's PID loop */
     public final static double  SHOOTER_SETPOINT                      = 35;
     /** Proportional multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_PROPORTIONAL                  = 0.006;
+    public final static double  SHOOTER_PROPORTIONAL                  = 0.043; //TODO tune more
     /** Integral multiplier for the shooter's PID loop */
-    public final static double  SHOOTER_INTEGRAL                      = 0.003;
+    public final static double  SHOOTER_INTEGRAL                      = 0.00;
     /** Derivative multiplier for the shooter's */
-    public final static double  SHOOTER_DERIVATIVE                    = 0.001;
+    public final static double  SHOOTER_DERIVATIVE                    = 0.025;
     /** Absolute tolerance (allowable error from set point) from the shooter's set point */
-    public final static double  SHOOTER_ABSOLUTE_TOLERANCE            = 0.1; //TODO figure out what this should be
+    public final static double  SHOOTER_ABSOLUTE_TOLERANCE            = 0.0; //TODO figure out what this should be
     /** Feed forward value for the shooter's PID loop */
     public final static double  SHOOTER_FEED_FORWARD                  = 0;
     /** Update period for the shooter's PID loop */
@@ -131,7 +136,7 @@ public class RobotMap {
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
     public final static int     CLIMBER_SECOND_PWM_PORT               = 8;
     /** Speed to climb at */
-    public final static double  CLIMBER_SPEED                         = 1;
+    public final static double  CLIMBER_SPEED                         = -1;
 
     /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */
@@ -181,7 +186,7 @@ public class RobotMap {
     public final static int     DRIVE_LEFT_ENCODER_A_CHANNEL          = 4;
     /** DIO port for the drive train's left encoder B channel */
     public final static int     DRIVE_LEFT_ENCODER_B_CHANNEL          = 5;
-    /**  */
+    /** Distance that the robot travels per pulse of the encoder */
     public final static double  DRIVE_ENCODER_DISTANCE_PER_PULSE      = 2 * (6 * Math.PI) / 2048;
     ///// Motor CAN IDs /////
     /** CAN ID for front right motor */
@@ -220,13 +225,13 @@ public class RobotMap {
     /** Button ID to enter safety mode */
     public final static int     XBOX_SAFETY_MODE_BUTTON               = 1; //(A)
     /** Button ID to enter straight mode */
-    public final static int      XBOX_STRAIGHT_MODE_BUTTON             = 2; //(B)
+    public final static int     XBOX_STRAIGHT_MODE_BUTTON             = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */
-    public final static int      XBOX_CONTOUR_ERROR_BUTTON             = 9; //(Left Stick Click)
+    public final static int     XBOX_CONTOUR_ERROR_BUTTON             = 9; //(Left Stick Click)
     /** Button ID to center the robot on the vision target */
-    public final static int      XBOX_CENTER_ON_HIGH_GOAL_BUTTON       = 4; //(X)
+    public final static int     XBOX_CENTER_ON_HIGH_GOAL_BUTTON       = 4; //(X)
     /** Button ID to drive towards the center of the vision target */
-    public final static int      XBOX_DRIVE_TO_HIGH_GOAL_BUTTON        = 3; //(Y)
+    public final static int     XBOX_DRIVE_TO_HIGH_GOAL_BUTTON        = 3; //(Y)
     /** Button ID to drive towards the center of the gear's vision target */
     public final static int      XBOX_CENTER_ON_GEAR_BUTTON            = 6; //(Right Bumper)
     /** Button ID to center the robot on the gear's vision target */
@@ -296,21 +301,23 @@ public class RobotMap {
     /** Map key for the speed of the left side of the robot */
     public final static String   SPEED_LEFT_KEY                        = "leftSpeed";
     /** Map key for center x of a contour */
-    public final static String   CONTOUR_X_KEY                         = "center_x";
+    public final static String  CONTOUR_X_KEY                         = "center_x";
     /** Map key for center y of a contour */
-    public final static String   CONTOUR_Y_KEY                         = "center_y";
+    public final static String  CONTOUR_Y_KEY                         = "center_y";
     /** Map key for contour height */
-    public final static String   CONTOUR_HEIGHT_KEY                    = "height";
+    public final static String  CONTOUR_HEIGHT_KEY                    = "height";
     /** Map key for contour width */
-    public final static String   CONTOUR_WIDTH_KEY                     = "width";
+    public final static String  CONTOUR_WIDTH_KEY                     = "width";
+    /***/
+    public final static String  CONTOUR_AREA_KEY                      = "area";
     /** Map key for SmartFilter pass status */
-    public final static String   SMARTFILTER_PASS_KEY                  = "smartFilter";
+    public final static String  SMARTFILTER_PASS_KEY                  = "smartFilter";
     ///// Smart Filter Configuration /////
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
-    public final static double   ALLOWABLE_ERROR                       = 0.05;
+    public final static double  ALLOWABLE_ERROR                       = 0.05;
     ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
-    public final static int      IMAGE_X                               = 320;
+    public final static int     IMAGE_X                               = 320;
     /** Size of the vision tracking image's Y axis */
     public final static int      IMAGE_Y                               = 240;
     /** Center point on the screen */

@@ -30,7 +30,7 @@ public class GearPlacementMotorUp extends Command {
         Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED);
 
         try {
-            wait(RobotMap.AGITATOR_DELAY_TIME);
+            wait(RobotMap.GEAR_MOTOR_UP_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

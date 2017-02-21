@@ -19,15 +19,17 @@ import org.usfirst.frc.team3926.robot.RobotMap;
 public class ShooterSubsystem extends PIDSubsystem {
 
     /***/
-    public  Encoder  encoder;
+    public Encoder  encoder;
     /***/
-    private CANTalon shooterMotor;
+    public CANTalon shooterMotor;
+    /***/
+    public double testSpeed = 0;
 
     public ShooterSubsystem() {
         /* This calls the constructor for a PIDSubsystem(name, proportional, integral, derivative) */
         super("Shooter PID System", RobotMap.SHOOTER_PROPORTIONAL, RobotMap.SHOOTER_INTEGRAL,
               RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_FEED_FORWARD, RobotMap.SHOOTER_PERIOD);
-        //setAbsoluteTolerance(RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+        setAbsoluteTolerance(RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
         encoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL, false,
                               CounterBase.EncodingType.k4X);
         //Sets up the test motor
@@ -37,10 +39,22 @@ public class ShooterSubsystem extends PIDSubsystem {
         //encoder.setDistancePerPulse(RobotMap.WHEEL_DIAMETER * Math.PI / RobotMap.ENCODER_PULSES_PER_REVOLUTION);
 
         encoder.setPIDSourceType(PIDSourceType.kRate);
-        setOutputRange(-1, 1);
+        setOutputRange(0, 1);
         setSetpoint(0);
         //Starts the PID loop
-        getPIDController().setContinuous(true);
+        //getPIDController().setContinuous(true);
+
+    }
+
+    public void increaseTestSpeed() {
+
+        testSpeed += 0.05;
+
+    }
+
+    public void decreaseTestSpeed() {
+
+        testSpeed -= 0.05;
 
     }
 
