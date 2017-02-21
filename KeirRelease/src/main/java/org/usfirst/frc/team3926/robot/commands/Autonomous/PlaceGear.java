@@ -23,7 +23,7 @@ public class PlaceGear extends CommandGroup {
     public PlaceGear() {
 
         addSequential(new GetGearTrajectory());
-        addSequential(new ContinueUntilRange(RobotMap.GEAR_PLACEMENT_VOLTAGE));
+        addSequential(new ContinueUntilRange(RobotMap.GEAR_PLACEMENT_VOLTAGE), RobotMap.GEAR_PLACEMENT_TIMEOUT);
         addSequential(new GearPlacementMotorUp());
         addSequential(new IndividualSideDrive(RobotMap.GEAR_TURN_LEFT_DISTANCE, RobotMap.GEAR_TURN_RIGHT_DISTANCE));
         addSequential(new AutoStraightDrive(RobotMap.GEAR_BACKUP_DISTANCE));

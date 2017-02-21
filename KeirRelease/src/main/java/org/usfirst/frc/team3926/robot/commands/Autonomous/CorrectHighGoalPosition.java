@@ -2,11 +2,14 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
+/***********************************************************************************************************************
  * Moves the robot to a position to shoot on the high goal
  *
  * @author William Kluge
- */
+ *         <p>
+ *         Contact: klugewilliam@gmail.com
+ *         </p>
+ **********************************************************************************************************************/
 public class CorrectHighGoalPosition extends CommandGroup {
 
     public CorrectHighGoalPosition() {
