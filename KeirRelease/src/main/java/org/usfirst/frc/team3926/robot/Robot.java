@@ -36,6 +36,13 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
 
+    /**
+     * Positions that the robot can start in.
+     * <p>
+     * These are used so that we can correct for autonomous starting positions within the command and we don't
+     * need 6 different commands for every action
+     * </p>
+     */
     public enum StartPositions {
         BlueLeft,
         BlueCenter,
@@ -51,8 +58,6 @@ public class Robot extends IterativeRobot {
     ////////////////////////////////////////// Instances of Subsystem Classes //////////////////////////////////////////
     /** Instance of DriveControl to allow driving of the robot's base */
     public final static DriveControl     driveControl = new DriveControl();
-    /** Encoder to use for the shooter's PID loop */
-    //public final static Encoder          shooterEncoder;
     /** Subsystem to control the robot's shooter */
     public final static ShooterSubsystem shooter      = new ShooterSubsystem();
     /** Subsystem to control the robot's climbing mechanism */

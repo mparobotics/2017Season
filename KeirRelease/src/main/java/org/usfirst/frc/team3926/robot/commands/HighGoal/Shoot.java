@@ -68,7 +68,9 @@ public class Shoot extends Command {
      */
     protected void interrupted() {
 
+        Robot.shooter.setSetpoint(0);
         Robot.shooter.disable();
+
     }
 
 }

@@ -27,7 +27,7 @@ public class ShooterSubsystem extends PIDSubsystem {
         /* This calls the constructor for a PIDSubsystem(name, proportional, integral, derivative) */
         super("Shooter PID System", RobotMap.SHOOTER_PROPORTIONAL, RobotMap.SHOOTER_INTEGRAL,
               RobotMap.SHOOTER_DERIVATIVE, RobotMap.SHOOTER_FEED_FORWARD, RobotMap.SHOOTER_PERIOD);
-        setAbsoluteTolerance(RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
+        //setAbsoluteTolerance(RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
         encoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL, false,
                               CounterBase.EncodingType.k4X);
         //Sets up the test motor
@@ -41,17 +41,6 @@ public class ShooterSubsystem extends PIDSubsystem {
         setSetpoint(0);
         //Starts the PID loop
         getPIDController().setContinuous(true);
-
-    }
-
-    /**
-     * Displays various values about the encoder
-     */
-    public void motorDisplayOutput() {
-
-        SmartDashboard.putNumber("Shooter Encoder value: ", encoder.get());
-        SmartDashboard.putNumber("Shooter Encoder Distance: ", encoder.getDistance());
-        SmartDashboard.putNumber("Shooter Encoder Rate: ", encoder.getRate());
 
     }
 

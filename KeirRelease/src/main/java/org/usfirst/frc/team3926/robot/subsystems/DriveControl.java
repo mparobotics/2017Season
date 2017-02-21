@@ -396,7 +396,7 @@ public class DriveControl extends Subsystem {
      */
     public void printResetRightEncoder() {
 
-        System.out.println("Right Encoder: " + rightEncoder.get());
+        System.out.println("Right Encoder: " + rightEncoder.getDistance());
         rightEncoder.reset();
 
     }
@@ -406,7 +406,7 @@ public class DriveControl extends Subsystem {
      */
     public void printResetLeftEncoder() {
 
-        System.out.println("Left Encoder: " + leftEncoder.get());
+        System.out.println("Left Encoder: " + leftEncoder.getDistance());
         leftEncoder.reset();
 
     }

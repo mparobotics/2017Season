@@ -25,14 +25,14 @@ public class LeftDriveEncoderCheck extends Command {
      */
     protected void initialize() {
 
+        Robot.driveControl.printResetLeftEncoder();
+
     }
 
     /**
      * Prints the value of
      */
     protected void execute() {
-
-        Robot.driveControl.printResetLeftEncoder();
 
     }
 
@@ -44,7 +44,7 @@ public class LeftDriveEncoderCheck extends Command {
      */
     protected boolean isFinished() {
 
-        return false;
+        return true;
     }
 
     /**
