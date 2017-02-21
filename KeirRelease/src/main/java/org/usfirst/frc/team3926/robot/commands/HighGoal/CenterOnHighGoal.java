@@ -3,6 +3,7 @@ package org.usfirst.frc.team3926.robot.commands.HighGoal;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * Command to center the robot on the high goal target
@@ -37,21 +38,22 @@ public class CenterOnHighGoal extends Command {
     protected void execute() {
 
         Robot.driveControl.center(false);
+
+        if (Robot.driveControl.lostTarget(false))
+            Robot.driveControl.driveTank(RobotMap.AUTONOMOUS_SPEED, -RobotMap.AUTONOMOUS_SPEED);
+
     }
 
     /**
-     * isFinished() is not needed because this command is run using
-     * {@link org.usfirst.frc.team3926.robot.OI#centerOnHighGoal}
      *
-     * @return false
      */
     protected boolean isFinished() {
 
-        return false;
+        return Robot.driveControl.isCentered();
     }
 
     /**
-     * end() is not needed because this command is run using {@link org.usfirst.frc.team3926.robot.OI#centerOnHighGoal}
+     * Nothing needs to happen in the end method
      */
     protected void end() {
 

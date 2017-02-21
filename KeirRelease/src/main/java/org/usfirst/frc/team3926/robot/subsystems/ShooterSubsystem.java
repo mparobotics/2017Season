@@ -18,7 +18,9 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  **********************************************************************************************************************/
 public class ShooterSubsystem extends PIDSubsystem {
 
-    private Encoder  encoder;
+    /***/
+    public  Encoder  encoder;
+    /***/
     private CANTalon shooterMotor;
 
     public ShooterSubsystem() {
@@ -47,9 +49,9 @@ public class ShooterSubsystem extends PIDSubsystem {
      */
     public void motorDisplayOutput() {
 
-        SmartDashboard.putNumber("Encoder value: ", encoder.get());
-        SmartDashboard.putNumber("Encoder Distance: ", encoder.getDistance());
-        SmartDashboard.putNumber("Encoder Rate: ", encoder.getRate());
+        SmartDashboard.putNumber("Shooter Encoder value: ", encoder.get());
+        SmartDashboard.putNumber("Shooter Encoder Distance: ", encoder.getDistance());
+        SmartDashboard.putNumber("Shooter Encoder Rate: ", encoder.getRate());
 
     }
 
@@ -71,7 +73,7 @@ public class ShooterSubsystem extends PIDSubsystem {
     protected void usePIDOutput(double output) {
 
         SmartDashboard.putNumber("Shooter PID Control Output", output);
-        SmartDashboard.putNumber("Shooter PID Control Input", Math.round(encoder.getRate() * 100) / 100);
+        SmartDashboard.putNumber("Shooter PID Control Input", encoder.getRate());
         SmartDashboard.putNumber("Shooter PID Control Setpoint", getSetpoint());
         shooterMotor.set(output);
 

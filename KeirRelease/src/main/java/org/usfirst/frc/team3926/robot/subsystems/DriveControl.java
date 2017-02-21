@@ -58,7 +58,7 @@ public class DriveControl extends Subsystem {
                                          RobotMap.FRONT_RIGHT_MOTOR_PWM, RobotMap.BACK_RIGHT_MOTOR_PWM);
 
         leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A_CHANNEL, RobotMap.DRIVE_LEFT_ENCODER_B_CHANNEL,
-                                  false, CounterBase.EncodingType.k4X);
+                                  true, CounterBase.EncodingType.k4X);
         leftEncoder.setDistancePerPulse(RobotMap.DRIVE_ENCODER_DISTANCE_PER_PULSE);
         rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A_CHANNEL, RobotMap.DRIVE_RIGHT_ENCODER_B_CHANNEL,
                                    false, CounterBase.EncodingType.k4X);
@@ -234,7 +234,8 @@ public class DriveControl extends Subsystem {
      */
     public boolean isCentered() {
 
-        return leftSide == RobotMap.AUTONOMOUS_SPEED && rightSide == RobotMap.AUTONOMOUS_SPEED;
+        return leftSide == RobotMap.AUTONOMOUS_SPEED && rightSide == RobotMap.AUTONOMOUS_SPEED ||
+               leftSide == 0 && rightSide == 0;
 
     }
 

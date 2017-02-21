@@ -61,17 +61,19 @@ public class OI {
     /** Prints the value of the drive train's left encoder and resets its value */
     public Button                leftDrivetrainEncoder;
     /** Prints the value of the drive train's rangefinder */
-    public Button                drivetrainRangefinder;
+    public Button drivetrainRangefinder;
     /** Toggles the inverted direction of the drivetrains */
-    public Button                invertDriveDirection;
+    public Button invertDriveDirection;
     /** Runs the shooter backwards */
-    public Button                reverseShooter;
+    public Button reverseShooter;
     /** Cancel the current autonomous command */
-    public Button                cancelCommand;
+    public Button cancelCommand;
     /** Runs the gear motor to put the arm up */
-    public Button                gearMotorUp;
+    public Button gearMotorUp;
     /** Runs the gear motor to put the arm down */
-    public Button                gearMotorDown;
+    public Button gearMotorDown;
+    /***/
+    public Button placeGear;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -83,8 +85,8 @@ public class OI {
 
         ///// Shooter /////
         LiveWindow.addActuator("shooter", "Shooter PID Loop", Robot.shooter.getPIDController());
-        Robot.shooterEncoder.startLiveWindowMode();
-        LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooterEncoder);
+        Robot.shooter.encoder.startLiveWindowMode();
+        LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooter.encoder);
         ///// Drive Control Sensors /////
         LiveWindow.addSensor("drive", "Rangefinder", Robot.driveControl.rangefinder);
         LiveWindow.addSensor("drive", "Left Encoder", Robot.driveControl.leftEncoder);
@@ -124,6 +126,7 @@ public class OI {
             climb = new JoystickButton(driverSecondaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(driverSecondaryStick, RobotMap.BALL_COLLECT_BUTTON);
             cancelCommand = new JoystickButton(driverSecondaryStick, RobotMap.CANCEL_COMMAND);
+            placeGear = new JoystickButton(driverPrimaryStick, 11);
             ///// Debugging Buttons /////
             if (RobotMap.DEBUG) {
                 rightDrivetrainEncoder = new JoystickButton(driverSecondaryStick, RobotMap.RIGHT_DRIVE_ENCODER_CHECK);
@@ -148,6 +151,7 @@ public class OI {
         gearMotorUp.whileHeld(new GearPlacementMotorUp());
         ///// Misc Commands /////
         climb.whileHeld(new Climb());
+        placeGear.whenPressed(new PlaceGear());
 
     }
 
