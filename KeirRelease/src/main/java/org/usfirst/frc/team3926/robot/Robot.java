@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3926.robot.commands.Autonomous.AutoPlaceGear;
+import org.usfirst.frc.team3926.robot.commands.Autonomous.AutoShoot;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
@@ -33,6 +35,18 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {
+
+    public enum StartPositions {
+        BlueLeft,
+        BlueCenter,
+        BlueRight,
+        RedLeft,
+        RedCenter,
+        RedRight
+    }
+
+    /** Represents where the robot starts */
+    public StartPositions startPosition;
 
     ////////////////////////////////////////// Instances of Subsystem Classes //////////////////////////////////////////
     /** Instance of DriveControl to allow driving of the robot's base */
@@ -91,11 +105,13 @@ public class Robot extends IterativeRobot {
 
     ///////////////////////////////////////// User Interface and Control ///////////////////////////////////////////////
     /** Operator interface class */
-    public static OI                       oi;
+    public static OI                              oi;
     /** Chooser for selecting the autonomous command */
-    private       SendableChooser<Command> chooser;
-    /** Command to run during autonomous (selected with {@link #chooser} */
-    private       Command                  autonomousCommand;
+    private       SendableChooser<Command>        autoCommandChooser;
+    /** Chooser for selecting where the robot is starting */
+    private       SendableChooser<StartPositions> startPositionChooser;
+    /** Command to run during autonomous (selected with {@link #autoCommandChooser} */
+    private       Command                         autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -106,11 +122,23 @@ public class Robot extends IterativeRobot {
 
         ////////// User Interface and Control Initialization //////////
         oi = new OI();
-        chooser = new SendableChooser<>();
-        chooser.addDefault("Do Nothing", new DoNothing());
-        chooser.addObject("Drive Forward", new DriveForward(RobotMap.AUTONOMOUS_DRIVE_FORWARD_DISTANCE));
-        SmartDashboard.putData("Autonomous mode", chooser);
-
+        ///// Auto Command Chooser /////
+        autoCommandChooser = new SendableChooser<>();
+        autoCommandChooser.addDefault("Do Nothing", new DoNothing());
+        autoCommandChooser.addObject("Drive Forward", new DriveForward(RobotMap.AUTONOMOUS_DRIVE_FORWARD_DISTANCE));
+        autoCommandChooser.addObject("Place Gear", new AutoPlaceGear());
+        autoCommandChooser.addObject("Shoot", new AutoShoot());
+        SmartDashboard.putData("Autonomous mode", autoCommandChooser);
+        ///// Start Position Chooser /////
+        startPositionChooser = new SendableChooser<>();
+        startPositionChooser.addDefault("Blue Center", StartPositions.BlueCenter);
+        startPositionChooser.addObject("Blue Left", StartPositions.BlueLeft);
+        startPositionChooser.addObject("Blue Right", StartPositions.BlueRight);
+        startPositionChooser.addObject("Red Center", StartPositions.RedCenter);
+        startPositionChooser.addObject("Red Left", StartPositions.RedLeft);
+        startPositionChooser.addObject("Red Right", StartPositions.RedRight);
+        SmartDashboard.putData("Starting Position", startPositionChooser);
+        ///// Vision Init /////
         driveControl.initNetworkTables();
 
     }
@@ -138,20 +166,20 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * This autonomous (along with the chooser code above) shows how to select
+     * This autonomous (along with the autoCommandChooser code above) shows how to select
      * between different autonomous modes using the dashboard. The sendable
-     * chooser code works with the Java SmartDashboard. If you prefer the
-     * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+     * autoCommandChooser code works with the Java SmartDashboard. If you prefer the
+     * LabVIEW Dashboard, remove all of the autoCommandChooser code and uncomment the
      * getString code to get the auto name from the text box below the Gyro
      * <p>
      * You can add additional auto modes by adding additional commands to the
-     * chooser code above (like the commented example) or additional comparisons
+     * autoCommandChooser code above (like the commented example) or additional comparisons
      * to the switch structure below with additional strings and commands.
      */
     @Override
     public void autonomousInit() {
 
-        autonomousCommand = chooser.getSelected();
+        autonomousCommand = autoCommandChooser.getSelected();
 
         // schedule the autonomous command (example)
         if (autonomousCommand != null)

@@ -40,9 +40,9 @@ public class RobotMap {
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double   GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE         = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double   GEAR_MOTOR_UP_TIME                 = 500;
+    public final static double  GEAR_MOTOR_UP_TIME              = 500;
     /** Time (in milliseconds) that it takes to put the gear motor down */
     public final static double  GEAR_MOTOR_DOWN_TIME            = 500;
     /** Gear backup direction */
@@ -104,13 +104,13 @@ public class RobotMap {
     /** Whether or not there should be a delay before the agitator starts */
     public final static boolean AGITATOR_DELAY_START            = true;
     /** Amount of time (in milliseconds) for the agitator to wait before starting */
-    public final static long     AGITATOR_DELAY_TIME                = 500;
+    public final static long    AGITATOR_DELAY_TIME             = 500;
 
     /////////////////////////////////////////////// Climber Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the climbing mechanism */
-    public final static boolean  CLIMBER_USE_CAN_TALON              = true;
+    public final static boolean CLIMBER_USE_CAN_TALON           = true;
     /** CAN ID for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
-    public final static int      CLIMBER_CAN_ID                     = 6;
+    public final static int     CLIMBER_CAN_ID                  = 6;
     /** CAN ID for the climbing system's second motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
     public final static int      CLIMBER_SECOND_CAN_ID              = 10;
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
@@ -268,11 +268,11 @@ public class RobotMap {
     /** Button ID on {@link OI#driverSecondaryStick} to collect balls */
     public final static int      BALL_COLLECT_BUTTON                = 5;
     /** Button ID on {@link OI#driverSecondaryStick} to cancel the current autonomous command */
-    public final static int      CANCEL_COMMAND                     = 8;
+    public final static int     CANCEL_COMMAND                  = 8;
 
     ///// Debugging Buttons /////
     /** Button ID on {@link OI#driverSecondaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
-    public final static int      RIGHT_DRIVE_ENCODER_CHECK          = 10;
+    public final static int     RIGHT_DRIVE_ENCODER_CHECK       = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
     public final static int     LEFT_DRIVE_ENCODER_CHECK        = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
@@ -293,14 +293,14 @@ public class RobotMap {
     /** Map key for center y of a contour */
     public final static String  CONTOUR_Y_KEY                   = "center_y";
     /** Map key for contour height */
-    public final static String   CONTOUR_HEIGHT_KEY                 = "height";
+    public final static String  CONTOUR_HEIGHT_KEY              = "height";
     /** Map key for contour width */
-    public final static String   CONTOUR_WIDTH_KEY                  = "width";
+    public final static String  CONTOUR_WIDTH_KEY               = "width";
     /** Map key for SmartFilter pass status */
-    public final static String   SMARTFILTER_PASS_KEY               = "smartFilter";
+    public final static String  SMARTFILTER_PASS_KEY            = "smartFilter";
     ///// Smart Filter Configuration /////
     /** How off the value is allowed to be from what it should be for vision tracking algorithms */
-    public final static double   ALLOWABLE_ERROR                    = 0.05;
+    public final static double  ALLOWABLE_ERROR                 = 0.05;
     ///// Image size configuration /////
     /** Size of the vision tracking image's X axis */
     public final static int      IMAGE_X                            = 320;
