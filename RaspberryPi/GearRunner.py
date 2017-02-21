@@ -2,7 +2,7 @@
 
 import cv2
 from networktables import NetworkTables
-from grip import GripPythonVI  #
+from geargrip import GearPython  #
 import numpy
 
 # The x side of the camera resolution being used for processing
@@ -102,7 +102,7 @@ def main():  # TODO optimize
     # Grabs the data from camera on port 1
     cap = cv2.VideoCapture(1)
     # pipeline from the grip generated file
-    pipeline = GripPythonVI()
+    pipeline = GearPython()
     # Setting width
     cap.set(3, x_resolution)
     # Setting height
