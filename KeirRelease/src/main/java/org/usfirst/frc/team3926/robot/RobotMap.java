@@ -46,7 +46,7 @@ public class RobotMap {
     /** Time (in milliseconds) that it takes to put the gear motor down */
     public final static double  GEAR_MOTOR_DOWN_TIME                  = 500;
     /** Gear backup direction */
-    public final static double  GEAR_BACKUP_DISTANCE                  = -93.8520125644193;
+    public final static double  GEAR_BACKUP_DISTANCE                  = -90;
     /** Distance for the left side of the robot to travel when turning from the gear target */
     public final static double  GEAR_TURN_LEFT_DISTANCE               = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
@@ -65,7 +65,7 @@ public class RobotMap {
      * Distance to drive forward to place a gear in autonomous if the robot does not start in the center position.
      * This value is the same for all starting positions that are not the center
      */
-    public final static double  AUTO_GEAR_NOT_CENTER_FORWARD_DISTANCE = 134;
+    public final static double  AUTO_GEAR_NOT_CENTER_FORWARD_DISTANCE = 79.999;
     /**
      * Distance for the inner side (towards driver station) side of the robot to turn to face the gear.
      * <p>
@@ -73,9 +73,9 @@ public class RobotMap {
      * When starting from blue or red right, the left side of the robot should face the driver station.
      * </p>
      */
-    public final static double  AUTO_GEAR_INNER_SIDE_TURN_DISTANCE    = 14.9;
+    public final static double  AUTO_GEAR_INNER_SIDE_TURN_DISTANCE    = 25;
     /** Distance for the outer side (away from driver station) side of the robot to run to face the gear */
-    public final static double  AUTO_GEAR_OUTER_SIDE_TURN_DISTANCE    = -26;
+    public final static double  AUTO_GEAR_OUTER_SIDE_TURN_DISTANCE    = -60;
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
@@ -139,11 +139,11 @@ public class RobotMap {
 
     /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */
-    public final static boolean  BALL_COLLECTION_USE_CAN_TALON         = true;
+    public final static boolean BALL_COLLECTION_USE_CAN_TALON         = true;
     /** CAN ID for ball collection system's motor controller (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true) */
-    public final static int      BALL_COLLECTION_CAN_ID                = 2;
+    public final static int     BALL_COLLECTION_CAN_ID                = 2;
     /** PWM port for ball collection motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
-    public final static int      BALL_COLLECTION_PWM_PORT              = 6;
+    public final static int     BALL_COLLECTION_PWM_PORT              = 6;
     /** Speed to set the ball collector motor to */
     public final static double   BALL_COLLECTION_SPEED                 = 1;
 
@@ -157,11 +157,11 @@ public class RobotMap {
     /** Speed to set the gear placement motor to */
     public final static double   GEAR_PLACEMENT_SPEED                  = 0.5;
     /** Whether or not to reverse the direction of the gear retention arm motor */
-    public final static boolean  REVERSE_GEAR_DIRECTION                = false;
+    public final static boolean REVERSE_GEAR_DIRECTION                = false;
 
     ///////////////////////////////////////////// Rangefinder Configuration ////////////////////////////////////////////
     /** DIO port for the rangefinder's echo pulse output */
-    public final static int      RANGEFINDER_ANALOG_IN_PORT            = 3;
+    public final static int     RANGEFINDER_ANALOG_IN_PORT            = 3;
     /** Resolution of the ADC to use for rangefinder calculations (roboRIO has 12-bit ADC, so this is 2^12) */
     public final static int     RANGEFINDER_BITS                      = 4096;
     /** Amount of volts per 5 millimeters */
@@ -207,13 +207,13 @@ public class RobotMap {
     public final static int     BACK_LEFT_MOTOR_PWM                   = 3;
     ///// Autonomous Configuration /////
     /** Max speed for the robot to travel during autonomous */
-    public final static double   AUTONOMOUS_SPEED                      = 0.5;
+    public final static double  AUTONOMOUS_SPEED                      = 0.5;
     /** Multiplier for turning speed with autonomous driving */
-    public final static double   TURNING_SPEED_MULTIPLIER              = 0.5;
+    public final static double  TURNING_SPEED_MULTIPLIER              = 0.5;
 
     ///////////////////////////////////////// Drive Joystick Configuration /////////////////////////////////////////////
     /** Use an XBox controller for {@link OI#driverPrimaryStick} */
-    public final static boolean  XBOX_DRIVE_CONTROLLER                 = false;
+    public final static boolean XBOX_DRIVE_CONTROLLER                 = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
     public final static int      XBOX_PORT                             = 0;

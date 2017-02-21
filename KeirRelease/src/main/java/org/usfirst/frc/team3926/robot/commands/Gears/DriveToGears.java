@@ -38,7 +38,11 @@ public class DriveToGears extends Command {
      */
     protected void execute() {
 
+        //if (!Robot.driveControl.isCentered())
         Robot.driveControl.autonomousTank(true);
+        //else
+        //  Robot.driveControl.continueDriving();
+
     }
 
     /**
@@ -48,7 +52,7 @@ public class DriveToGears extends Command {
      */
     protected boolean isFinished() {
 
-        return Robot.driveControl.withinDistance(RobotMap.GEAR_PLACEMENT_DISTANCE) ||
+        return Robot.driveControl.withinRangefinderVoltage(RobotMap.GEAR_PLACEMENT_VOLTAGE) ||
                Robot.oi.cancelCommand.get();
     }
 

@@ -39,7 +39,8 @@ public class IndividualSideDrive extends Command {
      */
     protected void initialize() {
 
-        Robot.driveControl.reset();
+        Robot.driveControl.leftEncoder.reset();
+        Robot.driveControl.rightEncoder.reset();
 
     }
 
