@@ -98,8 +98,8 @@ public class DriveControl extends Subsystem {
 
         rightSide = 0;
         leftSide = 0;
-        rightEncoder.reset();
-        leftEncoder.reset();
+        //rightEncoder.reset();
+        //leftEncoder.reset();
     }
 
     //////////////////////////////////////////////// Robot Driving /////////////////////////////////////////////////////
@@ -115,7 +115,7 @@ public class DriveControl extends Subsystem {
      */
     public void driveTank(double rightSpeed, double leftSpeed, boolean straight, boolean safe, boolean invert) {
 
-        setSpeed(rightSpeed, leftSpeed);
+        setSpeed(rightSpeed * -1, leftSpeed * -1); //invert joystick values
 
         if (straight)
             straightDrive();
@@ -360,6 +360,8 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putNumber("Rangefinder Voltage:", rangefinder.getVoltage());
         SmartDashboard.putNumber("Left Rate:", leftEncoder.getRate());
         SmartDashboard.putNumber("Right Rate:", rightEncoder.getRate());
+
+        driveSystem.tankDrive(leftSide, rightSide);
 
     }
 

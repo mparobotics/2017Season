@@ -43,6 +43,7 @@ public class CenterOnGears extends Command {
     /**
      * isFinished() is not needed here because this is controlled with
      * {@link org.usfirst.frc.team3926.robot.OI#centerOnGear}
+     *
      * @return false
      */
     protected boolean isFinished() {
@@ -54,6 +55,8 @@ public class CenterOnGears extends Command {
      * end() is not needed here because this is controlled with {@link org.usfirst.frc.team3926.robot.OI#centerOnGear}
      */
     protected void end() {
+
+        SmartDashboard.putBoolean("Center on Gears: ", false);
 
     }
 

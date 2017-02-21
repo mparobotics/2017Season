@@ -57,6 +57,8 @@ public class CenterOnHighGoal extends Command {
      */
     protected void end() {
 
+        SmartDashboard.putBoolean("Center on High Goal: ", false);
+
     }
 
     /**

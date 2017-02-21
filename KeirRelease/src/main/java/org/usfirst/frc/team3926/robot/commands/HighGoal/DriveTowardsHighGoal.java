@@ -57,6 +57,8 @@ public class DriveTowardsHighGoal extends Command {
      */
     protected void end() {
 
+        SmartDashboard.putBoolean("Drive to High Goal: ", false);
+
     }
 
     /**

@@ -89,8 +89,8 @@ public class OI {
         LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooter.encoder);
         ///// Drive Control Sensors /////
         LiveWindow.addSensor("drive", "Rangefinder", Robot.driveControl.rangefinder);
-        LiveWindow.addSensor("drive", "Left Encoder", Robot.driveControl.leftEncoder);
-        LiveWindow.addSensor("drive", "Right Encoder", Robot.driveControl.rightEncoder);
+        //LiveWindow.addSensor("drive", "Left Encoder", Robot.driveControl.leftEncoder);
+        //LiveWindow.addSensor("drive", "Right Encoder", Robot.driveControl.rightEncoder);
 
         if (RobotMap.XBOX_DRIVE_CONTROLLER) {
             driverPrimaryStick = new Joystick(RobotMap.XBOX_PORT);
