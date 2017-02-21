@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.concurrent.TimeUnit;
-
 /***********************************************************************************************************************
  * Puts the gear placement system's motor up (letting the gear come out)
  * @author William Kluge
@@ -15,17 +13,12 @@ import java.util.concurrent.TimeUnit;
  **********************************************************************************************************************/
 public class GearPlacementMotorUp extends Command {
 
-    /** Time (in system nano time) that this command started */
-    private long startTime;
-
     /**
      * Constructs the GearPlacementMotorUp command requiring {@link Robot#gearPlacer}
      */
     public GearPlacementMotorUp() {
 
         requires(Robot.gearPlacer);
-
-        startTime = System.nanoTime();
 
     }
 
@@ -36,14 +29,19 @@ public class GearPlacementMotorUp extends Command {
 
         Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED);
 
+        try {
+            wait(RobotMap.AGITATOR_DELAY_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
-     * No code needs to be executed during this command
+     * No code needs to be executed during this command because it will stop directly after initialize is finished
+     * waiting
      */
     protected void execute() {
-
-        Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED);
 
     }
 
@@ -53,8 +51,7 @@ public class GearPlacementMotorUp extends Command {
      */
     protected boolean isFinished() {
 
-        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_UP_TIME ||
-               Robot.oi.cancelCommand.get();
+        return true;
     }
 
     /**

@@ -98,8 +98,16 @@ public class DriveControl extends Subsystem {
 
         rightSide = 0;
         leftSide = 0;
-        //rightEncoder.reset();
-        //leftEncoder.reset();
+
+    }
+
+    /**
+     * Resets the drivetrain encoders
+     */
+    public void resetEncoders() {
+
+        leftEncoder.reset();
+        rightEncoder.reset();
     }
 
     //////////////////////////////////////////////// Robot Driving /////////////////////////////////////////////////////

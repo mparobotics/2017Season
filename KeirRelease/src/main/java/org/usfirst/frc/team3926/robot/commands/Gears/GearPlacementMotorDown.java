@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
-import java.util.concurrent.TimeUnit;
-
 /***********************************************************************************************************************
  * Puts the gear placement system's motor down (blocking the gear from falling out)
  * @author William Kluge
@@ -15,16 +13,12 @@ import java.util.concurrent.TimeUnit;
  **********************************************************************************************************************/
 public class GearPlacementMotorDown extends Command {
 
-    /** Time (in system nano time) that this command started */
-    private long startTime;
-
     /**
      * Constructs the GearPlacementMotorDown command requiring {@link Robot#gearPlacer}
      */
     public GearPlacementMotorDown() {
 
         requires(Robot.gearPlacer);
-        startTime = System.nanoTime();
 
     }
 
@@ -35,14 +29,18 @@ public class GearPlacementMotorDown extends Command {
 
         Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED * -1);
 
+        try {
+            wait(RobotMap.GEAR_MOTOR_DOWN_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
      * No code needs to be executed during this command
      */
     protected void execute() {
-
-        Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED * -1);
 
     }
 
@@ -54,8 +52,7 @@ public class GearPlacementMotorDown extends Command {
      */
     protected boolean isFinished() {
 
-        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) >= RobotMap.GEAR_MOTOR_DOWN_TIME ||
-               Robot.oi.cancelCommand.get();
+        return true;
     }
 
     /**

@@ -42,9 +42,9 @@ public class RobotMap {
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
     public final static double  GEAR_PLACEMENT_DISTANCE               = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static double  GEAR_MOTOR_UP_TIME                    = 500;
+    public final static long    GEAR_MOTOR_UP_TIME                    = 500;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double  GEAR_MOTOR_DOWN_TIME                  = 500;
+    public final static long    GEAR_MOTOR_DOWN_TIME                  = 500;
     /** Gear backup direction */
     public final static double  GEAR_BACKUP_DISTANCE                  = -90;
     /** Distance for the left side of the robot to travel when turning from the gear target */
@@ -145,17 +145,17 @@ public class RobotMap {
     /** PWM port for ball collection motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
     public final static int     BALL_COLLECTION_PWM_PORT              = 6;
     /** Speed to set the ball collector motor to */
-    public final static double   BALL_COLLECTION_SPEED                 = 1;
+    public final static double  BALL_COLLECTION_SPEED                 = 1;
 
     //////////////////////////////////////// Gear Placement Configuration //////////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the gear placement mechanism's motor */
-    public final static boolean  GEAR_PLACEMENT_USE_CAN_TALON          = true;
+    public final static boolean GEAR_PLACEMENT_USE_CAN_TALON          = true;
     /** CAN ID for the gear placement system's motor (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is true */
-    public final static int      GEAR_PLACEMENT_CAN_ID                 = 9;
+    public final static int     GEAR_PLACEMENT_CAN_ID                 = 9;
     /** PWM port for the gear placement system (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is false) */
-    public final static int      GEAR_PLACEMENT_PWM_PORT               = 9;
+    public final static int     GEAR_PLACEMENT_PWM_PORT               = 9;
     /** Speed to set the gear placement motor to */
-    public final static double   GEAR_PLACEMENT_SPEED                  = 0.5;
+    public final static double  GEAR_PLACEMENT_SPEED                  = 0.5;
     /** Whether or not to reverse the direction of the gear retention arm motor */
     public final static boolean REVERSE_GEAR_DIRECTION                = false;
 
@@ -216,13 +216,13 @@ public class RobotMap {
     public final static boolean XBOX_DRIVE_CONTROLLER                 = false;
     ///// XBox configuration (for driving) /////
     /** USB port number for the XBOX controller */
-    public final static int      XBOX_PORT                             = 0;
+    public final static int     XBOX_PORT                             = 0;
     /** Axis ID to use for the left speed in tank drive */
-    public final static int      XBOX_LEFT_SPEED_AXIS                  = 1; //(Left joystick y)
+    public final static int     XBOX_LEFT_SPEED_AXIS                  = 1; //(Left joystick y)
     /** Axis ID to use for the right speed in tank drive */
-    public final static int      XBOX_RIGHT_SPEED_AXIS                 = 5; //(Right joystick y)
+    public final static int     XBOX_RIGHT_SPEED_AXIS                 = 5; //(Right joystick y)
     /** Button ID to enter safety mode */
-    public final static int      XBOX_SAFETY_MODE_BUTTON               = 1; //(A)
+    public final static int     XBOX_SAFETY_MODE_BUTTON               = 1; //(A)
     /** Button ID to enter straight mode */
     public final static int      XBOX_STRAIGHT_MODE_BUTTON             = 2; //(B)
     /** Button ID to signify that an action taken by the robot in (removed) is incorrect */

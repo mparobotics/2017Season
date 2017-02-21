@@ -72,16 +72,6 @@ public class Robot extends IterativeRobot {
     static { //Static initialization for subsystems
 
         ///// Shooter Initialization ///
-//        shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_A_CHANNEL, RobotMap.SHOOTER_ENCODER_B_CHANNEL,
-//                                     false, CounterBase.EncodingType.k4X);
-//        shooterEncoder.setDistancePerPulse(1 / RobotMap.SHOOTER_ENCODER_PULSE_PER_REV);
-//        shooter = new PIDControlledActuator<>("Shooter PID Control", RobotMap.SHOOTER_USE_CAN_TALON ?
-//                                                                     new CANTalon(RobotMap.SHOOTER_CAN_ID) :
-//                                                                     new Talon(RobotMap.SHOOTER_PWM_ID),
-//                                              shooterEncoder, PIDSourceType.kRate, RobotMap.SHOOTER_SETPOINT,
-//                                              RobotMap.SHOOTER_PROPORTIONAL, RobotMap.SHOOTER_INTEGRAL,
-//                                              RobotMap.SHOOTER_DERIVATIVE,
-//                                              RobotMap.SHOOTER_ABSOLUTE_TOLERANCE);
 
         ///// Climber Initialization /////
         climber = new Climber<>(RobotMap.CLIMBER_USE_CAN_TALON ?

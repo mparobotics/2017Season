@@ -24,6 +24,7 @@ public class IndividualSideDrive extends Command {
 
     /**
      * Constructs the IndividualSideDrive command requiring {@link Robot#driveControl}
+     *
      * @param leftDistance  Distance the left side should travel
      * @param rightDistance Distance the right side should travel
      */
