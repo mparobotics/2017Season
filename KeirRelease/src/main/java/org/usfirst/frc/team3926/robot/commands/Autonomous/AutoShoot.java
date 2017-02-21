@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
@@ -13,7 +14,11 @@ public class AutoShoot extends CommandGroup {
 
     public AutoShoot() {
 
-        addSequential(new DriveForward(RobotMap.AUTONOMOUS_SHOOT_DRIVE_DISTANCE));
+        if (Robot.startPosition != Robot.StartPositions.BlueLeft ||
+            Robot.startPosition != Robot.StartPositions.RedRight)
+            addSequential(new CorrectHighGoalPosition());
+        else
+            addSequential(new DriveForward(RobotMap.AUTONOMOUS_SHOOT_DRIVE_DISTANCE));
         addSequential(new CenterOnHighGoal());
         addSequential(new ShootAndFeed(), RobotMap.AUTONOMOUS_SHOOT_TIMEOUT);
 

@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
     }
 
     /** Represents where the robot starts */
-    public StartPositions startPosition;
+    public static StartPositions startPosition;
 
     ////////////////////////////////////////// Instances of Subsystem Classes //////////////////////////////////////////
     /** Instance of DriveControl to allow driving of the robot's base */
@@ -180,6 +180,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
 
         autonomousCommand = autoCommandChooser.getSelected();
+        startPosition = startPositionChooser.getSelected();
 
         // schedule the autonomous command (example)
         if (autonomousCommand != null)
@@ -210,12 +211,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
-
-        //TODO remove debugging
-        if (oi.driverPrimaryStick.getRawButton(11))
-            gearPlacer.set(0.5);
-        else
-            gearPlacer.set(0);
 
         Scheduler.getInstance().run();
     }

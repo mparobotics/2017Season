@@ -39,7 +39,7 @@ public class CenterOnHighGoal extends Command {
 
         Robot.driveControl.center(false);
 
-        if (Robot.driveControl.lostTarget(false))
+        if (Robot.driveControl.lostTarget(false)) //turns to try to find the target
             Robot.driveControl.driveTank(RobotMap.AUTONOMOUS_SPEED, -RobotMap.AUTONOMOUS_SPEED);
 
     }
