@@ -2,7 +2,7 @@
 
 import cv2
 from networktables import NetworkTables
-from grip import GripPythonVI  #
+from geargrip import GearPython  #
 import numpy
 
 # The x side of the camera resolution being used for processing
@@ -63,7 +63,7 @@ def extra_processing(pipeline, frame):
     # The index of the contour in the list of all contours
     contour_number = 0
     # The table from network tables to add data to
-    table = NetworkTables.getTable('/vision/high_goal')
+    table = NetworkTables.getTable('/vision/gears')
 
     for contour in pipeline.filter_contours_output:
 
@@ -83,8 +83,6 @@ def extra_processing(pipeline, frame):
             cv2.putText(frame, str(w*h), (x, y), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
             contour_number += 1
 
-
-
     table.putNumberArray('center_x', center_x_positions)
     table.putNumberArray('center_y', center_y_positions)
     table.putNumberArray('width', widths)
@@ -101,10 +99,10 @@ def main():  # TODO optimize
     """
 
     NetworkTables.initialize(server='roboRIO-3926-FRC.local')  # Change the number to your team number if not MPA
-    # Grabs the data from camera on port 0
-    cap = cv2.VideoCapture(0)
+    # Grabs the data from camera on port 1
+    cap = cv2.VideoCapture(1)
     # pipeline from the grip generated file
-    pipeline = GripPythonVI()
+    pipeline = GearPython()
     # Setting width
     cap.set(3, x_resolution)
     # Setting height
@@ -115,7 +113,7 @@ def main():  # TODO optimize
         have_frame, frame = cap.read()
         if have_frame:
             pipeline.process(frame)
-            cv2.imwrite('/home/pi/git/2017Season/RaspberryPi/pic.jpg', extra_processing(pipeline, frame))
+            cv2.imwrite('/home/pi/git/2017Season/RaspberryPi/gear.jpg', extra_processing(pipeline, frame))
 
     print('Stopped Capturing')
 
