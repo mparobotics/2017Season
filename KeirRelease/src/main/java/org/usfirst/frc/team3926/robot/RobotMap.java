@@ -44,11 +44,11 @@ public class RobotMap {
     /** Time (in milliseconds) that it takes to put the gear motor up */
     public final static double   GEAR_MOTOR_UP_TIME                 = 500;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static double   GEAR_MOTOR_DOWN_TIME               = 500;
+    public final static double  GEAR_MOTOR_DOWN_TIME            = 500;
     /** Gear backup direction */
-    public final static double   GEAR_BACKUP_DISTANCE               = 10; //TODO figure out this distance
+    public final static double  GEAR_BACKUP_DISTANCE            = 10; //TODO figure out this distance
     /** Distance for the left side of the robot to travel when turning from the gear target */
-    public final static double   GEAR_TURN_LEFT_DISTANCE            = 4; //TODO figure out what this should be
+    public final static double  GEAR_TURN_LEFT_DISTANCE         = 4; //TODO figure out what this should be
     /** Distance for the right side of the robot to travel when turning from the gear target */
     public final static double  GEAR_TURN_RIGHT_DISTANCE        = 4; //TODO figure out what this should be
     /** Voltage of the rangefinder when the robot should stop driving forward */
@@ -98,11 +98,11 @@ public class RobotMap {
     /** PWM ID for the ball agitator's motor controller (used if {@link #AGITATOR_USE_CAN_TALON} is false) */
     public final static int     AGITATOR_PWM_PORT               = 5;
     /** Setpoint for the agitator's PID loop when it is feeding to the ball loader */
-    public final static double   AGITATOR_FEED_SETPOINT             = -0.4; //TODO figure out what this should be
+    public final static double  AGITATOR_FEED_SETPOINT          = -0.4; //TODO figure out what this should be
     /** Setpoint for the agitator's PID loop when it is sitting idle */
-    public final static double   AGITATOR_IDLE_SETPOINT             = 0; //TODO add actual value
+    public final static double  AGITATOR_IDLE_SETPOINT          = 0; //TODO add actual value
     /** Whether or not there should be a delay before the agitator starts */
-    public final static boolean  AGITATOR_DELAY_START               = true;
+    public final static boolean AGITATOR_DELAY_START            = true;
     /** Amount of time (in milliseconds) for the agitator to wait before starting */
     public final static long     AGITATOR_DELAY_TIME                = 500;
 
@@ -274,22 +274,24 @@ public class RobotMap {
     /** Button ID on {@link OI#driverSecondaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
     public final static int      RIGHT_DRIVE_ENCODER_CHECK          = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
-    public final static int      LEFT_DRIVE_ENCODER_CHECK           = 10;
+    public final static int     LEFT_DRIVE_ENCODER_CHECK        = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
-    public final static int      RANGEFINDER_CHECK                  = 9;
+    public final static int     RANGEFINDER_CHECK               = 9;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////
-    /** Name of the network table for NetworkVisionProcessing to read from */
-    public final static String   TABLE_HIGH_GOAL_NAME               = "vision/high_goal";
+    /** Name of the network table for high goal */
+    public final static String  TABLE_HIGH_GOAL_NAME            = "vision/high_goal";
+    /** Name of the network table for gears */
+    public final static String  TABLE_GEAR_NAME                 = "vision/gears";
     /** Map key for the speed of the right side of the robot */
-    public final static String   SPEED_RIGHT_KEY                    = "rightSpeed";
+    public final static String  SPEED_RIGHT_KEY                 = "rightSpeed";
     /** Map key for the speed of the left side of the robot */
-    public final static String   SPEED_LEFT_KEY                     = "leftSpeed";
+    public final static String  SPEED_LEFT_KEY                  = "leftSpeed";
     /** Map key for center x of a contour */
-    public final static String   CONTOUR_X_KEY                      = "center_x";
+    public final static String  CONTOUR_X_KEY                   = "center_x";
     /** Map key for center y of a contour */
-    public final static String   CONTOUR_Y_KEY                      = "center_y";
+    public final static String  CONTOUR_Y_KEY                   = "center_y";
     /** Map key for contour height */
     public final static String   CONTOUR_HEIGHT_KEY                 = "height";
     /** Map key for contour width */

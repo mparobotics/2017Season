@@ -111,7 +111,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Drive Forward", new DriveForward(RobotMap.AUTONOMOUS_DRIVE_FORWARD_DISTANCE));
         SmartDashboard.putData("Autonomous mode", chooser);
 
-        driveControl.initNetworkTables(RobotMap.TABLE_HIGH_GOAL_NAME);
+        driveControl.initNetworkTables();
 
     }
 

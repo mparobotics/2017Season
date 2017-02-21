@@ -31,7 +31,9 @@ public class DriveControl extends Subsystem {
     /** Object to handle actual driving of motors */
     private RobotDrive driveSystem;
     /** Network table for vision processing of the high goal target */
-    private NetworkTable visionTable = null;
+    private NetworkTable highGoalTable = null;
+    /** Network table for vision processing of the gear target */
+    private NetworkTable gearTable     = null;
     /** Vision processing booleans */
     private boolean moveLeft, moveRight, contoursFound, centered;
     /** Encoder for the robot's left side */
@@ -81,12 +83,11 @@ public class DriveControl extends Subsystem {
      * <p>
      * Note: When this is put in the constructor it seems to always fail
      * </p>
-     *
-     * @param networkTableName Name of the network table to initialize
      */
-    public void initNetworkTables(String networkTableName) {
+    public void initNetworkTables() {
 
-        visionTable = NetworkTable.getTable(networkTableName);
+        highGoalTable = NetworkTable.getTable(RobotMap.TABLE_HIGH_GOAL_NAME);
+        gearTable = NetworkTable.getTable(RobotMap.TABLE_GEAR_NAME);
 
     }
 
@@ -156,20 +157,21 @@ public class DriveControl extends Subsystem {
      */
     public void autonomousTank(boolean targetGears) {
 
-        int checkIndex = 0; //TODO add minor filtering
+        //TODO add minor filtering? (Joe might handle this)
 
-        double[] contourCenter = visionTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
-
-        if (contourCenter.length != 0) {
+        if ((!targetGears && highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length != 0)
+            || (targetGears && gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length != 0)) {
 
             double target;
 
             if (targetGears) {
-                target = ((contourCenter[0] + contourCenter[1]) / 2) -
-                         (visionTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
+                double[] gearTargetCenters = gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+                target = ((gearTargetCenters[0] + gearTargetCenters[1]) / 2) +
+                         (gearTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
                           RobotMap.GEAR_VISION_OFFSET_RATIO);
-            } else
-                target = contourCenter[0];
+            } else { //target for the high goal
+                target = highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE)[0];
+            }
 
             if (target == RobotMap.ILLEGAL_DOUBLE)
                 return;
@@ -205,7 +207,6 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putBoolean("Move Right", moveRight);
         SmartDashboard.putBoolean("Centered", centered);
         SmartDashboard.putBoolean("Contours Found", contoursFound);
-        SmartDashboard.putNumber("Driving Based on Contour: ", checkIndex);
 
     }
 
@@ -247,14 +248,15 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * @param targetGears
-     * @return
+     * Finds if the arrays for vision processing are the correct size
+     *
+     * @param targetGears Whether or not this needs to check if there are gear targets or high goal targets
+     * @return If there is a vision target to lock onto to drive towards
      */
     public boolean lostTarget(boolean targetGears) {
 
-        int visionArraySize = visionTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length;
-
-        return (targetGears) ? visionArraySize == 2 : visionArraySize == 1;
+        return (targetGears) ? gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length == 2 :
+               highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length >= 1;
 
     }
 
