@@ -162,7 +162,14 @@ public class DriveControl extends Subsystem {
 
         if (contourCenter.length != 0) {
 
-            double target = (targetGears) ? (contourCenter[0] + contourCenter[1]) / 2 : contourCenter[0];
+            double target;
+
+            if (targetGears) {
+                target = ((contourCenter[0] + contourCenter[1]) / 2) -
+                         (visionTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
+                          RobotMap.GEAR_VISION_OFFSET_RATIO);
+            } else
+                target = contourCenter[0];
 
             if (target == RobotMap.ILLEGAL_DOUBLE)
                 return;
