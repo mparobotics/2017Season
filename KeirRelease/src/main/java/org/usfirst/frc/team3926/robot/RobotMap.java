@@ -47,10 +47,6 @@ public class RobotMap {
     public final static long    GEAR_MOTOR_DOWN_TIME                  = 500;
     /** Gear backup direction */
     public final static double  GEAR_BACKUP_DISTANCE                  = -90;
-    /** Distance for the left side of the robot to travel when turning from the gear target */
-    public final static double  GEAR_TURN_LEFT_DISTANCE               = 4; //TODO figure out what this should be
-    /** Distance for the right side of the robot to travel when turning from the gear target */
-    public final static double  GEAR_TURN_RIGHT_DISTANCE              = 4; //TODO figure out what this should be
     /** Voltage of the rangefinder when the robot should stop driving forward */
     public final static double  GEAR_PLACEMENT_VOLTAGE                = 0.34;
     /** Timeout for gear placement in case the rangefinder stops working */

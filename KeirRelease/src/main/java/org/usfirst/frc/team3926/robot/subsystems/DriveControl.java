@@ -19,8 +19,6 @@ import org.usfirst.frc.team3926.robot.commands.UserDriveTank;
  *      <p>
  *      Contact: klugewilliam@gmail.com
  *      </p>
- * TODO autonomous vision driving
- * TODO add offset for driving to gears
  **********************************************************************************************************************/
 public class DriveControl extends Subsystem {
 
@@ -114,6 +112,9 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in a tank configuration
+     * <p>
+     * Note: Input values are inverted here to account for joystick inversions
+     * </p>
      *
      * @param rightSpeed Speed to set the right motor
      * @param leftSpeed  Speed to set the left motor
@@ -123,7 +124,7 @@ public class DriveControl extends Subsystem {
      */
     public void driveTank(double rightSpeed, double leftSpeed, boolean straight, boolean safe, boolean invert) {
 
-        setSpeed(rightSpeed * -1, leftSpeed * -1); //invert joystick values
+        setSpeed(rightSpeed * -1, leftSpeed * -1); //This inverts joystick values
 
         if (straight)
             straightDrive();
@@ -147,6 +148,9 @@ public class DriveControl extends Subsystem {
 
     /**
      * Drives the robot in tank configuration
+     * <p>
+     * Note: Joystick values ARE NOT inverted when using this method. This is intended mostly for driving in autonomous.
+     * </p>
      *
      * @param rightSpeed Speed to set the right side of the drive train
      * @param leftSpeed  Speed to set the left side of the drive train
@@ -164,8 +168,6 @@ public class DriveControl extends Subsystem {
      *                    target, which it will do if this is true
      */
     public void autonomousTank(boolean targetGears) {
-
-        //TODO add minor filtering? (Joe might handle this)
 
         if ((!targetGears && highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length != 0)
             || (targetGears && gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length != 0)) {

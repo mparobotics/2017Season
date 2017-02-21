@@ -30,7 +30,6 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  * @author Joe Brooksbank
- *      TODO gear placement command group
  *      TODO collector reverse
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
