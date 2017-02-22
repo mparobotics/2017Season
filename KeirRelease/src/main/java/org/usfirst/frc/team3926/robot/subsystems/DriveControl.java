@@ -132,7 +132,7 @@ public class DriveControl extends Subsystem {
      */
     public void driveTank(double rightSpeed, double leftSpeed, boolean straight, boolean safe, boolean invert) {
 
-        setSpeed(rightSpeed * -1, leftSpeed * -1); //This inverts joystick values
+        setSpeed(rightSpeed * -1, leftSpeed * -1, false); //This inverts joystick values
 
         if (straight)
             straightDrive();
@@ -165,7 +165,7 @@ public class DriveControl extends Subsystem {
      */
     public void driveTank(double rightSpeed, double leftSpeed) {
 
-        setSpeed(leftSpeed, rightSpeed);
+        setSpeed(leftSpeed, rightSpeed, true);
 
     }
 
@@ -198,26 +198,29 @@ public class DriveControl extends Subsystem {
 
             if (target > RobotMap.SCREEN_CENTER[0] * (1 + RobotMap.ALLOWABLE_ERROR)) {
                 setSpeed(RobotMap.AUTONOMOUS_SPEED, ((target - RobotMap.SCREEN_CENTER[0]) /
-                                                     RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED);
+                                                     RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED, true);
                 moveLeft = false;
                 moveRight = true;
                 centered = false;
             } else if (target < RobotMap.SCREEN_CENTER[0] * (1 - RobotMap.ALLOWABLE_ERROR)) {
-                setSpeed((target / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED, 0);
+                setSpeed((target / RobotMap.SCREEN_CENTER[0]) * RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED,
+                         true);
                 moveRight = false;
                 centered = false;
                 moveLeft = true;
             } else {
-                setSpeed(RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED);
+                setSpeed(RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED, true);
                 moveLeft = false;
                 moveRight = false;
                 centered = true;
             }
 
         } else {
-            setSpeed(0, 0);
+            setSpeed(0, 0, true);
             contoursFound = false;
         }
+
+        setSpeed(leftSide, rightSide, false);
 
         driveSystem.tankDrive(leftSide, rightSide);
 
@@ -242,11 +245,13 @@ public class DriveControl extends Subsystem {
         autonomousTank(targetGears);
 
         if (moveLeft)
-            setSpeed(leftSide * RobotMap.TURNING_SPEED_MULTIPLIER, rightSide * -RobotMap.TURNING_SPEED_MULTIPLIER);
+            setSpeed(leftSide * RobotMap.TURNING_SPEED_MULTIPLIER, rightSide * -RobotMap.TURNING_SPEED_MULTIPLIER,
+                     true);
         else if (moveRight)
-            setSpeed(leftSide * -RobotMap.TURNING_SPEED_MULTIPLIER, rightSide * RobotMap.TURNING_SPEED_MULTIPLIER);
+            setSpeed(leftSide * -RobotMap.TURNING_SPEED_MULTIPLIER, rightSide * RobotMap.TURNING_SPEED_MULTIPLIER,
+                     true);
         else
-            setSpeed(0, 0);
+            setSpeed(0, 0, true);
 
         driveSystem.tankDrive(leftSide, rightSide);
 
@@ -354,8 +359,10 @@ public class DriveControl extends Subsystem {
      *
      * @param leftSpeed  Speed to drive the left side
      * @param rightSpeed Speed to drive the right side
+     * @param autonomous Whether or not his command is being called from an autonomous method (to
+     *                   reverse one side's drive
      */
-    private void setSpeed(double leftSpeed, double rightSpeed) {
+    private void setSpeed(double leftSpeed, double rightSpeed, boolean autonomous) {
 
         if (leftSpeed != RobotMap.ILLEGAL_DOUBLE) {
             rightSide = rightSpeed;
@@ -375,7 +382,10 @@ public class DriveControl extends Subsystem {
         if (leftSpeed != RobotMap.ILLEGAL_DOUBLE)
             SmartDashboard.putNumber("Left Speed: ", leftSide);
 
-        SmartDashboard.putNumber("Rangefinder Voltage:", rangefinder.getVoltage());
+        if (autonomous)
+            //rightSide *= -1; //TODO find out which side this is on
+
+            SmartDashboard.putNumber("Rangefinder Voltage:", rangefinder.getVoltage());
         SmartDashboard.putNumber("Left Rate:", leftEncoder.getRate());
         SmartDashboard.putNumber("Right Rate:", rightEncoder.getRate());
 

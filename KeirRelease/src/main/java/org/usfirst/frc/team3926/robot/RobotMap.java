@@ -47,13 +47,13 @@ public class RobotMap {
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
     public final static double  GEAR_PLACEMENT_DISTANCE               = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static long    GEAR_MOTOR_UP_TIME                    = 500;
+    public final static long    GEAR_MOTOR_UP_TIME                    = 250;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static long    GEAR_MOTOR_DOWN_TIME                  = 500;
+    public final static long    GEAR_MOTOR_DOWN_TIME                  = 250;
     /** Gear backup direction */
     public final static double  GEAR_BACKUP_DISTANCE                  = -90;
     /** Voltage of the rangefinder when the robot should stop driving forward */
-    public final static double  GEAR_PLACEMENT_VOLTAGE                = 0.34;
+    public final static double  GEAR_PLACEMENT_VOLTAGE                = 0.43;
     /** Timeout for gear placement in case the rangefinder stops working */
     public final static double  GEAR_PLACEMENT_TIMEOUT                = 6000;
     /**  */
@@ -66,7 +66,7 @@ public class RobotMap {
      * Distance to drive forward to place a gear in autonomous if the robot does not start in the center position.
      * This value is the same for all starting positions that are not the center
      */
-    public final static double  AUTO_GEAR_NOT_CENTER_FORWARD_DISTANCE = 79.999;
+    public final static double  AUTO_GEAR_NOT_CENTER_FORWARD_DISTANCE = /*79.999*/140;
     /**
      * Distance for the inner side (towards driver station) side of the robot to turn to face the gear.
      * <p>
@@ -74,9 +74,9 @@ public class RobotMap {
      * When starting from blue or red right, the left side of the robot should face the driver station.
      * </p>
      */
-    public final static double  AUTO_GEAR_INNER_SIDE_TURN_DISTANCE    = 25;
+    public final static double  AUTO_GEAR_INNER_SIDE_TURN_DISTANCE    = /*25*/-25;
     /** Distance for the outer side (away from driver station) side of the robot to run to face the gear */
-    public final static double  AUTO_GEAR_OUTER_SIDE_TURN_DISTANCE    = -60;
+    public final static double  AUTO_GEAR_OUTER_SIDE_TURN_DISTANCE    = /*-60*/-25;
 
     ////////////////////////////////////////////// Shooter Configuration ///////////////////////////////////////////////
     ///// Shooter Motor Configuration /////
@@ -156,7 +156,7 @@ public class RobotMap {
     /** PWM port for the gear placement system (used if {@link #GEAR_PLACEMENT_USE_CAN_TALON} is false) */
     public final static int     GEAR_PLACEMENT_PWM_PORT               = 9;
     /** Speed to set the gear placement motor to */
-    public final static double  GEAR_PLACEMENT_SPEED                  = 0.5;
+    public final static double  GEAR_PLACEMENT_SPEED                  = 0.25;
     /** Whether or not to reverse the direction of the gear retention arm motor */
     public final static boolean REVERSE_GEAR_DIRECTION                = false;
 

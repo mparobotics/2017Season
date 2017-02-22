@@ -26,6 +26,8 @@ public class ContinueTrajectory extends Command {
      */
     protected void initialize() {
 
+        //Robot.driveControl.reverseSpeeds(); //TODO fix this more elegantly
+
     }
 
     /**
