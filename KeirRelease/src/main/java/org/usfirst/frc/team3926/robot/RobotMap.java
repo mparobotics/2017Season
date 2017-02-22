@@ -45,19 +45,19 @@ public class RobotMap {
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double   GEAR_PLACEMENT_DISTANCE               = 0; //TODO find this value
+    public final static double GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static long     GEAR_MOTOR_UP_TIME                    = 250;
+    public final static long   GEAR_MOTOR_UP_TIME                 = 250;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static long     GEAR_MOTOR_DOWN_TIME                  = 10000;
+    public final static long   GEAR_MOTOR_DOWN_TIME               = 1000;
     /** Gear backup direction */
-    public final static double   GEAR_BACKUP_DISTANCE                  = -70;
+    public final static double GEAR_BACKUP_DISTANCE               = -70;
     /** Voltage of the rangefinder when the robot should stop driving forward */
-    public final static double   GEAR_PLACEMENT_VOLTAGE                = 0.375;
+    public final static double GEAR_PLACEMENT_VOLTAGE             = 0.375;
     /** Timeout for gear placement in case the rangefinder stops working */
-    public final static double   GEAR_PLACEMENT_TIMEOUT                = 6;
+    public final static double GEAR_PLACEMENT_TIMEOUT             = 6;
     /***/
-    public final static double   AUTO_GEAR_TURN_AFTER_PLACE_OUTSIDE    = 30;
+    public final static double AUTO_GEAR_TURN_AFTER_PLACE_OUTSIDE = 30;
     public final static double   AUTO_GEAR_TURN_AFTER_PLACE_INSIDE     = 30;
     public final static double   AUTO_GEAR_STRAIGHT_AFTER_TURN         = 150;
     /**  */

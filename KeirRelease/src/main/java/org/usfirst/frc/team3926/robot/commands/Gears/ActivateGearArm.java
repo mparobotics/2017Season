@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.RobotMap;
 
 /**
  *
@@ -15,6 +16,14 @@ public class ActivateGearArm extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+
+        Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED);
+
+        try {
+            wait(RobotMap.GEAR_MOTOR_DOWN_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
