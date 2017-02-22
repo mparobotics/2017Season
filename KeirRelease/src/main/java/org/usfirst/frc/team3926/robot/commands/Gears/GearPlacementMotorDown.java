@@ -32,7 +32,7 @@ public class GearPlacementMotorDown extends Command {
         Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED * -1);
 
         try {
-            wait(RobotMap.GEAR_MOTOR_DOWN_TIME);
+            Thread.sleep(RobotMap.GEAR_MOTOR_DOWN_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

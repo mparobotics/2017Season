@@ -57,7 +57,7 @@ public class AutoStraightDrive extends Command {
 
         if (waitTime != 0) {
             try {
-                wait(waitTime);
+                Thread.sleep(waitTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
