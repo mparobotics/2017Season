@@ -27,6 +27,8 @@ public class GearPlacementMotorUp extends Command {
      */
     protected void initialize() {
 
+        System.out.println("Putting gear motor up");
+
         Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED);
 
         try {

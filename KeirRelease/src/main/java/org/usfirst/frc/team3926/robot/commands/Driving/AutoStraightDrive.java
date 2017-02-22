@@ -21,6 +21,7 @@ public class AutoStraightDrive extends Command {
 
     /** Distance that the robot should drive (forwards or backwards) */
     private double driveDistance;
+    private long   waitTime;
 
     /**
      * Constructs the AutoStraightDrive command requiring {@link Robot#driveControl}
@@ -34,11 +35,33 @@ public class AutoStraightDrive extends Command {
     }
 
     /**
+     * Constructs the AutoStraightDrive command requiring {@link Robot#driveControl}
+     *
+     * @param driveDistance Distance that the robot should drive (forwards or backwards)
+     */
+    public AutoStraightDrive(double driveDistance, long waitTime) {
+
+        requires(Robot.driveControl);
+        this.driveDistance = driveDistance;
+        this.waitTime = waitTime;
+    }
+
+    /**
      * Resets encoder values
      */
     protected void initialize() {
 
-        Robot.driveControl.reset();
+        System.out.println("Driving the robot autonomously with distance " + driveDistance);
+
+        Robot.driveControl.resetEncoders();
+
+        if (waitTime != 0) {
+            try {
+                wait(waitTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

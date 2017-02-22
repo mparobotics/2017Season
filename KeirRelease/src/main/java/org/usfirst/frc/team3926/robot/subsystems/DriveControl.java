@@ -177,18 +177,19 @@ public class DriveControl extends Subsystem {
      */
     public void autonomousTank(boolean targetGears) {
 
-        if ((!targetGears && highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length != 0)
-            || (targetGears && gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length != 0)) {
+        double[] highGoal = highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+        double[] gearGoal = gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
+
+        if ((!targetGears && highGoal.length != 0) || (targetGears && gearGoal.length > 1)) {
 
             double target;
 
             if (targetGears) {
-                double[] gearTargetCenters = gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE);
-                target = ((gearTargetCenters[0] + gearTargetCenters[1]) / 2) +
-                         (gearTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
-                          RobotMap.GEAR_VISION_OFFSET_RATIO);
+                target = ((gearGoal[0] + gearGoal[1]) / 2); //+
+                         /*(gearTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
+                          RobotMap.GEAR_VISION_OFFSET_RATIO*///);
             } else { //target for the high goal
-                target = highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE)[0];
+                target = highGoal[0];
             }
 
             if (target == RobotMap.ILLEGAL_DOUBLE)
@@ -312,7 +313,12 @@ public class DriveControl extends Subsystem {
      */
     public boolean withinRangefinderVoltage(double targetVoltage) {
 
-        return rangefinder.getVoltage() <= targetVoltage;
+        boolean rangefinderStatus = rangefinder.getVoltage() <= targetVoltage;
+
+        if (rangefinderStatus)
+            System.out.println(rangefinder.getVoltage() + " target = " + targetVoltage);
+
+        return rangefinderStatus;
 
     }
 

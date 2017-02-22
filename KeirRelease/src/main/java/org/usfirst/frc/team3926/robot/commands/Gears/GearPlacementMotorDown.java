@@ -27,6 +27,8 @@ public class GearPlacementMotorDown extends Command {
      */
     protected void initialize() {
 
+        System.out.println("Putting gear motor down");
+
         Robot.gearPlacer.set(RobotMap.GEAR_PLACEMENT_SPEED * -1);
 
         try {
