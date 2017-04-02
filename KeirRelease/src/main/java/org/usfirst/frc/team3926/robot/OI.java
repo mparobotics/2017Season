@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.PlaceGear;
 import org.usfirst.frc.team3926.robot.commands.Climb;
-import org.usfirst.frc.team3926.robot.commands.Debugging.*;
+import org.usfirst.frc.team3926.robot.commands.Debugging.DebugShoot;
+import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
+import org.usfirst.frc.team3926.robot.commands.Debugging.RangefinderCheck;
+import org.usfirst.frc.team3926.robot.commands.Debugging.RightDriveEncoderCheck;
 import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
 import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorDown;
 import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
@@ -101,9 +104,9 @@ public class OI {
     OI() {
 
         ///// Shooter /////
-        LiveWindow.addActuator("shooter", "Shooter PID Loop", Robot.shooter.getPIDController());
-        Robot.shooter.encoder.startLiveWindowMode();
-        LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooter.encoder);
+        //LiveWindow.addActuator("shooter", "Shooter PID Loop", Robot.shooter.getPIDController());
+        //Robot.shooter.encoder.startLiveWindowMode();
+        //LiveWindow.addSensor("shooter", "Shooter Encoder", Robot.shooter.encoder);
         ///// Drive Control Sensors /////
         LiveWindow.addSensor("drive", "Rangefinder", Robot.driveControl.rangefinder);
         //LiveWindow.addSensor("drive", "Left Encoder", Robot.driveControl.leftEncoder);
@@ -181,18 +184,19 @@ public class OI {
             }
             centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());
             driveToHighGoal.whileHeld(new CenterOnHighGoal());
+            ///// Gear Commands /////
+            driveToGear.whileHeld(new PlaceGear());
+            centerOnGear.whileHeld(new CenterOnGears());
+            gearMotorDown.whileHeld(new GearPlacementMotorDown());
+            gearMotorUp.whileHeld(new GearPlacementMotorUp());
         }
 
         ///// High Goal Commands /////
         shootAndFeed.whileHeld(new ShootAndFeed());
+        shootFeedAlign.whileHeld(new ShootFeedAlign());
+        reverseShooter.whileHeld(new ShooterReverse());
         collectBalls.whileHeld(new CollectBalls(RobotMap.BALL_COLLECTION_SPEED));
         reverseCollectBalls.whileHeld(new CollectBalls(-RobotMap.BALL_COLLECTION_SPEED));
-        reverseShooter.whileHeld(new ShooterReverse());
-        ///// Gear Commands /////
-        driveToGear.whileHeld(new PlaceGear());
-        centerOnGear.whileHeld(new CenterOnGears());
-        gearMotorDown.whileHeld(new GearPlacementMotorDown());
-        gearMotorUp.whileHeld(new GearPlacementMotorUp());
         ///// Misc Commands /////
         climb.whileHeld(new Climb());
         placeGear.whenPressed(new PlaceGear());

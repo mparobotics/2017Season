@@ -213,5 +213,10 @@ public class SimpleMotor<T> extends Subsystem {
 
     }
 
+    public void disable() {
+
+        set(0);
+    }
+
 }
 

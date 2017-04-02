@@ -31,7 +31,7 @@ public class Shoot extends Command {
      */
     protected void initialize() {
 
-        Robot.shooter.enable();
+        //Robot.shooter.enable();
 
     }
 
@@ -43,7 +43,7 @@ public class Shoot extends Command {
 
         double calculatedSetpoint = RobotMap.SHOOTER_SETPOINT;
 
-        Robot.shooter.setSetpoint(calculatedSetpoint);
+        Robot.shooter.set(calculatedSetpoint);
     }
 
     /**
@@ -68,7 +68,6 @@ public class Shoot extends Command {
      */
     protected void interrupted() {
 
-        Robot.shooter.setSetpoint(0);
         Robot.shooter.disable();
 
     }

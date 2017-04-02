@@ -36,17 +36,19 @@ public class RobotMap {
 
     ///////////////////////////////////////////// Enable/Disable Features //////////////////////////////////////////////
     /** Use code specifically made for debugging the robot */
-    public final static boolean DEBUG                              = true;
+    public final static boolean DEBUG                             = true;
     /** Use the competition control configuration */
-    public final static boolean COMPETITION_DRIVE_CONFIG           = true;
+    public final static boolean COMPETITION_DRIVE_CONFIG          = true;
+    ///////////////////////////////////////////// Preference Keys //////////////////////////////////////////////////////
+    public final static String  SHOOTER_SPEED_MODIFIER_KEY        = "ShooterSpeedModifier";
 
     ///////////////////////////////////////////// Autonomous Configuration /////////////////////////////////////////////
     /** Distance to drive forward for the autonomous DriveForward command (whe used by itself) */
-    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE  = 256;
+    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE = 256;
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double  GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE           = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
     public final static long    GEAR_MOTOR_UP_TIME                 = 250;
     /** Time (in milliseconds) that it takes to put the gear motor down */

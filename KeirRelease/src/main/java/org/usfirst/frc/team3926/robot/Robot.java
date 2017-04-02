@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,7 +16,6 @@ import org.usfirst.frc.team3926.robot.commands.Autonomous.DriveForward;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.AgitatorIdle;
 import org.usfirst.frc.team3926.robot.subsystems.Climber;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
-import org.usfirst.frc.team3926.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
 
 /***********************************************************************************************************************
@@ -66,7 +66,8 @@ public class Robot extends IterativeRobot {
     /** Instance of DriveControl to allow driving of the robot's base */
     public final static DriveControl     driveControl = new DriveControl();
     /** Subsystem to control the robot's shooter */
-    public final static ShooterSubsystem shooter      = new ShooterSubsystem();
+    //public final static ShooterSubsystem shooter      = new ShooterSubsystem(); No more PID
+    public final static SimpleMotor shooter;
     /** Subsystem to control the robot's climbing mechanism */
     public final static Climber     climber;
     /** Subsystem to control the robot's ball collection mechanism */
@@ -75,10 +76,14 @@ public class Robot extends IterativeRobot {
     public final static SimpleMotor gearPlacer;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
     public final static SimpleMotor agitator;
+    /***/
+    public              Preferences robotPreferences;
 
     static { //Static initialization for subsystems
 
         ///// Shooter Initialization ///
+        shooter = new SimpleMotor<>(RobotMap.SHOOTER_USE_CAN_TALON ? new CANTalon(RobotMap.SHOOTER_CAN_ID) : new
+                Talon(RobotMap.SHOOTER_PWM_ID));
 
         ///// Climber Initialization /////
         climber = new Climber<>(RobotMap.CLIMBER_USE_CAN_TALON ?
@@ -95,7 +100,7 @@ public class Robot extends IterativeRobot {
         ///// Gear Placer Initialization /////
         gearPlacer = new SimpleMotor<>(RobotMap.GEAR_PLACEMENT_USE_CAN_TALON ?
                                        new CANTalon(RobotMap.GEAR_PLACEMENT_CAN_ID) :
-                                       new Talon(RobotMap.GEAR_PLACEMENT_PWM_PORT));
+                                       new Talon(RobotMap.GEAR_PLACEMENT_PWM_PORT)); // This motor is no longer needed
 
         ///// Agitator Initialization /////
         agitator = new SimpleMotor<>(RobotMap.AGITATOR_USE_CAN_TALON ?

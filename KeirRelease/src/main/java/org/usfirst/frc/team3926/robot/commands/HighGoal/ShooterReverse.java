@@ -27,9 +27,7 @@ public class ShooterReverse extends Command {
      */
     protected void initialize() {
 
-        Robot.shooter.enable();
-
-        Robot.shooter.setSetpoint(RobotMap.SHOOTER_REVERSE_SPEED);
+        Robot.shooter.set(RobotMap.SHOOTER_REVERSE_SPEED);
 
     }
 
