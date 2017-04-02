@@ -2,8 +2,6 @@ package org.usfirst.frc.team3926.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team3926.robot.Robot;
-import org.usfirst.frc.team3926.robot.RobotMap;
-import org.usfirst.frc.team3926.robot.commands.Driving.IndividualSideDrive;
 import org.usfirst.frc.team3926.robot.commands.Gears.CorrectGearPosition;
 
 /***********************************************************************************************************************
@@ -25,10 +23,10 @@ public class AutoPlaceGear extends CommandGroup {
             addSequential(new CorrectGearPosition());
 
         addSequential(new PlaceGear());
-        addSequential(new IndividualSideDrive(RobotMap.AUTO_GEAR_TURN_AFTER_PLACE_OUTSIDE,
-                                              RobotMap.AUTO_GEAR_TURN_AFTER_PLACE_INSIDE)); //TODO
-        addSequential(new DriveForward(RobotMap.AUTO_GEAR_STRAIGHT_AFTER_TURN));
-        // generalize
+        // TODO figure out if we can keep this functionality somehow
+        //addSequential(new IndividualSideDrive(RobotMap.AUTO_GEAR_TURN_AFTER_PLACE_OUTSIDE,
+        //                                      RobotMap.AUTO_GEAR_TURN_AFTER_PLACE_INSIDE));
+        //addSequential(new DriveForward(RobotMap.AUTO_GEAR_STRAIGHT_AFTER_TURN));
 
     }
 

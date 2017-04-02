@@ -7,7 +7,7 @@ import org.usfirst.frc.team3926.robot.commands.HighGoal.CenterOnHighGoal;
 import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
 
 /**
- * Command group to drive and shoot balls in autonomous
+ * Command group to drive and shootAndFeed balls in autonomous
  * TODO handle turning
  */
 public class AutoShoot extends CommandGroup {

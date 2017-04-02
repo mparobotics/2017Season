@@ -26,46 +26,47 @@ import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
  *      </p>
  *
  *      TODO Test shooter vision
- *      TODO find shooter ranges
- *      TODO tune shooter PID loops
- *      TODO finish gear placement auto
- *      TODO shooting auto
- *      TODO winch testing
+ *      TODO Find shooter ranges
+ *      TODO Shooting auto
+ *      TODO Winch testing
+ *      TODO Tune shooter PID loops (not using PID anymore)
  **********************************************************************************************************************/
 @SuppressWarnings("WeakerAccess")
 public class RobotMap {
 
     ///////////////////////////////////////////// Enable/Disable Features //////////////////////////////////////////////
     /** Use code specifically made for debugging the robot */
-    public final static boolean  DEBUG                                 = true;
+    public final static boolean DEBUG                              = true;
+    /** Use the competition control configuration */
+    public final static boolean COMPETITION_DRIVE_CONFIG           = true;
 
     ///////////////////////////////////////////// Autonomous Configuration /////////////////////////////////////////////
     /** Distance to drive forward for the autonomous DriveForward command (whe used by itself) */
-    public final static double   AUTONOMOUS_DRIVE_FORWARD_DISTANCE     = 256;
+    public final static double  AUTONOMOUS_DRIVE_FORWARD_DISTANCE  = 256;
     /** Distance to drive forward for gear placement from the left start position */
     //public final static double AUTONOMOUS_
     /** Distance between the ultrasonic sensor and the gear placement device when placing gears */
-    public final static double GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
+    public final static double  GEAR_PLACEMENT_DISTANCE            = 0; //TODO find this value
     /** Time (in milliseconds) that it takes to put the gear motor up */
-    public final static long   GEAR_MOTOR_UP_TIME                 = 250;
+    public final static long    GEAR_MOTOR_UP_TIME                 = 250;
     /** Time (in milliseconds) that it takes to put the gear motor down */
-    public final static long   GEAR_MOTOR_DOWN_TIME               = 1000;
+    public final static long    GEAR_MOTOR_DOWN_TIME               = 1000;
     /** Gear backup direction */
-    public final static double GEAR_BACKUP_DISTANCE               = -70;
+    public final static double  GEAR_BACKUP_DISTANCE               = -70;
     /** Voltage of the rangefinder when the robot should stop driving forward */
-    public final static double GEAR_PLACEMENT_VOLTAGE             = 0.375;
+    public final static double  GEAR_PLACEMENT_VOLTAGE             = 0.375;
     /** Timeout for gear placement in case the rangefinder stops working */
-    public final static double GEAR_PLACEMENT_TIMEOUT             = 6;
+    public final static double  GEAR_PLACEMENT_TIMEOUT             = 6;
     /***/
-    public final static double AUTO_GEAR_TURN_AFTER_PLACE_OUTSIDE = 30;
-    public final static double   AUTO_GEAR_TURN_AFTER_PLACE_INSIDE     = 30;
-    public final static double   AUTO_GEAR_STRAIGHT_AFTER_TURN         = 150;
+    public final static double  AUTO_GEAR_TURN_AFTER_PLACE_OUTSIDE = 30;
+    public final static double  AUTO_GEAR_TURN_AFTER_PLACE_INSIDE  = 30;
+    public final static double  AUTO_GEAR_STRAIGHT_AFTER_TURN      = 150;
     /**  */
-    public final static double   AUTONOMOUS_SHOOT_DRIVE_DISTANCE       = 10;
+    public final static double  AUTONOMOUS_SHOOT_DRIVE_DISTANCE    = 10;
     /** Timeout to stop shooting balls in autonomous */
-    public final static double   AUTONOMOUS_SHOOT_TIMEOUT              = 4000;
+    public final static double  AUTONOMOUS_SHOOT_TIMEOUT           = 4000;
     /** Offset of the gear vision target's width to its position to be "centered" with the camera above the shooter */
-    public final static double   GEAR_VISION_OFFSET_RATIO              = 2;
+    public final static double  GEAR_VISION_OFFSET_RATIO           = 2;
     /**
      * Distance to drive forward to place a gear in autonomous if the robot does not start in the center position.
      * This value is the same for all starting positions that are not the center
@@ -243,56 +244,45 @@ public class RobotMap {
     /** Button ID to turn on the shooter */
     public final static int      XBOX_SHOOT_BUTTON                     = 7; //(Back)
     /** Button ID to activate the climber */
-    public final static int      XBOX_CLIMB_BUTTON                     = 8; //(Start)
+    public final static int     XBOX_CLIMB_BUTTON                  = 8; //(Start)
     /** Button ID to collect balls */
-    public final static int      XBOX_COLLECT_BUTTON                   = 10; //(Right Stick Click)
+    public final static int     XBOX_COLLECT_BUTTON                = 10; //(Right Stick Click)
 
     ///// Joystick Configuration (for tank drive) /////
     ///// USB Port Configuration /////
     /** USB port number for right joystick */
-    public final static int      RIGHT_STICK_PORT                      = 0;
+    public final static int     RIGHT_STICK_PORT                   = 0;
     /** USB port number for left joystick */
-    public final static int      LEFT_STICK_PORT                       = 1;
-    ///// Configuration for Driver's Primary Stick /////
-    /** Button ID on {@link OI#driverPrimaryStick} to enter safety mode */
-    public final static int      SAFETY_MODE_BUTTON                    = 1;
-    /** Button ID on {@link OI#driverPrimaryStick} to toggle invert drive direction */
-    public final static int      TOGGLE_INVERT_DRIVE_BUTTON            = 8;
-    /** Button ID on {@link OI#driverPrimaryStick} to signify that an autonomous action is incorrect */
-    public final static int      CONTOUR_ERROR_BUTTON                  = 7;
-    /** Button ID on {@link OI#driverPrimaryStick} to center the robot on the vision target */
-    public final static int      CENTER_ON_HIGH_BUTTON_BUTTON          = 3;
-    /** Button ID on {@link OI#driverPrimaryStick} to drive towards the center of the vision target */
-    public final static int      DRIVE_TO_HIGH_GOAL_BUTTON             = 2;
-    /** Button ID on {@link OI#driverPrimaryStick} to shoot the ball and enable the agitator to feed mode */
-    public final static int      SHOOT_BUTTON                          = 5;
-    /** Button ID to reverse the shooting direction (to get stuck balls out) */
-    public final static int      REVERSE_SHOOT_DIRECTION               = 4;
-    /** Button ID on {@link OI#driverPrimaryStick} to put the gear holder down */
-    public final static int      GEAR_DOWN_BUTTON                      = 11;
-    /** Button ID on {@link OI#driverPrimaryStick} to put the gear holder up */
-    public final static int      GEAR_UP_BUTTON                        = 6;
-    ///// Configuration for Driver's Secondary Stick /////
-    /** Button ID on {@link OI#driverSecondaryStick} to enter straight mode */
-    public final static int      STRAIGHT_MODE_BUTTON                  = 1;
-    /** Button ID on {@link OI#driverSecondaryStick} to center on the gear's vision target */
-    public final static int      CENTER_ON_GEAR_BUTTON                 = 3;
-    /** Button ID on {@link OI#driverSecondaryStick} to drive toward's the center of gear's vision target */
-    public final static int      DRIVE_TO_GEAR_BUTTON                  = 2;
-    /** Button ID on {@link OI#driverSecondaryStick} to climb the rope */
-    public final static int      CLIMB_BUTTON                          = 9;
-    /** Button ID on {@link OI#driverSecondaryStick} to collect balls */
-    public final static int      BALL_COLLECT_BUTTON                   = 5;
-    /** Button ID on {@link OI#driverSecondaryStick} to cancel the current autonomous command */
-    public final static int      CANCEL_COMMAND                        = 8;
+    public final static int     LEFT_STICK_PORT                    = 1;
+    /** USB port number for the auxiliary driver stick */
+    public final static int     AUXILIARY_STICK_PORT               = 2;
+    ///// Configuration /////
+    public final static int     SAFETY_MODE_BUTTON                 = 1;
+    public final static int     TOGGLE_INVERT_DRIVE_BUTTON         = 2;
+    public final static int     CONTOUR_ERROR_BUTTON               = 7;
+    public final static int     CENTER_ON_HIGH_BUTTON_BUTTON       = 3;
+    public final static int     DRIVE_TO_HIGH_GOAL_BUTTON          = 2;
+    public final static int     SHOOT_BUTTON                       = 2;
+    public final static int     SHOOT_AND_ALIGN_BUTTON             = 1;
+    public final static int     PLACE_GEAR_BUTTON                  = 2;
+    public final static int     REVERSE_SHOOT_DIRECTION            = 3;
+    public final static int     GEAR_DOWN_BUTTON                   = 11;
+    public final static int     GEAR_UP_BUTTON                     = 6;
+    public final static int     STRAIGHT_MODE_BUTTON               = 1;
+    public final static int     CENTER_ON_GEAR_BUTTON              = 3;
+    public final static int     DRIVE_TO_GEAR_BUTTON               = 2;
+    public final static int     CLIMB_BUTTON                       = 4;
+    public final static int     BALL_COLLECT_BUTTON                = 6;
+    public final static int     REVERSE_BALL_COLLECT_BUTTON        = 5;
+    public final static int     CANCEL_COMMAND_BUTTON              = 3;
 
     ///// Debugging Buttons /////
     /** Button ID on {@link OI#driverSecondaryStick} to trigger {@link DriveControl#rightEncoderCheck(double)} */
-    public final static int      RIGHT_DRIVE_ENCODER_CHECK             = 10;
+    public final static int     RIGHT_DRIVE_ENCODER_CHECK          = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#leftEncoderCheck(double)} */
-    public final static int      LEFT_DRIVE_ENCODER_CHECK              = 10;
+    public final static int     LEFT_DRIVE_ENCODER_CHECK           = 10;
     /** Button ID on {@link OI#driverPrimaryStick} to trigger {@link DriveControl#printRangefinder()} */
-    public final static int      RANGEFINDER_CHECK                     = 9;
+    public final static int     RANGEFINDER_CHECK                  = 9;
 
     //////////////////////////////////////////////////// Vision Tracking ///////////////////////////////////////////////
     ///// Table Names and Keys /////

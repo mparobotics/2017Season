@@ -30,7 +30,15 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  *      Contact: klugewilliam@gmail.com
  *      </p>
  * @author Joe Brooksbank
- *      TODO collector reverse
+ *      TODO Add distance modifier for autonomous straight correction distance
+ *      TODO Add distance modifier for the distance from the wall
+ *      TODO Add shooting speed modifier
+ *      TODO Add agitator delay modifier
+ *      TODO Add agitator speed modifier
+ *      TODO Add climber speed modifier
+ *      TODO Add ball collection speed modifier
+ *      TODO Add autonomous speed modifier
+ *      TODO Turn shooter into a basic motor, not more PID
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {

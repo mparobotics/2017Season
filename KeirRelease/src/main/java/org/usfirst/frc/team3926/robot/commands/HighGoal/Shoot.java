@@ -5,7 +5,7 @@ import org.usfirst.frc.team3926.robot.Robot;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
- * Command to make the robot shoot at the high goal
+ * Command to make the robot shootAndFeed at the high goal
  *      <p>
  *      This command is part of the group {@link ShootAndFeed}
  *      </p>
@@ -47,7 +47,7 @@ public class Shoot extends Command {
     }
 
     /**
-     * isFinished is not needed because this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#shoot}
+     * isFinished is not needed because this command is controlled with {@link org.usfirst.frc.team3926.robot.OI#shootAndFeed}
      *
      * @return false
      */

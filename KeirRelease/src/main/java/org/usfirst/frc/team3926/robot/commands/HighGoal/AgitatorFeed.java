@@ -58,7 +58,7 @@ public class AgitatorFeed extends Command {
 
     /**
      * isFinished() is not needed because this command is being controlled with
-     * {@link org.usfirst.frc.team3926.robot.OI#shoot}
+     * {@link org.usfirst.frc.team3926.robot.OI#shootAndFeed}
      *
      * @return false
      */

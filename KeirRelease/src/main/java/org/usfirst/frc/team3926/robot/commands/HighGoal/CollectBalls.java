@@ -14,12 +14,15 @@ import org.usfirst.frc.team3926.robot.RobotMap;
  **********************************************************************************************************************/
 public class CollectBalls extends Command {
 
+    private double speed;
+
     /**
      * Constructs the CollectBalls command requiring {@link Robot#ballCollector}
      */
-    public CollectBalls() {
+    public CollectBalls(double speed) {
 
         requires(Robot.ballCollector);
+        this.speed = speed;
     }
 
     /**
@@ -27,7 +30,7 @@ public class CollectBalls extends Command {
      */
     protected void initialize() {
 
-        Robot.ballCollector.set(RobotMap.BALL_COLLECTION_SPEED);
+        Robot.ballCollector.set(speed);
 
     }
 
