@@ -38,7 +38,7 @@ import org.usfirst.frc.team3926.robot.subsystems.SimpleMotor;
  *      TODO Add climber speed modifier
  *      TODO Add ball collection speed modifier
  *      TODO Add autonomous speed modifier
- *      TODO Turn shooter into a basic motor, not more PID
+ *      TODO Add dashboard options for motor types
  **********************************************************************************************************************/
 @SuppressWarnings({"ConstantConditions", "WeakerAccess"})
 public class Robot extends IterativeRobot {

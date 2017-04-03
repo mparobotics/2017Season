@@ -60,9 +60,14 @@ public class UserDriveTank extends Command {
                                          oi.driverPrimaryStick.getRawAxis(RobotMap.XBOX_LEFT_SPEED_AXIS),
                                          oi.straightMode.get(),
                                          oi.safetyMode.get(), false);
-        else
-            Robot.driveControl.driveTank(oi.driverPrimaryStick.getY(), oi.driverSecondaryStick.getY(),
+        else {
+            double rightSpeed = (RobotMap.SWITCH_CONTROLLER_DRIVE_SIDE) ? oi.driverPrimaryStick.getY() : oi
+                    .driverSecondaryStick.getY();
+            double leftSpeed = (RobotMap.SWITCH_CONTROLLER_DRIVE_SIDE) ? oi.driverSecondaryStick.getY() :
+                               oi.driverPrimaryStick.getY();
+            Robot.driveControl.driveTank(rightSpeed, leftSpeed,
                                          oi.straightMode.get(), oi.safetyMode.get(), invertDirection);
+        }
     }
 
     /**

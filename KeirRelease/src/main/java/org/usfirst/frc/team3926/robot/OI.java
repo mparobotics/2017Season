@@ -6,14 +6,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3926.robot.commands.Autonomous.PlaceGear;
 import org.usfirst.frc.team3926.robot.commands.Climb;
-import org.usfirst.frc.team3926.robot.commands.Debugging.DebugShoot;
 import org.usfirst.frc.team3926.robot.commands.Debugging.LeftDriveEncoderCheck;
 import org.usfirst.frc.team3926.robot.commands.Debugging.RangefinderCheck;
 import org.usfirst.frc.team3926.robot.commands.Debugging.RightDriveEncoderCheck;
-import org.usfirst.frc.team3926.robot.commands.Gears.CenterOnGears;
-import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorDown;
-import org.usfirst.frc.team3926.robot.commands.Gears.GearPlacementMotorUp;
-import org.usfirst.frc.team3926.robot.commands.HighGoal.*;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.CollectBalls;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootAndFeed;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.ShootFeedAlign;
+import org.usfirst.frc.team3926.robot.commands.HighGoal.ShooterReverse;
 import org.usfirst.frc.team3926.robot.triggers.SaveTrajectoryTrigger;
 
 import static org.usfirst.frc.team3926.robot.RobotMap.COMPETITION_DRIVE_CONFIG;
@@ -94,6 +93,12 @@ public class OI {
     public Button                placeGear;
     public Joystick              debugStick;
     public Button                printShooterValues, increaseShooterSpeed, decreaseShooterSpeed, debugShoot;
+    public Button driverShootWithAlignment;
+    public Button driverShoot;
+    public Button driverReverseShoot;
+    public Button driverClimb;
+    public Button driverCollectBalls;
+    public Button driverReverseBallCollector;
 
     /**
      * Constructs the OI class as specified by various options in {@link RobotMap}
@@ -134,9 +139,14 @@ public class OI {
             straightMode = new JoystickButton(driverPrimaryStick, RobotMap.STRAIGHT_MODE_BUTTON);
             invertDriveDirection = new JoystickButton(driverPrimaryStick, RobotMap.TOGGLE_INVERT_DRIVE_BUTTON);
             cancelCommand = new JoystickButton(driverPrimaryStick, RobotMap.CANCEL_COMMAND_BUTTON);
+            driverCollectBalls = new JoystickButton(driverPrimaryStick, 4);
+            driverReverseBallCollector = new JoystickButton(driverPrimaryStick, 5);
             ///// Secondary Stick /////
             safetyMode = new JoystickButton(driverSecondaryStick, RobotMap.SAFETY_MODE_BUTTON);
             placeGear = new JoystickButton(driverSecondaryStick, PLACE_GEAR_BUTTON);
+            driverShoot = new JoystickButton(driverSecondaryStick, 4);
+            driverShootWithAlignment = new JoystickButton(driverSecondaryStick, 3);
+            driverReverseShoot = new JoystickButton(driverSecondaryStick, 5);
             ///// Auxiliary Stick /////
             shootAndFeed = new JoystickButton(auxiliaryStick, RobotMap.SHOOT_BUTTON);
             shootFeedAlign = new JoystickButton(auxiliaryStick, RobotMap.SHOOT_AND_ALIGN_BUTTON);
@@ -144,6 +154,11 @@ public class OI {
             climb = new JoystickButton(auxiliaryStick, RobotMap.CLIMB_BUTTON);
             collectBalls = new JoystickButton(auxiliaryStick, RobotMap.BALL_COLLECT_BUTTON);
             reverseCollectBalls = new JoystickButton(auxiliaryStick, RobotMap.REVERSE_BALL_COLLECT_BUTTON);
+            driverCollectBalls.whileHeld(new CollectBalls(RobotMap.BALL_COLLECTION_SPEED));
+            driverReverseBallCollector.whileHeld(new CollectBalls(-RobotMap.BALL_COLLECTION_SPEED));
+            driverShoot.whileHeld(new ShootAndFeed());
+            driverShootWithAlignment.whileHeld(new ShootFeedAlign());
+            driverReverseShoot.whileHeld(new ShooterReverse());
         } else { // This configuration is used for debugging
             ///// Stick Initiation /////
             driverPrimaryStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
@@ -176,19 +191,19 @@ public class OI {
                 drivetrainRangefinder.whenPressed(new RangefinderCheck());
                 debugStick = new Joystick(2);
                 printShooterValues = new JoystickButton(debugStick, 4);
-                printShooterValues.whenPressed(new PrintShootingInfo());
+                //printShooterValues.whenPressed(new PrintShootingInfo());
                 increaseShooterSpeed = new JoystickButton(debugStick, 1);
                 decreaseShooterSpeed = new JoystickButton(debugStick, 2);
                 debugShoot = new JoystickButton(debugStick, 3);
-                debugShoot.whileHeld(new DebugShoot());
+                //debugShoot.whileHeld(new DebugShoot());
             }
-            centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());
-            driveToHighGoal.whileHeld(new CenterOnHighGoal());
-            ///// Gear Commands /////
-            driveToGear.whileHeld(new PlaceGear());
-            centerOnGear.whileHeld(new CenterOnGears());
-            gearMotorDown.whileHeld(new GearPlacementMotorDown());
-            gearMotorUp.whileHeld(new GearPlacementMotorUp());
+//            centerOnHighGoal.whileHeld(new DriveTowardsHighGoal());
+//            driveToHighGoal.whileHeld(new CenterOnHighGoal());
+//            ///// Gear Commands /////
+//            driveToGear.whileHeld(new PlaceGear());
+//            centerOnGear.whileHeld(new CenterOnGears());
+//            gearMotorDown.whileHeld(new GearPlacementMotorDown());
+//            gearMotorUp.whileHeld(new GearPlacementMotorUp());
         }
 
         ///// High Goal Commands /////

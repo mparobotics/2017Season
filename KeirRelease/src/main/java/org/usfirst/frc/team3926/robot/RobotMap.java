@@ -39,6 +39,7 @@ public class RobotMap {
     public final static boolean DEBUG                             = true;
     /** Use the competition control configuration */
     public final static boolean COMPETITION_DRIVE_CONFIG          = true;
+    public final static boolean SWITCH_CONTROLLER_DRIVE_SIDE      = false;
     ///////////////////////////////////////////// Preference Keys //////////////////////////////////////////////////////
     public final static String  SHOOTER_SPEED_MODIFIER_KEY        = "ShooterSpeedModifier";
 
