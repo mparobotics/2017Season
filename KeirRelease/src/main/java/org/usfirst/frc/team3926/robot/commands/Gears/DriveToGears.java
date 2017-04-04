@@ -54,6 +54,7 @@ public class DriveToGears extends Command {
 
         return Robot.driveControl.withinRangefinderVoltage(RobotMap.GEAR_PLACEMENT_VOLTAGE) ||
                Robot.oi.cancelCommand.get();
+
     }
 
     /**

@@ -185,9 +185,12 @@ public class DriveControl extends Subsystem {
             double target;
 
             if (targetGears) {
-                target = ((gearGoal[0] + gearGoal[1]) / 2); //+
-                         /*(gearTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
-                          RobotMap.GEAR_VISION_OFFSET_RATIO*///);
+                if (gearGoal.length == 2)
+                    target = ((gearGoal[0] + gearGoal[1]) / 2); //+
+                             /*(gearTable.getNumberArray(RobotMap.CONTOUR_WIDTH_KEY, RobotMap.DEFAULT_VALUE)[0] *
+                              RobotMap.GEAR_VISION_OFFSET_RATIO*///);
+                else
+                    target = gearGoal[0];
             } else { //target for the high goal
                 target = highGoal[0];
             }
@@ -217,7 +220,7 @@ public class DriveControl extends Subsystem {
             }
 
         } else {
-            setSpeed(0, 0, true);
+            setSpeed(RobotMap.AUTONOMOUS_SPEED, RobotMap.AUTONOMOUS_SPEED, true);
             contoursFound = false;
         }
 
@@ -279,8 +282,8 @@ public class DriveControl extends Subsystem {
      */
     public boolean lostTarget(boolean targetGears) {
 
-        return (targetGears) ? gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length == 2 :
-               highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length >= 1;
+        return (targetGears) ? gearTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length < 1 :
+               !(highGoalTable.getNumberArray(RobotMap.CONTOUR_X_KEY, RobotMap.DEFAULT_VALUE).length >= 1);
 
     }
 

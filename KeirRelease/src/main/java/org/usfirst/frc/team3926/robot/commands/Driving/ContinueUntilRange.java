@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot.commands.Driving;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3926.robot.Robot;
+import org.usfirst.frc.team3926.robot.commands.Gears.DriveToGears;
 import org.usfirst.frc.team3926.robot.subsystems.DriveControl;
 
 /**
@@ -41,6 +42,9 @@ public class ContinueUntilRange extends Command {
     protected void execute() {
 
         Robot.driveControl.continueDriving();
+
+        if (!Robot.driveControl.lostTarget(true))
+            new DriveToGears();
 
     }
 

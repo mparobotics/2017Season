@@ -2,7 +2,6 @@ package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -61,10 +60,11 @@ public class Robot extends IterativeRobot {
 
     /** Represents where the robot starts */
     public static StartPositions startPosition;
+    public        double         actualAllowableError;
 
     ////////////////////////////////////////// Instances of Subsystem Classes //////////////////////////////////////////
     /** Instance of DriveControl to allow driving of the robot's base */
-    public final static DriveControl     driveControl = new DriveControl();
+    public final static DriveControl driveControl = new DriveControl();
     /** Subsystem to control the robot's shooter */
     //public final static ShooterSubsystem shooter      = new ShooterSubsystem(); No more PID
     public final static SimpleMotor shooter;
@@ -76,8 +76,6 @@ public class Robot extends IterativeRobot {
     public final static SimpleMotor gearPlacer;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
     public final static SimpleMotor agitator;
-    /***/
-    public              Preferences robotPreferences;
 
     static { //Static initialization for subsystems
 
@@ -161,6 +159,11 @@ public class Robot extends IterativeRobot {
 
         agitator.set(0);
 
+    }
+
+    public double getActualAllowableError() {
+
+        return actualAllowableError;
     }
 
     /**
