@@ -66,8 +66,6 @@ public class RobotMap {
     public final static double  AUTONOMOUS_SHOOT_DRIVE_DISTANCE       = 10;
     /** Timeout to stop shooting balls in autonomous */
     public final static double  AUTONOMOUS_SHOOT_TIMEOUT              = 4000;
-    /** Offset of the gear vision target's width to its position to be "centered" with the camera above the shooter */
-    public final static double  GEAR_VISION_OFFSET_RATIO              = 2;
     /**
      * Distance to drive forward to place a gear in autonomous if the robot does not start in the center position.
      * This value is the same for all starting positions that are not the center
@@ -136,21 +134,21 @@ public class RobotMap {
     /** CAN ID for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
     public final static int      CLIMBER_CAN_ID                        = 6;
     /** CAN ID for the climbing system's second motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is true) */
-    public final static int      CLIMBER_SECOND_CAN_ID                 = 10;
+    public final static int     CLIMBER_SECOND_CAN_ID         = 10;
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
-    public final static int      CLIMBER_PWM_PORT                      = 7;
+    public final static int     CLIMBER_PWM_PORT              = 7;
     /** PWM port for the climbing system's motor controller (used if {@link #CLIMBER_USE_CAN_TALON} is false) */
-    public final static int      CLIMBER_SECOND_PWM_PORT               = 8;
+    public final static int     CLIMBER_SECOND_PWM_PORT       = 8;
     /** Speed to climb at */
-    public final static double   CLIMBER_SPEED                         = -1;
+    public final static double  CLIMBER_SPEED                 = -0.55; // was running to fast at -1
 
     /////////////////////////////////////////// Ball Collection Configuration //////////////////////////////////////////
     /** Enable/Disable using CAN based talons for the ball feeding mechanism */
-    public final static boolean  BALL_COLLECTION_USE_CAN_TALON         = true;
+    public final static boolean BALL_COLLECTION_USE_CAN_TALON = true;
     /** CAN ID for ball collection system's motor controller (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true) */
-    public final static int      BALL_COLLECTION_CAN_ID                = 2;
+    public final static int     BALL_COLLECTION_CAN_ID        = 2;
     /** PWM port for ball collection motor controlled (used if {@link #BALL_COLLECTION_USE_CAN_TALON} is true */
-    public final static int      BALL_COLLECTION_PWM_PORT              = 6;
+    public final static int     BALL_COLLECTION_PWM_PORT      = 6;
     /** Speed to set the ball collector motor to */
     public final static double   BALL_COLLECTION_SPEED                 = 1;
 

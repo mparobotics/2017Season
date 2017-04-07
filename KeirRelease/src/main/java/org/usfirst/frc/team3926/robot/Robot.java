@@ -2,6 +2,7 @@ package org.usfirst.frc.team3926.robot;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -76,6 +77,9 @@ public class Robot extends IterativeRobot {
     public final static SimpleMotor gearPlacer;
     /** Subsystem to control the robot's agitator and prevents balls form getting stuck and feeds the shooter */
     public final static SimpleMotor agitator;
+    /***/
+    public              Preferences robotPreferences;
+    public static       double      usedGearPlacementVoltage;
 
     static { //Static initialization for subsystems
 
@@ -145,6 +149,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Starting Position", startPositionChooser);
         ///// Vision Init /////
         driveControl.initNetworkTables();
+        ///// Preferences Init /////
+        robotPreferences = Preferences.getInstance();
 
     }
 
@@ -191,6 +197,7 @@ public class Robot extends IterativeRobot {
 
         autonomousCommand = autoCommandChooser.getSelected();
         startPosition = startPositionChooser.getSelected();
+        usedGearPlacementVoltage = robotPreferences.getDouble("GearPlacementVoltage", RobotMap.GEAR_PLACEMENT_VOLTAGE);
 
         // schedule the autonomous command (example)
         if (autonomousCommand != null)

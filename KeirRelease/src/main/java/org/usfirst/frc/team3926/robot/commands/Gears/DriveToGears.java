@@ -3,7 +3,6 @@ package org.usfirst.frc.team3926.robot.commands.Gears;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3926.robot.Robot;
-import org.usfirst.frc.team3926.robot.RobotMap;
 
 /***********************************************************************************************************************
  * Drive towards the gear placement vision target
@@ -21,6 +20,7 @@ public class DriveToGears extends Command {
     public DriveToGears() {
 
         requires(Robot.driveControl);
+
     }
 
     /**
@@ -52,7 +52,7 @@ public class DriveToGears extends Command {
      */
     protected boolean isFinished() {
 
-        return Robot.driveControl.withinRangefinderVoltage(RobotMap.GEAR_PLACEMENT_VOLTAGE) ||
+        return Robot.driveControl.withinRangefinderVoltage(Robot.usedGearPlacementVoltage) ||
                Robot.oi.cancelCommand.get();
 
     }

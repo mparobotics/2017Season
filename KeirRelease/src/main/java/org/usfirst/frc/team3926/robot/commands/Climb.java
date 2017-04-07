@@ -33,7 +33,10 @@ public class Climb extends Command {
      */
     protected void execute() {
 
-        Robot.climber.climb(RobotMap.CLIMBER_SPEED);
+        if (!Robot.oi.cancelCommand.get())
+            Robot.climber.climb(RobotMap.CLIMBER_SPEED);
+        else
+            Robot.climber.stopClimbing();
     }
 
     /**
@@ -44,7 +47,7 @@ public class Climb extends Command {
      */
     protected boolean isFinished() {
 
-        return false;
+        return Robot.oi.cancelCommand.get();
     }
 
     /**
@@ -52,6 +55,7 @@ public class Climb extends Command {
      */
     protected void end() {
 
+        Robot.climber.stopClimbing();
 
     }
 

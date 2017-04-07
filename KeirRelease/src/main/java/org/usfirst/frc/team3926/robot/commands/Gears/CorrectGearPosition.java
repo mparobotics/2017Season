@@ -24,8 +24,8 @@ public class CorrectGearPosition extends CommandGroup {
         if (Robot.startPosition == Robot.StartPositions.BlueLeft ||
             Robot.startPosition == Robot.StartPositions.RedLeft) {
 
-            addSequential(new IndividualSideDrive(RobotMap.AUTO_GEAR_OUTER_SIDE_TURN_DISTANCE,
-                                                  RobotMap.AUTO_GEAR_INNER_SIDE_TURN_DISTANCE));
+            addSequential(new IndividualSideDrive(RobotMap.AUTO_GEAR_OUTER_SIDE_TURN_DISTANCE * -1,
+                                                  RobotMap.AUTO_GEAR_INNER_SIDE_TURN_DISTANCE * -1));
 
         } else {
 
