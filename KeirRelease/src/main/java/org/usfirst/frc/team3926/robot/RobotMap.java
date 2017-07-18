@@ -97,7 +97,7 @@ public class RobotMap {
     /** This sets the shooter to count 1 unit per rotation of the motor, this gives us the rotational speed */
     public final static double   SHOOTER_ENCODER_PULSE_PER_REV         = 20;
     /** Setpoint for the shooter's PID loop */
-    public final static double   SHOOTER_SETPOINT                      = 35;
+    public final static double  SHOOTER_SETPOINT                   = 600 / 4; //TODO figure out what this should be
     /** Proportional multiplier for the shooter's PID loop */
     public final static double   SHOOTER_PROPORTIONAL                  = 0.043; //TODO tune more
     /** Integral multiplier for the shooter's PID loop */

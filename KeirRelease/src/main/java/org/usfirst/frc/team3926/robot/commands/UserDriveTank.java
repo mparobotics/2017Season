@@ -19,6 +19,8 @@ public class UserDriveTank extends Command {
 
     private boolean invertDirection;
     private boolean toggleButtonLastState;
+    private boolean toggleSafety;
+    private boolean toggleButtonLastState;
 
     /**
      * Constructs the UserDriveTank command requiring {@link Robot#driveControl}
@@ -68,6 +70,12 @@ public class UserDriveTank extends Command {
             Robot.driveControl.driveTank(rightSpeed, leftSpeed,
                                          oi.straightMode.get(), oi.safetyMode.get(), invertDirection);
         }
+
+        if(toggleButtonLastState != oi.safetyButton.get())
+            toggleSafety = !toggleSafety;
+
+
+        toggleButtonLastState = io.safteyButton.get();
     }
 
     /**
