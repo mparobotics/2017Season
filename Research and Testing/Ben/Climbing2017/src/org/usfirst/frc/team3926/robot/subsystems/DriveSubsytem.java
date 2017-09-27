@@ -55,8 +55,8 @@ public class DriveSubsytem extends Subsystem {
         rightDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
         leftDrivingEncoder.setDistancePerPulse(RobotMap.DRIVING_ENCODERS_DISTANCE_PER_PULSE);
 
-        driveSystem = new RobotDrive(new Talon(RobotMap.TALON_FL_CAN_ID), new Talon(RobotMap.TALON_BL_CAN_ID),
-                                     new Talon(RobotMap.TALON_FR_CAN_ID), new Talon(RobotMap.TALON_BR_CAN_ID));
+        driveSystem = new RobotDrive(new Talon(RobotMap.TALON_FL_PWM_PORT), new Talon(RobotMap.TALON_BL_PWM_PORT),
+                                     new Talon(RobotMap.TALON_FR_PWM_PORT), new Talon(RobotMap.TALON_BR_PWM_PORT));
 
         accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 
@@ -130,7 +130,7 @@ public class DriveSubsytem extends Subsystem {
      */
     public void rangeFinderDriveBackward() {
 
-        if (wallLessThenTenMetersAway()) {
+        if (wallTooClose()) {
 
             autoDriveDesiredDistance(-RobotMap.AUTO_DRIVE_BACKWARD_DISTANCE);
 
@@ -143,7 +143,7 @@ public class DriveSubsytem extends Subsystem {
      *
      * @return if the wall is less than ten meters away
      */
-    private boolean wallLessThenTenMetersAway() {
+    private boolean wallTooClose() {
 
         return rangeFinder.getValue() * RobotMap.RANGE_FINDER_SENSITIVITY <= 10;
 
@@ -203,6 +203,12 @@ public class DriveSubsytem extends Subsystem {
 
         decelerationMath();
         driveSystem.tankDrive(leftSideDecelerationSpeed, rightSideDecelerationSpeed);
+
+    }
+
+    public void turn(){
+
+        driveSystem.tankDrive(RobotMap.MAX_AUTO_DRIVING_SPEED,RobotMap.MAX_AUTO_DRIVING_SPEED);
 
     }
 
@@ -310,13 +316,9 @@ public class DriveSubsytem extends Subsystem {
     /**
      * Sets the driveSystem to values that make it turn
      */
-    public void turnDesiredAngle(int desiredAngle, double leftTurningSpeed, double rightTurningSpeed) {
+    public void turnDesiredAngle(double leftTurningSpeed, double rightTurningSpeed) {
 
-        for (; gyro.getAngle() < desiredAngle; ) {
-
-            driveSystem.tankDrive(leftTurningSpeed, rightTurningSpeed);
-
-        }
+        driveSystem.tankDrive(leftTurningSpeed, rightTurningSpeed);
 
     }
 

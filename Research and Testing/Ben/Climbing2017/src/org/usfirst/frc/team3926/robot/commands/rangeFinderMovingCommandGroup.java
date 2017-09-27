@@ -3,14 +3,14 @@ package org.usfirst.frc.team3926.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Backs up Robot and Turns Robot if there is too close
  */
-public class RangeFinderMovingCommandGroup extends CommandGroup {
+public class rangeFinderMovingCommandGroup extends CommandGroup {
 
     /**
-     * Backs up Robot and Turns Robot if there is a wall 10 meters or less away
+     *
      */
-    public RangeFinderMovingCommandGroup() {
+    public rangeFinderMovingCommandGroup() {
 
         addSequential(new RangeFinderDriveBackward());
         addSequential(new RangeFinderTurning());

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc.team3926.robot.commands.AutonomousGearInsertionCommand;
 import org.usfirst.frc.team3926.robot.subsystems.*;
 
 /**
@@ -16,26 +17,32 @@ import org.usfirst.frc.team3926.robot.subsystems.*;
 public class Robot extends IterativeRobot {
 
     /** Instance of the climbSubsystem */
-    public static ClimbSubsystem          climbSubsystem          = new ClimbSubsystem();
+    public static ClimbSubsystem                 climbSubsystem;
     /** Instance of the driveSubsystem */
-    public static DriveSubsytem           driveSubsystem          = new DriveSubsytem();
+    public static DriveSubsytem                  driveSubsystem;
     /** Instance of the shootingSubsystem */
-    public static ShootingSubsystem       shootingSubsystem       = new ShootingSubsystem();
+    public static ShootingSubsystem              shootingSubsystem;
     /** Instance of the visionTrackingSubsystem */
-    public static VisionTrackingSubsystem visionTrackingSubsystem = new VisionTrackingSubsystem();
+    public static VisionTrackingSubsystem        visionTrackingSubsystem;
     /** Instance of the PIDSubystem */
-    public static PIDSubsystem            pidSubsystem            = new PIDLoopSubsystem();
-    /** Instance fo the InsertingGearSubsystem */
-    public static InsertingGearSubsystem  insertingGearSubsystem  = new InsertingGearSubsystem();
+    public static PIDSubsystem                   pidSubsystem;
+    /** Instance of AutonomousGearInsetionClass */
+    public static AutonomousGearInsertionCommand autonomousGearInsertionCommand;
     /** Instance of the OI class */
-    public static OI oi;
+    public static OI                             oi;
 
     /**
-     * Constructs an instance of the OI class\
+     * Constructs an instance of io and the subsystems and the autonomousGearInsertionCommand
      */
     public void robotInit() {
 
         oi = new OI();
+        pidSubsystem = new PIDLoopSubsystem();
+        visionTrackingSubsystem = new VisionTrackingSubsystem();
+        shootingSubsystem = new ShootingSubsystem();
+        driveSubsystem = new DriveSubsytem();
+        climbSubsystem = new ClimbSubsystem();
+        autonomousGearInsertionCommand = new AutonomousGearInsertionCommand();
 
     }
 
@@ -58,6 +65,8 @@ public class Robot extends IterativeRobot {
      * or additional comparisons to the switch structure below with additional strings & commands.
      */
     public void autonomousInit() {
+
+        autonomousGearInsertionCommand.start();
 
     }
 

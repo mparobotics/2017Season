@@ -3,13 +3,23 @@ package org.usfirst.frc.team3926.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team3926.robot.RobotMap;
 
+
+/**
+ * Moves robot to airship
+ * Deposits Gear
+ * Moves robot to base line
+ */
 public class GearInsertionFromLeftOfCenter extends CommandGroup {
 
     /**
-     * Moves robot to airship
-     * Deposits Gear
-     * Moves robot to base line
+     * Drive half the distance from the wall to the airship using
+     * {@link org.usfirst.frc.team3926.robot.commands#DriveForward(double)}
+     *
+     * Turn toward airship while decelerating using {@link org.usfirst.frc.team3926.robot.commands#DecelerationTurn}
+     *
+     * Drive toward airship
      */
+    //{@link org.usfirst.frc.team3926.robot.subsystems.DriveSubsytem#hasRobotTurned}
     public GearInsertionFromLeftOfCenter() {
 
         addSequential(new DriveForward(RobotMap.DISTANCE_FROM_WALL_TO_AIRSHIP / 2));
@@ -36,3 +46,49 @@ public class GearInsertionFromLeftOfCenter extends CommandGroup {
         // arm.
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//annie is cool

@@ -6,17 +6,17 @@ import org.usfirst.frc.team3926.robot.Robot;
 /**
  *
  */
-public class TurnDesiredDegrees extends Command {
+public class TurnDesiredDegreesAndSpeed extends Command {
 
-    int desiredAngle;
-    int desiredLeftSpeed;
-    int desiredRightSpeed;
+    int angle;
+    int leftSpeed;
+    int rightSpeed;
 
-    public TurnDesiredDegrees(int desiredDegrees, int desiredLeftSideSpeed, int desiredRightSideSpeed) {
+    public TurnDesiredDegreesAndSpeed(int desiredAngle, int desiredLeftSideSpeed, int desiredRightSideSpeed) {
 
-        desiredAngle = desiredDegrees;
-        desiredLeftSpeed = desiredLeftSideSpeed;
-        desiredRightSpeed = desiredRightSideSpeed;
+        angle = desiredAngle;
+        leftSpeed = desiredLeftSideSpeed;
+        rightSpeed = desiredRightSideSpeed;
 
     }
 
@@ -25,17 +25,19 @@ public class TurnDesiredDegrees extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Turns robot using desired speed
+     */
     protected void execute() {
 
-        Robot.driveSubsystem.turnDesiredAngle(desiredAngle, desiredLeftSpeed, desiredRightSpeed);
+        Robot.driveSubsystem.turnDesiredAngle(leftSpeed, rightSpeed);
 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-        return false;
+        return Robot.driveSubsystem.hasRobotTurned(angle);
 
     }
 
@@ -51,3 +53,31 @@ public class TurnDesiredDegrees extends Command {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//annie is cool

@@ -19,7 +19,7 @@ public class ShootingSubsystem extends Subsystem {
      */
     public ShootingSubsystem() {
 
-        shooter = new Talon(RobotMap.SHOOTER_CAN_ID);
+        shooter = new Talon(RobotMap.SHOOTER_PWM_PORT);
 
     }
 

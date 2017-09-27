@@ -35,15 +35,15 @@ public class RobotMap {
     /////Driving Gyro/////
     /** Analog port for gyro */
     public static final  int    GYRO_PORT                                 = 1;
-    /////Driving Talon CAN IDs/////
-    /** CAN ID for the drivesystem's back right talon */
-    public static final  int    TALON_BR_CAN_ID                           = 0;
-    /** CAN ID for the drivesystem's front right talon */
-    public static final  int    TALON_FR_CAN_ID                           = 1;
-    /** CAN ID for the drivesystem's back left talon */
-    public static final  int    TALON_BL_CAN_ID                           = 2;
-    /** CAN ID for the drivesystem's front left talon */
-    public static final  int    TALON_FL_CAN_ID                           = 3;
+    /////Driving Talon PWM Ports/////
+    /** PWM_PORT for the drivesystem's back right talon */
+    public static final  int    TALON_BR_PWM_PORT                         = 0;
+    /** PWM_PORT for the drivesystem's front right talon */
+    public static final  int    TALON_FR_PWM_PORT                         = 1;
+    /** PWM_PORT for the drivesystem's back left talon */
+    public static final  int    TALON_BL_PWM_PORT                         = 2;
+    /** PWM_PORT for the drivesystem's front left talon */
+    public static final  int    TALON_FL_PWM_PORT                         = 3;
     /////Driving Encoders/////
     /** Port A for the right driving encoder */
     public static final  int    RIGHT_DRIVING_ENCODER_PORT_A              = 6;
@@ -60,23 +60,23 @@ public class RobotMap {
     /** Set point for the shooting PID loop */
     public static final  int    SHOOTER_PID_LOOP_SET_POINT                = 3;
     /** Proportianal value for PID loop */
-    public static final  double SHOOTER_PID_LOOP_P                        = 0.001;
+    public static final  double SHOOTER_PID_LOOP_P                  = 0.001;
     /** Integral value for PID loop */
-    public static final  double SHOOTER_PID_LOOP_I                        = 0;
+    public static final  double SHOOTER_PID_LOOP_I                  = 0;
     /** Derivative value for PID loop */
-    public static final  double SHOOTER_PID_LOOP_D                        = 0;
+    public static final  double SHOOTER_PID_LOOP_D                  = 0;
     /** Name for calling super constructor */
-    public static final  String SHOOTER_SUPER_NAME                        = "Name";
-    /////Shooting Motor CAN ID/////
-    /** CAN ID for motor which shoots */
-    public static final  int    SHOOTER_CAN_ID                            = 4;
+    public static final  String SHOOTER_SUPER_NAME                  = "Name";
+    /////Shooting Motor PWM port/////
+    /** PWM port for motor which shoots */
+    public static final  int    SHOOTER_PWM_PORT                    = 4;
     /////Shooting Encoder/////
     /** Port A for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_PORT_A                   = 0;
+    public static final  int    SHOOTING_ENCODER_PORT_A             = 0;
     /** Port B for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_PORT_B                   = 1;
+    public static final  int    SHOOTING_ENCODER_PORT_B             = 1;
     /** Distance per pulse for the shooting encoder */
-    public static final  int    SHOOTING_ENCODER_DISTANCE_PER_PULSE       = 1;
+    public static final  int    SHOOTING_ENCODER_DISTANCE_PER_PULSE = 1;
     //////////////////////////////////////////////////Vision Tracking//////////////////////////////////////////////////
     /** Ratio of height to the length of the retro-reflective tape contour */
     public static final  double LARGE_TAPE_SIDES_RATIO                    = 0.25;
@@ -111,27 +111,27 @@ public class RobotMap {
      * Ideal RPM of the climber which is acheived by adjusting the speed input of the climber using
      * CLIMBER_SPEED_INCREMENT
      */
-    public static final  int    CLIMBER_RPM_TARGET                        = 5;
+    public static final  int    CLIMBER_RPM_TARGET                  = 5;
     /** Default speed for the climber */
-    public static final  double DEFAULT_CLIMBER_SPEED                     = 0.5;
+    public static final  double DEFAULT_CLIMBER_SPEED               = 0.5;
     /** Max speed input for the climber */
-    public static final  int    CLIMBER_MAX_SPEED                         = 1;
+    public static final  int    CLIMBER_MAX_SPEED                   = 1;
     /** Minimum speed input for the climber */
-    public static final  int    CLIMBER_MIN_SPEED                         = 0;
-    /////Climber CAN ID/////
-    /** CAN ID for the climber motor */
-    public static final  int    CLIMBER_CAN_ID                            = 1;
+    public static final  int    CLIMBER_MIN_SPEED                   = 0;
+    /////Climber PWM port/////
+    /** PWM port for the climber motor */
+    public static final  int    CLIMBER_PWM_PORT                    = 1;
 
     /////Limit Switch/////
     /** Digital input number of the limit switch */
-    public static final  int    LIMIT_SWITCH_DIGITAL_INPUT_NUMBER         = 0;
+    public static final  int    LIMIT_SWITCH_DIGITAL_INPUT_NUMBER   = 0;
     /////Climbing Encoder/////
     /** Distance per pulse for the climbing encoder */
-    public static final  double CLIMBING_ENCODER_DISTANCE_PER_PULSE       = 1;
+    public static final  double CLIMBING_ENCODER_DISTANCE_PER_PULSE = 1;
     /** Port A for the climbing encoder */
-    public static final  int    CLIMBING_ENCODER_PORT_A                   = 4;
+    public static final  int    CLIMBING_ENCODER_PORT_A             = 4;
     /** Port B for the climbing encoder */
-    public static final  int    CLIMBING_ENCODER_PORT_B                   = 5;
+    public static final  int    CLIMBING_ENCODER_PORT_B             = 5;
     ///////////////////////////////////////////////////Button Numbers//////////////////////////////////////////////////
     /////Joystick Buttons/////
     /** Number for button which makes driving slower but more precise */
@@ -163,7 +163,7 @@ public class RobotMap {
     public static final  int    RANGE_FINDER_SENSITIVITY                  = 5;
     //////////////////////////////////////////////////Inserting Gear///////////////////////////////////////////////////
     /////Inserting Gear Motor /////
-    /** CAN ID for gear insertion motor */
+    /** PWM port for gear insertion motor */
     public static final  int    GEAR_INSERTION_MOTOR_ID                   = 1;
     /** Motor speed of gear insertion */
     public static final  double GEAR_INSERTION_SPEED                      = 1;
@@ -176,3 +176,28 @@ public class RobotMap {
     public static final  double GEAR_INSERTION_MAX_MOVEMENT               = 10;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//annie is cool

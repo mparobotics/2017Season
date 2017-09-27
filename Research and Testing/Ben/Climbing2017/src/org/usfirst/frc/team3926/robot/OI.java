@@ -15,33 +15,52 @@ import org.usfirst.frc.team3926.robot.commands.VisionTrackingTurning;
 public class OI {
 
     /** Right joystick */
-    public  Joystick rightStick       = new Joystick(RobotMap.RIGHT_STICK_PORT);
+    public  Joystick rightStick;
     /** Left joystick */
-    public  Joystick leftStick        = new Joystick(RobotMap.LEFT_STICK_PORT);
+    public  Joystick leftStick;
     /** Button on the joystick that equalizes the speed of each robot side */
-    public  Button   goStraightButton = new JoystickButton(leftStick,
-                                                           RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER);
+    public  Button   goStraightButton;
     /** Button for slowing the speed of the Robot */
-    public  Button   safeModeButton   = new JoystickButton(rightStick,
-                                                                      RobotMap.PRECISE_DRIVING_BUTTON_NUMBER);
+    public  Button   safeModeButton;
     ///** Xbox joystick */
     //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
     /** Button on the joystick that starts the Shooting */
-    private Button   shooterPIDButton            = new JoystickButton(rightStick, RobotMap.PID_SHOOTER_BUTTON_NUMBER);
+    private Button   shooterPIDButton;
     /** Button on the joystick that starts the Climb */
-    private Button   climberButton               = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
+    private Button   climberButton;
     /** Button on the joystick that starts the VisionTrackingTurning */
-    private Button   visionTrackingTurningButton = new JoystickButton(leftStick,
-                                                                      RobotMap.VISION_TRACKING_TURNING_BUTTON_NUMBER);
+    private Button   visionTrackingTurningButton;
     /** Button on the joystick that starts the VisionTrackingForward */
-    private Button   visionTrackingForwardButton = new JoystickButton(leftStick,
-                                                                      RobotMap.VISION_TRACKING_FORWARD_BUTTON_NUMBER);
+    private Button   visionTrackingForwardButton;
 
     /**
      * Activates the Climb and the Shooting if the buttons made for them are pressed
      * Activates the vision tracking command if the vision tracking button is being held
      */
     OI() {
+
+        /** Right joystick */
+        rightStick = new Joystick(RobotMap.RIGHT_STICK_PORT);
+        /** Left joystick */
+        leftStick = new Joystick(RobotMap.LEFT_STICK_PORT);
+        /** Button on the joystick that equalizes the speed of each robot side */
+        goStraightButton = new JoystickButton(leftStick,
+                                              RobotMap.EQUALIZE_DRIVE_SYSTEM_SPEED_BUTTON_NUMBER);
+        /** Button for slowing the speed of the Robot */
+        safeModeButton = new JoystickButton(rightStick,
+                                            RobotMap.PRECISE_DRIVING_BUTTON_NUMBER);
+        ///** Xbox joystick */
+        //private Joystick xboxJoystick                = new Joystick(RobotMap.XBOX_JOYSTICK_PORT);
+        /** Button on the joystick that starts the Shooting */
+        shooterPIDButton = new JoystickButton(rightStick, RobotMap.PID_SHOOTER_BUTTON_NUMBER);
+        /** Button on the joystick that starts the Climb */
+        climberButton = new JoystickButton(leftStick, RobotMap.CLIMBER_BUTTON_NUMBER);
+        /** Button on the joystick that starts the VisionTrackingTurning */
+        visionTrackingTurningButton = new JoystickButton(leftStick,
+                                                         RobotMap.VISION_TRACKING_TURNING_BUTTON_NUMBER);
+        /** Button on the joystick that starts the VisionTrackingForward */
+        visionTrackingForwardButton = new JoystickButton(leftStick,
+                                                         RobotMap.VISION_TRACKING_FORWARD_BUTTON_NUMBER);
 
         climberButton.whenPressed(new Climb());
         shooterPIDButton.whileHeld(new ShootWithPID());
